@@ -2,43 +2,43 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
 // 1. Projects Filtering with Smooth Auto-Close
-const filterDropdown = document.querySelector('.filter-dropdown');
-const filterButtons = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.app-card');
+    const filterDropdown = document.querySelector('.filter-dropdown');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.app-card');
 
-if (filterButtons.length > 0) {
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
+    if (filterButtons.length > 0) {
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
 
-            // Update trigger label
-            const label = document.querySelector('.filter-selected');
-            if (label) {
-                label.textContent = button.textContent.replace(' Projects', '');
-            }
+                // Update trigger label
+                const label = document.querySelector('.filter-selected');
+                if (label) {
+                    label.textContent = button.textContent.replace(' Projects', '');
+                }
 
-            // Filter cards
-            const filterValue = button.getAttribute('data-filter') || 'all';
-            cards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                card.style.display = (filterValue === 'all' || cardCategory === filterValue) ? 'flex' : 'none';
+                // Filter cards
+                const filterValue = button.getAttribute('data-filter') || 'all';
+                cards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    card.style.display = (filterValue === 'all' || cardCategory === filterValue) ? 'flex' : 'none';
+                });
+
+                // Smoothly close menu immediately upon selection
+                if (filterDropdown) {
+                    filterDropdown.classList.add('menu-closed');
+                }
             });
-
-            // Smoothly close menu immediately upon selection
-            if (filterDropdown) {
-                filterDropdown.classList.add('menu-closed');
-            }
         });
-    });
 
-    // Re-enable hover open once mouse leaves
-    if (filterDropdown) {
-        filterDropdown.addEventListener('mouseleave', () => {
-            filterDropdown.classList.remove('menu-closed');
-        });
+        // Re-enable hover open once mouse leaves
+        if (filterDropdown) {
+            filterDropdown.addEventListener('mouseleave', () => {
+                filterDropdown.classList.remove('menu-closed');
+            });
+        }
     }
-}
 
     // 2. Dynamic Collapsible Bio Toggle
     const bioToggle = document.querySelector('.bio-toggle');
@@ -129,56 +129,68 @@ if (filterButtons.length > 0) {
     }
 
     // 6. Tools View Switcher
-const projectsView = document.getElementById('projects-view');
-const toolView = document.getElementById('tool-view');
-const projectsFilter = document.getElementById('projects-filter');
-const viewTitle = document.getElementById('view-title');
-const backToProjectsBtn = document.getElementById('back-to-projects');
-const toolButtons = document.querySelectorAll('.tool-select-btn');
-const activeToolTitle = document.getElementById('active-tool-title');
-const activeToolDesc = document.getElementById('active-tool-desc');
+    const projectsView = document.getElementById('projects-view');
+    const toolView = document.getElementById('tool-view');
+    const projectsFilter = document.getElementById('projects-filter');
+    const viewTitle = document.getElementById('view-title');
+    const backToProjectsBtn = document.getElementById('back-to-projects');
+    const toolButtons = document.querySelectorAll('.tool-select-btn');
+    const activeToolTitle = document.getElementById('active-tool-title');
+    const activeToolDesc = document.getElementById('active-tool-desc');
 
-const toolData = {
-    converter: { title: 'Media & File Converter', desc: 'In-browser client-side conversion for PNG, WebP, JPEG, and PDF documents.' },
-    subnet: { title: 'Subnet & CIDR Calculator', desc: 'Interactive IP network calculation, mask translation, and broadcast range lookup.' },
-    nutrient: { title: 'Nutrient Bioavailability Engine', desc: 'Micro-nutrient ratio modeling and absorption synergy analysis.' },
-    hash: { title: 'Developer Inspector', desc: 'Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON formatter.' }
-};
+    const toolData = {
+        converter: {
+            title: 'Media & File Converter',
+            desc: 'In-browser client-side conversion for PNG, WebP, JPEG, and PDF documents.'
+        },
+        subnet: {
+            title: 'Subnet & CIDR Calculator',
+            desc: 'Interactive IP network calculation, mask translation, and broadcast range lookup.'
+        },
+        nutrient: {
+            title: 'Nutrient Bioavailability Engine',
+            desc: 'Micro-nutrient ratio modeling and absorption synergy analysis.'
+        },
+        hash: {
+            title: 'Developer Inspector',
+            desc: 'Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON formatter.'
+        }
+    };
 
-if (toolButtons.length > 0) {
-    toolButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const toolKey = btn.getAttribute('data-tool');
-            const tool = toolData[toolKey];
+    if (toolButtons.length > 0) {
+        toolButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const toolKey = btn.getAttribute('data-tool');
+                const tool = toolData[toolKey];
 
-            if (tool && projectsView && toolView) {
-                // Switch panel view
-                projectsView.style.display = 'none';
-                toolView.style.display = 'block';
-                if (projectsFilter) projectsFilter.style.display = 'none';
+                if (tool && projectsView && toolView) {
+                    // Switch panel view
+                    projectsView.style.display = 'none';
+                    toolView.style.display = 'block';
+                    if (projectsFilter) projectsFilter.style.display = 'none';
 
-                // Update header
-                if (viewTitle) viewTitle.textContent = 'Tools';
-                if (backToProjectsBtn) backToProjectsBtn.style.display = 'inline-block';
+                    // Update header
+                    if (viewTitle) viewTitle.textContent = 'Tools';
+                    if (backToProjectsBtn) backToProjectsBtn.style.display = 'inline-block';
 
-                // Set content
-                if (activeToolTitle) activeToolTitle.textContent = tool.title;
-                if (activeToolDesc) activeToolDesc.textContent = tool.desc;
+                    // Set content
+                    if (activeToolTitle) activeToolTitle.textContent = tool.title;
+                    if (activeToolDesc) activeToolDesc.textContent = tool.desc;
+                }
+            });
+        });
+    }
+
+    // Back to Projects click
+    if (backToProjectsBtn) {
+        backToProjectsBtn.addEventListener('click', () => {
+            if (projectsView && toolView) {
+                projectsView.style.display = 'block';
+                toolView.style.display = 'none';
+                if (projectsFilter) projectsFilter.style.display = 'inline-block';
+                if (viewTitle) viewTitle.textContent = 'Projects';
+                backToProjectsBtn.style.display = 'none';
             }
         });
-    });
-}
-
-// Back to Projects click
-if (backToProjectsBtn) {
-    backToProjectsBtn.addEventListener('click', () => {
-        if (projectsView && toolView) {
-            projectsView.style.display = 'block';
-            toolView.style.display = 'none';
-            if (projectsFilter) projectsFilter.style.display = 'inline-block';
-            if (viewTitle) viewTitle.textContent = 'Projects';
-            backToProjectsBtn.style.display = 'none';
-        }
-    });
-}
+    }
 });
