@@ -165,45 +165,92 @@
 </div>
 
     </section>
+<section class="right-panel" aria-label="Content Panel">
 
-    <!-- RIGHT PANEL: Grid of Apps (Scrolls independently) -->
-    <section class="right-panel" aria-label="Projects Grid">
-      <div class="right-header">
-        <h2>Projects</h2>
-<div class="filter-dropdown">
-  <button class="filter-trigger" id="active-filter-label" type="button">
-    Category: <span class="filter-selected">All</span>
-    <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-  </button>
-  <div class="filter-menu">
-    <button class="filter-btn active" data-filter="all" type="button">All Projects</button>
-    <button class="filter-btn" data-filter="web" type="button">Web Development</button>
-    <button class="filter-btn" data-filter="ai" type="button">AI & Machine Learning</button>
-    <button class="filter-btn" data-filter="security" type="button">Network Security</button>
-  </div>
-</div>
+  <div class="right-header">
+    <div class="header-title-group">
+      <h2 id="view-title">Projects</h2>
+      <!-- Back button appears only when viewing a tool -->
+      <button class="back-to-projects-btn" id="back-to-projects" type="button" style="display: none;">
+        ← Back to Projects
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <!-- 1. Category Filter (Visible on Projects view) -->
+      <div class="filter-dropdown" id="projects-filter">
+        <button class="filter-trigger" id="active-filter-label" type="button">
+          Category: <span class="filter-selected">All</span>
+          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="filter-menu">
+          <button class="filter-btn active" data-filter="all" type="button">All Projects</button>
+          <button class="filter-btn" data-filter="web" type="button">Web</button>
+          <button class="filter-btn" data-filter="ai" type="button">AI / ML</button>
+          <button class="filter-btn" data-filter="security" type="button">Security</button>
+        </div>
       </div>
 
-      <div class="apps-grid">
-        <!-- Nutrition App Card -->
-<article class="app-card" data-category="web">
-  <div class="app-img-container">
-    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Nutritional analytics interface preview">
-  </div>
-  <div class="app-content">
-    <h3>Nutritional App</h3>
-    <p>A minimalist nutrition tracker expanding beyond basic macros to analyze bioavailability, micronutrient ratios, nutrient-nutrient interactions, and optimal daily absorption rates.</p>
-    <div class="app-links">
-      <a href="https://github.com/adamnordling/nutritional-app.git" target="_blank" rel="noopener noreferrer" class="btn-primary">GitHub Repository</a>
-      <span class="btn-secondary" style="opacity: 0.6; cursor: default;">In Development</span>
+      <!-- 2. Tools Menu Dropdown -->
+      <div class="tools-dropdown">
+        <button class="tools-trigger" type="button" aria-label="Open Tools Menu">
+          <span class="menu-icon">≡</span> Tools
+          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="tools-menu">
+          <button class="tool-select-btn" data-tool="converter" type="button">
+            <strong>Media Converter</strong>
+            <small>PNG, WebP, JPEG, PDF</small>
+          </button>
+          <button class="tool-select-btn" data-tool="subnet" type="button">
+            <strong>Subnet / CIDR Calc</strong>
+            <small>IP mask & Network analysis</small>
+          </button>
+          <button class="tool-select-btn" data-tool="nutrient" type="button">
+            <strong>Nutrient Engine</strong>
+            <small>Bioavailability & Ratios</small>
+          </button>
+          <button class="tool-select-btn" data-tool="hash" type="button">
+            <strong>Dev Inspector</strong>
+            <small>Base64, JSON & Hashes</small>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-</article>
 
+  <!-- PROJECTS VIEW (Default) -->
+  <div class="projects-view" id="projects-view">
+    <div class="apps-grid">
+      <!-- Your project cards remain here -->
+      <article class="app-card" data-category="web">
+        <div class="app-img-container">
+          <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80" alt="Nutritional app preview">
+        </div>
+        <div class="app-content">
+          <h3>Nutritional App</h3>
+          <p>A minimalist nutrition tracker analyzing bioavailability, micronutrient ratios, and optimal daily absorption rates.</p>
+          <div class="app-links">
+            <a href="https://github.com/adamnordling/nutritional-app" target="_blank" rel="noopener noreferrer" class="btn-primary">GitHub Repository</a>
+            <span class="btn-secondary" style="opacity: 0.6; cursor: default;">In Development</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
 
-
+  <!-- TOOL ACTIVE VIEW (Hidden by default) -->
+  <div class="tool-view" id="tool-view" style="display: none;">
+    <div class="tool-placeholder-card">
+      <h3 id="active-tool-title">Tool Name</h3>
+      <p id="active-tool-desc">Tool description and interactive canvas placeholder.</p>
+      <div class="tool-canvas-mockup">
+        <span>⚡ Interactive tool environment is ready for implementation</span>
       </div>
-    </section>
+    </div>
+  </div>
+
+</section>
 
   </main>
 </div>

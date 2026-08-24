@@ -817,3 +817,160 @@ body.light-theme .theme-toggle:hover {
     column-gap: 0;
   }
 }
+
+
+
+/* Header grouping & tool controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.back-to-projects-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.back-to-projects-btn:hover {
+  text-decoration: underline;
+}
+
+/* Tools Dropdown button */
+.tools-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.tools-trigger {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.tools-trigger:hover {
+  border-color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tools-trigger .menu-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.tools-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 220px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.tools-menu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.tools-dropdown:hover .tools-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.tools-dropdown:hover .tools-trigger .chevron {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Tool Item Buttons */
+.tool-select-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.15s ease;
+}
+
+.tool-select-btn strong {
+  font-size: 0.88rem;
+}
+
+.tool-select-btn small {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.tool-select-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Tool View Canvas Container */
+.tool-placeholder-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.tool-placeholder-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 6px;
+}
+
+.tool-placeholder-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.tool-canvas-mockup {
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.88rem;
+  background: rgba(0, 0, 0, 0.15);
+}
