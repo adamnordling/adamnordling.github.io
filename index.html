@@ -122,46 +122,47 @@
       </ul>
 
       <h2>Skills</h2>
+<div class="skills-grid">
+  <!-- Left Column: 4 items -->
+  <div class="skills-column">
+    <div class="skill-item">
+      <span class="skill-name">Python &amp; ML</span>
+      <span class="skill-score">TensorFlow, Keras, Scikit</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">Web &amp; APIs</span>
+      <span class="skill-score">Angular, Node, Express, Flask</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">Low-Level</span>
+      <span class="skill-score">C, C++, CUDA</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">Languages</span>
+      <span class="skill-score">TypeScript, Java, JS, SQL</span>
+    </div>
+  </div>
 
-
-      <div class="skills-grid">
-        <div class="skills-column">
-          <div class="skill-item">
-            <span class="skill-name">Python</span>
-            <span class="skill-score">95</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">Fullstack</span>
-            <span class="skill-score">92</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">AI &amp; ML</span>
-            <span class="skill-score">90</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">DevOps</span>
-            <span class="skill-score">85</span>
-          </div>
-        </div>
-        <div class="skills-column">
-          <div class="skill-item">
-            <span class="skill-name">Network Sec</span>
-            <span class="skill-score">93</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">C/C++</span>
-            <span class="skill-score">82</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">Databases</span>
-            <span class="skill-score">88</span>
-          </div>
-          <div class="skill-item">
-            <span class="skill-name">Linux</span>
-            <span class="skill-score">87</span>
-          </div>
-        </div>
-      </div>
+  <!-- Right Column: 4 items -->
+  <div class="skills-column">
+    <div class="skill-item">
+      <span class="skill-name">Data Stack</span>
+      <span class="skill-score">NumPy, Pandas, Databases</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">Network Sec</span>
+      <span class="skill-score">Wireshark, Protocols</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">DevOps &amp; CI</span>
+      <span class="skill-score">Docker, Git Pipelines</span>
+    </div>
+    <div class="skill-item">
+      <span class="skill-name">OS &amp; Shell</span>
+      <span class="skill-score">Linux, CachyOS, Bash</span>
+    </div>
+  </div>
+</div>
 
     </section>
 
@@ -169,12 +170,18 @@
     <section class="right-panel" aria-label="Projects Grid">
       <div class="right-header">
         <h2>Projects</h2>
-        <div class="filters" role="group" aria-label="Project category filters">
-          <button class="filter-btn active" data-filter="all" type="button">All</button>
-          <button class="filter-btn" data-filter="web" type="button">Web</button>
-          <button class="filter-btn" data-filter="ai" type="button">AI / ML</button>
-          <button class="filter-btn" data-filter="security" type="button">Security</button>
-        </div>
+<div class="filter-dropdown">
+  <button class="filter-trigger" id="active-filter-label" type="button">
+    Category: <span class="filter-selected">All</span>
+    <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+  <div class="filter-menu">
+    <button class="filter-btn active" data-filter="all" type="button">All Projects</button>
+    <button class="filter-btn" data-filter="web" type="button">Web Development</button>
+    <button class="filter-btn" data-filter="ai" type="button">AI & Machine Learning</button>
+    <button class="filter-btn" data-filter="security" type="button">Network Security</button>
+  </div>
+</div>
       </div>
 
       <div class="apps-grid">

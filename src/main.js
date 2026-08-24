@@ -1,29 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
-    // 1. Projects Filtering
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.app-card');
+// 1. Projects Filtering with Smooth Auto-Close
+const filterDropdown = document.querySelector('.filter-dropdown');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.app-card');
 
-    if (filterButtons.length > 0 && cards.length > 0) {
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+if (filterButtons.length > 0) {
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
 
-                const filterValue = button.getAttribute('data-filter') || 'all';
+            // Update trigger label
+            const label = document.querySelector('.filter-selected');
+            if (label) {
+                label.textContent = button.textContent.replace(' Projects', '');
+            }
 
-                cards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-                    if (filterValue === 'all' || cardCategory === filterValue) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
+            // Filter cards
+            const filterValue = button.getAttribute('data-filter') || 'all';
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                card.style.display = (filterValue === 'all' || cardCategory === filterValue) ? 'flex' : 'none';
             });
+
+            // Smoothly close menu immediately upon selection
+            if (filterDropdown) {
+                filterDropdown.classList.add('menu-closed');
+            }
+        });
+    });
+
+    // Re-enable hover open once mouse leaves
+    if (filterDropdown) {
+        filterDropdown.addEventListener('mouseleave', () => {
+            filterDropdown.classList.remove('menu-closed');
         });
     }
+}
 
     // 2. Dynamic Collapsible Bio Toggle
     const bioToggle = document.querySelector('.bio-toggle');
