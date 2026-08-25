@@ -390,4 +390,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadGitHubActivity();
+
+
+    // -------------------------------------------------------------------------
+    // 10. Email One-Click Copy with Toast Feedback
+    // -------------------------------------------------------------------------
+    const emailCopyBtn = document.getElementById('email-copy-btn');
+    const emailToast = document.getElementById('email-toast');
+    let toastTimeout = null;
+
+    if (emailCopyBtn && emailToast) {
+        emailCopyBtn.addEventListener('click', async () => {
+            const email = emailCopyBtn.getAttribute('data-email');
+            if (!email) return;
+
+            try {
+                await navigator.clipboard.writeText(email);
+
+                // Show toast
+                emailToast.classList.add('is-visible');
+
+                // Reset timeout if clicked multiple times
+                if (toastTimeout) clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    emailToast.classList.remove('is-visible');
+                }, 2200);
+            } catch (err) {
+                // Fallback if clipboard permission is blocked
+                window.location.href = `mailto:${email}`;
+            }
+        });
+    }
+
+
+    // -------------------------------------------------------------------------
+    // 11. Resume / CV Preview Modal Controller
+    // -------------------------------------------------------------------------
+    const openCvBtn = document.getElementById('open-cv-modal');
+    const closeCvBtn = document.getElementById('close-cv-modal');
+    const cvModal = document.getElementById('cv-modal');
+
+    function openModal() {
+        if (!cvModal) return;
+        cvModal.classList.add('is-open');
+        cvModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // Lock background scrolling
+    }
+
+    function closeModal() {
+        if (!cvModal) return;
+        cvModal.classList.remove('is-open');
+        cvModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    if (openCvBtn) openCvBtn.addEventListener('click', openModal);
+    if (closeCvBtn) closeCvBtn.addEventListener('click', closeModal);
+
+    // Close on backdrop click
+    if (cvModal) {
+        cvModal.addEventListener('click', (e) => {
+            if (e.target === cvModal) closeModal();
+        });
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cvModal?.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
 });

@@ -117,21 +117,53 @@
                                 <circle cx="4" cy="4" r="2"></circle>
                             </svg>
                         </a>
-                        <a href="mailto:adam.nordling@example.com" aria-label="Send Email" class="social-btn-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" aria-hidden="true">
-                                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                            </svg>
-                        </a>
+                        <!-- Button 3 (Email with Copy & Toast) -->
+                        <div class="email-wrapper">
+                            <button type="button" class="social-btn-3" id="email-copy-btn"
+                                    data-email="adam.nordling@example.com"
+                                    aria-label="Copy email address to clipboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                </svg>
+                            </button>
+                            <div class="email-toast" id="email-toast" role="status" aria-live="polite">
+                                <span class="toast-checkmark">✓</span>
+                                <span lang="en">Copied to clipboard</span>
+                                <span lang="sv">Kopierat till urklipp</span>
+                            </div>
+                        </div>
                     </div>
                     <h1 class="name-title">Adam Nordling</h1>
                     <p class="subtitle">
                         <span lang="en">Software Engineer</span>
                         <span lang="sv">Mjukvaruingenjör</span>
                     </p>
+                    <div class="cv-action-wrapper">
+                        <div class="cv-badge">
+                            <span class="cv-badge-dot"></span>
+                            <span lang="en">CV: </span>
+                            <span lang="sv">CV:</span>
+                        </div>
+                        <div class="cv-actions">
+                            <button type="button" class="cv-btn cv-btn-view" id="open-cv-modal"
+                                    aria-label="View CV preview">
+                                <span lang="en">View</span>
+                                <span lang="sv">Visa</span>
+                            </button>
+                            <span class="cv-divider">/</span>
+                            <a href="./src/assets/resume.pdf" download="Adam_Nordling_CV.pdf"
+                               class="cv-btn cv-btn-download" aria-label="Download CV as PDF">
+                                <span lang="en">Download</span>
+                                <span lang="sv">Ladda ner</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
+
             </header>
 
             <blockquote class="intro-quote">
@@ -513,7 +545,28 @@
     </div>
     <p class="copyright">© 2026 Adam Nordling</p>
 </footer>
-
+<!-- CV / RESUME MODAL PREVIEW -->
+<div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="cv-modal-window">
+        <div class="cv-modal-header">
+            <div class="cv-modal-title">
+                <span lang="en">Adam Nordling — CV</span>
+                <span lang="sv">Adam Nordling — CV</span>
+            </div>
+            <div class="cv-modal-actions">
+                <a href="./src/assets/resume.pdf" download="Adam_Nordling_CV.pdf"
+                   class="btn-primary cv-modal-download-btn">
+                    <span lang="en">Download PDF</span>
+                    <span lang="sv">Ladda ner PDF</span>
+                </a>
+                <button type="button" class="cv-modal-close" id="close-cv-modal" aria-label="Close CV Modal">✕</button>
+            </div>
+        </div>
+        <div class="cv-modal-body">
+            <iframe src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
+        </div>
+    </div>
+</div>
 <script type="module" src="./src/main.js"></script>
 </body>
 </html>
