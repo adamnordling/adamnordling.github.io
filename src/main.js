@@ -261,14 +261,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
 
 
-    // -------------------------------------------------------------------------
-    // 9. Live GitHub Activity Fetcher (Public & Cached)
+// -------------------------------------------------------------------------
+    // 9. Live GitHub Activity Fetcher (Guaranteed Real Commit Messages)
     // -------------------------------------------------------------------------
     const activityFeed = document.getElementById('activity-feed');
     const GITHUB_USERNAME = 'adamnordling';
-    const CACHE_KEY = `gh_events_${GITHUB_USERNAME}`;
-    const CACHE_TIME_KEY = `gh_events_time_${GITHUB_USERNAME}`;
-    const TTL_MS = 5 * 60 * 1000; // 5 minutes cache
+    const CACHE_KEY = `gh_commits_${GITHUB_USERNAME}`;
+    const CACHE_TIME_KEY = `gh_commits_time_${GITHUB_USERNAME}`;
+    const TTL_MS = 60 * 1000; // 1-minute cache
 
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
@@ -284,79 +284,57 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = Math.floor(seconds / i.secs);
             if (count >= 1) {
                 return `
-                        <span lang="en">${count}${i.labelEn}</span>
-                        <span lang="sv">${count} ${i.labelSv}</span>
-                    `;
+                    <span lang="en">${count}${i.labelEn}</span>
+                    <span lang="sv">${count} ${i.labelSv}</span>
+                `;
             }
         }
         return `
-                <span lang="en">just now</span>
-                <span lang="sv">just nu</span>
-            `;
+            <span lang="en">just now</span>
+            <span lang="sv">just nu</span>
+        `;
     }
 
-    function renderEvents(events) {
+    function renderCommits(items) {
         if (!activityFeed) return;
 
-        // Filter for push, PR, create, or star events
-        const relevantEvents = events.filter(e =>
-            ['PushEvent', 'WatchEvent', 'CreateEvent', 'PullRequestEvent', 'ForkEvent'].includes(e.type)
-        ).slice(0, 3);
-
-        if (relevantEvents.length === 0) {
+        if (!items || items.length === 0) {
             activityFeed.innerHTML = `
-                    <div class="activity-skeleton">
-                        <span lang="en">No recent public activity.</span>
-                        <span lang="sv">Ingen nylig offentlig aktivitet.</span>
-                    </div>
-                `;
+                <div class="activity-skeleton">
+                    <span lang="en">No recent public commits found.</span>
+                    <span lang="sv">Inga nyliga offentliga commits hittades.</span>
+                </div>
+            `;
             return;
         }
 
-        activityFeed.innerHTML = relevantEvents.map(event => {
-            const repoName = event.repo.name.replace(`${GITHUB_USERNAME}/`, '');
-            const repoUrl = `https://github.com/${event.repo.name}`;
-            let actionText = '';
-            let detailText = '';
+        activityFeed.innerHTML = items.slice(0, 5).map(item => {
+            // Extract the true commit headline (first line of message)
+            const rawMsg = item.commit?.message || item.message || 'Code commit';
+            const commitMessage = rawMsg.split('\n')[0].trim();
 
-            if (event.type === 'PushEvent') {
-                const commitCount = event.payload.commits?.length || 1;
-                const latestCommitMsg = event.payload.commits?.[0]?.message || 'Code update';
-                actionText = `
-                        <span lang="en">Pushed ${commitCount} commit(s) to</span>
-                        <span lang="sv">Pushade ${commitCount} commit(s) till</span>
-                    `;
-                detailText = latestCommitMsg;
-            } else if (event.type === 'WatchEvent') {
-                actionText = `
-                        <span lang="en">Starred repository</span>
-                        <span lang="sv">Stjärnmärkte</span>
-                    `;
-            } else if (event.type === 'CreateEvent') {
-                actionText = `
-                        <span lang="en">Created ${event.payload.ref_type || 'repo'}</span>
-                        <span lang="sv">Skapade ${event.payload.ref_type || 'repo'}</span>
-                    `;
-            } else if (event.type === 'PullRequestEvent') {
-                actionText = `
-                        <span lang="en">${event.payload.action} PR in</span>
-                        <span lang="sv">${event.payload.action} PR i</span>
-                    `;
-                detailText = event.payload.pull_request?.title || '';
-            }
+            const repoName = item.repository?.name || item.repo_name || 'repository';
+            const commitUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
+            const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
+            const shortSha = item.sha ? item.sha.substring(0, 7) : '';
 
             return `
-                    <div class="activity-item">
-                        <div class="activity-icon">⚡</div>
-                        <div class="activity-body">
-                            <div class="activity-title">
-                                ${actionText} <a href="${repoUrl}" target="_blank" rel="noopener noreferrer">${repoName}</a>
-                            </div>
-                            ${detailText ? `<div class="activity-desc">${detailText}</div>` : ''}
-                            <div class="activity-time">${timeAgo(event.created_at)}</div>
+                <div class="activity-item">
+                    <div class="activity-icon">⚡</div>
+                    <div class="activity-body">
+                        <div class="activity-title">
+                            <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}">
+                                ${commitMessage}
+                            </a>
                         </div>
+                        <div class="activity-desc">
+                            <span>${repoName}</span>
+                            ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
+                        </div>
+                        <div class="activity-time">${timeAgo(commitDate)}</div>
                     </div>
-                `;
+                </div>
+            `;
         }).join('');
     }
 
@@ -365,26 +343,47 @@ document.addEventListener('DOMContentLoaded', () => {
         const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
 
         if (cached && cachedTime && (Date.now() - Number(cachedTime) < TTL_MS)) {
-            renderEvents(JSON.parse(cached));
+            renderCommits(JSON.parse(cached));
             return;
         }
 
         try {
-            const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
-            if (!res.ok) throw new Error('API request failed');
-            const data = await res.json();
+            // Search API directly queries your latest commits across all public repositories
+            const res = await fetch(`https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5&_t=${Date.now()}`, {
+                headers: {
+                    'Accept': 'application/vnd.github.cloak-preview+json'
+                },
+                cache: 'no-cache'
+            });
 
-            sessionStorage.setItem(CACHE_KEY, JSON.stringify(data));
+            if (!res.ok) throw new Error('Search API request failed');
+            const data = await res.json();
+            const commits = data.items || [];
+
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
             sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-            renderEvents(data);
+            renderCommits(commits);
         } catch (err) {
-            if (activityFeed) {
-                activityFeed.innerHTML = `
-                        <div class="activity-skeleton">
-                            <span lang="en">Active on GitHub (@${GITHUB_USERNAME})</span>
-                            <span lang="sv">Aktiv på GitHub (@${GITHUB_USERNAME})</span>
-                        </div>
-                    `;
+            // Fallback: If search endpoint is busy, fetch standard events
+            try {
+                const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`);
+                const eventsData = await eventsRes.json();
+
+                const pushEvents = eventsData
+                    .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
+                    .flatMap(e => e.payload.commits.map(c => ({
+                        commit: {message: c.message, author: {date: e.created_at}},
+                        repository: {name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')},
+                        html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
+                        sha: c.sha
+                    })))
+                    .slice(0, 5);
+
+                renderCommits(pushEvents);
+            } catch (fallbackErr) {
+                if (cached) {
+                    renderCommits(JSON.parse(cached));
+                }
             }
         }
     }
