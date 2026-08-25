@@ -1044,3 +1044,106 @@ body.light-theme .tool-canvas-mockup {
         padding-left: 6px;
     }
 }
+
+
+/* GitHub Activity Feed */
+.activity-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.84rem;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.activity-item:hover {
+    border-color: var(--text-muted);
+    transform: translateX(4px);
+}
+
+.activity-icon {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.activity-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.activity-title {
+    color: var(--text-primary);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activity-title a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.activity-title a:hover {
+    color: var(--accent);
+}
+
+.activity-desc {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-mono), monospace;
+}
+
+.activity-time {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono), monospace;
+}
+
+.activity-skeleton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono), monospace;
+    padding: 10px 0;
+}
+
+.activity-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    animation: pulse-dot 2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+@keyframes pulse-dot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
