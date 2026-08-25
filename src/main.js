@@ -216,4 +216,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // -------------------------------------------------------------------------
+    // 8. Timezone-Accurate Live Clock with ISO Week & Year
+    // -------------------------------------------------------------------------
+    const clockTimeEl = document.getElementById('clock-time');
+    const clockWeekNumEl = document.getElementById('clock-week-num');
+    const clockYearEl = document.getElementById('clock-year');
+
+    // Calculate standard ISO-8601 week number
+    function getISOWeekNumber(date) {
+        const target = new Date(date.valueOf());
+        const dayNr = (date.getDay() + 6) % 7; // Monday is day 0
+        target.setDate(target.getDate() - dayNr + 3);
+        const firstThursday = target.valueOf();
+        target.setMonth(0, 1);
+        if (target.getDay() !== 4) {
+            target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
+        }
+        return 1 + Math.ceil((firstThursday - target) / (7 * 24 * 3600 * 1000));
+    }
+
+    function updateClock() {
+        const now = new Date();
+
+        // 1. Time (HH:MM:SS) in user's local timezone
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        if (clockTimeEl) {
+            clockTimeEl.textContent = `${hours}:${minutes}`;
+        }
+
+        // 2. ISO Week Number & Year
+        if (clockWeekNumEl) {
+            clockWeekNumEl.textContent = String(getISOWeekNumber(now)).padStart(2, '0');
+        }
+        if (clockYearEl) {
+            clockYearEl.textContent = now.getFullYear();
+        }
+    }
+
+    // Run immediately and update every second
+    updateClock();
+    setInterval(updateClock, 1000);
 });

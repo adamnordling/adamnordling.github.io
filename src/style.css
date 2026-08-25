@@ -989,3 +989,58 @@ body.light-theme .tool-canvas-mockup {
         column-gap: 0;
     }
 }
+
+
+/* Live Clock Widget (Top-Right) */
+.live-clock {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0 14px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono), monospace;
+    user-select: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.clock-time {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.04em;
+}
+
+.clock-details {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-left: 1px solid var(--border-color);
+    padding-left: 10px;
+}
+
+.clock-divider {
+    opacity: 0.5;
+}
+
+/* Mobile adjust: stack cleanly if screen is very small */
+@media (max-width: 640px) {
+    .live-clock {
+        top: 24px;
+        right: 16px;
+        padding: 0 10px;
+        gap: 6px;
+    }
+
+    .clock-details {
+        padding-left: 6px;
+    }
+}
