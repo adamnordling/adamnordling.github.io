@@ -11,12 +11,12 @@
     <meta name="author" content="Adam Nordling">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph Meta Tags (for professional preview on LinkedIn, etc.) -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Adam Nordling | Software Engineer">
     <meta property="og:description"
           content="Explore projects in fullstack web development, machine learning pipelines, and network security.">
     <meta property="og:type" content="profile">
-    <meta property="og:image" content="/src/assets/profile-picture-resized.png">
+    <meta property="og:image" content="./src/assets/profile-picture-resized.png">
 
     <!-- Stylesheets & Assets -->
     <link rel="stylesheet" href="./src/style.css">
@@ -24,27 +24,49 @@
 </head>
 <body>
 
-<!-- Theme Toggle Button (Top-Left corner) -->
-<button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
-    <!-- Sun Icon (indicates switching to Light Mode) -->
-    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2"></path>
-        <path d="M12 20v2"></path>
-        <path d="m4.93 4.93 1.41 1.41"></path>
-        <path d="m17.66 17.66 1.41 1.41"></path>
-        <path d="M2 12h2"></path>
-        <path d="M22 12h2"></path>
-        <path d="m6.34 17.66-1.41 1.41"></path>
-        <path d="m19.07 4.93-1.41 1.41"></path>
-    </svg>
-    <!-- Moon Icon (indicates switching to Dark Mode) -->
-    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-    </svg>
-</button>
+<!-- TOP CONTROLS: Theme Toggle + Language Menu -->
+<div class="top-controls">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M22 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    </button>
+
+    <!-- Language Selector Dropdown -->
+    <div class="lang-dropdown">
+        <button class="lang-trigger" type="button" aria-label="Select Language">
+            <span class="lang-current-label">EN</span>
+            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        </button>
+        <div class="lang-menu">
+            <button class="lang-btn active" data-lang="en" type="button">
+                <strong>English</strong>
+                <small>EN</small>
+            </button>
+            <button class="lang-btn" data-lang="sv" type="button">
+                <strong>Svenska</strong>
+                <small>SV</small>
+            </button>
+        </div>
+    </div>
+</div>
 
 <div class="portfolio-wrapper">
     <main class="main-container">
@@ -54,22 +76,18 @@
 
             <!-- Side-by-Side Header Layout -->
             <header class="profile-header">
-
                 <!-- 3D Card Wrapper -->
                 <div class="profile-card-container">
                     <div class="profile-card-inner">
                         <img src="./src/assets/profile-picture-resized.png" alt="Adam Nordling Profile Portrait"
                              class="profile-img" draggable="false">
-                        <!-- Radial spotlight overlay tracking cursor -->
                         <div class="spotlight" aria-hidden="true"></div>
                     </div>
                 </div>
 
                 <!-- Right Column: Socials, Name & Title -->
                 <div class="profile-info">
-                    <!-- Synchronized waving social icons -->
                     <div class="header-socials">
-                        <!-- Button 1 (GitHub) -->
                         <a href="https://github.com/adamnordling" target="_blank" rel="noopener noreferrer"
                            aria-label="GitHub Profile" class="social-btn-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -79,7 +97,6 @@
                                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
                             </svg>
                         </a>
-                        <!-- Button 2 (LinkedIn) -->
                         <a href="https://linkedin.com/in/adamnordling" target="_blank" rel="noopener noreferrer"
                            aria-label="LinkedIn Profile" class="social-btn-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -90,7 +107,6 @@
                                 <circle cx="4" cy="4" r="2"></circle>
                             </svg>
                         </a>
-                        <!-- Button 3 (Email) -->
                         <a href="mailto:adam.nordling@example.com" aria-label="Send Email" class="social-btn-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -101,39 +117,75 @@
                         </a>
                     </div>
                     <h1 class="name-title">Adam Nordling</h1>
-                    <p class="subtitle">Software Engineer</p>
+                    <p class="subtitle">
+                        <span lang="en">Software Engineer</span>
+                        <span lang="sv">Mjukvaruingenjör</span>
+                    </p>
                 </div>
-
             </header>
 
             <blockquote class="intro-quote">
-                <span class="bio-teaser">Newly graduated software technology master's student, with a broad technical foundation in web development, software architecture, and machine learning...</span>
-                <button class="bio-toggle" aria-expanded="false" type="button">[Read more]</button>
-
+                <span class="bio-teaser">
+                    <span lang="en">Newly graduated software technology master's student, with a broad technical foundation in web development, software architecture, and machine learning...</span>
+                    <span lang="sv">Nyexaminerad masterstudent inom mjukvaruteknik med en bred teknisk grund inom webbutveckling, mjukvaruarkitektur och maskininlärning...</span>
+                </span>
+                <button class="bio-toggle" aria-expanded="false" type="button">
+                    <span lang="en">[Read more]</span>
+                    <span lang="sv">[Läs mer]</span>
+                </button>
 
                 <!-- Smooth Expandable Container -->
                 <div class="bio-expandable">
                     <div class="bio-expandable-content">
-                        <p>
-                            My practical background includes developing robust fullstack applications, implementing AI
-                            models, managing relational and non-relational databases, and constructing continuous
-                            integration/deployment (CI/CD) pipelines.
-                        </p>
-                        <p>
-                            Accustomed to problem-oriented work in agile environments, I focus heavily on writing clean,
-                            modular code. I prefer working with Python, data architectures, automation and responsive
-                            frontend environments. Here I share my projects, most of which are openly shared and
-                            open-source.
-                        </p>
-                        <p>
-                            My core toolkit includes Python, JavaScript/TypeScript, Java, C++, SQL, Docker, Linux, and
-                            GitLab CI/CD.
-                        </p>
+                        <!-- English Bio Paragraphs -->
+                        <div lang="en">
+                            <p>
+                                My practical background includes developing robust fullstack applications, implementing
+                                AI
+                                models, managing relational and non-relational databases, and constructing continuous
+                                integration/deployment (CI/CD) pipelines.
+                            </p>
+                            <p>
+                                Accustomed to problem-oriented work in agile environments, I focus heavily on writing
+                                clean,
+                                modular code. I prefer working with Python, data architectures, automation and
+                                responsive
+                                frontend environments. Here I share my projects, most of which are openly shared and
+                                open-source.
+                            </p>
+                            <p>
+                                My core toolkit includes Python, JavaScript/TypeScript, Java, C++, SQL, Docker, Linux,
+                                and
+                                GitLab CI/CD.
+                            </p>
+                        </div>
+                        <!-- Swedish Bio Paragraphs -->
+                        <div lang="sv">
+                            <p>
+                                Min praktiska bakgrund innefattar utveckling av robusta fullstack-applikationer,
+                                implementering av AI-modeller,
+                                hantering av relations- och icke-relationsdatabaser samt konstruktion av
+                                CI/CD-pipelines.
+                            </p>
+                            <p>
+                                Van vid problemorienterat arbete i agila miljöer med stort fokus på ren, modulär kod.
+                                Jag arbetar helst med Python, dataarkitekturer, automatisering och responsiva
+                                frontend-miljöer.
+                                Här delar jag mina projekt, varav de flesta är öppen källkod.
+                            </p>
+                            <p>
+                                Min kärnverktygslåda inkluderar Python, JavaScript/TypeScript, Java, C++, SQL, Docker,
+                                Linux och GitLab CI/CD.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </blockquote>
 
-            <h2>Education</h2>
+            <h2>
+                <span lang="en">Education</span>
+                <span lang="sv">Utbildning</span>
+            </h2>
             <ul class="education-list">
                 <li>
                     <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
@@ -142,7 +194,10 @@
                        class="edu-link"
                        aria-label="Master's Thesis publication page at Linnaeus University">
                         <div class="edu-header">
-                            <span class="edu-title">Master's Degree in Software Technology (120 HP)</span>
+                            <span class="edu-title">
+                                <span lang="en">Master's Degree in Software Technology (120 HP)</span>
+                                <span lang="sv">Masterexamen i Mjukvaruteknik (120 HP)</span>
+                            </span>
                             <span class="edu-date">2023 – 2026</span>
                         </div>
                         <div class="edu-school">Linnaeus University, Växjö — M.Sc. Software Technology</div>
@@ -155,7 +210,10 @@
                        class="edu-link"
                        aria-label="Bachelor's Thesis publication page at Linnaeus University">
                         <div class="edu-header">
-                            <span class="edu-title">Bachelor's Degree in Network Security (180 HP)</span>
+                            <span class="edu-title">
+                                <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
+                                <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
+                            </span>
                             <span class="edu-date">2020 – 2023</span>
                         </div>
                         <div class="edu-school">Linnaeus University, Växjö — B.Sc. Network Security</div>
@@ -163,9 +221,12 @@
                 </li>
             </ul>
 
-            <h2>Skills</h2>
+            <h2>
+                <span lang="en">Skills</span>
+                <span lang="sv">Kompetenser</span>
+            </h2>
             <div class="skills-grid">
-                <!-- Left Column: 4 items -->
+                <!-- Left Column -->
                 <div class="skills-column">
                     <div class="skill-item">
                         <span class="skill-name">Python &amp; ML</span>
@@ -176,16 +237,22 @@
                         <span class="skill-score">Angular, Node, Express, Flask</span>
                     </div>
                     <div class="skill-item">
-                        <span class="skill-name">Low-Level</span>
+                        <span class="skill-name">
+                            <span lang="en">Low-Level</span>
+                            <span lang="sv">Lågnivå</span>
+                        </span>
                         <span class="skill-score">C, C++, CUDA</span>
                     </div>
                     <div class="skill-item">
-                        <span class="skill-name">Languages</span>
+                        <span class="skill-name">
+                            <span lang="en">Languages</span>
+                            <span lang="sv">Språk</span>
+                        </span>
                         <span class="skill-score">TypeScript, Java, JS, SQL</span>
                     </div>
                 </div>
 
-                <!-- Right Column: 4 items -->
+                <!-- Right Column -->
                 <div class="skills-column">
                     <div class="skill-item">
                         <span class="skill-name">Data Stack</span>
@@ -207,39 +274,64 @@
             </div>
 
         </section>
+
+        <!-- RIGHT PANEL: Projects & Tools -->
         <section class="right-panel" aria-label="Content Panel">
 
             <div class="right-header">
                 <div class="header-title-group">
-                    <h2 id="view-title">Projects</h2>
-                    <!-- Back button appears only when viewing a tool -->
+                    <h2 id="view-title">
+                        <span class="view-title-projects" lang="en">Projects</span>
+                        <span class="view-title-projects" lang="sv">Projekt</span>
+                        <span class="view-title-tools" lang="en" style="display: none;">Tools</span>
+                        <span class="view-title-tools" lang="sv" style="display: none;">Verktyg</span>
+                    </h2>
                     <button class="back-to-projects-btn" id="back-to-projects" type="button" style="display: none;">
-                        ← Back to Projects
+                        <span lang="en">← Back to Projects</span>
+                        <span lang="sv">← Tillbaka till Projekt</span>
                     </button>
                 </div>
 
                 <div class="header-actions">
-                    <!-- 1. Category Filter (Visible on Projects view) -->
+                    <!-- 1. Category Filter -->
                     <div class="filter-dropdown" id="projects-filter">
                         <button class="filter-trigger" id="active-filter-label" type="button">
-                            Category: <span class="filter-selected">All</span>
+                            <span lang="en">Category:</span>
+                            <span lang="sv">Kategori:</span>
+                            <span class="filter-selected">
+                                <span lang="en">All</span>
+                                <span lang="sv">Alla</span>
+                            </span>
                             <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2">
                                 <path d="m6 9 6 6 6-6"/>
                             </svg>
                         </button>
                         <div class="filter-menu">
-                            <button class="filter-btn active" data-filter="all" type="button">All Projects</button>
-                            <button class="filter-btn" data-filter="web" type="button">Web</button>
-                            <button class="filter-btn" data-filter="ai" type="button">AI / ML</button>
-                            <button class="filter-btn" data-filter="security" type="button">Security</button>
+                            <button class="filter-btn active" data-filter="all" type="button">
+                                <span lang="en">All Projects</span>
+                                <span lang="sv">Alla Projekt</span>
+                            </button>
+                            <button class="filter-btn" data-filter="web" type="button">
+                                <span lang="en">Web</span>
+                                <span lang="sv">Webb</span>
+                            </button>
+                            <button class="filter-btn" data-filter="ai" type="button">
+                                <span>AI / ML</span>
+                            </button>
+                            <button class="filter-btn" data-filter="security" type="button">
+                                <span lang="en">Security</span>
+                                <span lang="sv">Säkerhet</span>
+                            </button>
                         </div>
                     </div>
 
                     <!-- 2. Tools Menu Dropdown -->
                     <div class="tools-dropdown">
                         <button class="tools-trigger" type="button" aria-label="Open Tools Menu">
-                            <span class="menu-icon">≡</span> Tools
+                            <span class="menu-icon">≡</span>
+                            <span lang="en">Tools</span>
+                            <span lang="sv">Verktyg</span>
                             <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2">
                                 <path d="m6 9 6 6 6-6"/>
@@ -247,20 +339,41 @@
                         </button>
                         <div class="tools-menu">
                             <button class="tool-select-btn" data-tool="converter" type="button">
-                                <strong>Media Converter</strong>
+                                <strong>
+                                    <span lang="en">Media Converter</span>
+                                    <span lang="sv">Filkonverterare</span>
+                                </strong>
                                 <small>PNG, WebP, JPEG, PDF</small>
                             </button>
                             <button class="tool-select-btn" data-tool="subnet" type="button">
-                                <strong>Subnet / CIDR Calc</strong>
-                                <small>IP mask & Network analysis</small>
+                                <strong>
+                                    <span lang="en">Subnet / CIDR Calc</span>
+                                    <span lang="sv">Subnät / CIDR Calc</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">IP mask & Network analysis</span>
+                                    <span lang="sv">IP-mask & nätverksanalys</span>
+                                </small>
                             </button>
                             <button class="tool-select-btn" data-tool="nutrient" type="button">
-                                <strong>Nutrient Engine</strong>
-                                <small>Bioavailability & Ratios</small>
+                                <strong>
+                                    <span lang="en">Nutrient Engine</span>
+                                    <span lang="sv">Näringsmotor</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">Bioavailability & Ratios</span>
+                                    <span lang="sv">Biotillgänglighet & data</span>
+                                </small>
                             </button>
                             <button class="tool-select-btn" data-tool="hash" type="button">
-                                <strong>Dev Inspector</strong>
-                                <small>Base64, JSON & Hashes</small>
+                                <strong>
+                                    <span lang="en">Dev Inspector</span>
+                                    <span lang="sv">Utvecklarinspektör</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">Base64, JSON & Hashes</span>
+                                    <span lang="sv">Base64, JSON & Hashning</span>
+                                </small>
                             </button>
                         </div>
                     </div>
@@ -270,20 +383,30 @@
             <!-- PROJECTS VIEW (Default) -->
             <div class="projects-view" id="projects-view">
                 <div class="apps-grid">
-                    <!-- Your project cards remain here -->
                     <article class="app-card" data-category="web">
                         <div class="app-img-container">
                             <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
                                  alt="Nutritional app preview">
                         </div>
                         <div class="app-content">
-                            <h3>Nutritional App</h3>
-                            <p>A minimalist nutrition tracker analyzing bioavailability, micronutrient ratios, and
-                                optimal daily absorption rates.</p>
+                            <h3>
+                                <span lang="en">Nutritional App</span>
+                                <span lang="sv">Näringsapplikation</span>
+                            </h3>
+                            <p>
+                                <span lang="en">A minimalist nutrition tracker analyzing bioavailability, micronutrient ratios, and optimal daily absorption rates.</span>
+                                <span lang="sv">En minimalistisk näringsspårare som analyserar biotillgänglighet, mikronäringsämnesförhållanden och optimalt dagligt upptag.</span>
+                            </p>
                             <div class="app-links">
                                 <a href="https://github.com/adamnordling/nutritional-app" target="_blank"
-                                   rel="noopener noreferrer" class="btn-primary">GitHub Repository</a>
-                                <span class="btn-secondary" style="opacity: 0.6; cursor: default;">In Development</span>
+                                   rel="noopener noreferrer" class="btn-primary">
+                                    <span lang="en">GitHub Repository</span>
+                                    <span lang="sv">GitHub-källkod</span>
+                                </a>
+                                <span class="btn-secondary" style="opacity: 0.6; cursor: default;">
+                                    <span lang="en">In Development</span>
+                                    <span lang="sv">Under utveckling</span>
+                                </span>
                             </div>
                         </div>
                     </article>
@@ -293,10 +416,56 @@
             <!-- TOOL ACTIVE VIEW (Hidden by default) -->
             <div class="tool-view" id="tool-view" style="display: none;">
                 <div class="tool-placeholder-card">
-                    <h3 id="active-tool-title">Tool Name</h3>
-                    <p id="active-tool-desc">Tool description and interactive canvas placeholder.</p>
+                    <!-- Multilingual Tool Descriptions configured declaratively -->
+                    <div class="tool-content-item" data-tool-content="converter">
+                        <h3>
+                            <span lang="en">Media &amp; File Converter</span>
+                            <span lang="sv">Fil- och mediakonverterare</span>
+                        </h3>
+                        <p>
+                            <span lang="en">In-browser client-side conversion for PNG, WebP, JPEG, and PDF documents.</span>
+                            <span lang="sv">Klientbaserad konvertering i webbläsaren för PNG, WebP, JPEG och PDF-dokument.</span>
+                        </p>
+                    </div>
+
+                    <div class="tool-content-item" data-tool-content="subnet" style="display: none;">
+                        <h3>
+                            <span lang="en">Subnet &amp; CIDR Calculator</span>
+                            <span lang="sv">Subnät- &amp; CIDR-kalkylator</span>
+                        </h3>
+                        <p>
+                            <span lang="en">Interactive IP network calculation, mask translation, and broadcast range lookup.</span>
+                            <span lang="sv">Interaktiv IP-nätverksberäkning, masköversättning och broadcast-intervall.</span>
+                        </p>
+                    </div>
+
+                    <div class="tool-content-item" data-tool-content="nutrient" style="display: none;">
+                        <h3>
+                            <span lang="en">Nutrient Bioavailability Engine</span>
+                            <span lang="sv">Närings- och biotillgänglighetsmotor</span>
+                        </h3>
+                        <p>
+                            <span lang="en">Micro-nutrient ratio modeling and absorption synergy analysis.</span>
+                            <span lang="sv">Modellering av mikronäringsförhållanden och analys av absorptionssynergier.</span>
+                        </p>
+                    </div>
+
+                    <div class="tool-content-item" data-tool-content="hash" style="display: none;">
+                        <h3>
+                            <span lang="en">Developer Inspector</span>
+                            <span lang="sv">Utvecklarinspektör</span>
+                        </h3>
+                        <p>
+                            <span lang="en">Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON formatter.</span>
+                            <span lang="sv">Realtids Base64-omkodare, SHA-256 hashgenerator och JSON-formaterare.</span>
+                        </p>
+                    </div>
+
                     <div class="tool-canvas-mockup">
-                        <span>⚡ Interactive tool environment is ready for implementation</span>
+                        <span>
+                            <span lang="en">⚡ Interactive tool environment is ready for implementation</span>
+                            <span lang="sv">⚡ Interaktiv verktygsmiljö är redo för implementering</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -306,7 +475,7 @@
     </main>
 </div>
 
-<!-- FOOTER CONTROLS: Containing font switcher and copyright -->
+<!-- FOOTER CONTROLS -->
 <footer class="footer-controls">
     <div class="font-switcher" role="group" aria-label="Font configuration">
         <button class="font-btn active" data-font="default" aria-label="Default System Font" type="button">A</button>
