@@ -277,45 +277,45 @@
             <div class="skills-grid">
                 <!-- Left Column -->
                 <div class="skills-column">
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="python">
                         <span class="skill-name">Python &amp; ML</span>
                         <span class="skill-score">TensorFlow, Keras, Scikit</span>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="web">
                         <span class="skill-name">Web &amp; APIs</span>
                         <span class="skill-score">Angular, Node, Express, Flask</span>
                     </div>
-                    <div class="skill-item">
-                        <span class="skill-name">
-                            <span lang="en">Low-Level</span>
-                            <span lang="sv">Lågnivå</span>
-                        </span>
+                    <div class="skill-item" data-skill-id="lowlevel">
+                                    <span class="skill-name">
+                                        <span lang="en">Low-Level</span>
+                                        <span lang="sv">Lågnivå</span>
+                                    </span>
                         <span class="skill-score">C, C++, CUDA</span>
                     </div>
-                    <div class="skill-item">
-                        <span class="skill-name">
-                            <span lang="en">Languages</span>
-                            <span lang="sv">Språk</span>
-                        </span>
+                    <div class="skill-item" data-skill-id="languages">
+                                    <span class="skill-name">
+                                        <span lang="en">Languages</span>
+                                        <span lang="sv">Språk</span>
+                                    </span>
                         <span class="skill-score">TypeScript, Java, JS, SQL</span>
                     </div>
                 </div>
 
                 <!-- Right Column -->
                 <div class="skills-column">
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="data">
                         <span class="skill-name">Data Stack</span>
                         <span class="skill-score">NumPy, Pandas, Databases</span>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="security">
                         <span class="skill-name">Network Sec</span>
                         <span class="skill-score">Wireshark, Protocols</span>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="devops">
                         <span class="skill-name">DevOps &amp; CI</span>
                         <span class="skill-score">Docker, Git Pipelines</span>
                     </div>
-                    <div class="skill-item">
+                    <div class="skill-item" data-skill-id="os">
                         <span class="skill-name">OS &amp; Shell</span>
                         <span class="skill-score">Linux, CachyOS, Bash</span>
                     </div>
@@ -371,19 +371,29 @@
                         </button>
                         <div class="filter-menu">
                             <button class="filter-btn active" data-filter="all" type="button">
-                                <span lang="en">All Projects</span>
-                                <span lang="sv">Alla Projekt</span>
+                                                        <span>
+                                                            <span lang="en">All Projects</span>
+                                                            <span lang="sv">Alla Projekt</span>
+                                                        </span>
+                                <span class="filter-count"></span>
                             </button>
                             <button class="filter-btn" data-filter="web" type="button">
-                                <span lang="en">Web</span>
-                                <span lang="sv">Webb</span>
+                                                        <span>
+                                                            <span lang="en">Web</span>
+                                                            <span lang="sv">Webb</span>
+                                                        </span>
+                                <span class="filter-count"></span>
                             </button>
                             <button class="filter-btn" data-filter="ai" type="button">
                                 <span>AI / ML</span>
+                                <span class="filter-count"></span>
                             </button>
                             <button class="filter-btn" data-filter="security" type="button">
-                                <span lang="en">Security</span>
-                                <span lang="sv">Säkerhet</span>
+                                                        <span>
+                                                            <span lang="en">Security</span>
+                                                            <span lang="sv">Säkerhet</span>
+                                                        </span>
+                                <span class="filter-count"></span>
                             </button>
                         </div>
                     </div>
@@ -445,8 +455,22 @@
             <!-- PROJECTS VIEW (Default) -->
             <div class="projects-view" id="projects-view">
                 <div class="apps-grid">
-                    <article class="app-card" data-category="web">
+                    <article class="app-card" data-category="web" data-skills="web languages data">
                         <div class="app-img-container">
+                            <!-- Live Status Badge (Change data-live-enabled to 'true' or 'false') -->
+                            <div class="app-status-badge" data-live-enabled="false"
+                                 data-endpoint="http://localhost:3000">
+                                <span class="status-dot"></span>
+                                <span class="status-label-dev">
+                                                        <span lang="en">In Development</span>
+                                                        <span lang="sv">Under utveckling</span>
+                                                    </span>
+                                <span class="status-label-live" style="display: none;">
+                                                        <span lang="en">Live</span>
+                                                        <span lang="sv">Drift</span>
+                                                        <span class="status-ping"></span>
+                                                    </span>
+                            </div>
                             <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
                                  alt="Nutritional app preview">
                         </div>
@@ -466,9 +490,23 @@
                                     <span lang="sv">GitHub-källkod</span>
                                 </a>
                                 <span class="btn-secondary" style="opacity: 0.6; cursor: default;">
-                                    <span lang="en">In Development</span>
-                                    <span lang="sv">Under utveckling</span>
-                                </span>
+                                                        <span lang="en">In Development</span>
+                                                        <span lang="sv">Under utveckling</span>
+                                                    </span>
+                            </div>
+                        </div>
+
+                        <!-- Hover Context Drawer -->
+                        <div class="app-tech-drawer">
+                            <div class="tech-drawer-inner">
+                                <div class="tech-drawer-label">
+                                    <span lang="en">Architecture &amp; Tech Focus</span>
+                                    <span lang="sv">Arkitektur &amp; Teknikfokus</span>
+                                </div>
+                                <p class="tech-drawer-text">
+                                    <span lang="en">Architected with modular TypeScript &amp; Express services, utilizing SQLite for fast in-memory nutrient matrix lookups, reactive charts, and automated daily micronutrient bioavailability ratios.</span>
+                                    <span lang="sv">Arkitekturerad med modulära TypeScript- &amp; Express-tjänster, SQLite för snabba mikronäringsberäkningar i minnet, reaktiva grafer och automatiserad analys av biotillgänglighet.</span>
+                                </p>
                             </div>
                         </div>
                     </article>

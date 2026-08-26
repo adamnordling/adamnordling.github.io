@@ -557,4 +557,111 @@ document.addEventListener('DOMContentLoaded', () => {
 
         requestAnimationFrame(draw);
     }
+
+
+    // -------------------------------------------------------------------------
+    // 13. Dynamic Category Filter Counts
+    // -------------------------------------------------------------------------
+    function updateCategoryCounts() {
+        const allCards = document.querySelectorAll('.app-card');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        filterBtns.forEach(btn => {
+            const category = btn.getAttribute('data-filter');
+            const countSpan = btn.querySelector('.filter-count');
+            if (!countSpan) return;
+
+            let count = 0;
+            if (category === 'all') {
+                count = allCards.length;
+            } else {
+                count = document.querySelectorAll(`.app-card[data-category="${category}"]`).length;
+            }
+
+            countSpan.textContent = `(${count})`;
+        });
+    }
+
+    updateCategoryCounts();
+
+    // -------------------------------------------------------------------------
+    // 14. Skill-to-Project Context Drawer on Hover
+    // -------------------------------------------------------------------------
+    const skillItems = document.querySelectorAll('.skill-item[data-skill-id]');
+    const allProjectCards = document.querySelectorAll('.app-card');
+
+    skillItems.forEach(item => {
+        const skillId = item.getAttribute('data-skill-id');
+
+        item.addEventListener('mouseenter', () => {
+            let hasMatchingCard = false;
+
+            allProjectCards.forEach(card => {
+                const cardSkills = (card.getAttribute('data-skills') || '').split(' ');
+                const isMatch = cardSkills.includes(skillId);
+                const drawer = card.querySelector('.app-tech-drawer');
+
+                if (isMatch) {
+                    hasMatchingCard = true;
+                    card.classList.add('skill-highlighted');
+                    card.classList.remove('skill-dimmed');
+                    if (drawer) drawer.classList.add('is-active');
+                } else {
+                    card.classList.add('skill-dimmed');
+                    card.classList.remove('skill-highlighted');
+                    if (drawer) drawer.classList.remove('is-active');
+                }
+            });
+
+            // If no projects use this skill yet, don't dim everything
+            if (!hasMatchingCard) {
+                allProjectCards.forEach(card => card.classList.remove('skill-dimmed'));
+            }
+        });
+
+        item.addEventListener('mouseleave', () => {
+            allProjectCards.forEach(card => {
+                card.classList.remove('skill-highlighted', 'skill-dimmed');
+                const drawer = card.querySelector('.app-tech-drawer');
+                if (drawer) drawer.classList.remove('is-active');
+            });
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // 15. Configurable Live API Status Ping
+    // -------------------------------------------------------------------------
+    const statusBadges = document.querySelectorAll('.app-status-badge');
+
+    statusBadges.forEach(async (badge) => {
+        const isLiveEnabled = badge.getAttribute('data-live-enabled') === 'true';
+        const endpoint = badge.getAttribute('data-endpoint');
+        const devLabel = badge.querySelector('.status-label-dev');
+        const liveLabel = badge.querySelector('.status-label-live');
+        const pingSpan = badge.querySelector('.status-ping');
+
+        if (!isLiveEnabled) {
+            // Keep in Development mode
+            badge.classList.remove('is-live');
+            if (devLabel) devLabel.style.display = 'inline';
+            if (liveLabel) liveLabel.style.display = 'none';
+            return;
+        }
+
+        // Live Mode: Perform ping check
+        badge.classList.add('is-live');
+        if (devLabel) devLabel.style.display = 'none';
+        if (liveLabel) liveLabel.style.display = 'inline';
+
+        if (endpoint) {
+            const startTime = performance.now();
+            try {
+                await fetch(endpoint, {method: 'HEAD', mode: 'no-cors', cache: 'no-cache'});
+                const pingTime = Math.round(performance.now() - startTime);
+                if (pingSpan) pingSpan.textContent = `· ${pingTime}ms`;
+            } catch (err) {
+                if (pingSpan) pingSpan.textContent = '· online';
+            }
+        }
+    });
 });
