@@ -138,9 +138,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Dark/Light Theme Toggle
     // -------------------------------------------------------------------------
     const themeToggle = document.querySelector('.theme-toggle');
+    const savedTheme = localStorage.getItem('site_theme');
+
+    // Default to 'light' unless user specifically saved 'dark'
+    if (savedTheme === 'dark') {
+        document.body.classList.remove('light-theme');
+    } else {
+        document.body.classList.add('light-theme');
+    }
+
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
+            const isLight = document.body.classList.toggle('light-theme');
+            localStorage.setItem('site_theme', isLight ? 'light' : 'dark');
         });
     }
 
@@ -474,11 +484,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // ==========================================
         // ⚙️ CONTROLS & SETTINGS (Tweak these freely)
         // ==========================================
-        const FULL_SCREEN = false;    // Set to 'true' for whole site, 'false' for sides only
-        const BASE_ALPHA = 0.05;     // Normal dot brightness (0.1 = faint, 0.35 = very bright)
-        const GLOW_ALPHA = 0.85;     // Hover dot brightness when mouse is near
-        const DOT_SPACING = 28;      // Distance between dots in pixels
-        const FADE_MARGIN = 60;     // Fade width in pixels when FULL_SCREEN is false
+        const FULL_SCREEN = false;      // true for full site, false for sides
+        const DARK_BASE_ALPHA = 0.45;  // ⬅️ Boosted brightness for Dark Mode
+        const DARK_GLOW_ALPHA = 1.0;   // ⬅️ Hover glow in Dark Mode
+        const LIGHT_BASE_ALPHA = 0.14; // ⬅️ Subtle brightness for Light Mode
+        const LIGHT_GLOW_ALPHA = 0.60; // ⬅️ Hover glow in Light Mode
+        const DOT_SPACING = 28;        // Distance between dots in pixels
+        const FADE_MARGIN = 120;
+
         // ==========================================
 
         function resize() {
@@ -505,6 +518,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLight = document.body.classList.contains('light-theme');
             const baseColor = isLight ? [0, 0, 0] : [255, 255, 255];
             const activeColor = [59, 130, 246]; // Accent Blue
+
+            // Pick the theme's tuned brightness
+            const currentBaseAlpha = isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA;
+            const currentGlowAlpha = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 
             const rect = portfolioWrapper.getBoundingClientRect();
             const leftBoundary = rect.left;
@@ -534,14 +551,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     const mouseRadius = 140;
 
                     let radius = 1.4;
-                    let alpha = BASE_ALPHA * flankFade;
+                    let alpha = currentBaseAlpha * flankFade;
                     let color = baseColor;
 
-                    // Mouse proximity glow & expansion
                     if (distToMouse < mouseRadius) {
                         const influence = (1 - distToMouse / mouseRadius);
                         radius = 1.4 + influence * 2.4;
-                        alpha = (BASE_ALPHA + influence * (GLOW_ALPHA - BASE_ALPHA)) * flankFade;
+                        alpha = (currentBaseAlpha + influence * (currentGlowAlpha - currentBaseAlpha)) * flankFade;
                         color = activeColor;
                     }
 
@@ -661,6 +677,83 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pingSpan) pingSpan.textContent = `· ${pingTime}ms`;
             } catch (err) {
                 if (pingSpan) pingSpan.textContent = '· online';
+            }
+        }
+    });
+
+
+// -------------------------------------------------------------------------
+    // 16. Power-User Keyboard Shortcuts Controller
+    // -------------------------------------------------------------------------
+    const fontTypes = ['default', 'serif', 'monospace'];
+    let currentFontIndex = 0;
+
+    // Track which panel the mouse is over (defaults to left panel)
+    const leftPanel = document.querySelector('.left-panel');
+    const rightPanel = document.querySelector('.right-panel');
+    let activeScrollTarget = leftPanel;
+
+    if (leftPanel) leftPanel.addEventListener('mouseenter', () => activeScrollTarget = leftPanel);
+    if (rightPanel) rightPanel.addEventListener('mouseenter', () => activeScrollTarget = rightPanel);
+
+    document.addEventListener('keydown', (e) => {
+        // Ignore if user is typing inside an input/textarea
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+        const key = e.key.toLowerCase();
+
+        // 1. [ T ] -> Toggle Theme
+        if (key === 't') {
+            const isLight = document.body.classList.toggle('light-theme');
+            localStorage.setItem('site_theme', isLight ? 'light' : 'dark');
+        }
+
+        // 2. [ L ] -> Toggle Language
+        if (key === 'l') {
+            const newLang = (document.documentElement.lang === 'sv') ? 'en' : 'sv';
+            setLanguage(newLang);
+        }
+
+        // 3. [ C ] -> Toggle CV Modal
+        if (key === 'c') {
+            if (cvModal?.classList.contains('is-open')) {
+                closeModal();
+            } else {
+                openModal();
+            }
+        }
+
+        // 4. [ F ] -> Cycle Fonts (Default -> Serif -> Monospace)
+        if (key === 'f') {
+            currentFontIndex = (currentFontIndex + 1) % fontTypes.length;
+            const fontName = fontTypes[currentFontIndex];
+            const targetFontBtn = document.querySelector(`.font-btn[data-font="${fontName}"]`);
+            if (targetFontBtn) targetFontBtn.click();
+        }
+
+        // 5. [ 1 - 9 ] -> Open GitHub Repository of Project #1, #2, #3...
+        if (/^[1-9]$/.test(key)) {
+            const visibleCards = Array.from(document.querySelectorAll('.app-card'))
+                .filter(card => card.style.display !== 'none');
+
+            const targetCard = visibleCards[parseInt(key, 10) - 1];
+            if (targetCard) {
+                const repoLink = targetCard.querySelector('a.btn-primary[href]')?.getAttribute('href');
+                if (repoLink) {
+                    window.open(repoLink, '_blank', 'noopener,noreferrer');
+                }
+            }
+        }
+
+        // 6. [ ↑ / ↓ ] -> Smart Smooth Arrow Scrolling (Left Panel / Hovered Panel / Page)
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault(); // Prevents page jumping
+            const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
+
+            if (window.innerWidth <= 1024) {
+                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
+            } else if (activeScrollTarget) {
+                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
             }
         }
     });

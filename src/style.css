@@ -1065,7 +1065,7 @@ body.light-theme .tool-canvas-mockup {
 /* Live Clock Widget (Top-Right) */
 .live-clock {
     position: fixed;
-    bottom: 24px;
+    bottom: 72px;
     right: 24px;
     z-index: 100;
     background: var(--card-bg);
@@ -1570,4 +1570,58 @@ body.light-theme .tool-canvas-mockup {
     font-size: 0.75rem;
     color: var(--text-muted);
     margin-left: 8px;
+}
+
+
+/* Bottom-Right Keyboard Hotkeys Indicator */
+.hotkeys-indicator {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0 12px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    user-select: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hotkeys-prefix {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.hotkey-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.hotkey-item kbd {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1px 4px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+body.light-theme .hotkey-item kbd {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 900px) {
+    .hotkeys-indicator {
+        display: none;
+    }
 }
