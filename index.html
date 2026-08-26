@@ -207,7 +207,7 @@
             <blockquote class="intro-quote">
                 <span class="bio-teaser">
                     <span lang="en">Newly graduated software technology master's student, with a broad technical foundation in web development, software architecture, and machine learning...</span>
-                    <span lang="sv">Nyexaminerad masterstudent inom mjukvaruteknik med en bred teknisk grund inom webbutveckling, mjukvaruarkitektur och maskininlärning...</span>
+                    <span lang="sv">Nyexaminerad masterstudent inom programvaruteknik med en bred teknisk grund inom webbutveckling, mjukvaruarkitektur och maskininlärning...</span>
                 </span>
                 <button class="bio-toggle" aria-expanded="false" type="button">
                     <span lang="en">[Read more]</span>
@@ -261,49 +261,112 @@
                     </div>
                 </div>
             </blockquote>
-
             <h2>
                 <span lang="en">Education</span>
                 <span lang="sv">Utbildning</span>
             </h2>
             <ul class="education-list">
-                <li>
-                    <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="edu-link"
-                       aria-label="Master's Thesis publication page at Linnaeus University">
+                <!-- Master's Degree -->
+                <li class="edu-item">
+                    <button type="button" class="edu-toggle-btn" aria-expanded="false">
                         <div class="edu-header">
-                            <span class="edu-title">
-                                <span lang="en">Master's Degree in Software Technology (120 HP)</span>
-                                <span lang="sv">Masterexamen i Mjukvaruteknik (120 HP)</span>
-                            </span>
+                                        <span class="edu-title">
+                                            <span lang="en">Master's Degree in Software Technology (120 HP)</span>
+                                            <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
+                                        </span>
                             <span class="edu-date">2023 – 2026</span>
                         </div>
-                        <div class="edu-school">
+                        <div class="edu-school-row">
                             <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
-                            <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Mjukvaruteknik</span>
+                            <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
+                            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
                         </div>
-                    </a>
+                    </button>
+
+                    <!-- Expandable Research Drawer -->
+                    <div class="edu-drawer">
+                        <div class="edu-drawer-content">
+                            <div class="thesis-box">
+                                <div class="thesis-header">
+                                    <span class="thesis-tag">Master's Thesis · 2026</span>
+                                    <h4 class="thesis-title">A Systematic Approach for Selecting Trajectories for Data
+                                        Augmentation</h4>
+                                </div>
+                                <p class="thesis-abstract">
+                                                <span lang="en">
+                                                    Trajectory data augmentation mitigates data scarcity in machine learning, but preserving spatio-temporal coherence remains challenging. This thesis establishes a systematic and scalable framework evaluating five selection strategies: Outlierness, Diversity, Representativeness, Uncertainty, and Random selection across four datasets (animal behavior, maritime AIS, and urban traffic). Using an Optuna-based hyperparameter optimization loop and UMAP topological analysis, the findings prove that systematic selection (specifically Outlierness and Uncertainty) offers superior stability over random sampling, demonstrating that strategic data selection is a primary determinant of augmentation success.
+                                                </span>
+                                    <span lang="sv">
+                                                    Dataaugmentering av trajektorier minskar databrist inom maskininlärning, men att bevara rumslig och tidsmässig koherens är komplext. Detta examensarbete utvecklar ett systematiskt och skalbart ramverk för att utvärdera fem urvalsstrategier: Outlierness, Diversity, Representativeness, Uncertainty och Random selection över fyra dataset (djurbeteende, marin AIS och stadstrafik). Genom en Optuna-baserad hyperparameteroptimering och UMAP-topologisk analys visar resultaten att systematiskt urval (särskilt Outlierness och Uncertainty) ger överlägsen stabilitet gentemot slumpmässigt urval, vilket etablerar att strategiskt dataurval är en avgörande faktor för framgångsrik augmentering.
+                                                </span>
+                                </p>
+                                <div class="thesis-links">
+                                    <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
+                                       target="_blank" rel="noopener noreferrer" class="thesis-btn">
+                                        <span>DiVA Portal</span>
+                                        <span class="thesis-ext-icon">↗</span>
+                                    </a>
+                                    <a href="https://arxiv.org/abs/2606.10938" target="_blank" rel="noopener noreferrer"
+                                       class="thesis-btn thesis-arxiv">
+                                        <span>arXiv</span>
+                                        <span class="thesis-ext-icon">↗</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
-                <li>
-                    <a href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="edu-link"
-                       aria-label="Bachelor's Thesis publication page at Linnaeus University">
+
+                <!-- Bachelor's Degree -->
+                <li class="edu-item">
+                    <button type="button" class="edu-toggle-btn" aria-expanded="false">
                         <div class="edu-header">
-                            <span class="edu-title">
-                                <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
-                                <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
-                            </span>
+                                        <span class="edu-title">
+                                            <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
+                                            <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
+                                        </span>
                             <span class="edu-date">2020 – 2023</span>
                         </div>
-                        <div class="edu-school">
+                        <div class="edu-school-row">
                             <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
                             <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
+                            <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
                         </div>
-                    </a>
+                    </button>
+
+                    <!-- Expandable Research Drawer -->
+                    <div class="edu-drawer">
+                        <div class="edu-drawer-content">
+                            <div class="thesis-box">
+                                <div class="thesis-header">
+                                    <span class="thesis-tag">Bachelor's Thesis · 2023</span>
+                                    <h4 class="thesis-title">Edge Computing Security for IoT: A Systematic Literature
+                                        Review</h4>
+                                </div>
+                                <p class="thesis-abstract">
+                                                <span lang="en">
+                                                    A systematic literature review (SLR) analyzing 82 primary studies from an initial pool of 1,667 articles across four digital libraries to evaluate IoT security threats in edge computing. The research examines distinct vulnerabilities across sensors, gateways, and actuators, mitigations spanning IDS, firewalls, and cryptography, and the architectural advantages of integrating blockchain and 5G technologies to enhance security, privacy, and trust in edge environments.
+                                                </span>
+                                    <span lang="sv">
+                                                    En systematisk litteraturstudie (SLR) som analyserar 82 primära studier från ett urval av 1 667 artiklar över fyra digitala bibliotek för att utvärdera säkerhetshot mot IoT i edge computing-miljöer. Studien granskar unika sårbarheter hos sensorer, gateways och ställdon, motåtgärder via IDS, brandväggar och kryptografi, samt de arkitektoniska fördelarna med att integrera blockkedje- och 5G-teknik för att stärka säkerhet, integritet och tillit i distribuerade edge-miljöer.
+                                                </span>
+                                </p>
+                                <div class="thesis-links">
+                                    <a href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
+                                       target="_blank" rel="noopener noreferrer" class="thesis-btn">
+                                        <span>DiVA Portal</span>
+                                        <span class="thesis-ext-icon">↗</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
 
@@ -508,8 +571,12 @@
                                                         <span class="status-ping"></span>
                                                     </span>
                             </div>
-                            <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&amp;fit=crop&amp;w=600&amp;q=80"
-                                 alt="Nutritional app preview">
+                            <img
+                                    src="./src/assets/nutrition-image.jpg"
+                                    alt="Nutritional app preview"
+                                    style="width: 100%; object-fit: cover;"
+                            >
+                            alt="Nutritional app preview">
                         </div>
                         <div class="app-content">
                             <h3>

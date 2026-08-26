@@ -485,8 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // ⚙️ CONTROLS & SETTINGS (Tweak these freely)
         // ==========================================
         const FULL_SCREEN = false;      // true for full site, false for sides
-        const DARK_BASE_ALPHA = 0.45;  // ⬅️ Boosted brightness for Dark Mode
-        const DARK_GLOW_ALPHA = 1.0;   // ⬅️ Hover glow in Dark Mode
+        const DARK_BASE_ALPHA = 0.14;  // ⬅️ Boosted brightness for Dark Mode
+        const DARK_GLOW_ALPHA = 1;   // ⬅️ Hover glow in Dark Mode
         const LIGHT_BASE_ALPHA = 0.14; // ⬅️ Subtle brightness for Light Mode
         const LIGHT_GLOW_ALPHA = 0.60; // ⬅️ Hover glow in Light Mode
         const DOT_SPACING = 28;        // Distance between dots in pixels
@@ -755,6 +755,22 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (activeScrollTarget) {
                 activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
             }
+        }
+    });
+
+
+    // -------------------------------------------------------------------------
+    // 17. Education Thesis Accordion Controller
+    // -------------------------------------------------------------------------
+    const eduItems = document.querySelectorAll('.edu-item');
+
+    eduItems.forEach(item => {
+        const toggleBtn = item.querySelector('.edu-toggle-btn');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const isOpen = item.classList.toggle('is-open');
+                toggleBtn.setAttribute('aria-expanded', String(isOpen));
+            });
         }
     });
 });

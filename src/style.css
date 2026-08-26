@@ -409,32 +409,37 @@ body {
 }
 
 /* Education List */
+/* Education Accordion Cards */
 .education-list {
     list-style: none;
     padding-left: 0;
 }
 
-.education-list li {
-    margin-bottom: 12px;
-}
-
-.edu-link {
-    display: block;
-    text-decoration: none !important;
-    color: inherit;
-    padding: 10px 14px;
-    margin: 0 -14px;
+.edu-item {
+    margin-bottom: 8px;
     border-radius: 8px;
-    border-left: 2px solid transparent;
-    transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 200ms ease,
-    border-color 200ms ease;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.edu-link:hover {
-    transform: translateX(6px);
-    background-color: rgba(255, 255, 255, 0.03);
-    border-left-color: var(--text-secondary);
+.edu-item:hover {
+    border-color: var(--text-muted);
+}
+
+.edu-toggle-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .edu-header {
@@ -446,33 +451,119 @@ body {
 
 .edu-title {
     font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    transition: color 200ms ease;
+    font-size: 0.94rem;
+    color: var(--text-primary);
 }
 
 .edu-date {
     font-family: var(--font-mono), monospace;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text-muted);
     white-space: nowrap;
-    transition: color 200ms ease;
+}
+
+.edu-school-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .edu-school {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin-top: 4px;
-    transition: color 200ms ease;
 }
 
-.edu-link:hover .edu-title {
+.edu-toggle-btn .chevron {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-muted);
+}
+
+.edu-item.is-open .edu-toggle-btn .chevron {
+    transform: rotate(180deg);
+}
+
+/* Smooth Accordion Drawer */
+.edu-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid transparent;
+}
+
+.edu-item.is-open .edu-drawer {
+    grid-template-rows: 1fr;
+    border-top-color: var(--border-color);
+}
+
+.edu-drawer-content {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.thesis-box {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.thesis-tag {
+    font-size: 0.7rem;
+    font-family: var(--font-mono), monospace;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.thesis-title {
+    font-size: 0.88rem;
+    font-weight: 600;
     color: var(--text-primary);
+    margin-top: 2px;
 }
 
-.edu-link:hover .edu-date,
-.edu-link:hover .edu-school {
+.thesis-abstract {
+    font-size: 0.82rem;
     color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.thesis-links {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.thesis-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-family: var(--font-mono), monospace;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+}
+
+body.light-theme .thesis-btn {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.thesis-btn:hover {
+    border-color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.thesis-ext-icon {
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 /* Skills Grid */
