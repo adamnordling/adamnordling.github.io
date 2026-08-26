@@ -459,4 +459,102 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    // -------------------------------------------------------------------------
+    // 12. Interactive Dot Matrix Canvas (Customizable)
+    // -------------------------------------------------------------------------
+    const canvas = document.getElementById('bg-canvas');
+    const portfolioWrapper = document.querySelector('.portfolio-wrapper');
+
+    if (canvas && portfolioWrapper) {
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let mouseX = -1000, mouseY = -1000;
+
+        // ==========================================
+        // ⚙️ CONTROLS & SETTINGS (Tweak these freely)
+        // ==========================================
+        const FULL_SCREEN = false;    // Set to 'true' for whole site, 'false' for sides only
+        const BASE_ALPHA = 0.05;     // Normal dot brightness (0.1 = faint, 0.35 = very bright)
+        const GLOW_ALPHA = 0.85;     // Hover dot brightness when mouse is near
+        const DOT_SPACING = 28;      // Distance between dots in pixels
+        const FADE_MARGIN = 60;     // Fade width in pixels when FULL_SCREEN is false
+        // ==========================================
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouseX = -1000;
+            mouseY = -1000;
+        });
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            const isLight = document.body.classList.contains('light-theme');
+            const baseColor = isLight ? [0, 0, 0] : [255, 255, 255];
+            const activeColor = [59, 130, 246]; // Accent Blue
+
+            const rect = portfolioWrapper.getBoundingClientRect();
+            const leftBoundary = rect.left;
+            const rightBoundary = rect.right;
+
+            for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
+                let flankFade = 1.0;
+
+                // If NOT full screen, calculate the smooth fade into the middle
+                if (!FULL_SCREEN) {
+                    if (x < leftBoundary) {
+                        const distToEdge = leftBoundary - x;
+                        flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
+                    } else if (x > rightBoundary) {
+                        const distToEdge = x - rightBoundary;
+                        flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
+                    } else {
+                        flankFade = 0; // Invisible behind the container
+                    }
+                    if (flankFade <= 0) continue;
+                }
+
+                for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
+                    const dx = mouseX - x;
+                    const dy = mouseY - y;
+                    const distToMouse = Math.sqrt(dx * dx + dy * dy);
+                    const mouseRadius = 140;
+
+                    let radius = 1.4;
+                    let alpha = BASE_ALPHA * flankFade;
+                    let color = baseColor;
+
+                    // Mouse proximity glow & expansion
+                    if (distToMouse < mouseRadius) {
+                        const influence = (1 - distToMouse / mouseRadius);
+                        radius = 1.4 + influence * 2.4;
+                        alpha = (BASE_ALPHA + influence * (GLOW_ALPHA - BASE_ALPHA)) * flankFade;
+                        color = activeColor;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
+                    ctx.fill();
+                }
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        requestAnimationFrame(draw);
+    }
 });
