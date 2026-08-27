@@ -442,6 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadGitHubActivity();
+
     // -------------------------------------------------------------------------
     // 10. Email One-Click Copy with Toast Feedback
     // -------------------------------------------------------------------------
@@ -450,26 +451,48 @@ document.addEventListener('DOMContentLoaded', () => {
     let toastTimeout = null;
 
     if (emailCopyBtn && emailToast) {
-        emailCopyBtn.addEventListener('click', async () => {
+        emailCopyBtn.addEventListener('click', async e => {
+            e.preventDefault();
             const email = emailCopyBtn.getAttribute('data-email');
             if (!email) return;
 
-            try {
-                await navigator.clipboard.writeText(email);
+            let copied = false;
 
-                // Show toast
-                emailToast.classList.add('is-visible');
-
-                // Reset timeout if clicked multiple times
-                if (toastTimeout) clearTimeout(toastTimeout);
-
-                toastTimeout = setTimeout(() => {
-                    emailToast.classList.remove('is-visible');
-                }, 2200);
-            } catch {
-                // Fallback if clipboard permission is blocked
-                window.location.href = `mailto:${email}`;
+            // 1. Try Modern Clipboard API (Works on HTTPS and localhost)
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(email);
+                    copied = true;
+                } catch {
+                    copied = false;
+                }
             }
+
+            // 2. Invisible Fallback (Works on plain HTTP without opening any app)
+            if (!copied) {
+                try {
+                    const tempTextArea = document.createElement('textarea');
+                    tempTextArea.value = email;
+                    tempTextArea.style.position = 'fixed';
+                    tempTextArea.style.left = '-9999px';
+                    tempTextArea.style.top = '0';
+                    tempTextArea.setAttribute('readonly', '');
+                    document.body.appendChild(tempTextArea);
+                    tempTextArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempTextArea);
+                } catch {
+                    // Ignore if blocked
+                }
+            }
+
+            // Show Toast Notification
+            emailToast.classList.add('is-visible');
+
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                emailToast.classList.remove('is-visible');
+            }, 2200);
         });
     }
 
