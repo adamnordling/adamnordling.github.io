@@ -168,7 +168,7 @@
             <main class="main-container">
                 <!-- LEFT PANEL: Minimal Column -->
                 <section class="left-panel" aria-label="Introduction & Profile">
-                    <!-- Side-by-Side Header Layout -->
+                    <!-- 1. Profile Header Layout -->
                     <header class="profile-header">
                         <!-- 3D Card Wrapper -->
                         <div class="profile-card-container">
@@ -308,6 +308,7 @@
                         </div>
                     </header>
 
+                    <!-- 2. Bio Quote -->
                     <blockquote class="intro-quote">
                         <span class="bio-teaser">
                             <span lang="en"
@@ -324,10 +325,8 @@
                             <span lang="sv">[Läs mer]</span>
                         </button>
 
-                        <!-- Smooth Expandable Container -->
                         <div class="bio-expandable">
                             <div class="bio-expandable-content">
-                                <!-- English Bio Paragraphs -->
                                 <div lang="en">
                                     <p>
                                         My practical background includes developing robust fullstack applications,
@@ -345,7 +344,6 @@
                                         Linux, and GitLab CI/CD.
                                     </p>
                                 </div>
-                                <!-- Swedish Bio Paragraphs -->
                                 <div lang="sv">
                                     <p>
                                         Min praktiska bakgrund innefattar utveckling av robusta fullstack-applikationer,
@@ -366,240 +364,249 @@
                             </div>
                         </div>
                     </blockquote>
-                    <h2>
-                        <span lang="en">Education</span>
-                        <span lang="sv">Utbildning</span>
-                    </h2>
-                    <ul class="education-list">
-                        <!-- Master's Degree -->
-                        <li class="edu-item">
-                            <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                <div class="edu-header">
-                                    <span class="edu-title">
-                                        <span lang="en">Master's Degree in Software Technology (120 HP)</span>
-                                        <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
-                                    </span>
-                                    <span class="edu-date">2023 – 2026</span>
-                                </div>
-                                <div class="edu-school-row">
-                                    <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
-                                    <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
-                                    <svg
-                                        class="chevron"
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </div>
-                            </button>
 
-                            <!-- Expandable Research Drawer -->
-                            <div class="edu-drawer">
-                                <div class="edu-drawer-content">
-                                    <div class="thesis-box">
-                                        <div class="thesis-header">
-                                            <span class="thesis-tag">Master's Thesis · 2026</span>
-                                            <h3 class="thesis-title">
-                                                A Systematic Approach for Selecting Trajectories for Data Augmentation
-                                            </h3>
-                                        </div>
-                                        <p class="thesis-abstract">
-                                            <span lang="en">
-                                                Trajectory data augmentation mitigates data scarcity in machine
-                                                learning, but preserving spatio-temporal coherence remains challenging.
-                                                This thesis establishes a systematic and scalable framework evaluating
-                                                five selection strategies: Outlierness, Diversity, Representativeness,
-                                                Uncertainty, and Random selection across four datasets (animal behavior,
-                                                maritime AIS, and urban traffic). Using an Optuna-based hyperparameter
-                                                optimization loop and UMAP topological analysis, the findings prove that
-                                                systematic selection (specifically Outlierness and Uncertainty) offers
-                                                superior stability over random sampling, demonstrating that strategic
-                                                data selection is a primary determinant of augmentation success.
-                                            </span>
-                                            <span lang="sv">
-                                                Dataaugmentering av trajektorier minskar databrist inom maskininlärning,
-                                                men att bevara rumslig och tidsmässig koherens är komplext. Detta
-                                                examensarbete utvecklar ett systematiskt och skalbart ramverk för att
-                                                utvärdera fem urvalsstrategier: Outlierness, Diversity,
-                                                Representativeness, Uncertainty och Random selection över fyra dataset
-                                                (djurbeteende, marin AIS och stadstrafik). Genom en Optuna-baserad
-                                                hyperparameteroptimering och UMAP-topologisk analys visar resultaten att
-                                                systematiskt urval (särskilt Outlierness och Uncertainty) ger överlägsen
-                                                stabilitet gentemot slumpmässigt urval, vilket etablerar att strategiskt
-                                                dataurval är en avgörande faktor för framgångsrik augmentering.
-                                            </span>
-                                        </p>
-                                        <div class="thesis-links">
-                                            <a
-                                                href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn"
-                                                aria-label="View Master's Thesis on DiVA Portal"
-                                            >
-                                                <span>DiVA Portal</span>
-                                                <span class="thesis-ext-icon">↗</span>
-                                            </a>
-                                            <a
-                                                href="https://arxiv.org/abs/2606.10938"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn thesis-arxiv"
-                                                aria-label="View Master's Thesis preprint on arXiv"
-                                            >
-                                                <span>arXiv</span>
-                                                <span class="thesis-ext-icon">↗</span>
-                                            </a>
+                    <!-- 3. Education Section -->
+                    <section class="section-edu">
+                        <h2>
+                            <span lang="en">Education</span>
+                            <span lang="sv">Utbildning</span>
+                        </h2>
+                        <ul class="education-list">
+                            <!-- Master's Degree -->
+                            <li class="edu-item">
+                                <button type="button" class="edu-toggle-btn" aria-expanded="false">
+                                    <div class="edu-header">
+                                        <span class="edu-title">
+                                            <span lang="en">Master's Degree in Software Technology (120 HP)</span>
+                                            <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
+                                        </span>
+                                        <span class="edu-date">2023 – 2026</span>
+                                    </div>
+                                    <div class="edu-school-row">
+                                        <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
+                                        <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
+                                        <svg
+                                            class="chevron"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path d="m6 9 6 6 6-6" />
+                                        </svg>
+                                    </div>
+                                </button>
+                                <div class="edu-drawer">
+                                    <div class="edu-drawer-content">
+                                        <div class="thesis-box">
+                                            <div class="thesis-header">
+                                                <span class="thesis-tag">Master's Thesis · 2026</span>
+                                                <h3 class="thesis-title">
+                                                    A Systematic Approach for Selecting Trajectories for Data
+                                                    Augmentation
+                                                </h3>
+                                            </div>
+                                            <p class="thesis-abstract">
+                                                <span lang="en"
+                                                    >Trajectory data augmentation mitigates data scarcity in machine
+                                                    learning, but preserving spatio-temporal coherence remains
+                                                    challenging. This thesis establishes a systematic and scalable
+                                                    framework evaluating five selection strategies: Outlierness,
+                                                    Diversity, Representativeness, Uncertainty, and Random selection
+                                                    across four datasets (animal behavior, maritime AIS, and urban
+                                                    traffic). Using an Optuna-based hyperparameter optimization loop and
+                                                    UMAP topological analysis, the findings prove that systematic
+                                                    selection (specifically Outlierness and Uncertainty) offers superior
+                                                    stability over random sampling, demonstrating that strategic data
+                                                    selection is a primary determinant of augmentation success.</span
+                                                >
+                                                <span lang="sv"
+                                                    >Dataaugmentering av trajektorier minskar databrist inom
+                                                    maskininlärning, men att bevara rumslig och tidsmässig koherens är
+                                                    komplext. Detta examensarbete utvecklar ett systematiskt och
+                                                    skalbart ramverk för att utvärdera fem urvalsstrategier:
+                                                    Outlierness, Diversity, Representativeness, Uncertainty och Random
+                                                    selection över fyra dataset (djurbeteende, marin AIS och
+                                                    stadstrafik). Genom en Optuna-baserad hyperparameteroptimering och
+                                                    UMAP-topologisk analys visar resultaten att systematiskt urval
+                                                    (särskilt Outlierness och Uncertainty) ger överlägsen stabilitet
+                                                    gentemot slumpmässigt urval, vilket etablerar att strategiskt
+                                                    dataurval är en avgörande faktor för framgångsrik
+                                                    augmentering.</span
+                                                >
+                                            </p>
+                                            <div class="thesis-links">
+                                                <a
+                                                    href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="thesis-btn"
+                                                    aria-label="View Master's Thesis on DiVA Portal"
+                                                >
+                                                    <span>DiVA Portal</span>
+                                                    <span class="thesis-ext-icon">↗</span>
+                                                </a>
+                                                <a
+                                                    href="https://arxiv.org/abs/2606.10938"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="thesis-btn thesis-arxiv"
+                                                    aria-label="View Master's Thesis preprint on arXiv"
+                                                >
+                                                    <span>arXiv</span>
+                                                    <span class="thesis-ext-icon">↗</span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
 
-                        <!-- Bachelor's Degree -->
-                        <li class="edu-item">
-                            <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                <div class="edu-header">
-                                    <span class="edu-title">
-                                        <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
-                                        <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
-                                    </span>
-                                    <span class="edu-date">2020 – 2023</span>
-                                </div>
-                                <div class="edu-school-row">
-                                    <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
-                                    <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
-                                    <svg
-                                        class="chevron"
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </div>
-                            </button>
-
-                            <!-- Expandable Research Drawer -->
-                            <div class="edu-drawer">
-                                <div class="edu-drawer-content">
-                                    <div class="thesis-box">
-                                        <div class="thesis-header">
-                                            <span class="thesis-tag">Bachelor's Thesis · 2023</span>
-                                            <h3 class="thesis-title">
-                                                Edge Computing Security for IoT: A Systematic Literature Review
-                                            </h3>
-                                        </div>
-                                        <p class="thesis-abstract">
-                                            <span lang="en">
-                                                A systematic literature review (SLR) analyzing 82 primary studies from
-                                                an initial pool of 1,667 articles across four digital libraries to
-                                                evaluate IoT security threats in edge computing. The research examines
-                                                distinct vulnerabilities across sensors, gateways, and actuators,
-                                                mitigations spanning IDS, firewalls, and cryptography, and the
-                                                architectural advantages of integrating blockchain and 5G technologies
-                                                to enhance security, privacy, and trust in edge environments.
-                                            </span>
-                                            <span lang="sv">
-                                                En systematisk litteraturstudie (SLR) som analyserar 82 primära studier
-                                                från ett urval av 1 667 artiklar över fyra digitala bibliotek för att
-                                                utvärdera säkerhetshot mot IoT i edge computing-miljöer. Studien
-                                                granskar unika sårbarheter hos sensorer, gateways och ställdon,
-                                                motåtgärder via IDS, brandväggar och kryptografi, samt de arkitektoniska
-                                                fördelarna med att integrera blockkedje- och 5G-teknik för att stärka
-                                                säkerhet, integritet och tillit i distribuerade edge-miljöer.
-                                            </span>
-                                        </p>
-                                        <div class="thesis-links">
-                                            <a
-                                                href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn"
-                                                aria-label="View Bachelor's Thesis on DiVA Portal"
-                                            >
-                                                <span>DiVA Portal</span>
-                                                <span class="thesis-ext-icon">↗</span>
-                                            </a>
+                            <!-- Bachelor's Degree -->
+                            <li class="edu-item">
+                                <button type="button" class="edu-toggle-btn" aria-expanded="false">
+                                    <div class="edu-header">
+                                        <span class="edu-title">
+                                            <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
+                                            <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
+                                        </span>
+                                        <span class="edu-date">2020 – 2023</span>
+                                    </div>
+                                    <div class="edu-school-row">
+                                        <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
+                                        <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
+                                        <svg
+                                            class="chevron"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path d="m6 9 6 6 6-6" />
+                                        </svg>
+                                    </div>
+                                </button>
+                                <div class="edu-drawer">
+                                    <div class="edu-drawer-content">
+                                        <div class="thesis-box">
+                                            <div class="thesis-header">
+                                                <span class="thesis-tag">Bachelor's Thesis · 2023</span>
+                                                <h3 class="thesis-title">
+                                                    Edge Computing Security for IoT: A Systematic Literature Review
+                                                </h3>
+                                            </div>
+                                            <p class="thesis-abstract">
+                                                <span lang="en"
+                                                    >A systematic literature review (SLR) analyzing 82 primary studies
+                                                    from an initial pool of 1,667 articles across four digital libraries
+                                                    to evaluate IoT security threats in edge computing. The research
+                                                    examines distinct vulnerabilities across sensors, gateways, and
+                                                    actuators, mitigations spanning IDS, firewalls, and cryptography,
+                                                    and the architectural advantages of integrating blockchain and 5G
+                                                    technologies to enhance security, privacy, and trust in edge
+                                                    environments.</span
+                                                >
+                                                <span lang="sv"
+                                                    >En systematisk litteraturstudie (SLR) som analyserar 82 primära
+                                                    studier från ett urval av 1 667 artiklar över fyra digitala
+                                                    bibliotek för att utvärdera säkerhetshot mot IoT i edge
+                                                    computing-miljöer. Studien granskar unika sårbarheter hos sensorer,
+                                                    gateways och ställdon, motåtgärder via IDS, brandväggar och
+                                                    kryptografi, samt de arkitektoniska fördelarna med att integrera
+                                                    blockkedje- och 5G-teknik för att stärka säkerhet, integritet och
+                                                    tillit i distribuerade edge-miljöer.</span
+                                                >
+                                            </p>
+                                            <div class="thesis-links">
+                                                <a
+                                                    href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="thesis-btn"
+                                                    aria-label="View Bachelor's Thesis on DiVA Portal"
+                                                >
+                                                    <span>DiVA Portal</span>
+                                                    <span class="thesis-ext-icon">↗</span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </section>
 
-                    <h2>
-                        <span lang="en">Skills</span>
-                        <span lang="sv">Kompetenser</span>
-                    </h2>
-                    <div class="skills-grid">
-                        <!-- Left Column -->
-                        <div class="skills-column">
-                            <div class="skill-item" data-skill-id="python">
-                                <span class="skill-name">Python &amp; ML</span>
-                                <span class="skill-score">TensorFlow, Keras, Scikit</span>
+                    <!-- 4. Skills Section -->
+                    <section class="section-skills">
+                        <h2>
+                            <span lang="en">Skills</span>
+                            <span lang="sv">Kompetenser</span>
+                        </h2>
+                        <div class="skills-grid">
+                            <div class="skills-column">
+                                <div class="skill-item" data-skill-id="python">
+                                    <span class="skill-name">Python &amp; ML</span>
+                                    <span class="skill-score">TensorFlow, Keras, Scikit</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="web">
+                                    <span class="skill-name">Web &amp; APIs</span>
+                                    <span class="skill-score">Angular, Node, Express, Flask</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="lowlevel">
+                                    <span class="skill-name">
+                                        <span lang="en">Low-Level</span>
+                                        <span lang="sv">Lågnivå</span>
+                                    </span>
+                                    <span class="skill-score">C, C++, CUDA</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="languages">
+                                    <span class="skill-name">
+                                        <span lang="en">Languages</span>
+                                        <span lang="sv">Språk</span>
+                                    </span>
+                                    <span class="skill-score">TypeScript, Java, JS, SQL</span>
+                                </div>
                             </div>
-                            <div class="skill-item" data-skill-id="web">
-                                <span class="skill-name">Web &amp; APIs</span>
-                                <span class="skill-score">Angular, Node, Express, Flask</span>
-                            </div>
-                            <div class="skill-item" data-skill-id="lowlevel">
-                                <span class="skill-name">
-                                    <span lang="en">Low-Level</span>
-                                    <span lang="sv">Lågnivå</span>
-                                </span>
-                                <span class="skill-score">C, C++, CUDA</span>
-                            </div>
-                            <div class="skill-item" data-skill-id="languages">
-                                <span class="skill-name">
-                                    <span lang="en">Languages</span>
-                                    <span lang="sv">Språk</span>
-                                </span>
-                                <span class="skill-score">TypeScript, Java, JS, SQL</span>
+
+                            <div class="skills-column">
+                                <div class="skill-item" data-skill-id="data">
+                                    <span class="skill-name">Data Stack</span>
+                                    <span class="skill-score">NumPy, Pandas, Databases</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="security">
+                                    <span class="skill-name">Network Sec</span>
+                                    <span class="skill-score">Wireshark, Protocols</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="devops">
+                                    <span class="skill-name">DevOps &amp; CI</span>
+                                    <span class="skill-score">Docker, Git Pipelines</span>
+                                </div>
+                                <div class="skill-item" data-skill-id="os">
+                                    <span class="skill-name">OS &amp; Shell</span>
+                                    <span class="skill-score">Linux, CachyOS, Bash</span>
+                                </div>
                             </div>
                         </div>
+                    </section>
 
-                        <!-- Right Column -->
-                        <div class="skills-column">
-                            <div class="skill-item" data-skill-id="data">
-                                <span class="skill-name">Data Stack</span>
-                                <span class="skill-score">NumPy, Pandas, Databases</span>
-                            </div>
-                            <div class="skill-item" data-skill-id="security">
-                                <span class="skill-name">Network Sec</span>
-                                <span class="skill-score">Wireshark, Protocols</span>
-                            </div>
-                            <div class="skill-item" data-skill-id="devops">
-                                <span class="skill-name">DevOps &amp; CI</span>
-                                <span class="skill-score">Docker, Git Pipelines</span>
-                            </div>
-                            <div class="skill-item" data-skill-id="os">
-                                <span class="skill-name">OS &amp; Shell</span>
-                                <span class="skill-score">Linux, CachyOS, Bash</span>
+                    <!-- 5. Recent Activity Section -->
+                    <section class="section-activity">
+                        <h2>
+                            <span lang="en">Recent Activity</span>
+                            <span lang="sv">Senaste aktivitet</span>
+                        </h2>
+                        <div class="activity-feed" id="activity-feed">
+                            <div class="activity-skeleton">
+                                <span class="activity-pulse"></span>
+                                <span lang="en">Connecting to GitHub...</span>
+                                <span lang="sv">Ansluter till GitHub...</span>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Activity Section -->
-                    <h2>
-                        <span lang="en">Recent Activity</span>
-                        <span lang="sv">Senaste aktivitet</span>
-                    </h2>
-                    <div class="activity-feed" id="activity-feed">
-                        <div class="activity-skeleton">
-                            <span class="activity-pulse"></span>
-                            <span lang="en">Connecting to GitHub...</span>
-                            <span lang="sv">Ansluter till GitHub...</span>
-                        </div>
-                    </div>
+                    </section>
                 </section>
 
                 <!-- RIGHT PANEL: Projects & Tools -->

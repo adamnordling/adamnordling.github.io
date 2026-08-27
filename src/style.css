@@ -638,7 +638,8 @@ body.light-theme .thesis-btn {
     flex: 0 0 58%;
     max-height: 100%;
     overflow-y: auto;
-    padding-right: 10px;
+    padding-right: 12px;
+    padding-bottom: 90px; /* Prevents floating clock/hotkeys from covering cards on desktop */
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) transparent;
 }
@@ -789,6 +790,14 @@ body.light-theme .thesis-btn {
     opacity: 0 !important;
     pointer-events: none !important;
     transform: translateY(-4px) !important;
+}
+
+.filter-dropdown.menu-open .filter-menu,
+.tools-dropdown.menu-open .tools-menu,
+.lang-dropdown.menu-open .lang-menu {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
 }
 
 .filter-btn,
@@ -1162,50 +1171,287 @@ body.light-theme .tool-canvas-mockup {
 }
 
 /* ==========================================================================
-   7. RESPONSIVE MEDIA QUERIES
+   7. UNIVERSAL RESPONSIVE BREAKPOINTS (320px - 4K)
    ========================================================================== */
-@media (max-width: 1024px) {
+
+/* --------------------------------------------------------------------------
+   A. TABLETS, IPADS & COMPACT LAPTOPS (<= 1150px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1150px) {
+    /* 1. Hide desktop-only floating widgets completely */
+    .live-clock,
+    .hotkeys-indicator {
+        display: none !important;
+    }
+
     .portfolio-wrapper {
         height: auto;
-        margin: 70px auto 40px auto;
-        padding: 0 24px;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 76px 28px 80px 28px;
     }
 
     .main-container {
+        display: flex;
         flex-direction: column;
-        gap: 60px;
+        gap: 2px;
+        height: auto;
     }
 
-    .left-panel,
+    /* 2. Flatten panels for flexible mobile reordering */
+    .left-panel {
+        display: contents; /* Unlocks children to be ordered alongside .right-panel */
+    }
+
     .right-panel {
         flex: none;
         width: 100%;
         max-height: none;
         overflow-y: visible;
-        padding-right: 0;
+        padding: 0;
     }
 
     .right-header {
         position: static;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    /* 3. The Requested Mobile/Tablet Order:
+          Profile (1) -> Bio (2) -> Education (3) -> PROJECTS (4) -> Skills (5) -> Activity (6) */
+    .profile-header {
+        order: 1;
+    }
+
+    .intro-quote {
+        margin: 0;
+        order: 2;
+    }
+
+    .section-edu {
+        order: 3;
+    }
+
+    .right-panel {
+        order: 4;
+    }
+
+    /* Projects & Tools appear right after Education! */
+    .section-skills {
+        order: 5;
+    }
+
+    .section-activity {
+        order: 6;
+    }
+
+    /* Footer: sits naturally at the end of the page */
+    .footer-controls {
+        position: static;
+        margin-top: 48px;
         padding-bottom: 24px;
+        align-items: center;
+        text-align: center;
     }
 }
 
-@media (max-width: 640px) {
+/* --------------------------------------------------------------------------
+   B. STANDARD SMARTPHONES (<= 768px - iPhone 12/13/14/15, Galaxy S, Pixel)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .portfolio-wrapper {
+        padding: 70px 18px 60px 18px;
+    }
+
+    /* Centered Header Layout */
     .profile-header {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+        margin-bottom: 16px;
     }
 
     .profile-card-container {
-        width: 120px;
-        flex: none;
+        width: 170px;
+        max-width: 170px;
+        margin: 0 auto;
     }
 
+    .profile-img {
+        height: 170px;
+        border-radius: 16px;
+    }
+
+    .profile-info {
+        align-items: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .name-title {
+        font-size: 1.65rem;
+    }
+
+    .header-socials {
+        justify-content: center;
+        margin-top: 2px;
+        margin-bottom: 8px;
+        gap: 20px;
+    }
+
+    /* Perfectly centered CV Action Pill */
+    .cv-action-wrapper {
+        margin: 10px auto 0 auto !important;
+        align-self: center;
+        display: inline-flex;
+    }
+
+    .intro-quote {
+        padding-left: 14px;
+    }
+
+    /* Right Header (Projects Title + Filters) */
+    .right-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    /* Full-width Cards */
+    .apps-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .app-img-container {
+        height: 160px;
+    }
+
+    /* 2-column compact skills */
+    .skills-grid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+    }
+
+    /* CV Modal: Native fullscreen mobile adaptation */
+    .cv-modal-overlay {
+        padding: 10px;
+    }
+
+    .cv-modal-window {
+        height: 94vh;
+        max-height: 94vh;
+        border-radius: 10px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   C. COMPACT / SMALL PHONES (<= 480px - iPhone SE, Galaxy Fold cover, Mini)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .portfolio-wrapper {
+        padding: 66px 14px 50px 14px;
+    }
+
+    .top-controls {
+        top: 14px;
+        left: 14px;
+        gap: 6px;
+    }
+
+    .theme-toggle,
+    .lang-trigger {
+        height: 34px;
+        padding: 0 10px;
+        font-size: 0.8rem;
+    }
+
+    .theme-toggle {
+        width: 34px;
+    }
+
+    .profile-card-container {
+        width: 150px;
+    }
+
+    .profile-img {
+        height: 150px;
+    }
+
+    .name-title {
+        font-size: 1.45rem;
+    }
+
+    /* Single column skills on narrow screens */
     .skills-grid {
         grid-template-columns: 1fr;
         column-gap: 0;
+    }
+
+    .app-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 10px 14px; /* Big thumb touch targets */
+    }
+
+    /* Education header stack */
+    .edu-header {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .edu-school {
+        font-size: 0.8rem;
+    }
+
+    .thesis-box {
+        padding: 12px;
+    }
+
+    .filter-menu,
+    .tools-menu {
+        left: 0;
+        right: auto;
+        min-width: 220px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   D. ULTRAWIDE & 4K MONITORS (>= 1600px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1600px) {
+    .portfolio-wrapper {
+        max-width: 1440px;
+        padding: 0 60px;
+    }
+
+    .left-panel {
+        flex: 0 0 40%;
+        padding-right: 40px;
+    }
+
+    .right-panel {
+        flex: 0 0 60%;
+        padding-left: 20px;
+    }
+
+    .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
     }
 }
 

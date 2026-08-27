@@ -2,6 +2,25 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     // -------------------------------------------------------------------------
+    // Mobile Touch-Dropdown Support
+    // -------------------------------------------------------------------------
+    const allDropdownTriggers = document.querySelectorAll('.filter-trigger, .tools-trigger, .lang-trigger');
+
+    allDropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('click', e => {
+            if (window.innerWidth <= 1024) {
+                e.stopPropagation();
+                const parentDropdown = trigger.closest('.filter-dropdown, .tools-dropdown, .lang-dropdown');
+                parentDropdown?.classList.toggle('menu-open');
+            }
+        });
+    });
+
+    // Close open menus when tapping anywhere else on mobile
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.menu-open').forEach(el => el.classList.remove('menu-open'));
+    });
+    // -------------------------------------------------------------------------
     // 1. Pure CSS-Driven Language Controller
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -542,7 +561,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 12. Interactive Dot Matrix Canvas (Customizable)
+    // 12. Interactive Dot Matrix Canvas (Desktop Mouse + Mobile Touch Drag)
     // -------------------------------------------------------------------------
     const canvas = document.getElementById('bg-canvas');
     const portfolioWrapper = document.querySelector('.portfolio-wrapper');
@@ -553,18 +572,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let mouseX = -1000,
             mouseY = -1000;
 
-        // ==========================================
-        // ⚙️ CONTROLS & SETTINGS (Tweak these freely)
-        // ==========================================
-        const FULL_SCREEN = false; // true for full site, false for sides
-        const DARK_BASE_ALPHA = 0.14; // ⬅️ Boosted brightness for Dark Mode
-        const DARK_GLOW_ALPHA = 1; // ⬅️ Hover glow in Dark Mode
-        const LIGHT_BASE_ALPHA = 0.14; // ⬅️ Subtle brightness for Light Mode
-        const LIGHT_GLOW_ALPHA = 0.6; // ⬅️ Hover glow in Light Mode
-        const DOT_SPACING = 28; // Distance between dots in pixels
-        const FADE_MARGIN = 120;
-
-        // ==========================================
+        // Settings
+        const DARK_BASE_ALPHA = 0.12;
+        const DARK_GLOW_ALPHA = 0.9;
+        const LIGHT_BASE_ALPHA = 0.12;
+        const LIGHT_GLOW_ALPHA = 0.55;
+        const DOT_SPACING = 28;
+        const FADE_MARGIN = 100;
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -574,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', resize);
         resize();
 
+        // Mouse tracking (Desktop)
         window.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
@@ -584,14 +599,49 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseY = -1000;
         });
 
+        // Touch & Drag Tracking (Mobile & Tablets)
+        window.addEventListener(
+            'touchstart',
+            e => {
+                if (e.touches.length > 0) {
+                    mouseX = e.touches[0].clientX;
+                    mouseY = e.touches[0].clientY;
+                }
+            },
+            { passive: true }
+        );
+
+        window.addEventListener(
+            'touchmove',
+            e => {
+                if (e.touches.length > 0) {
+                    mouseX = e.touches[0].clientX;
+                    mouseY = e.touches[0].clientY;
+                }
+            },
+            { passive: true }
+        );
+
+        window.addEventListener(
+            'touchend',
+            () => {
+                // Fade out when finger lifts
+                setTimeout(() => {
+                    mouseX = -1000;
+                    mouseY = -1000;
+                }, 300);
+            },
+            { passive: true }
+        );
+
         function draw() {
             ctx.clearRect(0, 0, width, height);
 
             const isLight = document.body.classList.contains('light-theme');
+            const isMobile = width <= 1024;
             const baseColor = isLight ? [0, 0, 0] : [255, 255, 255];
             const activeColor = [59, 130, 246]; // Accent Blue
 
-            // Pick the theme's tuned brightness
             const currentBaseAlpha = isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA;
             const currentGlowAlpha = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 
@@ -602,8 +652,8 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
                 let flankFade = 1.0;
 
-                // If NOT full screen, calculate the smooth fade into the middle
-                if (!FULL_SCREEN) {
+                // On desktop: fade behind middle container. On mobile: subtle full screen mesh
+                if (!isMobile) {
                     if (x < leftBoundary) {
                         const distToEdge = leftBoundary - x;
                         flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
@@ -611,24 +661,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         const distToEdge = x - rightBoundary;
                         flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
                     } else {
-                        flankFade = 0; // Invisible behind the container
+                        flankFade = 0;
                     }
                     if (flankFade <= 0) continue;
+                } else {
+                    flankFade = 0.65; // Subtle full-screen mobile mesh
                 }
 
                 for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
                     const dx = mouseX - x;
                     const dy = mouseY - y;
                     const distToMouse = Math.sqrt(dx * dx + dy * dy);
-                    const mouseRadius = 140;
+                    const touchRadius = isMobile ? 100 : 140;
 
-                    let radius = 1.4;
-                    let alpha = currentBaseAlpha * flankFade;
+                    let radius = 1.3;
+                    let alpha = currentBaseAlpha * 0.7 * flankFade;
                     let color = baseColor;
 
-                    if (distToMouse < mouseRadius) {
-                        const influence = 1 - distToMouse / mouseRadius;
-                        radius = 1.4 + influence * 2.4;
+                    if (distToMouse < touchRadius) {
+                        const influence = 1 - distToMouse / touchRadius;
+                        radius = 1.3 + influence * 2.2;
                         alpha = (currentBaseAlpha + influence * (currentGlowAlpha - currentBaseAlpha)) * flankFade;
                         color = activeColor;
                     }
@@ -672,47 +724,81 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCategoryCounts();
 
     // -------------------------------------------------------------------------
-    // 14. Skill-to-Project Context Drawer on Hover
+    // 14. Skill-to-Project Context Drawer (Hover on Desktop + Tap-Toggle on Mobile)
     // -------------------------------------------------------------------------
     const skillItems = document.querySelectorAll('.skill-item[data-skill-id]');
     const allProjectCards = document.querySelectorAll('.app-card');
+    let activeSkillId = null;
+
+    function highlightSkill(skillId) {
+        let hasMatchingCard = false;
+
+        allProjectCards.forEach(card => {
+            const cardSkills = (card.getAttribute('data-skills') || '').split(' ');
+            const isMatch = cardSkills.includes(skillId);
+            const drawer = card.querySelector('.app-tech-drawer');
+
+            if (isMatch) {
+                hasMatchingCard = true;
+                card.classList.add('skill-highlighted');
+                card.classList.remove('skill-dimmed');
+                if (drawer) drawer.classList.add('is-active');
+            } else {
+                card.classList.add('skill-dimmed');
+                card.classList.remove('skill-highlighted');
+                if (drawer) drawer.classList.remove('is-active');
+            }
+        });
+
+        if (!hasMatchingCard) {
+            clearHighlights();
+        }
+    }
+
+    function clearHighlights() {
+        activeSkillId = null;
+        allProjectCards.forEach(card => {
+            card.classList.remove('skill-highlighted', 'skill-dimmed');
+            const drawer = card.querySelector('.app-tech-drawer');
+            if (drawer) drawer.classList.remove('is-active');
+        });
+        skillItems.forEach(item => item.classList.remove('skill-selected'));
+    }
 
     skillItems.forEach(item => {
         const skillId = item.getAttribute('data-skill-id');
 
+        // 1. Mouse Hover (Desktop)
         item.addEventListener('mouseenter', () => {
-            let hasMatchingCard = false;
-
-            allProjectCards.forEach(card => {
-                const cardSkills = (card.getAttribute('data-skills') || '').split(' ');
-                const isMatch = cardSkills.includes(skillId);
-                const drawer = card.querySelector('.app-tech-drawer');
-
-                if (isMatch) {
-                    hasMatchingCard = true;
-                    card.classList.add('skill-highlighted');
-                    card.classList.remove('skill-dimmed');
-                    if (drawer) drawer.classList.add('is-active');
-                } else {
-                    card.classList.add('skill-dimmed');
-                    card.classList.remove('skill-highlighted');
-                    if (drawer) drawer.classList.remove('is-active');
-                }
-            });
-
-            // If no projects use this skill yet, don't dim everything
-            if (!hasMatchingCard) {
-                allProjectCards.forEach(card => card.classList.remove('skill-dimmed'));
-            }
+            if (!activeSkillId) highlightSkill(skillId);
         });
 
         item.addEventListener('mouseleave', () => {
-            allProjectCards.forEach(card => {
-                card.classList.remove('skill-highlighted', 'skill-dimmed');
-                const drawer = card.querySelector('.app-tech-drawer');
-                if (drawer) drawer.classList.remove('is-active');
-            });
+            if (!activeSkillId) clearHighlights();
         });
+
+        // 2. Tap / Click (Mobile Toggle & Desktop Pin)
+        item.addEventListener('click', e => {
+            e.stopPropagation();
+
+            if (activeSkillId === skillId) {
+                // Tapping active skill toggles it OFF
+                clearHighlights();
+            } else {
+                // Tapping new skill activates it
+                clearHighlights();
+                activeSkillId = skillId;
+                item.classList.add('skill-selected');
+                highlightSkill(skillId);
+            }
+        });
+    });
+
+    // 3. Tap anywhere else on the page to unclick / reset
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.skill-item')) {
+            clearHighlights();
+        }
     });
 
     // -------------------------------------------------------------------------
