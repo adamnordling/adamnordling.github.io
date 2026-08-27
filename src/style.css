@@ -1865,6 +1865,16 @@ body.light-theme .tool-canvas-mockup {
     color: var(--accent);
 }
 
+/* Active skill tap feedback on touchscreens */
+.skill-item.skill-selected {
+    border-bottom-color: var(--accent);
+    transform: translateX(4px);
+}
+
+.skill-item.skill-selected .skill-name {
+    color: var(--accent);
+}
+
 /* Dynamic Project Highlighting & Dimming */
 .app-card {
     transition:
