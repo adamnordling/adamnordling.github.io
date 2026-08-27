@@ -13,7 +13,8 @@
     /* System font stacks with standard generic fallbacks */
     --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --font-mono:
+        ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --font-stack: var(--font-default);
 }
 
@@ -131,11 +132,13 @@ body {
     border-radius: 12px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    box-shadow: rgba(255, 255, 255, 0.08) 0 4px 25px 0,
-    rgba(255, 255, 255, 0.04) 0 0 0 1px;
-    transition: transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 400ms;
+    box-shadow:
+        rgba(255, 255, 255, 0.08) 0 4px 25px 0,
+        rgba(255, 255, 255, 0.04) 0 0 0 1px;
+    transition:
+        transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 400ms;
 }
 
 .profile-img {
@@ -171,8 +174,9 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
-    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    color 200ms ease;
+    transition:
+        transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 200ms ease;
 }
 
 /* Choreographed waving timelines */
@@ -395,8 +399,9 @@ body {
     padding: 0 4px;
     margin-left: 4px;
     display: inline-block;
-    transition: color 200ms ease,
-    transform 200ms ease;
+    transition:
+        color 200ms ease,
+        transform 200ms ease;
 }
 
 .bio-toggle:hover {
@@ -440,8 +445,9 @@ body {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     overflow: hidden;
-    transition: border-color 0.2s ease,
-    transform 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .edu-item:hover {
@@ -737,8 +743,9 @@ body.light-theme .thesis-btn {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-4px);
-    transition: opacity 0.18s ease,
-    transform 0.18s ease;
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     z-index: 50;
     backdrop-filter: blur(8px);
@@ -792,8 +799,9 @@ body.light-theme .thesis-btn {
     font-size: 0.85rem;
     text-align: left;
     cursor: pointer;
-    transition: background 0.15s ease,
-    color 0.15s ease;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -863,8 +871,9 @@ body.light-theme .thesis-btn {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease,
-    border-color 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .app-card:hover {
@@ -892,9 +901,10 @@ body.light-theme .thesis-btn {
     object-fit: cover;
     display: block;
     filter: grayscale(60%) opacity(0.85);
-    transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Hover & Skill-highlight restores 100% color, contrast & vibrancy */
@@ -1114,12 +1124,20 @@ body.light-theme {
     --border-color: #e4e4e7;
     --text-primary: #09090b;
     --text-secondary: #27272a;
-    --text-muted: #71717a;
+    --text-muted: #52525b;
+    --accent: #1d4ed8; /* Darker royal blue: passes WCAG AA & AAA contrast on white */
+}
+
+body.light-theme .thesis-tag,
+body.light-theme .tech-drawer-label {
+    color: #1d4ed8;
+    font-weight: 700;
 }
 
 body.light-theme .profile-card-inner {
-    box-shadow: rgba(0, 0, 0, 0.06) 0 4px 25px 0,
-    rgba(0, 0, 0, 0.04) 0 0 0 1px;
+    box-shadow:
+        rgba(0, 0, 0, 0.06) 0 4px 25px 0,
+        rgba(0, 0, 0, 0.04) 0 0 0 1px;
 }
 
 body.light-theme .edu-link:hover {
@@ -1260,8 +1278,9 @@ body.light-theme .tool-canvas-mockup {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.84rem;
-    transition: border-color 0.2s ease,
-    transform 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .activity-item:hover {
@@ -1362,8 +1381,9 @@ body.light-theme .tool-canvas-mockup {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    color 200ms ease;
+    transition:
+        transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        color 200ms ease;
 }
 
 .email-wrapper button.social-btn-3:hover {
@@ -1390,8 +1410,9 @@ body.light-theme .tool-canvas-mockup {
     opacity: 0;
     pointer-events: none;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    transition: opacity 0.2s ease,
-    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 60;
 }
 
@@ -1477,7 +1498,7 @@ body.light-theme .tool-canvas-mockup {
     z-index: 200;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
-    display: flex;
+    display: none; /* Changed from 'flex' to 'none' so it's completely hidden when closed */
     align-items: center;
     justify-content: center;
     padding: 30px;
@@ -1487,6 +1508,7 @@ body.light-theme .tool-canvas-mockup {
 }
 
 .cv-modal-overlay.is-open {
+    display: flex; /* Shown only when opened */
     opacity: 1;
     pointer-events: auto;
 }
@@ -1543,8 +1565,9 @@ body.light-theme .tool-canvas-mockup {
     padding: 4px 8px;
     border-radius: 6px;
     line-height: 1;
-    transition: color 0.15s ease,
-    background 0.15s ease;
+    transition:
+        color 0.15s ease,
+        background 0.15s ease;
 }
 
 .cv-modal-close:hover {
@@ -1580,8 +1603,9 @@ body.light-theme .tool-canvas-mockup {
 /* Skill Item Hover Effect */
 .skill-item {
     cursor: pointer;
-    transition: transform 0.2s ease,
-    border-color 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .skill-item:hover {
@@ -1595,11 +1619,12 @@ body.light-theme .tool-canvas-mockup {
 
 /* Dynamic Project Highlighting & Dimming */
 .app-card {
-    transition: transform 0.25s ease,
-    border-color 0.25s ease,
-    opacity 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        opacity 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
 }
 
 .app-card.skill-dimmed {
@@ -1617,8 +1642,9 @@ body.light-theme .tool-canvas-mockup {
 .app-tech-drawer {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 200ms ease;
+    transition:
+        grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 200ms ease;
     background: rgba(59, 130, 246, 0.04);
     border-top: 1px solid transparent;
 }

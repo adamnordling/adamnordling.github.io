@@ -312,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
         }
+
         return `
             <span lang="en">just now</span>
             <span lang="sv">just nu</span>
@@ -369,8 +370,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
 
         if (cached && cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
-            renderCommits(JSON.parse(cached));
-            return;
+            try {
+                renderCommits(JSON.parse(cached));
+                return;
+            } catch {
+                // Ignore invalid cached data and fetch fresh data.
+            }
         }
 
         try {
@@ -386,26 +391,37 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
             if (!res.ok) throw new Error('Search API request failed');
+
             const data = await res.json();
             const commits = data.items || [];
 
             sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
             sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
             renderCommits(commits);
-        } catch (err) {
+        } catch {
             // Fallback: If search endpoint is busy, fetch standard events
             try {
                 const eventsRes = await fetch(
                     `https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`
                 );
+
+                if (!eventsRes.ok) {
+                    throw new Error('Events API request failed');
+                }
+
                 const eventsData = await eventsRes.json();
 
                 const pushEvents = eventsData
                     .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
                     .flatMap(e =>
                         e.payload.commits.map(c => ({
-                            commit: { message: c.message, author: { date: e.created_at } },
-                            repository: { name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '') },
+                            commit: {
+                                message: c.message,
+                                author: { date: e.created_at }
+                            },
+                            repository: {
+                                name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
+                            },
                             html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
                             sha: c.sha
                         }))
@@ -413,16 +429,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     .slice(0, 5);
 
                 renderCommits(pushEvents);
-            } catch (fallbackErr) {
+            } catch {
                 if (cached) {
-                    renderCommits(JSON.parse(cached));
+                    try {
+                        renderCommits(JSON.parse(cached));
+                    } catch {
+                        // Ignore invalid cached data.
+                    }
                 }
             }
         }
     }
 
     loadGitHubActivity();
-
     // -------------------------------------------------------------------------
     // 10. Email One-Click Copy with Toast Feedback
     // -------------------------------------------------------------------------
@@ -443,10 +462,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Reset timeout if clicked multiple times
                 if (toastTimeout) clearTimeout(toastTimeout);
+
                 toastTimeout = setTimeout(() => {
                     emailToast.classList.remove('is-visible');
                 }, 2200);
-            } catch (err) {
+            } catch {
                 // Fallback if clipboard permission is blocked
                 window.location.href = `mailto:${email}`;
             }
@@ -459,12 +479,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const openCvBtn = document.getElementById('open-cv-modal');
     const closeCvBtn = document.getElementById('close-cv-modal');
     const cvModal = document.getElementById('cv-modal');
+    const cvIframe = cvModal ? cvModal.querySelector('iframe') : null;
 
     function openModal() {
         if (!cvModal) return;
+
+        // Only load the PDF when the user opens the modal
+        if (cvIframe && !cvIframe.getAttribute('src')) {
+            cvIframe.setAttribute('src', cvIframe.getAttribute('data-src'));
+        }
+
         cvModal.classList.add('is-open');
         cvModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden'; // Lock background scrolling
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
@@ -692,12 +719,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (endpoint) {
             const startTime = performance.now();
+
             try {
-                await fetch(endpoint, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
+                await fetch(endpoint, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-cache'
+                });
+
                 const pingTime = Math.round(performance.now() - startTime);
-                if (pingSpan) pingSpan.textContent = `· ${pingTime}ms`;
-            } catch (err) {
-                if (pingSpan) pingSpan.textContent = '· online';
+
+                if (pingSpan) {
+                    pingSpan.textContent = `· ${pingTime}ms`;
+                }
+            } catch {
+                if (pingSpan) {
+                    pingSpan.textContent = '· online';
+                }
             }
         }
     });

@@ -4,6 +4,10 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
+        />
         <!-- Professional SEO & Metadata -->
         <title>Adam Nordling | Software Engineer</title>
         <meta
@@ -20,7 +24,7 @@
             content="Explore projects in fullstack web development, machine learning pipelines, and network security."
         />
         <meta property="og:type" content="profile" />
-        <meta property="og:image" content="./src/assets/profile-picture-resized.png" />
+        <meta property="og:image" content="./src/assets/profile-picture-resized.webp" />
 
         <!-- Stylesheets & Assets -->
         <link rel="stylesheet" href="./src/style.css" />
@@ -170,9 +174,12 @@
                         <div class="profile-card-container">
                             <div class="profile-card-inner">
                                 <img
-                                    src="./src/assets/profile-picture-resized.png"
+                                    src="./src/assets/profile-picture-resized.webp"
                                     alt="Adam Nordling Profile Portrait"
                                     class="profile-img"
+                                    width="293"
+                                    height="255"
+                                    fetchpriority="high"
                                     draggable="false"
                                 />
                                 <div class="spotlight" aria-hidden="true"></div>
@@ -397,9 +404,9 @@
                                     <div class="thesis-box">
                                         <div class="thesis-header">
                                             <span class="thesis-tag">Master's Thesis · 2026</span>
-                                            <h4 class="thesis-title">
+                                            <h3 class="thesis-title">
                                                 A Systematic Approach for Selecting Trajectories for Data Augmentation
-                                            </h4>
+                                            </h3>
                                         </div>
                                         <p class="thesis-abstract">
                                             <span lang="en">
@@ -433,6 +440,7 @@
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="thesis-btn"
+                                                aria-label="View Master's Thesis on DiVA Portal"
                                             >
                                                 <span>DiVA Portal</span>
                                                 <span class="thesis-ext-icon">↗</span>
@@ -442,6 +450,7 @@
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="thesis-btn thesis-arxiv"
+                                                aria-label="View Master's Thesis preprint on arXiv"
                                             >
                                                 <span>arXiv</span>
                                                 <span class="thesis-ext-icon">↗</span>
@@ -485,9 +494,9 @@
                                     <div class="thesis-box">
                                         <div class="thesis-header">
                                             <span class="thesis-tag">Bachelor's Thesis · 2023</span>
-                                            <h4 class="thesis-title">
+                                            <h3 class="thesis-title">
                                                 Edge Computing Security for IoT: A Systematic Literature Review
-                                            </h4>
+                                            </h3>
                                         </div>
                                         <p class="thesis-abstract">
                                             <span lang="en">
@@ -515,6 +524,7 @@
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="thesis-btn"
+                                                aria-label="View Bachelor's Thesis on DiVA Portal"
                                             >
                                                 <span>DiVA Portal</span>
                                                 <span class="thesis-ext-icon">↗</span>
@@ -822,6 +832,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
+                                            aria-label="GitHub repository for Trajectory Data Augmentation"
                                         >
                                             <span lang="en">GitHub Repository</span>
                                             <span lang="sv">GitHub-källkod</span>
@@ -831,6 +842,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-secondary"
+                                            aria-label="Read Trajectory Augmentation research paper on arXiv"
                                         >
                                             <span>arXiv Paper ↗</span>
                                         </a>
@@ -881,9 +893,13 @@
                                         </span>
                                     </div>
                                     <img
-                                        src="./src/assets/nutrition-image.png"
-                                        alt="Nutritional app preview"
-                                        style="width: 100%; object-fit: cover"
+                                        src="./src/assets/nutrition-image.webp"
+                                        alt="Nutritional App interface preview"
+                                        width="400"
+                                        height="160"
+                                        loading="lazy"
+                                        decoding="async"
+                                        style="width: 100%; height: 100%; object-fit: cover"
                                     />
                                     alt="Nutritional app preview">
                                 </div>
@@ -908,6 +924,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
+                                            aria-label="GitHub repository for Nutritional App"
                                         >
                                             <span lang="en">GitHub Repository</span>
                                             <span lang="sv">GitHub-källkod</span>
@@ -1059,7 +1076,8 @@
                     </div>
                 </div>
                 <div class="cv-modal-body">
-                    <iframe src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
+                    <!-- Changed 'src' to 'data-src' so it won't load until clicked -->
+                    <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
                 </div>
             </div>
         </div>
