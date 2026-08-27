@@ -304,13 +304,28 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
 
     // -------------------------------------------------------------------------
-    // 9. Live GitHub Activity Fetcher (Guaranteed Real Commit Messages)
+    // 9. Live GitHub Activity Fetcher (XSS-Safe & Rate-Limit Resilient)
     // -------------------------------------------------------------------------
     const activityFeed = document.getElementById('activity-feed');
     const GITHUB_USERNAME = 'adamnordling';
     const CACHE_KEY = `gh_commits_${GITHUB_USERNAME}`;
     const CACHE_TIME_KEY = `gh_commits_time_${GITHUB_USERNAME}`;
     const TTL_MS = 60 * 1000; // 1-minute cache
+
+    // XSS Sanitizer: Prevents HTML injection from commit titles
+    function escapeHTML(str) {
+        return str.replace(
+            /[&<>'"]/g,
+            tag =>
+                ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                })[tag] || tag
+        );
+    }
 
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
@@ -326,16 +341,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = Math.floor(seconds / i.secs);
             if (count >= 1) {
                 return `
-                    <span lang="en">${count}${i.labelEn}</span>
-                    <span lang="sv">${count} ${i.labelSv}</span>
-                `;
+                        <span lang="en">${count}${i.labelEn}</span>
+                        <span lang="sv">${count} ${i.labelSv}</span>
+                    `;
             }
         }
 
         return `
-            <span lang="en">just now</span>
-            <span lang="sv">just nu</span>
-        `;
+                <span lang="en">just now</span>
+                <span lang="sv">just nu</span>
+            `;
     }
 
     function renderCommits(items) {
@@ -343,43 +358,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!items || items.length === 0) {
             activityFeed.innerHTML = `
-                <div class="activity-skeleton">
-                    <span lang="en">No recent public commits found.</span>
-                    <span lang="sv">Inga nyliga offentliga commits hittades.</span>
-                </div>
-            `;
+                    <div class="activity-skeleton">
+                        <span lang="en">No recent public commits found.</span>
+                        <span lang="sv">Inga nyliga offentliga commits hittades.</span>
+                    </div>
+                `;
             return;
         }
 
         activityFeed.innerHTML = items
             .slice(0, 5)
             .map(item => {
-                // Extract the true commit headline (first line of message)
                 const rawMsg = item.commit?.message || item.message || 'Code commit';
-                const commitMessage = rawMsg.split('\n')[0].trim();
-
-                const repoName = item.repository?.name || item.repo_name || 'repository';
+                const commitMessage = escapeHTML(rawMsg.split('\n')[0].trim());
+                const repoName = escapeHTML(item.repository?.name || item.repo_name || 'repository');
                 const commitUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
                 const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
                 const shortSha = item.sha ? item.sha.substring(0, 7) : '';
 
                 return `
-                <div class="activity-item">
-                    <div class="activity-icon">⚡</div>
-                    <div class="activity-body">
-                        <div class="activity-title">
-                            <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}">
-                                ${commitMessage}
-                            </a>
+                    <div class="activity-item">
+                        <div class="activity-icon">⚡</div>
+                        <div class="activity-body">
+                            <div class="activity-title">
+                                <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}">
+                                    ${commitMessage}
+                                </a>
+                            </div>
+                            <div class="activity-desc">
+                                <span>${repoName}</span>
+                                ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
+                            </div>
+                            <div class="activity-time">${timeAgo(commitDate)}</div>
                         </div>
-                        <div class="activity-desc">
-                            <span>${repoName}</span>
-                            ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
-                        </div>
-                        <div class="activity-time">${timeAgo(commitDate)}</div>
                     </div>
-                </div>
-            `;
+                `;
             })
             .join('');
     }
@@ -393,12 +406,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCommits(JSON.parse(cached));
                 return;
             } catch {
-                // Ignore invalid cached data and fetch fresh data.
+                // Ignore invalid cache and fetch fresh data
             }
         }
 
         try {
-            // Search API directly queries your latest commits across all public repositories
             const res = await fetch(
                 `https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5&_t=${Date.now()}`,
                 {
@@ -424,9 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     `https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`
                 );
 
-                if (!eventsRes.ok) {
-                    throw new Error('Events API request failed');
-                }
+                if (!eventsRes.ok) throw new Error('Events API request failed');
 
                 const eventsData = await eventsRes.json();
 
@@ -452,9 +462,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (cached) {
                     try {
                         renderCommits(JSON.parse(cached));
+                        return;
                     } catch {
-                        // Ignore invalid cached data.
+                        // Ignore
                     }
+                }
+
+                // Show clean message if API is down or rate-limited
+                if (activityFeed) {
+                    activityFeed.innerHTML = `
+                            <div class="activity-skeleton">
+                                <span lang="en">GitHub activity temporarily unavailable.</span>
+                                <span lang="sv">GitHub-aktivitet tillfälligt otillgänglig.</span>
+                            </div>
+                        `;
                 }
             }
         }
@@ -462,9 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadGitHubActivity();
 
-    // -------------------------------------------------------------------------
-    // 10. Email One-Click Copy with Toast Feedback
-    // -------------------------------------------------------------------------
     const emailCopyBtn = document.getElementById('email-copy-btn');
     const emailToast = document.getElementById('email-toast');
     let toastTimeout = null;
@@ -472,12 +490,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (emailCopyBtn && emailToast) {
         emailCopyBtn.addEventListener('click', async e => {
             e.preventDefault();
-            const email = emailCopyBtn.getAttribute('data-email');
-            if (!email) return;
+
+            // Decode Base64 string at the exact millisecond of click
+            const obf = emailCopyBtn.getAttribute('data-obf');
+            if (!obf) return;
+
+            let email = '';
+            try {
+                email = atob(obf); // Decodes to "adamnordling@live.se"
+            } catch {
+                return;
+            }
 
             let copied = false;
 
-            // 1. Try Modern Clipboard API (Works on HTTPS and localhost)
+            // 1. Try Modern Clipboard API (HTTPS & Localhost)
             if (navigator.clipboard && window.isSecureContext) {
                 try {
                     await navigator.clipboard.writeText(email);
@@ -487,25 +514,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 2. Invisible Fallback (Works on plain HTTP without opening any app)
+            // 2. Safe Fallback for older browsers / plain HTTP
             if (!copied) {
                 try {
                     const tempTextArea = document.createElement('textarea');
                     tempTextArea.value = email;
                     tempTextArea.style.position = 'fixed';
                     tempTextArea.style.left = '-9999px';
-                    tempTextArea.style.top = '0';
                     tempTextArea.setAttribute('readonly', '');
                     document.body.appendChild(tempTextArea);
                     tempTextArea.select();
                     document.execCommand('copy');
                     document.body.removeChild(tempTextArea);
+                    copied = true;
                 } catch {
-                    // Ignore if blocked
+                    copied = false;
                 }
             }
 
-            // Show Toast Notification
+            // Show confirmation toast
             emailToast.classList.add('is-visible');
 
             if (toastTimeout) clearTimeout(toastTimeout);

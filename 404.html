@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404 — Page Not Found | Adam Nordling</title>
+        <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
+        <style>
+            :root {
+                --bg-color: #0c0c0e;
+                --card-bg: #161619;
+                --border-color: #27272a;
+                --text-primary: #f4f4f5;
+                --text-secondary: #d4d4d8;
+                --text-muted: #a1a1aa;
+                --accent: #3b82f6;
+                --font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+            }
+
+            body.light-theme {
+                --bg-color: #f4f4f5;
+                --card-bg: #ffffff;
+                --border-color: #e4e4e7;
+                --text-primary: #09090b;
+                --text-secondary: #27272a;
+                --text-muted: #52525b;
+                --accent: #1d4ed8;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: var(--bg-color);
+                color: var(--text-primary);
+                font-family: var(--font-stack);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                text-align: center;
+            }
+
+            .error-card {
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 12px;
+                padding: 48px 36px;
+                max-width: 520px;
+                width: 100%;
+                box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .error-badge {
+                font-family: var(--font-mono);
+                font-size: 0.8rem;
+                color: var(--accent);
+                background: rgba(59, 130, 246, 0.1);
+                border: 1px solid rgba(59, 130, 246, 0.2);
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+            }
+
+            .error-title {
+                font-size: 1.75rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+            }
+
+            .error-desc {
+                color: var(--text-secondary);
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .error-actions {
+                display: flex;
+                gap: 12px;
+                margin-top: 12px;
+                width: 100%;
+            }
+
+            .btn-home {
+                flex: 1;
+                background: var(--text-primary);
+                color: var(--bg-color);
+                text-decoration: none;
+                padding: 10px 18px;
+                border-radius: 6px;
+                font-size: 0.88rem;
+                font-weight: 600;
+                transition: opacity 0.2s ease;
+            }
+
+            .btn-home:hover {
+                opacity: 0.9;
+            }
+
+            .btn-github {
+                flex: 1;
+                background: transparent;
+                color: var(--text-primary);
+                border: 1px solid var(--border-color);
+                text-decoration: none;
+                padding: 10px 18px;
+                border-radius: 6px;
+                font-size: 0.88rem;
+                font-weight: 500;
+                transition: border-color 0.2s ease;
+            }
+
+            .btn-github:hover {
+                border-color: var(--text-primary);
+            }
+
+            .redirect-notice {
+                font-family: var(--font-mono);
+                font-size: 0.76rem;
+                color: var(--text-muted);
+                margin-top: 8px;
+            }
+
+            html:not([lang='sv']) [lang='sv'],
+            html[lang='sv'] [lang='en'] {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="error-card">
+            <span class="error-badge">HTTP 404 · NOT_FOUND</span>
+
+            <h1 class="error-title">
+                <span lang="en">Page Not Found</span>
+                <span lang="sv">Sidan hittades inte</span>
+            </h1>
+
+            <p class="error-desc">
+                <span lang="en"
+                    >The page you are looking for might have been moved, renamed, or does not exist in this
+                    portfolio.</span
+                >
+                <span lang="sv"
+                    >Sidan du letar efter kan ha flyttats, bytt namn eller så finns den inte i denna portfolio.</span
+                >
+            </p>
+
+            <div class="error-actions">
+                <a href="/" class="btn-home">
+                    <span lang="en">← Return to Portfolio</span>
+                    <span lang="sv">← Tillbaka till Portfolio</span>
+                </a>
+                <a href="https://github.com/adamnordling" target="_blank" rel="noopener noreferrer" class="btn-github">
+                    <span>GitHub ↗</span>
+                </a>
+            </div>
+
+            <p class="redirect-notice">
+                <span lang="en">Auto-redirecting home in <span id="countdown">8</span>s...</span>
+                <span lang="sv">Omdirigerar automatiskt om <span id="countdown-sv">8</span>s...</span>
+            </p>
+        </main>
+
+        <script>
+            // Sync theme with user's saved preference
+            if (localStorage.getItem('site_theme') === 'dark') {
+                document.body.classList.remove('light-theme');
+            } else {
+                document.body.classList.add('light-theme');
+            }
+
+            // Sync language with saved preference or browser
+            const savedLang =
+                localStorage.getItem('site_lang') || (navigator.languages?.some(l => l.startsWith('sv')) ? 'sv' : 'en');
+            document.documentElement.lang = savedLang;
+
+            // Auto-redirect countdown
+            let seconds = 8;
+            const cdEn = document.getElementById('countdown');
+            const cdSv = document.getElementById('countdown-sv');
+
+            const timer = setInterval(() => {
+                seconds--;
+                if (cdEn) cdEn.textContent = seconds;
+                if (cdSv) cdSv.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    window.location.href = '/';
+                }
+            }, 1000);
+        </script>
+    </body>
+</html>
