@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     // 1. Pure CSS-Driven Language Controller
     // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+// 1. Pure CSS-Driven Language Controller
+// -------------------------------------------------------------------------
     const langDropdown = document.querySelector('.lang-dropdown');
     const langButtons = document.querySelectorAll('.lang-btn');
     const langLabel = document.querySelector('.lang-current-label');
@@ -13,6 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('site_lang', lang);
         if (langLabel) langLabel.textContent = lang.toUpperCase();
         langButtons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-lang') === lang));
+    }
+
+    function getInitialLanguage() {
+        const saved = localStorage.getItem('site_lang');
+        if (saved) return saved;
+
+        // Check navigator browser languages
+        const browserLangs = navigator.languages || [navigator.language || ''];
+        const isSwedish = browserLangs.some(l => l.toLowerCase().startsWith('sv'));
+        return isSwedish ? 'sv' : 'en';
     }
 
     langButtons.forEach(btn => {
@@ -28,9 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Initialize saved language or default to 'en'
-    setLanguage(localStorage.getItem('site_lang') || 'en');
-
+// Auto-detect browser language or load saved preference
+    setLanguage(getInitialLanguage());
     // -------------------------------------------------------------------------
     // 2. Projects Filtering
     // -------------------------------------------------------------------------
@@ -133,14 +145,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
+    
     // -------------------------------------------------------------------------
     // 5. Dark/Light Theme Toggle
     // -------------------------------------------------------------------------
     const themeToggle = document.querySelector('.theme-toggle');
     const savedTheme = localStorage.getItem('site_theme');
 
-    // Default to 'light' unless user specifically saved 'dark'
+    // Default is Light; only remove if explicitly saved as 'dark'
     if (savedTheme === 'dark') {
         document.body.classList.remove('light-theme');
     } else {
