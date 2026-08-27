@@ -1,28 +1,28 @@
 {
-  "name": "portfolio",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "format": "prettier --write \"**/*.{html,css,js,json}\"",
-    "format:check": "prettier --check \"**/*.{html,css,js,json}\"",
-    "lint:js": "eslint src/main.js",
-    "validate": "npm run format && npm run lint:js"
-  },
-  "prettier": {
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "none",
-    "printWidth": 120,
-    "bracketSpacing": true,
-    "arrowParens": "avoid",
-    "endOfLine": "lf"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.0.0",
-    "eslint": "^9.0.0",
-    "globals": "^15.0.0",
-    "prettier": "^3.2.5"
-  }
+    "name": "portfolio",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "format": "prettier --write \"**/*.{html,css,js,json}\"",
+        "format:check": "prettier --check \"**/*.{html,css,js,json}\"",
+        "lint:js": "eslint src/main.js",
+        "validate": "npm run format && npm run lint:js"
+    },
+    "prettier": {
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "printWidth": 120,
+        "bracketSpacing": true,
+        "arrowParens": "avoid",
+        "endOfLine": "lf"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.0.0",
+        "eslint": "^9.0.0",
+        "globals": "^15.0.0",
+        "prettier": "^3.2.5"
+    }
 }

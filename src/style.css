@@ -11,9 +11,9 @@
     --accent: #3b82f6;
 
     /* System font stacks with standard generic fallbacks */
-    --font-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
-    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --font-stack: var(--font-default);
 }
 
@@ -27,8 +27,8 @@
 }
 
 /* Pure CSS declarative language visibility */
-html:not([lang="sv"]) [lang="sv"],
-html[lang="sv"] [lang="en"] {
+html:not([lang='sv']) [lang='sv'],
+html[lang='sv'] [lang='en'] {
     display: none !important;
 }
 
@@ -171,7 +171,8 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
-    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), color 200ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 200ms ease;
 }
 
 /* Choreographed waving timelines */
@@ -210,7 +211,8 @@ body {
     2.5% {
         transform: rotateY(360deg) scale(1) translateY(0);
     }
-    2.51%, 11.5% {
+    2.51%,
+    11.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
     /* 1. Spin Backward: 11.5% -> 14% */
@@ -220,7 +222,8 @@ body {
     14% {
         transform: rotateY(-360deg) scale(1) translateY(0);
     }
-    14.01%, 33% {
+    14.01%,
+    33% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
 
@@ -228,13 +231,15 @@ body {
     34.25% {
         transform: scale(1.35);
     }
-    35.5%, 44.5% {
+    35.5%,
+    44.5% {
         transform: scale(1);
     }
     45.75% {
         transform: scale(1.35);
     }
-    47%, 66% {
+    47%,
+    66% {
         transform: scale(1);
     }
 
@@ -242,20 +247,23 @@ body {
     67.25% {
         transform: translateY(-8px);
     }
-    68.5%, 77.5% {
+    68.5%,
+    77.5% {
         transform: translateY(0);
     }
     78.75% {
         transform: translateY(-8px);
     }
-    80%, 100% {
+    80%,
+    100% {
         transform: translateY(0);
     }
 }
 
 @keyframes wave-button-2 {
     /* 2. Spin Forward: 2.5% -> 5% */
-    0%, 2.5% {
+    0%,
+    2.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
     3.75% {
@@ -264,7 +272,8 @@ body {
     5% {
         transform: rotateY(360deg) scale(1) translateY(0);
     }
-    5.01%, 9% {
+    5.01%,
+    9% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
     /* 2. Spin Backward: 9% -> 11.5% */
@@ -274,7 +283,8 @@ body {
     11.5% {
         transform: rotateY(-360deg) scale(1) translateY(0);
     }
-    11.51%, 35.5% {
+    11.51%,
+    35.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
 
@@ -282,13 +292,15 @@ body {
     36.75% {
         transform: scale(1.35);
     }
-    38%, 42% {
+    38%,
+    42% {
         transform: scale(1);
     }
     43.25% {
         transform: scale(1.35);
     }
-    44.5%, 68.5% {
+    44.5%,
+    68.5% {
         transform: scale(1);
     }
 
@@ -296,20 +308,23 @@ body {
     69.75% {
         transform: translateY(-8px);
     }
-    71%, 75% {
+    71%,
+    75% {
         transform: translateY(0);
     }
     76.25% {
         transform: translateY(-8px);
     }
-    77.5%, 100% {
+    77.5%,
+    100% {
         transform: translateY(0);
     }
 }
 
 @keyframes wave-button-3 {
     /* 3. Spin Peak (Center of wave): 5% -> 7.5% */
-    0%, 5% {
+    0%,
+    5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
     6.25% {
@@ -318,7 +333,8 @@ body {
     7.5% {
         transform: rotateY(360deg) scale(1) translateY(0);
     }
-    7.51%, 38% {
+    7.51%,
+    38% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
 
@@ -326,7 +342,8 @@ body {
     39.25% {
         transform: scale(1.35);
     }
-    40.5%, 71% {
+    40.5%,
+    71% {
         transform: scale(1);
     }
 
@@ -334,7 +351,8 @@ body {
     72.25% {
         transform: translateY(-8px);
     }
-    73.5%, 100% {
+    73.5%,
+    100% {
         transform: translateY(0);
     }
 }
@@ -377,7 +395,8 @@ body {
     padding: 0 4px;
     margin-left: 4px;
     display: inline-block;
-    transition: color 200ms ease, transform 200ms ease;
+    transition: color 200ms ease,
+    transform 200ms ease;
 }
 
 .bio-toggle:hover {
@@ -421,7 +440,8 @@ body {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     overflow: hidden;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .edu-item:hover {
@@ -717,7 +737,8 @@ body.light-theme .thesis-btn {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-4px);
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    transition: opacity 0.18s ease,
+    transform 0.18s ease;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     z-index: 50;
     backdrop-filter: blur(8px);
@@ -732,7 +753,7 @@ body.light-theme .thesis-btn {
 .filter-menu::before,
 .tools-menu::before,
 .lang-menu::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -8px;
     left: 0;
@@ -771,7 +792,8 @@ body.light-theme .thesis-btn {
     font-size: 0.85rem;
     text-align: left;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: background 0.15s ease,
+    color 0.15s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -841,7 +863,8 @@ body.light-theme .thesis-btn {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .app-card:hover {
@@ -859,25 +882,27 @@ body.light-theme .thesis-btn {
 /* ==========================================================================
    APP CARDS & MEDIA VISUAL FILTERS
    ========================================================================== */
+/* ==========================================================================
+   APP CARDS & MEDIA VISUAL FILTERS
+   ========================================================================== */
 .app-img-container img,
 .app-img-container svg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    /* Clear dormant state: fully desaturated, slightly dimmed */
-    filter: grayscale(100%) brightness(0.65) opacity(0.75);
+    filter: grayscale(60%) opacity(0.85);
     transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Hover & Skill-highlight: Full vibrant color and focus */
+/* Hover & Skill-highlight restores 100% color, contrast & vibrancy */
 .app-card:hover .app-img-container img,
 .app-card:hover .app-img-container svg,
 .app-card.skill-highlighted .app-img-container img,
 .app-card.skill-highlighted .app-img-container svg {
-    filter: grayscale(0%) brightness(1) opacity(1);
+    filter: grayscale(0%) opacity(1);
     transform: scale(1.02);
 }
 
@@ -1053,16 +1078,16 @@ body.light-theme .theme-toggle .moon-icon {
     transition: all 0.2s ease;
 }
 
-.font-btn[data-font="default"] {
+.font-btn[data-font='default'] {
     font-family: var(--font-default), sans-serif;
 }
 
-.font-btn[data-font="serif"] {
+.font-btn[data-font='serif'] {
     font-family: var(--font-serif), serif;
     font-weight: normal;
 }
 
-.font-btn[data-font="monospace"] {
+.font-btn[data-font='monospace'] {
     font-family: var(--font-mono), monospace;
     font-size: 0.9rem;
 }
@@ -1164,7 +1189,6 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-
 /* Live Clock Widget (Top-Right) */
 .live-clock {
     position: fixed;
@@ -1219,7 +1243,6 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-
 /* GitHub Activity Feed */
 .activity-feed {
     display: flex;
@@ -1237,7 +1260,8 @@ body.light-theme .tool-canvas-mockup {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.84rem;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .activity-item:hover {
@@ -1322,7 +1346,6 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-
 /* Email Button & Copy Toast */
 .email-wrapper {
     position: relative;
@@ -1339,7 +1362,8 @@ body.light-theme .tool-canvas-mockup {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), color 200ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 200ms ease;
 }
 
 .email-wrapper button.social-btn-3:hover {
@@ -1366,7 +1390,8 @@ body.light-theme .tool-canvas-mockup {
     opacity: 0;
     pointer-events: none;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 60;
 }
 
@@ -1379,7 +1404,6 @@ body.light-theme .tool-canvas-mockup {
     color: #10b981; /* Accent green checkmark */
     font-weight: bold;
 }
-
 
 .cv-action-wrapper {
     margin-top: auto; /* Pushes CV to the absolute bottom of the image */
@@ -1519,7 +1543,8 @@ body.light-theme .tool-canvas-mockup {
     padding: 4px 8px;
     border-radius: 6px;
     line-height: 1;
-    transition: color 0.15s ease, background 0.15s ease;
+    transition: color 0.15s ease,
+    background 0.15s ease;
 }
 
 .cv-modal-close:hover {
@@ -1541,7 +1566,6 @@ body.light-theme .tool-canvas-mockup {
     border: none;
 }
 
-
 /* Background Canvas: Fixed & Behind all elements */
 #bg-canvas {
     position: fixed;
@@ -1553,11 +1577,11 @@ body.light-theme .tool-canvas-mockup {
     pointer-events: none;
 }
 
-
 /* Skill Item Hover Effect */
 .skill-item {
     cursor: pointer;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .skill-item:hover {
@@ -1571,7 +1595,11 @@ body.light-theme .tool-canvas-mockup {
 
 /* Dynamic Project Highlighting & Dimming */
 .app-card {
-    transition: transform 0.25s ease, border-color 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    transition: transform 0.25s ease,
+    border-color 0.25s ease,
+    opacity 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
 }
 
 .app-card.skill-dimmed {
@@ -1589,7 +1617,8 @@ body.light-theme .tool-canvas-mockup {
 .app-tech-drawer {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms ease;
+    transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms ease;
     background: rgba(59, 130, 246, 0.04);
     border-top: 1px solid transparent;
 }
@@ -1675,7 +1704,6 @@ body.light-theme .tool-canvas-mockup {
     margin-left: 8px;
 }
 
-
 /* Bottom-Right Keyboard Hotkeys Indicator */
 .hotkeys-indicator {
     position: fixed;
@@ -1729,7 +1757,6 @@ body.light-theme .hotkey-item kbd {
     }
 }
 
-
 /* ==========================================================================
    INTERACTION & SELECTION POLICIES
    ========================================================================== */
@@ -1741,7 +1768,9 @@ body.light-theme .hotkey-item kbd {
 }
 
 /* 2. Disallow dragging and phantom ghosting on all media & vector icons */
-img, svg, canvas {
+img,
+svg,
+canvas {
     user-select: none;
     -webkit-user-select: none;
     -webkit-user-drag: none;

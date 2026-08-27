@@ -15,7 +15,7 @@ export default [
         },
         rules: {
             // Error Prevention & Code Cleanliness
-            'no-unused-vars': ['warn', {argsIgnorePattern: '^_'}],
+            'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
             'no-undef': 'error',
             'no-constant-condition': 'error',
             'no-duplicate-imports': 'error',
@@ -27,7 +27,7 @@ export default [
             'no-var': 'error',
             'object-shorthand': 'warn',
             'prefer-arrow-callback': 'warn',
-            'eqeqeq': ['error', 'always', {null: 'ignore'}],
+            eqeqeq: ['error', 'always', { null: 'ignore' }],
 
             // Strict Async & Security
             'no-async-promise-executor': 'error',

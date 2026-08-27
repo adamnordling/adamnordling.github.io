@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     // 1. Pure CSS-Driven Language Controller
     // -------------------------------------------------------------------------
-// -------------------------------------------------------------------------
-// 1. Pure CSS-Driven Language Controller
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // 1. Pure CSS-Driven Language Controller
+    // -------------------------------------------------------------------------
     const langDropdown = document.querySelector('.lang-dropdown');
     const langButtons = document.querySelectorAll('.lang-btn');
     const langLabel = document.querySelector('.lang-current-label');
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// Auto-detect browser language or load saved preference
+    // Auto-detect browser language or load saved preference
     setLanguage(getInitialLanguage());
     // -------------------------------------------------------------------------
     // 2. Projects Filtering
@@ -58,8 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Update selected category label inside trigger
                 const filterSelected = document.querySelector('.filter-selected');
-                const btnEnText = button.querySelector('[lang="en"]')?.textContent.replace(' Projects', '') || button.textContent;
-                const btnSvText = button.querySelector('[lang="sv"]')?.textContent.replace(' Projekt', '') || button.textContent;
+                const btnEnText =
+                    button.querySelector('[lang="en"]')?.textContent.replace(' Projects', '') || button.textContent;
+                const btnSvText =
+                    button.querySelector('[lang="sv"]')?.textContent.replace(' Projekt', '') || button.textContent;
 
                 if (filterSelected) {
                     filterSelected.innerHTML = `
@@ -72,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const filterValue = button.getAttribute('data-filter') || 'all';
                 cards.forEach(card => {
                     const cardCategory = card.getAttribute('data-category');
-                    card.style.display = (filterValue === 'all' || cardCategory === filterValue) ? 'flex' : 'none';
+                    card.style.display = filterValue === 'all' || cardCategory === filterValue ? 'flex' : 'none';
                 });
 
                 // Auto-close menu immediately
@@ -117,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const spotlight = document.querySelector('.spotlight');
 
     if (container && card) {
-        container.addEventListener('mousemove', (e) => {
+        container.addEventListener('mousemove', e => {
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -212,13 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     toolView.style.display = 'block';
                     if (projectsFilter) projectsFilter.style.display = 'none';
 
-                    viewTitleProjects.forEach(el => el.style.display = 'none');
-                    viewTitleTools.forEach(el => el.style.display = 'inline');
+                    viewTitleProjects.forEach(el => (el.style.display = 'none'));
+                    viewTitleTools.forEach(el => (el.style.display = 'inline'));
                     if (backToProjectsBtn) backToProjectsBtn.style.display = 'inline-block';
 
                     // Display active tool markup
                     toolContentItems.forEach(item => {
-                        item.style.display = (item.getAttribute('data-tool-content') === toolKey) ? 'block' : 'none';
+                        item.style.display = item.getAttribute('data-tool-content') === toolKey ? 'block' : 'none';
                     });
                 }
             });
@@ -232,8 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 toolView.style.display = 'none';
                 if (projectsFilter) projectsFilter.style.display = 'inline-block';
 
-                viewTitleProjects.forEach(el => el.style.display = 'inline');
-                viewTitleTools.forEach(el => el.style.display = 'none');
+                viewTitleProjects.forEach(el => (el.style.display = 'inline'));
+                viewTitleTools.forEach(el => (el.style.display = 'none'));
                 backToProjectsBtn.style.display = 'none';
             }
         });
@@ -282,8 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateClock();
     setInterval(updateClock, 1000);
 
-
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // 9. Live GitHub Activity Fetcher (Guaranteed Real Commit Messages)
     // -------------------------------------------------------------------------
     const activityFeed = document.getElementById('activity-feed');
@@ -295,11 +296,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
         const intervals = [
-            {labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000},
-            {labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000},
-            {labelEn: 'd ago', labelSv: 'd sedan', secs: 86400},
-            {labelEn: 'h ago', labelSv: 'h sedan', secs: 3600},
-            {labelEn: 'm ago', labelSv: 'm sedan', secs: 60}
+            { labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000 },
+            { labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000 },
+            { labelEn: 'd ago', labelSv: 'd sedan', secs: 86400 },
+            { labelEn: 'h ago', labelSv: 'h sedan', secs: 3600 },
+            { labelEn: 'm ago', labelSv: 'm sedan', secs: 60 }
         ];
 
         for (const i of intervals) {
@@ -330,17 +331,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        activityFeed.innerHTML = items.slice(0, 5).map(item => {
-            // Extract the true commit headline (first line of message)
-            const rawMsg = item.commit?.message || item.message || 'Code commit';
-            const commitMessage = rawMsg.split('\n')[0].trim();
+        activityFeed.innerHTML = items
+            .slice(0, 5)
+            .map(item => {
+                // Extract the true commit headline (first line of message)
+                const rawMsg = item.commit?.message || item.message || 'Code commit';
+                const commitMessage = rawMsg.split('\n')[0].trim();
 
-            const repoName = item.repository?.name || item.repo_name || 'repository';
-            const commitUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
-            const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
-            const shortSha = item.sha ? item.sha.substring(0, 7) : '';
+                const repoName = item.repository?.name || item.repo_name || 'repository';
+                const commitUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
+                const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
+                const shortSha = item.sha ? item.sha.substring(0, 7) : '';
 
-            return `
+                return `
                 <div class="activity-item">
                     <div class="activity-icon">⚡</div>
                     <div class="activity-body">
@@ -357,26 +360,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-        }).join('');
+            })
+            .join('');
     }
 
     async function loadGitHubActivity() {
         const cached = sessionStorage.getItem(CACHE_KEY);
         const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
 
-        if (cached && cachedTime && (Date.now() - Number(cachedTime) < TTL_MS)) {
+        if (cached && cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
             renderCommits(JSON.parse(cached));
             return;
         }
 
         try {
             // Search API directly queries your latest commits across all public repositories
-            const res = await fetch(`https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5&_t=${Date.now()}`, {
-                headers: {
-                    'Accept': 'application/vnd.github.cloak-preview+json'
-                },
-                cache: 'no-cache'
-            });
+            const res = await fetch(
+                `https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5&_t=${Date.now()}`,
+                {
+                    headers: {
+                        Accept: 'application/vnd.github.cloak-preview+json'
+                    },
+                    cache: 'no-cache'
+                }
+            );
 
             if (!res.ok) throw new Error('Search API request failed');
             const data = await res.json();
@@ -388,17 +395,21 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             // Fallback: If search endpoint is busy, fetch standard events
             try {
-                const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`);
+                const eventsRes = await fetch(
+                    `https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`
+                );
                 const eventsData = await eventsRes.json();
 
                 const pushEvents = eventsData
                     .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
-                    .flatMap(e => e.payload.commits.map(c => ({
-                        commit: {message: c.message, author: {date: e.created_at}},
-                        repository: {name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')},
-                        html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
-                        sha: c.sha
-                    })))
+                    .flatMap(e =>
+                        e.payload.commits.map(c => ({
+                            commit: { message: c.message, author: { date: e.created_at } },
+                            repository: { name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '') },
+                            html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
+                            sha: c.sha
+                        }))
+                    )
                     .slice(0, 5);
 
                 renderCommits(pushEvents);
@@ -411,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadGitHubActivity();
-
 
     // -------------------------------------------------------------------------
     // 10. Email One-Click Copy with Toast Feedback
@@ -443,7 +453,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // -------------------------------------------------------------------------
     // 11. Resume / CV Preview Modal Controller
     // -------------------------------------------------------------------------
@@ -470,13 +479,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close on backdrop click
     if (cvModal) {
-        cvModal.addEventListener('click', (e) => {
+        cvModal.addEventListener('click', e => {
             if (e.target === cvModal) closeModal();
         });
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && cvModal?.classList.contains('is-open')) {
             closeModal();
         }
@@ -491,17 +500,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas && portfolioWrapper) {
         const ctx = canvas.getContext('2d');
         let width, height;
-        let mouseX = -1000, mouseY = -1000;
+        let mouseX = -1000,
+            mouseY = -1000;
 
         // ==========================================
         // ⚙️ CONTROLS & SETTINGS (Tweak these freely)
         // ==========================================
-        const FULL_SCREEN = false;      // true for full site, false for sides
-        const DARK_BASE_ALPHA = 0.14;  // ⬅️ Boosted brightness for Dark Mode
-        const DARK_GLOW_ALPHA = 1;   // ⬅️ Hover glow in Dark Mode
+        const FULL_SCREEN = false; // true for full site, false for sides
+        const DARK_BASE_ALPHA = 0.14; // ⬅️ Boosted brightness for Dark Mode
+        const DARK_GLOW_ALPHA = 1; // ⬅️ Hover glow in Dark Mode
         const LIGHT_BASE_ALPHA = 0.14; // ⬅️ Subtle brightness for Light Mode
-        const LIGHT_GLOW_ALPHA = 0.60; // ⬅️ Hover glow in Light Mode
-        const DOT_SPACING = 28;        // Distance between dots in pixels
+        const LIGHT_GLOW_ALPHA = 0.6; // ⬅️ Hover glow in Light Mode
+        const DOT_SPACING = 28; // Distance between dots in pixels
         const FADE_MARGIN = 120;
 
         // ==========================================
@@ -514,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', resize);
         resize();
 
-        window.addEventListener('mousemove', (e) => {
+        window.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
@@ -567,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     let color = baseColor;
 
                     if (distToMouse < mouseRadius) {
-                        const influence = (1 - distToMouse / mouseRadius);
+                        const influence = 1 - distToMouse / mouseRadius;
                         radius = 1.4 + influence * 2.4;
                         alpha = (currentBaseAlpha + influence * (currentGlowAlpha - currentBaseAlpha)) * flankFade;
                         color = activeColor;
@@ -585,7 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         requestAnimationFrame(draw);
     }
-
 
     // -------------------------------------------------------------------------
     // 13. Dynamic Category Filter Counts
@@ -661,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     const statusBadges = document.querySelectorAll('.app-status-badge');
 
-    statusBadges.forEach(async (badge) => {
+    statusBadges.forEach(async badge => {
         const isLiveEnabled = badge.getAttribute('data-live-enabled') === 'true';
         const endpoint = badge.getAttribute('data-endpoint');
         const devLabel = badge.querySelector('.status-label-dev');
@@ -684,7 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (endpoint) {
             const startTime = performance.now();
             try {
-                await fetch(endpoint, {method: 'HEAD', mode: 'no-cors', cache: 'no-cache'});
+                await fetch(endpoint, { method: 'HEAD', mode: 'no-cors', cache: 'no-cache' });
                 const pingTime = Math.round(performance.now() - startTime);
                 if (pingSpan) pingSpan.textContent = `· ${pingTime}ms`;
             } catch (err) {
@@ -693,8 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // 16. Power-User Keyboard Shortcuts Controller
     // -------------------------------------------------------------------------
     const fontTypes = ['default', 'serif', 'monospace'];
@@ -705,10 +713,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const rightPanel = document.querySelector('.right-panel');
     let activeScrollTarget = leftPanel;
 
-    if (leftPanel) leftPanel.addEventListener('mouseenter', () => activeScrollTarget = leftPanel);
-    if (rightPanel) rightPanel.addEventListener('mouseenter', () => activeScrollTarget = rightPanel);
+    if (leftPanel) leftPanel.addEventListener('mouseenter', () => (activeScrollTarget = leftPanel));
+    if (rightPanel) rightPanel.addEventListener('mouseenter', () => (activeScrollTarget = rightPanel));
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
         // 1. Ignore if typing in an input field
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
 
@@ -725,7 +733,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. [ L ] -> Toggle Language
         if (key === 'l') {
-            const newLang = (document.documentElement.lang === 'sv') ? 'en' : 'sv';
+            const newLang = document.documentElement.lang === 'sv' ? 'en' : 'sv';
             setLanguage(newLang);
         }
 
@@ -749,8 +757,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 5. [ 1 - 9 ] -> Open Project Repo
         if (/^[1-9]$/.test(key)) {
-            const visibleCards = Array.from(document.querySelectorAll('.app-card'))
-                .filter(card => card.style.display !== 'none');
+            const visibleCards = Array.from(document.querySelectorAll('.app-card')).filter(
+                card => card.style.display !== 'none'
+            );
 
             const targetCard = visibleCards[parseInt(key, 10) - 1];
             if (targetCard) {
@@ -767,13 +776,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {
-                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             } else if (activeScrollTarget) {
-                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                activeScrollTarget.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             }
         }
     });
-
 
     // -------------------------------------------------------------------------
     // 17. Education Thesis Accordion Controller
