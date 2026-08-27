@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // -------------------------------------------------------------------------
     // 5. Dark/Light Theme Toggle
     // -------------------------------------------------------------------------
@@ -709,8 +709,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rightPanel) rightPanel.addEventListener('mouseenter', () => activeScrollTarget = rightPanel);
 
     document.addEventListener('keydown', (e) => {
-        // Ignore if user is typing inside an input/textarea
+        // 1. Ignore if typing in an input field
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+        // 2. IGNORE modifier combinations (Ctrl+C, Cmd+C, Alt+Tab, etc.)
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         const key = e.key.toLowerCase();
 
@@ -726,8 +729,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setLanguage(newLang);
         }
 
-        // 3. [ C ] -> Toggle CV Modal
+        // 3. [ C ] -> Toggle CV Modal (Single 'c' tap only)
         if (key === 'c') {
+            e.preventDefault();
             if (cvModal?.classList.contains('is-open')) {
                 closeModal();
             } else {
@@ -735,7 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 4. [ F ] -> Cycle Fonts (Default -> Serif -> Monospace)
+        // 4. [ F ] -> Cycle Fonts
         if (key === 'f') {
             currentFontIndex = (currentFontIndex + 1) % fontTypes.length;
             const fontName = fontTypes[currentFontIndex];
@@ -743,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetFontBtn) targetFontBtn.click();
         }
 
-        // 5. [ 1 - 9 ] -> Open GitHub Repository of Project #1, #2, #3...
+        // 5. [ 1 - 9 ] -> Open Project Repo
         if (/^[1-9]$/.test(key)) {
             const visibleCards = Array.from(document.querySelectorAll('.app-card'))
                 .filter(card => card.style.display !== 'none');
@@ -757,9 +761,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 6. [ ↑ / ↓ ] -> Smart Smooth Arrow Scrolling (Left Panel / Hovered Panel / Page)
+        // 6. [ ↑ / ↓ ] -> Smart Scrolling
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-            e.preventDefault(); // Prevents page jumping
+            e.preventDefault();
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {

@@ -21,6 +21,20 @@
     <!-- Stylesheets & Assets -->
     <link rel="stylesheet" href="./src/style.css">
     <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Adam Nordling",
+            "jobTitle": "Software Engineer",
+            "alumniOf": "Linnaeus University",
+            "url": "https://yourdomain.com",
+            "sameAs": [
+                "https://github.com/adamnordling",
+                "https://linkedin.com/in/adamnordling"
+            ]
+        }
+    </script>
 </head>
 <body class="light-theme">
 <!-- Interactive Dot Matrix Background (Left & Right Flanks) -->
@@ -555,6 +569,86 @@
             <!-- PROJECTS VIEW (Default) -->
             <div class="projects-view" id="projects-view">
                 <div class="apps-grid">
+                    <!-- Master's Thesis: Trajectory Data Augmentation Pipeline -->
+                    <article class="app-card" data-category="ai" data-skills="python data lowlevel languages devops">
+                        <div class="app-img-container">
+                            <!-- Live Status Badge -->
+                            <div class="app-status-badge is-live" data-live-enabled="true">
+                                <span class="status-dot"></span>
+                                <span class="status-label-live">
+                                    <span lang="en">M.Sc. Pipeline</span>
+                                    <span lang="sv">M.Sc. Pipeline</span>
+                                    <span class="status-ping">· Python 3.11</span>
+                                </span>
+                            </div>
+
+                            <!-- Trajectory Vector Graphic Visualization -->
+                            <svg viewBox="0 0 400 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                                 style="background: #101014; display: block;">
+                                <defs>
+                                    <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#3b82f6"/>
+                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                    </linearGradient>
+                                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.035)"
+                                              stroke-width="1"/>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)"/>
+                                <!-- Augmented Background Dispersion -->
+                                <path d="M 30 160 Q 120 40 220 120 T 370 50" fill="none"
+                                      stroke="rgba(59, 130, 246, 0.2)" stroke-width="3" stroke-dasharray="4 4"/>
+                                <path d="M 30 140 Q 140 20 200 140 T 370 70" fill="none"
+                                      stroke="rgba(139, 92, 246, 0.2)" stroke-width="3" stroke-dasharray="4 4"/>
+                                <!-- Primary Mathematical Trajectory -->
+                                <path d="M 30 150 Q 130 30 210 130 T 370 60" fill="none" stroke="url(#trajGrad)"
+                                      stroke-width="2.5"/>
+                                <!-- Selection Centroids -->
+                                <circle cx="30" cy="150" r="4.5" fill="#3b82f6"/>
+                                <circle cx="150" cy="65" r="5" fill="#60a5fa"/>
+                                <circle cx="210" cy="130" r="4.5" fill="#8b5cf6"/>
+                                <circle cx="295" cy="85" r="4.5" fill="#a78bfa"/>
+                                <circle cx="370" cy="60" r="5" fill="#38bdf8"/>
+                            </svg>
+                        </div>
+
+                        <div class="app-content">
+                            <h3>
+                                <span lang="en">Trajectory ML Augmentation</span>
+                                <span lang="sv">Trajektorieaugmentering (ML)</span>
+                            </h3>
+                            <p>
+                                <span lang="en">A modular, configuration-driven Python framework evaluating selection strategies (Outlierness, Uncertainty, Diversity) with Optuna across 200GB+ spatio-temporal datasets.</span>
+                                <span lang="sv">Ett modulärt, konfigurationsdrivet Python-ramverk som utvärderar urvalsstrategier (Outlierness, Uncertainty, Diversity) med Optuna över 200GB+ spatial-temporala dataset.</span>
+                            </p>
+                            <div class="app-links">
+                                <a href="https://github.com/adamnordling/master-thesis-trajectory-data-augmentation"
+                                   target="_blank" rel="noopener noreferrer" class="btn-primary">
+                                    <span lang="en">GitHub Repository</span>
+                                    <span lang="sv">GitHub-källkod</span>
+                                </a>
+                                <a href="https://arxiv.org/abs/2606.10938" target="_blank" rel="noopener noreferrer"
+                                   class="btn-secondary">
+                                    <span>arXiv Paper ↗</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Hover Context Drawer (100% Accurate Architecture from pyproject.toml / src/) -->
+                        <div class="app-tech-drawer">
+                            <div class="tech-drawer-inner">
+                                <div class="tech-drawer-label">
+                                    <span lang="en">Architecture &amp; Tech Stack</span>
+                                    <span lang="sv">Arkitektur &amp; Teknikstack</span>
+                                </div>
+                                <p class="tech-drawer-text">
+                                    <span lang="en">Architected in Python 3.11 with a strict <code>src/</code> layout, YAML control centers, PyArrow Feather serialization, Numba JIT acceleration, and Optuna HPO loops. Enforces static typing via Mypy and code standards via Ruff.</span>
+                                    <span lang="sv">Arkitekturerad i Python 3.11 med strikt <code>src/</code>-layout, YAML-konfigurationscenter, PyArrow Feather-serialisering, Numba JIT-acceleration och Optuna HPO-loopar. Strikt typsäkrad via Mypy och lintad med Ruff.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
                     <article class="app-card" data-category="web" data-skills="web languages data">
                         <div class="app-img-container">
                             <!-- Live Status Badge (Change data-live-enabled to 'true' or 'false') -->
@@ -572,7 +666,7 @@
                                                     </span>
                             </div>
                             <img
-                                    src="./src/assets/nutrition-image.jpg"
+                                    src="./src/assets/nutrition-image.png"
                                     alt="Nutritional app preview"
                                     style="width: 100%; object-fit: cover;"
                             >
@@ -614,6 +708,8 @@
                             </div>
                         </div>
                     </article>
+
+
                 </div>
             </div>
 
