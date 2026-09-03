@@ -33,7 +33,11 @@ Adda cloudflare analytics och mer?
 
 
 
+Tools ideas:
 
+png converter etc
+
+Optimize OS systems, SAFE, ,GOOD, VALID
 
 ----------------
 
