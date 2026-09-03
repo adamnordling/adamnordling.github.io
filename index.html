@@ -1,208 +1,265 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
-        <meta
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)"/>
+    <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)"/>
+    <meta
             http-equiv="Content-Security-Policy"
             content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
-        />
-        <!-- Professional SEO & Metadata -->
-        <title>Adam Nordling | Software Engineer</title>
-        <meta
+    />
+    <!-- Professional SEO & Metadata -->
+    <title>Adam Nordling | Software Engineer</title>
+    <meta
             name="description"
             content="Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web development, software architecture, machine learning, and network security."
-        />
-        <meta name="author" content="Adam Nordling" />
-        <meta name="robots" content="index, follow" />
+    />
+    <meta name="author" content="Adam Nordling"/>
+    <meta name="robots" content="index, follow"/>
 
-        <!-- Open Graph Meta Tags -->
-        <meta property="og:title" content="Adam Nordling | Software Engineer" />
-        <meta
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Adam Nordling | Software Engineer"/>
+    <meta
             property="og:description"
             content="Explore projects in fullstack web development, machine learning pipelines, and network security."
-        />
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://adamnordling.github.io/" />
-        <link rel="canonical" href="https://adamnordling.github.io/" />
-        <meta property="og:image" content="./src/assets/profile-picture-resized.webp" />
+    />
+    <meta property="og:type" content="profile"/>
+    <meta property="og:url" content="https://adamnordling.github.io/"/>
+    <link rel="canonical" href="https://adamnordling.github.io/"/>
+    <meta property="og:image" content="./src/assets/profile-picture-resized.webp"/>
 
-        <!-- Stylesheets & Assets -->
-        <link rel="stylesheet" href="./src/style.css" />
-        <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "Person",
-                "name": "Adam Nordling",
-                "jobTitle": "Software Engineer",
-                "alumniOf": {
-                    "@type": "CollegeOrUniversity",
-                    "name": "Linnaeus University"
-                },
-                "url": "https://adamnordling.github.io",
-                "sameAs": ["https://github.com/adamnordling", "https://linkedin.com/in/adamnordling"]
-            }
-        </script>
-    </head>
-    <body class="light-theme">
-        <!-- Interactive Dot Matrix Background (Left & Right Flanks) -->
-        <canvas id="bg-canvas" aria-hidden="true"></canvas>
-        <!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
-        <!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
-        <aside class="hotkeys-indicator" aria-label="Keyboard shortcuts">
+    <!-- Stylesheets & Assets -->
+    <link rel="stylesheet" href="./src/style.css"/>
+    <link rel="stylesheet" href="./src/tools/converter.css"/>
+    <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg"/>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Adam Nordling",
+            "jobTitle": "Software Engineer",
+            "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "Linnaeus University"
+            },
+            "url": "https://adamnordling.github.io",
+            "sameAs": [
+                "https://github.com/adamnordling",
+                "https://linkedin.com/in/adamnordling"
+            ]
+        }
+    </script>
+</head>
+<body class="light-theme">
+<!-- Interactive Dot Matrix Background (Left & Right Flanks) -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
+<!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
+<aside class="hotkeys-indicator" aria-label="Keyboard shortcuts">
             <span class="hotkeys-prefix">
                 <span lang="en">Hotkeys:</span>
                 <span lang="sv">Kortkommandon:</span>
             </span>
-            <div class="hotkey-item">
-                <kbd>T</kbd>
-                <span lang="en">Theme</span>
-                <span lang="sv">Tema</span>
-            </div>
-            <div class="hotkey-item">
-                <kbd>L</kbd>
-                <span lang="en">Lang</span>
-                <span lang="sv">Språk</span>
-            </div>
-            <div class="hotkey-item">
-                <kbd>C</kbd>
-                <span>CV</span>
-            </div>
-            <div class="hotkey-item">
-                <kbd>F</kbd>
-                <span lang="en">Font</span>
-                <span lang="sv">Typsnitt</span>
-            </div>
-            <div class="hotkey-item">
-                <kbd>1–4</kbd>
-                <span lang="en">Open Repo</span>
-                <span lang="sv">Öppna repo</span>
-            </div>
-            <div class="hotkey-item">
-                <kbd>↑↓</kbd>
-                <span lang="en">Scroll</span>
-                <span lang="sv">Rulla</span>
-            </div>
-        </aside>
-        <!-- TOP CONTROLS: Theme Toggle + Language Menu -->
-        <div class="top-controls">
-            <!-- Theme Toggle Button -->
-            <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
-                <svg
-                    class="sun-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <path d="M12 2v2"></path>
-                    <path d="M12 20v2"></path>
-                    <path d="m4.93 4.93 1.41 1.41"></path>
-                    <path d="m17.66 17.66 1.41 1.41"></path>
-                    <path d="M2 12h2"></path>
-                    <path d="M22 12h2"></path>
-                    <path d="m6.34 17.66-1.41 1.41"></path>
-                    <path d="m19.07 4.93-1.41 1.41"></path>
-                </svg>
-                <svg
-                    class="moon-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                >
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                </svg>
-            </button>
+    <div class="hotkey-item">
+        <kbd>T</kbd>
+        <span lang="en">Theme</span>
+        <span lang="sv">Tema</span>
+    </div>
+    <div class="hotkey-item">
+        <kbd>L</kbd>
+        <span lang="en">Lang</span>
+        <span lang="sv">Språk</span>
+    </div>
+    <div class="hotkey-item">
+        <kbd>C</kbd>
+        <span>CV</span>
+    </div>
+    <div class="hotkey-item">
+        <kbd>F</kbd>
+        <span lang="en">Font</span>
+        <span lang="sv">Typsnitt</span>
+    </div>
+    <div class="hotkey-item">
+        <kbd>1–4</kbd>
+        <span lang="en">Open Repo</span>
+        <span lang="sv">Öppna repo</span>
+    </div>
+    <div class="hotkey-item">
+        <kbd>↑↓</kbd>
+        <span lang="en">Scroll</span>
+        <span lang="sv">Rulla</span>
+    </div>
+</aside>
+<!-- TOP CONTROLS: Theme Toggle + Language Menu -->
+<div class="top-controls">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
+        <svg
+                class="sun-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+        >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M22 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <svg
+                class="moon-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+        >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+    </button>
 
-            <!-- Language Selector Dropdown -->
-            <div class="lang-dropdown">
-                <button class="lang-trigger" type="button" aria-label="Select Language">
-                    <span class="lang-current-label">EN</span>
-                    <svg
-                        class="chevron"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="m6 9 6 6 6-6" />
-                    </svg>
-                </button>
-                <div class="lang-menu">
-                    <button class="lang-btn active" data-lang="en" type="button">
-                        <strong>English</strong>
-                        <small>EN</small>
-                    </button>
-                    <button class="lang-btn" data-lang="sv" type="button">
-                        <strong>Svenska</strong>
-                        <small>SV</small>
-                    </button>
-                </div>
-            </div>
+    <!-- Language Selector Dropdown -->
+    <div class="lang-dropdown">
+        <button class="lang-trigger" type="button" aria-label="Select Language">
+            <span class="lang-current-label">EN</span>
+            <svg
+                    class="chevron"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+            >
+                <path d="m6 9 6 6 6-6"/>
+            </svg>
+        </button>
+        <div class="lang-menu">
+            <button class="lang-btn active" data-lang="en" type="button">
+                <strong>English</strong>
+                <small>EN</small>
+            </button>
+            <button class="lang-btn" data-lang="sv" type="button">
+                <strong>Svenska</strong>
+                <small>SV</small>
+            </button>
         </div>
-        <!-- TOP-RIGHT CLOCK WIDGET -->
-        <aside class="live-clock" aria-label="Current time and date">
-            <div class="clock-time" id="clock-time">00:00:00</div>
-            <div class="clock-details">
+    </div>
+</div>
+<!-- TOP-RIGHT CLOCK WIDGET -->
+<aside class="live-clock" aria-label="Current time and date">
+    <div class="clock-time" id="clock-time">00:00:00</div>
+    <div class="clock-details">
                 <span class="clock-week">
                     <span lang="en">W</span><span lang="sv">V</span><span id="clock-week-num">--</span>
                 </span>
-                <span class="clock-divider">·</span>
-                <span class="clock-year" id="clock-year">----</span>
-            </div>
-        </aside>
-        <div class="portfolio-wrapper">
-            <main class="main-container">
-                <!-- LEFT PANEL: Minimal Column -->
-                <section class="left-panel" aria-label="Introduction & Profile">
-                    <!-- 1. Profile Header Layout -->
-                    <header class="profile-header">
-                        <!-- 3D Card Wrapper -->
-                        <div class="profile-card-container">
-                            <div class="profile-card-inner">
-                                <img
-                                    src="./src/assets/profile-picture-resized.webp"
-                                    alt="Adam Nordling Profile Portrait"
-                                    class="profile-img"
-                                    width="293"
-                                    height="255"
-                                    fetchpriority="high"
-                                    draggable="false"
-                                />
-                                <div class="spotlight" aria-hidden="true"></div>
-                            </div>
-                        </div>
+        <span class="clock-divider">·</span>
+        <span class="clock-year" id="clock-year">----</span>
+    </div>
+</aside>
+<div class="portfolio-wrapper">
+    <main class="main-container">
+        <!-- LEFT PANEL: Minimal Column -->
+        <section class="left-panel" aria-label="Introduction & Profile">
+            <!-- 1. Profile Header Layout -->
+            <header class="profile-header">
+                <!-- 3D Card Wrapper -->
+                <div class="profile-card-container">
+                    <div class="profile-card-inner">
+                        <img
+                                src="./src/assets/profile-picture-resized.webp"
+                                alt="Adam Nordling Profile Portrait"
+                                class="profile-img"
+                                width="293"
+                                height="255"
+                                fetchpriority="high"
+                                draggable="false"
+                        />
+                        <div class="spotlight" aria-hidden="true"></div>
+                    </div>
+                </div>
 
-                        <!-- Right Column: Socials, Name & Title -->
-                        <div class="profile-info">
-                            <div class="header-socials">
-                                <a
-                                    href="https://github.com/adamnordling"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="GitHub Profile"
-                                    class="social-btn-1"
-                                >
-                                    <svg
+                <!-- Right Column: Socials, Name & Title -->
+                <div class="profile-info">
+                    <div class="header-socials">
+                        <a
+                                href="https://github.com/adamnordling"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub Profile"
+                                class="social-btn-1"
+                        >
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                            >
+                                <path
+                                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                                ></path>
+                                <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                            </svg>
+                        </a>
+                        <a
+                                href="https://linkedin.com/in/adamnordling"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn Profile"
+                                class="social-btn-2"
+                        >
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    aria-hidden="true"
+                            >
+                                <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                                ></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <!-- Button 3 (Email with Zero-Scrape Obfuscation) -->
+                        <div class="email-wrapper">
+                            <button
+                                    type="button"
+                                    class="social-btn-3"
+                                    id="email-copy-btn"
+                                    data-obf="YWRhbW5vcmRsaW5nQGxpdmUuc2U="
+                                    aria-label="Copy email address to clipboard"
+                            >
+                                <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="20"
                                         height="20"
@@ -213,210 +270,157 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-                                        ></path>
-                                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                                    </svg>
-                                </a>
-                                <a
-                                    href="https://linkedin.com/in/adamnordling"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="LinkedIn Profile"
-                                    class="social-btn-2"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                                        ></path>
-                                        <rect x="2" y="9" width="4" height="12"></rect>
-                                        <circle cx="4" cy="4" r="2"></circle>
-                                    </svg>
-                                </a>
-                                <!-- Button 3 (Email with Zero-Scrape Obfuscation) -->
-                                <div class="email-wrapper">
-                                    <button
-                                        type="button"
-                                        class="social-btn-3"
-                                        id="email-copy-btn"
-                                        data-obf="YWRhbW5vcmRsaW5nQGxpdmUuc2U="
-                                        aria-label="Copy email address to clipboard"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            aria-hidden="true"
-                                        >
-                                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                                        </svg>
-                                    </button>
-                                    <div class="email-toast" id="email-toast" role="status" aria-live="polite">
-                                        <span class="toast-checkmark">✓</span>
-                                        <span lang="en">Copied to clipboard</span>
-                                        <span lang="sv">Kopierat till urklipp</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="name-title">Adam Nordling</h1>
-                            <p class="subtitle">
-                                <span lang="en">Software Engineer</span>
-                                <span lang="sv">Mjukvaruingenjör</span>
-                            </p>
-                            <div class="cv-action-wrapper">
-                                <div class="cv-badge">
-                                    <span class="cv-badge-dot"></span>
-                                    <span lang="en">CV: </span>
-                                    <span lang="sv">CV:</span>
-                                </div>
-                                <div class="cv-actions">
-                                    <button
-                                        type="button"
-                                        class="cv-btn cv-btn-view"
-                                        id="open-cv-modal"
-                                        aria-label="View CV preview"
-                                    >
-                                        <span lang="en">View</span>
-                                        <span lang="sv">Visa</span>
-                                    </button>
-                                    <span class="cv-divider">/</span>
-                                    <a
-                                        href="./src/assets/resume.pdf"
-                                        download="Adam_Nordling_CV.pdf"
-                                        class="cv-btn cv-btn-download"
-                                        aria-label="Download CV as PDF"
-                                    >
-                                        <span lang="en">Download</span>
-                                        <span lang="sv">Ladda ner</span>
-                                    </a>
-                                </div>
+                                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                </svg>
+                            </button>
+                            <div class="email-toast" id="email-toast" role="status" aria-live="polite">
+                                <span class="toast-checkmark">✓</span>
+                                <span lang="en">Copied to clipboard</span>
+                                <span lang="sv">Kopierat till urklipp</span>
                             </div>
                         </div>
-                    </header>
+                    </div>
+                    <h1 class="name-title">Adam Nordling</h1>
+                    <p class="subtitle">
+                        <span lang="en">Software Engineer</span>
+                        <span lang="sv">Mjukvaruingenjör</span>
+                    </p>
+                    <div class="cv-action-wrapper">
+                        <div class="cv-badge">
+                            <span class="cv-badge-dot"></span>
+                            <span lang="en">CV: </span>
+                            <span lang="sv">CV:</span>
+                        </div>
+                        <div class="cv-actions">
+                            <button
+                                    type="button"
+                                    class="cv-btn cv-btn-view"
+                                    id="open-cv-modal"
+                                    aria-label="View CV preview"
+                            >
+                                <span lang="en">View</span>
+                                <span lang="sv">Visa</span>
+                            </button>
+                            <span class="cv-divider">/</span>
+                            <a
+                                    href="./src/assets/resume.pdf"
+                                    download="Adam_Nordling_CV.pdf"
+                                    class="cv-btn cv-btn-download"
+                                    aria-label="Download CV as PDF"
+                            >
+                                <span lang="en">Download</span>
+                                <span lang="sv">Ladda ner</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-                    <!-- 2. Bio Quote -->
-                    <blockquote class="intro-quote">
+            <!-- 2. Bio Quote -->
+            <blockquote class="intro-quote">
                         <span class="bio-teaser">
                             <span lang="en"
-                                >Newly graduated software technology master's student, with a broad technical foundation
+                            >Newly graduated software technology master's student, with a broad technical foundation
                                 in web development, software architecture, and machine learning...</span
                             >
                             <span lang="sv"
-                                >Nyexaminerad masterstudent inom programvaruteknik med en bred teknisk grund inom
+                            >Nyexaminerad masterstudent inom programvaruteknik med en bred teknisk grund inom
                                 webbutveckling, mjukvaruarkitektur och maskininlärning...</span
                             >
                         </span>
-                        <button class="bio-toggle" aria-expanded="false" type="button">
-                            <span lang="en">[Read more]</span>
-                            <span lang="sv">[Läs mer]</span>
-                        </button>
+                <button class="bio-toggle" aria-expanded="false" type="button">
+                    <span lang="en">[Read more]</span>
+                    <span lang="sv">[Läs mer]</span>
+                </button>
 
-                        <div class="bio-expandable">
-                            <div class="bio-expandable-content">
-                                <div lang="en">
-                                    <p>
-                                        My practical background includes developing robust fullstack applications,
-                                        implementing AI models, managing relational and non-relational databases, and
-                                        constructing continuous integration/deployment (CI/CD) pipelines.
-                                    </p>
-                                    <p>
-                                        Accustomed to problem-oriented work in agile environments, I focus heavily on
-                                        writing clean, modular code. I prefer working with Python, data architectures,
-                                        automation and responsive frontend environments. Here I share my projects, most
-                                        of which are openly shared and open-source.
-                                    </p>
-                                    <p>
-                                        My core toolkit includes Python, JavaScript/TypeScript, Java, C++, SQL, Docker,
-                                        Linux, and GitLab CI/CD.
-                                    </p>
-                                </div>
-                                <div lang="sv">
-                                    <p>
-                                        Min praktiska bakgrund innefattar utveckling av robusta fullstack-applikationer,
-                                        implementering av AI-modeller, hantering av relations- och
-                                        icke-relationsdatabaser samt konstruktion av CI/CD-pipelines.
-                                    </p>
-                                    <p>
-                                        Van vid problemorienterat arbete i agila miljöer med stort fokus på ren, modulär
-                                        kod. Jag arbetar helst med Python, dataarkitekturer, automatisering och
-                                        responsiva frontend-miljöer. Här delar jag mina projekt, varav de flesta är
-                                        öppen källkod.
-                                    </p>
-                                    <p>
-                                        Min kärnverktygslåda inkluderar Python, JavaScript/TypeScript, Java, C++, SQL,
-                                        Docker, Linux och GitLab CI/CD.
-                                    </p>
-                                </div>
-                            </div>
+                <div class="bio-expandable">
+                    <div class="bio-expandable-content">
+                        <div lang="en">
+                            <p>
+                                My practical background includes developing robust fullstack applications,
+                                implementing AI models, managing relational and non-relational databases, and
+                                constructing continuous integration/deployment (CI/CD) pipelines.
+                            </p>
+                            <p>
+                                Accustomed to problem-oriented work in agile environments, I focus heavily on
+                                writing clean, modular code. I prefer working with Python, data architectures,
+                                automation and responsive frontend environments. Here I share my projects, most
+                                of which are openly shared and open-source.
+                            </p>
+                            <p>
+                                My core toolkit includes Python, JavaScript/TypeScript, Java, C++, SQL, Docker,
+                                Linux, and GitLab CI/CD.
+                            </p>
                         </div>
-                    </blockquote>
+                        <div lang="sv">
+                            <p>
+                                Min praktiska bakgrund innefattar utveckling av robusta fullstack-applikationer,
+                                implementering av AI-modeller, hantering av relations- och
+                                icke-relationsdatabaser samt konstruktion av CI/CD-pipelines.
+                            </p>
+                            <p>
+                                Van vid problemorienterat arbete i agila miljöer med stort fokus på ren, modulär
+                                kod. Jag arbetar helst med Python, dataarkitekturer, automatisering och
+                                responsiva frontend-miljöer. Här delar jag mina projekt, varav de flesta är
+                                öppen källkod.
+                            </p>
+                            <p>
+                                Min kärnverktygslåda inkluderar Python, JavaScript/TypeScript, Java, C++, SQL,
+                                Docker, Linux och GitLab CI/CD.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </blockquote>
 
-                    <!-- 3. Education Section -->
-                    <section class="section-edu">
-                        <h2>
-                            <span lang="en">Education</span>
-                            <span lang="sv">Utbildning</span>
-                        </h2>
-                        <ul class="education-list">
-                            <!-- Master's Degree -->
-                            <li class="edu-item">
-                                <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                    <div class="edu-header">
+            <!-- 3. Education Section -->
+            <section class="section-edu">
+                <h2>
+                    <span lang="en">Education</span>
+                    <span lang="sv">Utbildning</span>
+                </h2>
+                <ul class="education-list">
+                    <!-- Master's Degree -->
+                    <li class="edu-item">
+                        <button type="button" class="edu-toggle-btn" aria-expanded="false">
+                            <div class="edu-header">
                                         <span class="edu-title">
                                             <span lang="en">Master's Degree in Software Technology (120 HP)</span>
                                             <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
                                         </span>
-                                        <span class="edu-date">2023 – 2026</span>
+                                <span class="edu-date">2023 – 2026</span>
+                            </div>
+                            <div class="edu-school-row">
+                                <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
+                                <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
+                                <svg
+                                        class="chevron"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                >
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="edu-drawer">
+                            <div class="edu-drawer-content">
+                                <div class="thesis-box">
+                                    <div class="thesis-header">
+                                        <span class="thesis-tag">Master's Thesis · 2026</span>
+                                        <h3 class="thesis-title">
+                                            A Systematic Approach for Selecting Trajectories for Data
+                                            Augmentation
+                                        </h3>
                                     </div>
-                                    <div class="edu-school-row">
-                                        <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
-                                        <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
-                                        <svg
-                                            class="chevron"
-                                            width="12"
-                                            height="12"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                        >
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div class="edu-drawer">
-                                    <div class="edu-drawer-content">
-                                        <div class="thesis-box">
-                                            <div class="thesis-header">
-                                                <span class="thesis-tag">Master's Thesis · 2026</span>
-                                                <h3 class="thesis-title">
-                                                    A Systematic Approach for Selecting Trajectories for Data
-                                                    Augmentation
-                                                </h3>
-                                            </div>
-                                            <p class="thesis-abstract">
+                                    <p class="thesis-abstract">
                                                 <span lang="en"
-                                                    >Trajectory data augmentation mitigates data scarcity in machine
+                                                >Trajectory data augmentation mitigates data scarcity in machine
                                                     learning, but preserving spatio-temporal coherence remains
                                                     challenging. This thesis establishes a systematic and scalable
                                                     framework evaluating five selection strategies: Outlierness,
@@ -428,8 +432,8 @@
                                                     stability over random sampling, demonstrating that strategic data
                                                     selection is a primary determinant of augmentation success.</span
                                                 >
-                                                <span lang="sv"
-                                                    >Dataaugmentering av trajektorier minskar databrist inom
+                                        <span lang="sv"
+                                        >Dataaugmentering av trajektorier minskar databrist inom
                                                     maskininlärning, men att bevara rumslig och tidsmässig koherens är
                                                     komplext. Detta examensarbete utvecklar ett systematiskt och
                                                     skalbart ramverk för att utvärdera fem urvalsstrategier:
@@ -441,73 +445,73 @@
                                                     gentemot slumpmässigt urval, vilket etablerar att strategiskt
                                                     dataurval är en avgörande faktor för framgångsrik
                                                     augmentering.</span
-                                                >
-                                            </p>
-                                            <div class="thesis-links">
-                                                <a
-                                                    href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="thesis-btn"
-                                                    aria-label="View Master's Thesis on DiVA Portal"
-                                                >
-                                                    <span>DiVA Portal</span>
-                                                    <span class="thesis-ext-icon">↗</span>
-                                                </a>
-                                                <a
-                                                    href="https://arxiv.org/abs/2606.10938"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="thesis-btn thesis-arxiv"
-                                                    aria-label="View Master's Thesis preprint on arXiv"
-                                                >
-                                                    <span>arXiv</span>
-                                                    <span class="thesis-ext-icon">↗</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        >
+                                    </p>
+                                    <div class="thesis-links">
+                                        <a
+                                                href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="thesis-btn"
+                                                aria-label="View Master's Thesis on DiVA Portal"
+                                        >
+                                            <span>DiVA Portal</span>
+                                            <span class="thesis-ext-icon">↗</span>
+                                        </a>
+                                        <a
+                                                href="https://arxiv.org/abs/2606.10938"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="thesis-btn thesis-arxiv"
+                                                aria-label="View Master's Thesis preprint on arXiv"
+                                        >
+                                            <span>arXiv</span>
+                                            <span class="thesis-ext-icon">↗</span>
+                                        </a>
                                     </div>
                                 </div>
-                            </li>
+                            </div>
+                        </div>
+                    </li>
 
-                            <!-- Bachelor's Degree -->
-                            <li class="edu-item">
-                                <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                    <div class="edu-header">
+                    <!-- Bachelor's Degree -->
+                    <li class="edu-item">
+                        <button type="button" class="edu-toggle-btn" aria-expanded="false">
+                            <div class="edu-header">
                                         <span class="edu-title">
                                             <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
                                             <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
                                         </span>
-                                        <span class="edu-date">2020 – 2023</span>
+                                <span class="edu-date">2020 – 2023</span>
+                            </div>
+                            <div class="edu-school-row">
+                                <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
+                                <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
+                                <svg
+                                        class="chevron"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                >
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </div>
+                        </button>
+                        <div class="edu-drawer">
+                            <div class="edu-drawer-content">
+                                <div class="thesis-box">
+                                    <div class="thesis-header">
+                                        <span class="thesis-tag">Bachelor's Thesis · 2023</span>
+                                        <h3 class="thesis-title">
+                                            Edge Computing Security for IoT: A Systematic Literature Review
+                                        </h3>
                                     </div>
-                                    <div class="edu-school-row">
-                                        <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
-                                        <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
-                                        <svg
-                                            class="chevron"
-                                            width="12"
-                                            height="12"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                        >
-                                            <path d="m6 9 6 6 6-6" />
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div class="edu-drawer">
-                                    <div class="edu-drawer-content">
-                                        <div class="thesis-box">
-                                            <div class="thesis-header">
-                                                <span class="thesis-tag">Bachelor's Thesis · 2023</span>
-                                                <h3 class="thesis-title">
-                                                    Edge Computing Security for IoT: A Systematic Literature Review
-                                                </h3>
-                                            </div>
-                                            <p class="thesis-abstract">
+                                    <p class="thesis-abstract">
                                                 <span lang="en"
-                                                    >A systematic literature review (SLR) analyzing 82 primary studies
+                                                >A systematic literature review (SLR) analyzing 82 primary studies
                                                     from an initial pool of 1,667 articles across four digital libraries
                                                     to evaluate IoT security threats in edge computing. The research
                                                     examines distinct vulnerabilities across sensors, gateways, and
@@ -516,8 +520,8 @@
                                                     technologies to enhance security, privacy, and trust in edge
                                                     environments.</span
                                                 >
-                                                <span lang="sv"
-                                                    >En systematisk litteraturstudie (SLR) som analyserar 82 primära
+                                        <span lang="sv"
+                                        >En systematisk litteraturstudie (SLR) som analyserar 82 primära
                                                     studier från ett urval av 1 667 artiklar över fyra digitala
                                                     bibliotek för att utvärdera säkerhetshot mot IoT i edge
                                                     computing-miljöer. Studien granskar unika sårbarheter hos sensorer,
@@ -525,574 +529,694 @@
                                                     kryptografi, samt de arkitektoniska fördelarna med att integrera
                                                     blockkedje- och 5G-teknik för att stärka säkerhet, integritet och
                                                     tillit i distribuerade edge-miljöer.</span
-                                                >
-                                            </p>
-                                            <div class="thesis-links">
-                                                <a
-                                                    href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    class="thesis-btn"
-                                                    aria-label="View Bachelor's Thesis on DiVA Portal"
-                                                >
-                                                    <span>DiVA Portal</span>
-                                                    <span class="thesis-ext-icon">↗</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        >
+                                    </p>
+                                    <div class="thesis-links">
+                                        <a
+                                                href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="thesis-btn"
+                                                aria-label="View Bachelor's Thesis on DiVA Portal"
+                                        >
+                                            <span>DiVA Portal</span>
+                                            <span class="thesis-ext-icon">↗</span>
+                                        </a>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </section>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
 
-                    <!-- 4. Skills Section -->
-                    <section class="section-skills">
-                        <h2>
-                            <span lang="en">Skills</span>
-                            <span lang="sv">Kompetenser</span>
-                        </h2>
-                        <div class="skills-grid">
-                            <div class="skills-column">
-                                <div class="skill-item" data-skill-id="python">
-                                    <span class="skill-name">Python &amp; ML</span>
-                                    <span class="skill-score">TensorFlow, Keras, Scikit</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="web">
-                                    <span class="skill-name">Web &amp; APIs</span>
-                                    <span class="skill-score">Angular, Node, Express, Flask</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="lowlevel">
+            <!-- 4. Skills Section -->
+            <section class="section-skills">
+                <h2>
+                    <span lang="en">Skills</span>
+                    <span lang="sv">Kompetenser</span>
+                </h2>
+                <div class="skills-grid">
+                    <div class="skills-column">
+                        <div class="skill-item" data-skill-id="python">
+                            <span class="skill-name">Python &amp; ML</span>
+                            <span class="skill-score">TensorFlow, Keras, Scikit</span>
+                        </div>
+                        <div class="skill-item" data-skill-id="web">
+                            <span class="skill-name">Web &amp; APIs</span>
+                            <span class="skill-score">Angular, Node, Express, Flask</span>
+                        </div>
+                        <div class="skill-item" data-skill-id="lowlevel">
                                     <span class="skill-name">
                                         <span lang="en">Low-Level</span>
                                         <span lang="sv">Lågnivå</span>
                                     </span>
-                                    <span class="skill-score">C, C++, CUDA</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="languages">
+                            <span class="skill-score">C, C++, CUDA</span>
+                        </div>
+                        <div class="skill-item" data-skill-id="languages">
                                     <span class="skill-name">
                                         <span lang="en">Languages</span>
                                         <span lang="sv">Språk</span>
                                     </span>
-                                    <span class="skill-score">TypeScript, Java, JS, SQL</span>
-                                </div>
-                            </div>
-
-                            <div class="skills-column">
-                                <div class="skill-item" data-skill-id="data">
-                                    <span class="skill-name">Data Stack</span>
-                                    <span class="skill-score">NumPy, Pandas, Databases</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="security">
-                                    <span class="skill-name">Network Sec</span>
-                                    <span class="skill-score">Wireshark, Protocols</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="devops">
-                                    <span class="skill-name">DevOps &amp; CI</span>
-                                    <span class="skill-score">Docker, Git Pipelines</span>
-                                </div>
-                                <div class="skill-item" data-skill-id="os">
-                                    <span class="skill-name">OS &amp; Shell</span>
-                                    <span class="skill-score">Linux, CachyOS, Bash</span>
-                                </div>
-                            </div>
+                            <span class="skill-score">TypeScript, Java, JS, SQL</span>
                         </div>
-                    </section>
+                    </div>
 
-                    <!-- 5. Recent Activity Section -->
-                    <section class="section-activity">
-                        <h2>
-                            <span lang="en">Recent Activity</span>
-                            <span lang="sv">Senaste aktivitet</span>
-                        </h2>
-                        <div class="activity-feed" id="activity-feed">
-                            <div class="activity-skeleton">
-                                <span class="activity-pulse"></span>
-                                <span lang="en">Connecting to GitHub...</span>
-                                <span lang="sv">Ansluter till GitHub...</span>
-                            </div>
+                    <div class="skills-column">
+                        <div class="skill-item" data-skill-id="data">
+                            <span class="skill-name">Data Stack</span>
+                            <span class="skill-score">NumPy, Pandas, Databases</span>
                         </div>
-                    </section>
-                </section>
-
-                <!-- RIGHT PANEL: Projects & Tools -->
-                <section class="right-panel" aria-label="Content Panel">
-                    <div class="right-header">
-                        <div class="header-title-group">
-                            <h2 id="view-title">
-                                <span class="view-title-projects" lang="en">Projects</span>
-                                <span class="view-title-projects" lang="sv">Projekt</span>
-                                <span class="view-title-tools" lang="en" style="display: none">Tools</span>
-                                <span class="view-title-tools" lang="sv" style="display: none">Verktyg</span>
-                            </h2>
-                            <button
-                                class="back-to-projects-btn"
-                                id="back-to-projects"
-                                type="button"
-                                style="display: none"
-                            >
-                                <span lang="en">← Back to Projects</span>
-                                <span lang="sv">← Tillbaka till Projekt</span>
-                            </button>
+                        <div class="skill-item" data-skill-id="security">
+                            <span class="skill-name">Network Sec</span>
+                            <span class="skill-score">Wireshark, Protocols</span>
                         </div>
+                        <div class="skill-item" data-skill-id="devops">
+                            <span class="skill-name">DevOps &amp; CI</span>
+                            <span class="skill-score">Docker, Git Pipelines</span>
+                        </div>
+                        <div class="skill-item" data-skill-id="os">
+                            <span class="skill-name">OS &amp; Shell</span>
+                            <span class="skill-score">Linux, CachyOS, Bash</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <div class="header-actions">
-                            <!-- 1. Category Filter -->
-                            <div class="filter-dropdown" id="projects-filter">
-                                <button class="filter-trigger" id="active-filter-label" type="button">
-                                    <span lang="en">Category:</span>
-                                    <span lang="sv">Kategori:</span>
-                                    <span class="filter-selected">
+            <!-- 5. Recent Activity Section -->
+            <section class="section-activity">
+                <h2>
+                    <span lang="en">Recent Activity</span>
+                    <span lang="sv">Senaste aktivitet</span>
+                </h2>
+                <div class="activity-feed" id="activity-feed">
+                    <div class="activity-skeleton">
+                        <span class="activity-pulse"></span>
+                        <span lang="en">Connecting to GitHub...</span>
+                        <span lang="sv">Ansluter till GitHub...</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- RIGHT PANEL: Projects & Tools -->
+        <section class="right-panel" aria-label="Content Panel">
+            <div class="right-header">
+                <div class="header-title-group">
+                    <h2 id="view-title">
+                        <span class="view-title-projects" lang="en">Projects</span>
+                        <span class="view-title-projects" lang="sv">Projekt</span>
+                        <span class="view-title-tools" lang="en" style="display: none">Tools</span>
+                        <span class="view-title-tools" lang="sv" style="display: none">Verktyg</span>
+                    </h2>
+                    <button
+                            class="back-to-projects-btn"
+                            id="back-to-projects"
+                            type="button"
+                            style="display: none"
+                    >
+                        <span lang="en">← Back to Projects</span>
+                        <span lang="sv">← Tillbaka till Projekt</span>
+                    </button>
+                </div>
+
+                <div class="header-actions">
+                    <!-- 1. Category Filter -->
+                    <div class="filter-dropdown" id="projects-filter">
+                        <button class="filter-trigger" id="active-filter-label" type="button">
+                            <span lang="en">Category:</span>
+                            <span lang="sv">Kategori:</span>
+                            <span class="filter-selected">
                                         <span lang="en">All</span>
                                         <span lang="sv">Alla</span>
                                     </span>
-                                    <svg
-                                        class="chevron"
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </button>
-                                <div class="filter-menu">
-                                    <button class="filter-btn active" data-filter="all" type="button">
+                            <svg
+                                    class="chevron"
+                                    width="12"
+                                    height="12"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                            >
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="filter-menu">
+                            <button class="filter-btn active" data-filter="all" type="button">
                                         <span>
                                             <span lang="en">All Projects</span>
                                             <span lang="sv">Alla Projekt</span>
                                         </span>
-                                        <span class="filter-count"></span>
-                                    </button>
-                                    <button class="filter-btn" data-filter="web" type="button">
+                                <span class="filter-count"></span>
+                            </button>
+                            <button class="filter-btn" data-filter="web" type="button">
                                         <span>
                                             <span lang="en">Web</span>
                                             <span lang="sv">Webb</span>
                                         </span>
-                                        <span class="filter-count"></span>
-                                    </button>
-                                    <button class="filter-btn" data-filter="ai" type="button">
-                                        <span>AI / ML</span>
-                                        <span class="filter-count"></span>
-                                    </button>
-                                    <button class="filter-btn" data-filter="security" type="button">
+                                <span class="filter-count"></span>
+                            </button>
+                            <button class="filter-btn" data-filter="ai" type="button">
+                                <span>AI / ML</span>
+                                <span class="filter-count"></span>
+                            </button>
+                            <button class="filter-btn" data-filter="security" type="button">
                                         <span>
                                             <span lang="en">Security</span>
                                             <span lang="sv">Säkerhet</span>
                                         </span>
-                                        <span class="filter-count"></span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 2. Tools Menu Dropdown -->
-                            <div class="tools-dropdown">
-                                <button class="tools-trigger" type="button" aria-label="Open Tools Menu">
-                                    <span class="menu-icon">≡</span>
-                                    <span lang="en">Tools</span>
-                                    <span lang="sv">Verktyg</span>
-                                    <svg
-                                        class="chevron"
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </button>
-                                <div class="tools-menu">
-                                    <button class="tool-select-btn" data-tool="converter" type="button">
-                                        <strong>
-                                            <span lang="en">Media Converter</span>
-                                            <span lang="sv">Filkonverterare</span>
-                                        </strong>
-                                        <small>PNG, WebP, JPEG, PDF</small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="subnet" type="button">
-                                        <strong>
-                                            <span lang="en">Subnet / CIDR Calc</span>
-                                            <span lang="sv">Subnät / CIDR Calc</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">IP mask & Network analysis</span>
-                                            <span lang="sv">IP-mask & nätverksanalys</span>
-                                        </small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="nutrient" type="button">
-                                        <strong>
-                                            <span lang="en">Nutrient Engine</span>
-                                            <span lang="sv">Näringsmotor</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">Bioavailability & Ratios</span>
-                                            <span lang="sv">Biotillgänglighet & data</span>
-                                        </small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="hash" type="button">
-                                        <strong>
-                                            <span lang="en">Dev Inspector</span>
-                                            <span lang="sv">Utvecklarinspektör</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">Base64, JSON & Hashes</span>
-                                            <span lang="sv">Base64, JSON & Hashning</span>
-                                        </small>
-                                    </button>
-                                </div>
-                            </div>
+                                <span class="filter-count"></span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- PROJECTS VIEW (Default) -->
-                    <div class="projects-view" id="projects-view">
-                        <div class="apps-grid">
-                            <!-- Master's Thesis: Trajectory Data Augmentation Pipeline -->
-                            <article
-                                class="app-card"
-                                data-category="ai"
-                                data-skills="python data lowlevel languages devops"
+                    <!-- 2. Tools Menu Dropdown -->
+                    <div class="tools-dropdown">
+                        <button class="tools-trigger" type="button" aria-label="Open Tools Menu">
+                            <span class="menu-icon">≡</span>
+                            <span lang="en">Tools</span>
+                            <span lang="sv">Verktyg</span>
+                            <svg
+                                    class="chevron"
+                                    width="12"
+                                    height="12"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
                             >
-                                <div class="app-img-container">
-                                    <!-- Live Status Badge -->
-                                    <div class="app-status-badge is-live" data-live-enabled="true">
-                                        <span class="status-dot"></span>
-                                        <span class="status-label-live">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </button>
+                        <div class="tools-menu">
+                            <button class="tool-select-btn" data-tool="converter" type="button">
+                                <strong>
+                                    <span lang="en">Media Converter</span>
+                                    <span lang="sv">Filkonverterare</span>
+                                </strong>
+                                <small>PNG, WebP, JPEG, PDF</small>
+                            </button>
+                            <button class="tool-select-btn" data-tool="subnet" type="button">
+                                <strong>
+                                    <span lang="en">Subnet / CIDR Calc</span>
+                                    <span lang="sv">Subnät / CIDR Calc</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">IP mask & Network analysis</span>
+                                    <span lang="sv">IP-mask & nätverksanalys</span>
+                                </small>
+                            </button>
+                            <button class="tool-select-btn" data-tool="nutrient" type="button">
+                                <strong>
+                                    <span lang="en">Nutrient Engine</span>
+                                    <span lang="sv">Näringsmotor</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">Bioavailability & Ratios</span>
+                                    <span lang="sv">Biotillgänglighet & data</span>
+                                </small>
+                            </button>
+                            <button class="tool-select-btn" data-tool="hash" type="button">
+                                <strong>
+                                    <span lang="en">Dev Inspector</span>
+                                    <span lang="sv">Utvecklarinspektör</span>
+                                </strong>
+                                <small>
+                                    <span lang="en">Base64, JSON & Hashes</span>
+                                    <span lang="sv">Base64, JSON & Hashning</span>
+                                </small>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROJECTS VIEW (Default) -->
+            <div class="projects-view" id="projects-view">
+                <div class="apps-grid">
+                    <!-- Master's Thesis: Trajectory Data Augmentation Pipeline -->
+                    <article
+                            class="app-card"
+                            data-category="ai"
+                            data-skills="python data lowlevel languages devops"
+                    >
+                        <div class="app-img-container">
+                            <!-- Live Status Badge -->
+                            <div class="app-status-badge is-live" data-live-enabled="true">
+                                <span class="status-dot"></span>
+                                <span class="status-label-live">
                                             <span lang="en">M.Sc. Pipeline</span>
                                             <span lang="sv">M.Sc. Pipeline</span>
                                             <span class="status-ping">· Python 3.11</span>
                                         </span>
-                                    </div>
+                            </div>
 
-                                    <!-- Trajectory Vector Graphic Visualization -->
-                                    <svg
-                                        viewBox="0 0 400 200"
-                                        width="100%"
-                                        height="100%"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        style="background: #101014; display: block"
-                                    >
-                                        <defs>
-                                            <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" stop-color="#3b82f6" />
-                                                <stop offset="100%" stop-color="#8b5cf6" />
-                                            </linearGradient>
-                                            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                                                <path
-                                                    d="M 20 0 L 0 0 0 20"
-                                                    fill="none"
-                                                    stroke="rgba(255,255,255,0.035)"
-                                                    stroke-width="1"
-                                                />
-                                            </pattern>
-                                        </defs>
-                                        <rect width="100%" height="100%" fill="url(#grid)" />
-                                        <!-- Augmented Background Dispersion -->
+                            <!-- Trajectory Vector Graphic Visualization -->
+                            <svg
+                                    viewBox="0 0 400 200"
+                                    width="100%"
+                                    height="100%"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    style="background: #101014; display: block"
+                            >
+                                <defs>
+                                    <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#3b82f6"/>
+                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                    </linearGradient>
+                                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
                                         <path
-                                            d="M 30 160 Q 120 40 220 120 T 370 50"
-                                            fill="none"
-                                            stroke="rgba(59, 130, 246, 0.2)"
-                                            stroke-width="3"
-                                            stroke-dasharray="4 4"
+                                                d="M 20 0 L 0 0 0 20"
+                                                fill="none"
+                                                stroke="rgba(255,255,255,0.035)"
+                                                stroke-width="1"
                                         />
-                                        <path
-                                            d="M 30 140 Q 140 20 200 140 T 370 70"
-                                            fill="none"
-                                            stroke="rgba(139, 92, 246, 0.2)"
-                                            stroke-width="3"
-                                            stroke-dasharray="4 4"
-                                        />
-                                        <!-- Primary Mathematical Trajectory -->
-                                        <path
-                                            d="M 30 150 Q 130 30 210 130 T 370 60"
-                                            fill="none"
-                                            stroke="url(#trajGrad)"
-                                            stroke-width="2.5"
-                                        />
-                                        <!-- Selection Centroids -->
-                                        <circle cx="30" cy="150" r="4.5" fill="#3b82f6" />
-                                        <circle cx="150" cy="65" r="5" fill="#60a5fa" />
-                                        <circle cx="210" cy="130" r="4.5" fill="#8b5cf6" />
-                                        <circle cx="295" cy="85" r="4.5" fill="#a78bfa" />
-                                        <circle cx="370" cy="60" r="5" fill="#38bdf8" />
-                                    </svg>
-                                </div>
+                                    </pattern>
+                                </defs>
+                                <rect width="100%" height="100%" fill="url(#grid)"/>
+                                <!-- Augmented Background Dispersion -->
+                                <path
+                                        d="M 30 160 Q 120 40 220 120 T 370 50"
+                                        fill="none"
+                                        stroke="rgba(59, 130, 246, 0.2)"
+                                        stroke-width="3"
+                                        stroke-dasharray="4 4"
+                                />
+                                <path
+                                        d="M 30 140 Q 140 20 200 140 T 370 70"
+                                        fill="none"
+                                        stroke="rgba(139, 92, 246, 0.2)"
+                                        stroke-width="3"
+                                        stroke-dasharray="4 4"
+                                />
+                                <!-- Primary Mathematical Trajectory -->
+                                <path
+                                        d="M 30 150 Q 130 30 210 130 T 370 60"
+                                        fill="none"
+                                        stroke="url(#trajGrad)"
+                                        stroke-width="2.5"
+                                />
+                                <!-- Selection Centroids -->
+                                <circle cx="30" cy="150" r="4.5" fill="#3b82f6"/>
+                                <circle cx="150" cy="65" r="5" fill="#60a5fa"/>
+                                <circle cx="210" cy="130" r="4.5" fill="#8b5cf6"/>
+                                <circle cx="295" cy="85" r="4.5" fill="#a78bfa"/>
+                                <circle cx="370" cy="60" r="5" fill="#38bdf8"/>
+                            </svg>
+                        </div>
 
-                                <div class="app-content">
-                                    <h3>
-                                        <span lang="en">Trajectory ML Augmentation</span>
-                                        <span lang="sv">Trajektorieaugmentering (ML)</span>
-                                    </h3>
-                                    <p>
+                        <div class="app-content">
+                            <h3>
+                                <span lang="en">Trajectory ML Augmentation</span>
+                                <span lang="sv">Trajektorieaugmentering (ML)</span>
+                            </h3>
+                            <p>
                                         <span lang="en"
-                                            >A modular, configuration-driven Python framework evaluating selection
+                                        >A modular, configuration-driven Python framework evaluating selection
                                             strategies (Outlierness, Uncertainty, Diversity) with Optuna across 200GB+
                                             spatio-temporal datasets.</span
                                         >
-                                        <span lang="sv"
-                                            >Ett modulärt, konfigurationsdrivet Python-ramverk som utvärderar
+                                <span lang="sv"
+                                >Ett modulärt, konfigurationsdrivet Python-ramverk som utvärderar
                                             urvalsstrategier (Outlierness, Uncertainty, Diversity) med Optuna över
                                             200GB+ spatial-temporala dataset.</span
-                                        >
-                                    </p>
-                                    <div class="app-links">
-                                        <a
-                                            href="https://github.com/adamnordling/master-thesis-trajectory-data-augmentation"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="btn-primary"
-                                            aria-label="GitHub repository for Trajectory Data Augmentation"
-                                        >
-                                            <span lang="en">GitHub Repository</span>
-                                            <span lang="sv">GitHub-källkod</span>
-                                        </a>
-                                        <a
-                                            href="https://arxiv.org/abs/2606.10938"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="btn-secondary"
-                                            aria-label="Read Trajectory Augmentation research paper on arXiv"
-                                        >
-                                            <span>arXiv Paper ↗</span>
-                                        </a>
-                                    </div>
-                                </div>
+                                >
+                            </p>
+                            <div class="app-links">
+                                <a
+                                        href="https://github.com/adamnordling/master-thesis-trajectory-data-augmentation"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn-primary"
+                                        aria-label="GitHub repository for Trajectory Data Augmentation"
+                                >
+                                    <span lang="en">GitHub Repository</span>
+                                    <span lang="sv">GitHub-källkod</span>
+                                </a>
+                                <a
+                                        href="https://arxiv.org/abs/2606.10938"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn-secondary"
+                                        aria-label="Read Trajectory Augmentation research paper on arXiv"
+                                >
+                                    <span>arXiv Paper ↗</span>
+                                </a>
+                            </div>
+                        </div>
 
-                                <!-- Hover Context Drawer (100% Accurate Architecture from pyproject.toml / src/) -->
-                                <div class="app-tech-drawer">
-                                    <div class="tech-drawer-inner">
-                                        <div class="tech-drawer-label">
-                                            <span lang="en">Architecture &amp; Tech Stack</span>
-                                            <span lang="sv">Arkitektur &amp; Teknikstack</span>
-                                        </div>
-                                        <p class="tech-drawer-text">
+                        <!-- Hover Context Drawer (100% Accurate Architecture from pyproject.toml / src/) -->
+                        <div class="app-tech-drawer">
+                            <div class="tech-drawer-inner">
+                                <div class="tech-drawer-label">
+                                    <span lang="en">Architecture &amp; Tech Stack</span>
+                                    <span lang="sv">Arkitektur &amp; Teknikstack</span>
+                                </div>
+                                <p class="tech-drawer-text">
                                             <span lang="en"
-                                                >Architected in Python 3.11 with a strict <code>src/</code> layout, YAML
+                                            >Architected in Python 3.11 with a strict <code>src/</code> layout, YAML
                                                 control centers, PyArrow Feather serialization, Numba JIT acceleration,
                                                 and Optuna HPO loops. Enforces static typing via Mypy and code standards
                                                 via Ruff.</span
                                             >
-                                            <span lang="sv"
-                                                >Arkitekturerad i Python 3.11 med strikt <code>src/</code>-layout,
+                                    <span lang="sv"
+                                    >Arkitekturerad i Python 3.11 med strikt <code>src/</code>-layout,
                                                 YAML-konfigurationscenter, PyArrow Feather-serialisering, Numba
                                                 JIT-acceleration och Optuna HPO-loopar. Strikt typsäkrad via Mypy och
                                                 lintad med Ruff.</span
-                                            >
-                                        </p>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="app-card" data-category="web" data-skills="web languages data">
-                                <div class="app-img-container">
-                                    <!-- Live Status Badge (Change data-live-enabled to 'true' or 'false') -->
-                                    <div
-                                        class="app-status-badge"
-                                        data-live-enabled="false"
-                                        data-endpoint="http://localhost:3000"
                                     >
-                                        <span class="status-dot"></span>
-                                        <span class="status-label-dev">
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="app-card" data-category="web" data-skills="web languages data">
+                        <div class="app-img-container">
+                            <!-- Live Status Badge (Change data-live-enabled to 'true' or 'false') -->
+                            <div
+                                    class="app-status-badge"
+                                    data-live-enabled="false"
+                                    data-endpoint="http://localhost:3000"
+                            >
+                                <span class="status-dot"></span>
+                                <span class="status-label-dev">
                                             <span lang="en">In Development</span>
                                             <span lang="sv">Under utveckling</span>
                                         </span>
-                                        <span class="status-label-live" style="display: none">
+                                <span class="status-label-live" style="display: none">
                                             <span lang="en">Live</span>
                                             <span lang="sv">Drift</span>
                                             <span class="status-ping"></span>
                                         </span>
-                                    </div>
-                                    <img
-                                        src="./src/assets/nutrition-image.webp"
-                                        alt="Nutritional App interface preview"
-                                        width="400"
-                                        height="160"
-                                        loading="lazy"
-                                        decoding="async"
-                                        style="width: 100%; height: 100%; object-fit: cover"
-                                    />
-                                </div>
-                                <div class="app-content">
-                                    <h3>
-                                        <span lang="en">Nutritional App</span>
-                                        <span lang="sv">Näringsapplikation</span>
-                                    </h3>
-                                    <p>
+                            </div>
+                            <img
+                                    src="./src/assets/nutrition-image.webp"
+                                    alt="Nutritional App interface preview"
+                                    width="400"
+                                    height="160"
+                                    loading="lazy"
+                                    decoding="async"
+                                    style="width: 100%; height: 100%; object-fit: cover"
+                            />
+                        </div>
+                        <div class="app-content">
+                            <h3>
+                                <span lang="en">Nutritional App</span>
+                                <span lang="sv">Näringsapplikation</span>
+                            </h3>
+                            <p>
                                         <span lang="en"
-                                            >A minimalist nutrition tracker analyzing bioavailability, micronutrient
+                                        >A minimalist nutrition tracker analyzing bioavailability, micronutrient
                                             ratios, and optimal daily absorption rates.</span
                                         >
-                                        <span lang="sv"
-                                            >En minimalistisk näringsspårare som analyserar biotillgänglighet,
+                                <span lang="sv"
+                                >En minimalistisk näringsspårare som analyserar biotillgänglighet,
                                             mikronäringsämnesförhållanden och optimalt dagligt upptag.</span
-                                        >
-                                    </p>
-                                    <div class="app-links">
-                                        <a
-                                            href="https://github.com/adamnordling/nutritional-app"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            class="btn-primary"
-                                            aria-label="GitHub repository for Nutritional App"
-                                        >
-                                            <span lang="en">GitHub Repository</span>
-                                            <span lang="sv">GitHub-källkod</span>
-                                        </a>
-                                        <span class="btn-secondary" style="cursor: default">
+                                >
+                            </p>
+                            <div class="app-links">
+                                <a
+                                        href="https://github.com/adamnordling/nutritional-app"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="btn-primary"
+                                        aria-label="GitHub repository for Nutritional App"
+                                >
+                                    <span lang="en">GitHub Repository</span>
+                                    <span lang="sv">GitHub-källkod</span>
+                                </a>
+                                <span class="btn-secondary" style="cursor: default">
                                             <span lang="en">In Development</span>
                                             <span lang="sv">Under utveckling</span>
                                         </span>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
 
-                                <!-- Hover Context Drawer -->
-                                <div class="app-tech-drawer">
-                                    <div class="tech-drawer-inner">
-                                        <div class="tech-drawer-label">
-                                            <span lang="en">Architecture &amp; Tech Focus</span>
-                                            <span lang="sv">Arkitektur &amp; Teknikfokus</span>
-                                        </div>
-                                        <p class="tech-drawer-text">
+                        <!-- Hover Context Drawer -->
+                        <div class="app-tech-drawer">
+                            <div class="tech-drawer-inner">
+                                <div class="tech-drawer-label">
+                                    <span lang="en">Architecture &amp; Tech Focus</span>
+                                    <span lang="sv">Arkitektur &amp; Teknikfokus</span>
+                                </div>
+                                <p class="tech-drawer-text">
                                             <span lang="en"
-                                                >Architected with modular TypeScript &amp; Express services, utilizing
+                                            >Architected with modular TypeScript &amp; Express services, utilizing
                                                 SQLite for fast in-memory nutrient matrix lookups, reactive charts, and
                                                 automated daily micronutrient bioavailability ratios.</span
                                             >
-                                            <span lang="sv"
-                                                >Arkitekturerad med modulära TypeScript- &amp; Express-tjänster, SQLite
+                                    <span lang="sv"
+                                    >Arkitekturerad med modulära TypeScript- &amp; Express-tjänster, SQLite
                                                 för snabba mikronäringsberäkningar i minnet, reaktiva grafer och
                                                 automatiserad analys av biotillgänglighet.</span
-                                            >
-                                        </p>
-                                    </div>
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- TOOL ACTIVE VIEW (Hidden by default) -->
+            <div class="tool-view" id="tool-view" style="display: none">
+                <div class="tool-placeholder-card">
+                    <!-- Multilingual Tool Descriptions configured declaratively -->
+                    <!-- Converter Tool Interface -->
+                    <div class="tool-content-item" data-tool-content="converter">
+                        <h3>
+                            <span lang="en">Media &amp; File Converter</span>
+                            <span lang="sv">Fil- och mediakonverterare</span>
+                        </h3>
+                        <p>
+                            <span lang="en">Client-side format conversion with real-time Before/After quality comparison and zero server uploads.</span>
+                            <span lang="sv">Klientbaserad filkonvertering med visuell Före/Efter-kvalitetsjämförelse direkt i webbläsaren.</span>
+                        </p>
+
+                        <div class="converter-container">
+                            <!-- Drag & Drop Zone -->
+                            <div class="converter-dropzone" id="converter-dropzone">
+                                <svg class="dropzone-icon" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                <span class="dropzone-title">
+                <span lang="en">Drop files here, paste from clipboard (Ctrl+V), or browse</span>
+                <span lang="sv">Släpp filer här, klistra in (Ctrl+V) eller bläddra</span>
+            </span>
+                                <span class="dropzone-hint">PNG, JPEG, WebP, SVG, GIF, BMP, ICO, AVIF</span>
+                                <input type="file" id="converter-file-input" class="converter-file-input" multiple
+                                       accept="image/*,.svg"/>
+                            </div>
+
+                            <!-- Global Settings Bar -->
+                            <div class="converter-settings">
+                                <div class="setting-group">
+                                    <label class="setting-label" for="converter-format">
+                                        <span lang="en">Target Format</span>
+                                        <span lang="sv">Målformat</span>
+                                    </label>
+                                    <select id="converter-format" class="setting-select">
+                                        <option value="webp" selected>WebP (.webp)</option>
+                                        <option value="png">PNG (.png)</option>
+                                        <option value="jpeg">JPEG (.jpg)</option>
+                                        <option value="ico">Icon / Favicon (.ico)</option>
+                                        <option value="bmp">Bitmap (.bmp)</option>
+                                        <option value="pdf">Document (.pdf)</option>
+                                    </select>
                                 </div>
-                            </article>
+
+                                <div class="setting-group">
+                                    <label class="setting-label" for="converter-scale">
+                                        <span lang="en">Resolution Scale</span>
+                                        <span lang="sv">Upplösningsskala</span>
+                                    </label>
+                                    <select id="converter-scale" class="setting-select">
+                                        <option value="0.5">0.5x (Compact)</option>
+                                        <option value="1.0" selected>1.0x (Original)</option>
+                                        <option value="2.0">2.0x (High-Res @2x)</option>
+                                        <option value="4.0">4.0x (Ultra-Res @4x)</option>
+                                    </select>
+                                </div>
+
+                                <div class="setting-group">
+                                    <div class="setting-label">
+                    <span>
+                        <span lang="en">Quality</span>
+                        <span lang="sv">Kvalitet</span>
+                    </span>
+                                        <span id="converter-quality-val">88%</span>
+                                    </div>
+                                    <input type="range" id="converter-quality" class="setting-range" min="0.1" max="1.0"
+                                           step="0.02" value="0.88"/>
+                                </div>
+                            </div>
+
+                            <!-- Action Toolbar -->
+                            <div class="converter-actions">
+                                <span class="converter-batch-info" id="converter-batch-count">0 files</span>
+                                <div class="converter-btn-group">
+                                    <button type="button" class="btn-clear-all" id="btn-clear-all">
+                                        <span lang="en">Clear All</span>
+                                        <span lang="sv">Rensa alla</span>
+                                    </button>
+                                    <button type="button" class="btn-convert-all" id="btn-convert-all" disabled>
+                                        <span lang="en">Convert All</span>
+                                        <span lang="sv">Konvertera alla</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Conversion Queue Grid -->
+                            <div class="converter-queue" id="converter-queue"></div>
                         </div>
                     </div>
 
-                    <!-- TOOL ACTIVE VIEW (Hidden by default) -->
-                    <div class="tool-view" id="tool-view" style="display: none">
-                        <div class="tool-placeholder-card">
-                            <!-- Multilingual Tool Descriptions configured declaratively -->
-                            <div class="tool-content-item" data-tool-content="converter">
-                                <h3>
-                                    <span lang="en">Media &amp; File Converter</span>
-                                    <span lang="sv">Fil- och mediakonverterare</span>
-                                </h3>
-                                <p>
-                                    <span lang="en"
-                                        >In-browser client-side conversion for PNG, WebP, JPEG, and PDF documents.</span
-                                    >
-                                    <span lang="sv"
-                                        >Klientbaserad konvertering i webbläsaren för PNG, WebP, JPEG och
-                                        PDF-dokument.</span
-                                    >
-                                </p>
+                    <!-- BEFORE / AFTER INTERACTIVE COMPARISON MODAL -->
+                    <div class="compare-modal-overlay" id="compare-modal" aria-hidden="true">
+                        <div class="compare-modal-window">
+                            <div class="compare-modal-header">
+            <span class="compare-modal-title">
+                <span lang="en">Interactive Quality &amp; Compression Comparison</span>
+                <span lang="sv">Interaktiv kvalitets- och komprimeringsjämförelse</span>
+            </span>
+                                <button type="button" class="compare-modal-close" id="compare-close"
+                                        aria-label="Close Comparison">✕
+                                </button>
                             </div>
 
-                            <div class="tool-content-item" data-tool-content="subnet" style="display: none">
-                                <h3>
-                                    <span lang="en">Subnet &amp; CIDR Calculator</span>
-                                    <span lang="sv">Subnät- &amp; CIDR-kalkylator</span>
-                                </h3>
-                                <p>
+                            <div class="compare-viewer-frame" id="compare-viewer-frame">
+                                <!-- Original (Left Base) -->
+                                <div class="compare-img-layer compare-layer-before">
+                                    <img id="compare-img-original" alt="Original Preview"/>
+                                    <span class="compare-tag compare-tag-before" id="compare-tag-before">Original</span>
+                                </div>
+
+                                <!-- Converted (Right Clipped Layer) -->
+                                <div class="compare-img-layer compare-layer-after" id="compare-layer-after">
+                                    <img id="compare-img-converted" alt="Converted Preview"/>
+                                    <span class="compare-tag compare-tag-after" id="compare-tag-after">Converted</span>
+                                </div>
+
+                                <!-- Split Divider Line -->
+                                <div class="compare-handle-line" id="compare-handle-line">
+                                    <div class="compare-handle-btn">◀ ▶</div>
+                                </div>
+                            </div>
+
+                            <div class="compare-modal-footer">
+                                <span class="compare-footer-info" id="compare-footer-info">Quality: 88%</span>
+                                <span class="dropzone-hint">
+                <span lang="en">Drag the center slider left and right to inspect detail preservation</span>
+                <span lang="sv">Dra mittenreglaget åt höger/vänster för att inspektera detaljbevaring</span>
+            </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-content-item" data-tool-content="subnet" style="display: none">
+                        <h3>
+                            <span lang="en">Subnet &amp; CIDR Calculator</span>
+                            <span lang="sv">Subnät- &amp; CIDR-kalkylator</span>
+                        </h3>
+                        <p>
                                     <span lang="en"
-                                        >Interactive IP network calculation, mask translation, and broadcast range
+                                    >Interactive IP network calculation, mask translation, and broadcast range
                                         lookup.</span
                                     >
-                                    <span lang="sv"
-                                        >Interaktiv IP-nätverksberäkning, masköversättning och
+                            <span lang="sv"
+                            >Interaktiv IP-nätverksberäkning, masköversättning och
                                         broadcast-intervall.</span
-                                    >
-                                </p>
-                            </div>
+                            >
+                        </p>
+                    </div>
 
-                            <div class="tool-content-item" data-tool-content="nutrient" style="display: none">
-                                <h3>
-                                    <span lang="en">Nutrient Bioavailability Engine</span>
-                                    <span lang="sv">Närings- och biotillgänglighetsmotor</span>
-                                </h3>
-                                <p>
+                    <div class="tool-content-item" data-tool-content="nutrient" style="display: none">
+                        <h3>
+                            <span lang="en">Nutrient Bioavailability Engine</span>
+                            <span lang="sv">Närings- och biotillgänglighetsmotor</span>
+                        </h3>
+                        <p>
                                     <span lang="en"
-                                        >Micro-nutrient ratio modeling and absorption synergy analysis.</span
+                                    >Micro-nutrient ratio modeling and absorption synergy analysis.</span
                                     >
-                                    <span lang="sv"
-                                        >Modellering av mikronäringsförhållanden och analys av
+                            <span lang="sv"
+                            >Modellering av mikronäringsförhållanden och analys av
                                         absorptionssynergier.</span
-                                    >
-                                </p>
-                            </div>
+                            >
+                        </p>
+                    </div>
 
-                            <div class="tool-content-item" data-tool-content="hash" style="display: none">
-                                <h3>
-                                    <span lang="en">Developer Inspector</span>
-                                    <span lang="sv">Utvecklarinspektör</span>
-                                </h3>
-                                <p>
+                    <div class="tool-content-item" data-tool-content="hash" style="display: none">
+                        <h3>
+                            <span lang="en">Developer Inspector</span>
+                            <span lang="sv">Utvecklarinspektör</span>
+                        </h3>
+                        <p>
                                     <span lang="en"
-                                        >Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON
+                                    >Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON
                                         formatter.</span
                                     >
-                                    <span lang="sv"
-                                        >Realtids Base64-omkodare, SHA-256 hashgenerator och JSON-formaterare.</span
-                                    >
-                                </p>
-                            </div>
+                            <span lang="sv"
+                            >Realtids Base64-omkodare, SHA-256 hashgenerator och JSON-formaterare.</span
+                            >
+                        </p>
+                    </div>
 
-                            <div class="tool-canvas-mockup">
+                    <div class="tool-canvas-mockup">
                                 <span>
                                     <span lang="en">⚡ Interactive tool environment is ready for implementation</span>
                                     <span lang="sv">⚡ Interaktiv verktygsmiljö är redo för implementering</span>
                                 </span>
-                            </div>
-                        </div>
                     </div>
-                </section>
-            </main>
-        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
 
-        <!-- FOOTER CONTROLS -->
-        <footer class="footer-controls">
-            <div class="font-switcher" role="group" aria-label="Font configuration">
-                <button class="font-btn active" data-font="default" aria-label="Default System Font" type="button">
-                    A
-                </button>
-                <button class="font-btn" data-font="serif" aria-label="Serif Font" type="button">A</button>
-                <button class="font-btn" data-font="monospace" aria-label="Monospace Font" type="button">A</button>
+<!-- FOOTER CONTROLS -->
+<footer class="footer-controls">
+    <div class="font-switcher" role="group" aria-label="Font configuration">
+        <button class="font-btn active" data-font="default" aria-label="Default System Font" type="button">
+            A
+        </button>
+        <button class="font-btn" data-font="serif" aria-label="Serif Font" type="button">A</button>
+        <button class="font-btn" data-font="monospace" aria-label="Monospace Font" type="button">A</button>
+    </div>
+    <p class="copyright">© 2026 Adam Nordling</p>
+</footer>
+<!-- CV / RESUME MODAL PREVIEW -->
+<div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="cv-modal-window">
+        <div class="cv-modal-header">
+            <div class="cv-modal-title">
+                <span lang="en">Adam Nordling — CV</span>
+                <span lang="sv">Adam Nordling — CV</span>
             </div>
-            <p class="copyright">© 2026 Adam Nordling</p>
-        </footer>
-        <!-- CV / RESUME MODAL PREVIEW -->
-        <div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
-            <div class="cv-modal-window">
-                <div class="cv-modal-header">
-                    <div class="cv-modal-title">
-                        <span lang="en">Adam Nordling — CV</span>
-                        <span lang="sv">Adam Nordling — CV</span>
-                    </div>
-                    <div class="cv-modal-actions">
-                        <a
-                            href="./src/assets/resume.pdf"
-                            download="Adam_Nordling_CV.pdf"
-                            class="btn-primary cv-modal-download-btn"
-                        >
-                            <span lang="en">Download PDF</span>
-                            <span lang="sv">Ladda ner PDF</span>
-                        </a>
-                        <button type="button" class="cv-modal-close" id="close-cv-modal" aria-label="Close CV Modal">
-                            ✕
-                        </button>
-                    </div>
-                </div>
-                <div class="cv-modal-body">
-                    <!-- Changed 'src' to 'data-src' so it won't load until clicked -->
-                    <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
-                </div>
+            <div class="cv-modal-actions">
+                <a
+                        href="./src/assets/resume.pdf"
+                        download="Adam_Nordling_CV.pdf"
+                        class="btn-primary cv-modal-download-btn"
+                >
+                    <span lang="en">Download PDF</span>
+                    <span lang="sv">Ladda ner PDF</span>
+                </a>
+                <button type="button" class="cv-modal-close" id="close-cv-modal" aria-label="Close CV Modal">
+                    ✕
+                </button>
             </div>
         </div>
-        <script type="module" src="./src/main.js"></script>
-    </body>
+        <div class="cv-modal-body">
+            <!-- Changed 'src' to 'data-src' so it won't load until clicked -->
+            <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
+        </div>
+    </div>
+</div>
+<script type="module" src="./src/main.js"></script>
+<script type="module" src="./src/tools/converter.js"></script>
+</body>
 </html>
