@@ -82,20 +82,67 @@ class MediaConverter {
         });
 
         // 3. Settings controls
+        // Updated: The disabled rules and opacity toggles have been removed
+        // Inside bindEvents() in converter.js:
         this.formatSelect.addEventListener('change', e => {
             this.targetFormat = e.target.value;
-            const isLossless = ['png', 'bmp', 'ico', 'pdf'].includes(this.targetFormat);
-            this.qualitySlider.disabled = isLossless;
-            this.qualitySlider.style.opacity = isLossless ? '0.4' : '1';
+            const qualityLabel = document.querySelector('.setting-label-quality');
+            const qualityPresetSub = document.getElementById('quality-preset-subtitle');
+
+            if (this.targetFormat === 'png') {
+                if (qualityLabel) {
+                    qualityLabel.innerHTML = `
+                <span lang="en">Color Quantization (PNG)</span>
+                <span lang="sv">Färgkvantisering (PNG)</span>
+            `;
+                }
+                if (qualityPresetSub) {
+                    qualityPresetSub.textContent = 'PNG is lossless: slider reduces color palette to save size';
+                }
+            } else {
+                if (qualityLabel) {
+                    qualityLabel.innerHTML = `
+                <span lang="en">Quality</span>
+                <span lang="sv">Kvalitet</span>
+            `;
+                }
+                if (qualityPresetSub) {
+                    qualityPresetSub.textContent = '● Balanced (80%) recommended';
+                }
+            }
         });
 
         this.qualitySlider.addEventListener('input', e => {
             this.quality = parseFloat(e.target.value);
-            this.qualityVal.textContent = `${Math.round(this.quality * 100)}%`;
+            const pct = Math.round(this.quality * 100);
+            let label = `${pct}%`;
+            if (pct === 80) label += ' (Recommended)';
+            else if (pct <= 35) label += ' (Max Compression)';
+            else if (pct >= 95) label += ' (High Quality)';
+            this.qualityVal.textContent = label;
+
+            // Live update comparison modal if open
+            if (this.compareModal?.classList.contains('is-open') && this.activeCompareItem) {
+                this.convertSingleFile(this.activeCompareItem).then(() => {
+                    this.compareConvertedImg.src = this.activeCompareItem.convertedUrl;
+                    this.compareTagAfter.textContent = `${this.targetFormat.toUpperCase()}: ${this.formatBytes(this.activeCompareItem.convertedSize)}`;
+                });
+            }
         });
 
         this.scaleSelect.addEventListener('change', e => {
             this.scale = parseFloat(e.target.value);
+        });
+
+        // New: Listeners that change the button text to allow re-conversion
+        [this.formatSelect, this.qualitySlider, this.scaleSelect].forEach(control => {
+            // Note: 'change' event works better for dropdown select elements
+            const eventType = control === this.qualitySlider ? 'input' : 'change';
+
+            control.addEventListener(eventType, () => {
+                this.convertAllBtn.innerHTML =
+                    '<span lang="en">Convert / Re-convert All</span><span lang="sv">Konvertera om alla</span>';
+            });
         });
 
         this.clearAllBtn.addEventListener('click', () => this.clearAll());
@@ -205,25 +252,28 @@ class MediaConverter {
                         </div>
                     </div>
 
-                    <div class="queue-actions">
-                        ${
-                    item.status === 'done'
-                        ? `
-                                    <button type="button" class="btn-compare-single" data-id="${item.id}">
-                                        <span>🔍 Compare</span>
-                                    </button>
-                                    <a href="${item.convertedUrl}" download="${newFilename}" class="btn-download-single">
-                                        <span>⬇ Download</span>
-                                    </a>
-                                  `
-                        : `
-                                    <button type="button" class="btn-convert-all btn-single-convert" data-id="${item.id}" style="padding: 6px 14px; font-size: 0.78rem;">
-                                        <span>Convert</span>
-                                    </button>
-                                  `
-                }
-                        <button type="button" class="btn-remove-single" data-id="${item.id}" title="Remove file">✕</button>
-                    </div>
+     <div class="queue-actions">
+    ${
+        item.status === 'done'
+            ? `
+                <button type="button" class="btn-single-convert btn-reconvert" data-id="${item.id}" title="Re-convert with new settings">
+                    <span>↺ Re-convert</span>
+                </button>
+                <button type="button" class="btn-compare-single" data-id="${item.id}">
+                    <span>🔍 Compare</span>
+                </button>
+                <a href="${item.convertedUrl}" download="${newFilename}" class="btn-download-single">
+                    <span>⬇ Download</span>
+                </a>
+              `
+            : `
+                <button type="button" class="btn-convert-all btn-single-convert" data-id="${item.id}">
+                    <span>Convert</span>
+                </button>
+              `
+    }
+    <button type="button" class="btn-remove-single" data-id="${item.id}" title="Remove file">✕</button>
+</div>
                 </div>
             `;
             })
@@ -266,14 +316,59 @@ class MediaConverter {
         });
     }
 
-    async loadImageElement(src) {
+    // 1. Quantize PNG image data for real client-side PNG file size reduction
+    quantizeCanvas(ctx, width, height, quality) {
+        if (quality >= 0.95) return; // Keep original 32-bit depth if near 100%
+
+        const imgData = ctx.getImageData(0, 0, width, height);
+        const data = imgData.data;
+        // Step size based on quality (lower quality = fewer color bands)
+        const step = Math.max(1, Math.round((1 - quality) * 32));
+
+        for (let i = 0; i < data.length; i += 4) {
+            data[i] = Math.floor(data[i] / step) * step; // Red
+            data[i + 1] = Math.floor(data[i + 1] / step) * step; // Green
+            data[i + 2] = Math.floor(data[i + 2] / step) * step; // Blue
+        }
+        ctx.putImageData(imgData, 0, 0);
+    }
+
+    async loadImageElement(item) {
+        if (item.file.type === 'application/pdf' || item.name.endsWith('.pdf')) {
+            return this.renderPdfToImage(item.file);
+        }
+
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.crossOrigin = 'anonymous';
             img.onload = () => resolve(img);
             img.onerror = () => reject(new Error('Failed to decode image data'));
-            img.src = src;
+            img.src = item.previewUrl;
         });
+    }
+
+    // PDF.js dynamic rasterizer for client-side PDF-to-Image decoding
+    async renderPdfToImage(pdfFile) {
+        if (!window.pdfjsLib) {
+            await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+        const arrayBuffer = await pdfFile.arrayBuffer();
+        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 2.0 });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+        const img = new Image();
+        img.src = canvas.toDataURL('image/png');
+        await new Promise(r => (img.onload = r));
+        return img;
     }
 
     async convertSingleFile(item) {
@@ -281,7 +376,7 @@ class MediaConverter {
         this.updateProgress(item.id, 25);
 
         try {
-            const img = await this.loadImageElement(item.previewUrl);
+            const img = await this.loadImageElement(item);
             this.updateProgress(item.id, 50);
 
             const canvas = document.createElement('canvas');
@@ -289,18 +384,24 @@ class MediaConverter {
             canvas.height = Math.max(1, Math.round(img.naturalHeight * this.scale));
             const ctx = canvas.getContext('2d');
 
-            // If target is JPEG/BMP, fill solid white background for alpha
+            // Solid background for JPEG / BMP
             if (['jpeg', 'jpg', 'bmp'].includes(this.targetFormat)) {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
 
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // Apply PNG quality compression via quantization
+            if (this.targetFormat === 'png') {
+                this.quantizeCanvas(ctx, canvas.width, canvas.height, this.quality);
+            }
+
             this.updateProgress(item.id, 75);
 
             let blob;
             if (this.targetFormat === 'pdf') {
-                blob = await this.generateStandardPdf(canvas);
+                blob = await this.generateStandardPdf(canvas, this.quality);
             } else if (this.targetFormat === 'ico') {
                 blob = await this.generateIcoBlob(canvas);
             } else {
@@ -308,6 +409,7 @@ class MediaConverter {
                 blob = await new Promise(res => canvas.toBlob(res, mimeType, this.quality));
             }
 
+            if (item.convertedUrl) URL.revokeObjectURL(item.convertedUrl);
             item.convertedBlob = blob;
             item.convertedSize = blob.size;
             item.convertedUrl = URL.createObjectURL(blob);
@@ -371,7 +473,7 @@ class MediaConverter {
             }
         }
 
-        return new Blob([binaryBuffer], {type: 'application/pdf'});
+        return new Blob([binaryBuffer], { type: 'application/pdf' });
     }
 
     /**
@@ -412,7 +514,7 @@ class MediaConverter {
         completeIco.set(icoHeader, 0);
         completeIco.set(pngBuffer, 22);
 
-        return new Blob([completeIco], {type: 'image/x-icon'});
+        return new Blob([completeIco], { type: 'image/x-icon' });
     }
 
     async convertAll() {
@@ -498,8 +600,8 @@ class MediaConverter {
         window.addEventListener('mousemove', onMove);
         window.addEventListener('mouseup', onEnd);
 
-        this.compareFrame.addEventListener('touchstart', onStart, {passive: true});
-        window.addEventListener('touchmove', onMove, {passive: true});
+        this.compareFrame.addEventListener('touchstart', onStart, { passive: true });
+        window.addEventListener('touchmove', onMove, { passive: true });
         window.addEventListener('touchend', onEnd);
     }
 

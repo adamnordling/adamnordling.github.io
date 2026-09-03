@@ -142,7 +142,9 @@ body.light-theme .converter-dropzone {
     font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -316,7 +318,9 @@ body.light-theme .queue-meta-pill {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .btn-download-single:hover {
@@ -436,10 +440,6 @@ body.light-theme .btn-compare-single {
     height: 480px;
     background: #0d0e12;
     overflow: hidden;
-    user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .compare-img-layer {
@@ -453,16 +453,34 @@ body.light-theme .btn-compare-single {
 }
 
 .compare-img-layer img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .compare-layer-after {
+    position: absolute;
+    inset: 0;
     clip-path: inset(0 0 0 50%);
-    width: 100%;
-    height: 100%;
+}
+
+.btn-reconvert {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-reconvert:hover {
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 /* Split Divider Line & Draggable Handle */
