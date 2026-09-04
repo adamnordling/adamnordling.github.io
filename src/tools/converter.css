@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CONVERTER TOOL STYLES & INTERACTIVE COMPARISON SLIDER
+   CONVERTER TOOL - MINIMALIST PORTFOLIO THEME
    ========================================================================== */
 
 .converter-container {
@@ -11,13 +11,13 @@
 
 /* 1. Drag & Drop Upload Zone */
 .converter-dropzone {
-    border: 2px dashed var(--border-color);
-    border-radius: 10px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
     padding: 28px 20px;
     text-align: center;
     background: rgba(255, 255, 255, 0.015);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,22 +33,26 @@ body.light-theme .converter-dropzone {
 .converter-dropzone:hover,
 .converter-dropzone.dragover {
     border-color: var(--accent);
-    background: rgba(96, 165, 250, 0.06);
-    transform: translateY(-2px);
+    background: rgba(96, 165, 250, 0.04);
 }
 
 .dropzone-icon {
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.converter-dropzone:hover .dropzone-icon {
     color: var(--accent);
 }
 
 .dropzone-title {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 0.92rem;
+    font-weight: 500;
     color: var(--text-primary);
 }
 
 .dropzone-hint {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--text-muted);
     font-family: var(--font-mono), monospace;
 }
@@ -62,7 +66,7 @@ body.light-theme .converter-dropzone {
     height: 100%;
 }
 
-/* 2. Global Conversion Configuration Bar */
+/* 2. Global Settings Bar */
 .converter-settings {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -118,8 +122,8 @@ body.light-theme .converter-dropzone {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 4px;
 }
 
 .converter-batch-info {
@@ -130,28 +134,20 @@ body.light-theme .converter-dropzone {
 
 .converter-btn-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .btn-convert-all {
     background: var(--accent);
     color: #ffffff;
     border: none;
-    padding: 8px 18px;
+    padding: 8px 16px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     font-weight: 600;
     cursor: pointer;
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-body.light-theme .btn-convert-all {
-    background: #1d4ed8;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
 }
 
 .btn-convert-all:hover:not(:disabled) {
@@ -166,11 +162,11 @@ body.light-theme .btn-convert-all {
 
 .btn-clear-all {
     background: transparent;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     border: 1px solid var(--border-color);
     padding: 8px 14px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -180,11 +176,12 @@ body.light-theme .btn-convert-all {
     border-color: var(--text-muted);
 }
 
-/* 4. Queue / File Card Items */
+/* 4. Queue Cards */
 .converter-queue {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 .queue-card {
@@ -194,22 +191,23 @@ body.light-theme .btn-convert-all {
     padding: 12px 16px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
-    transition: border-color 0.2s ease;
+    width: 100%;
     position: relative;
     overflow: hidden;
+    transition: border-color 0.2s ease;
 }
 
 .queue-card:hover {
     border-color: var(--text-muted);
 }
 
-/* Progress Bar at the bottom edge of the card */
 .queue-progress-bar {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 3px;
+    height: 2px;
     width: 0%;
     background-color: var(--accent);
     transition: width 0.2s ease;
@@ -217,17 +215,14 @@ body.light-theme .btn-convert-all {
 
 .queue-preview-wrapper {
     position: relative;
-    width: 52px;
-    height: 52px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
     cursor: pointer;
     border-radius: 6px;
     overflow: hidden;
-    background: #18191f;
+    background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .queue-preview {
@@ -237,35 +232,17 @@ body.light-theme .btn-convert-all {
     display: block;
 }
 
-.queue-preview-badge {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    color: #fff;
-    font-size: 0.65rem;
-    font-family: var(--font-mono), monospace;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.queue-preview-wrapper:hover .queue-preview-badge {
-    opacity: 1;
-}
-
 .queue-details {
-    flex: 1;
+    flex: 1 1 auto;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
 .queue-filename {
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
@@ -274,28 +251,27 @@ body.light-theme .btn-convert-all {
 
 .queue-meta {
     font-family: var(--font-mono), monospace;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     color: var(--text-muted);
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
 }
 
 .queue-meta-pill {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
     padding: 1px 6px;
     border-radius: 4px;
     color: var(--text-secondary);
 }
 
 body.light-theme .queue-meta-pill {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.04);
 }
 
 .queue-meta-saved {
-    color: #10b981;
-    font-weight: 600;
+    color: var(--accent);
+    font-weight: 500;
 }
 
 .queue-actions {
@@ -305,22 +281,61 @@ body.light-theme .queue-meta-pill {
     flex-shrink: 0;
 }
 
-.btn-download-single {
-    background: #10b981;
+.btn-single-convert {
+    background: var(--accent);
     color: #ffffff;
     border: none;
     padding: 6px 14px;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
-    text-decoration: none !important;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-single-convert:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn-reconvert,
+.btn-compare-single {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.btn-reconvert:hover,
+.btn-compare-single:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+.btn-download-single {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none !important;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .btn-download-single:hover {
@@ -328,53 +343,29 @@ body.light-theme .queue-meta-pill {
     transform: translateY(-1px);
 }
 
-.btn-compare-single {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 0.78rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.2s ease;
-}
-
-body.light-theme .btn-compare-single {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-.btn-compare-single:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
 .btn-remove-single {
     background: transparent;
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 6px;
+    padding: 4px 6px;
     font-size: 1rem;
-    border-radius: 4px;
     line-height: 1;
     transition: color 0.15s ease;
 }
 
 .btn-remove-single:hover {
-    color: #ef4444;
+    color: var(--text-primary);
 }
 
 /* ==========================================================================
-   5. INTERACTIVE BEFORE / AFTER COMPARISON MODAL
+   5. BEFORE / AFTER COMPARISON MODAL
    ========================================================================== */
 .compare-modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 210;
-    background: rgba(0, 0, 0, 0.82);
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
     display: none;
     align-items: center;
@@ -396,11 +387,11 @@ body.light-theme .btn-compare-single {
     border: 1px solid var(--border-color);
     border-radius: 12px;
     width: 100%;
-    max-width: 960px;
+    max-width: 920px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     overflow: hidden;
 }
 
@@ -422,24 +413,25 @@ body.light-theme .btn-compare-single {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     padding: 2px 8px;
     border-radius: 6px;
     line-height: 1;
+    transition: color 0.15s ease;
 }
 
 .compare-modal-close:hover {
     color: var(--text-primary);
 }
 
-/* Split Viewer Frame */
 .compare-viewer-frame {
     position: relative;
     width: 100%;
-    height: 480px;
-    background: #0d0e12;
+    height: 460px;
+    background: #0f1014;
     overflow: hidden;
+    user-select: none;
 }
 
 .compare-img-layer {
@@ -459,6 +451,7 @@ body.light-theme .btn-compare-single {
     position: absolute;
     top: 0;
     left: 0;
+    pointer-events: none;
 }
 
 .compare-layer-after {
@@ -467,23 +460,6 @@ body.light-theme .btn-compare-single {
     clip-path: inset(0 0 0 50%);
 }
 
-.btn-reconvert {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 0.78rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-reconvert:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-/* Split Divider Line & Draggable Handle */
 .compare-handle-line {
     position: absolute;
     top: 0;
@@ -493,7 +469,7 @@ body.light-theme .btn-compare-single {
     background: #ffffff;
     cursor: ew-resize;
     z-index: 10;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 .compare-handle-btn {
@@ -501,34 +477,34 @@ body.light-theme .btn-compare-single {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: #ffffff;
-    color: #111;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    font-size: 0.72rem;
+    font-family: var(--font-mono), monospace;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     pointer-events: none;
 }
 
-/* Badges showing Before / After */
 .compare-tag {
     position: absolute;
     top: 14px;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 3px 8px;
+    border-radius: 4px;
     font-family: var(--font-mono), monospace;
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 500;
     z-index: 5;
-    background: rgba(0, 0, 0, 0.75);
-    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
     backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .compare-tag-before {
@@ -539,9 +515,8 @@ body.light-theme .btn-compare-single {
     right: 14px;
 }
 
-/* Live comparison controller footer */
 .compare-modal-footer {
-    padding: 16px 20px;
+    padding: 14px 20px;
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -552,12 +527,6 @@ body.light-theme .btn-compare-single {
 
 .compare-footer-info {
     font-family: var(--font-mono), monospace;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-}
-
-@media (max-width: 640px) {
-    .compare-viewer-frame {
-        height: 320px;
-    }
 }

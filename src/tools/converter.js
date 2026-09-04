@@ -12,6 +12,10 @@ class MediaConverter {
         this.scale = 1.0;
         this.activeCompareItem = null;
 
+        // Safety Guardrails
+        this.MAX_FILE_SIZE_MB = 50;
+        this.MAX_BATCH_FILES = 25;
+
         this.initDOMElements();
         this.bindEvents();
         this.initComparisonSlider();
@@ -165,7 +169,21 @@ class MediaConverter {
     }
 
     async handleFiles(fileList) {
-        for (const file of Array.from(fileList)) {
+        const incomingFiles = Array.from(fileList);
+
+        // 1. Batch Limit Guardrail
+        if (this.files.length + incomingFiles.length > this.MAX_BATCH_FILES) {
+            alert(`Maximum ${this.MAX_BATCH_FILES} files allowed at once.`);
+            return;
+        }
+
+        for (const file of incomingFiles) {
+            // 2. File Size Guardrail (50 MB)
+            if (file.size > this.MAX_FILE_SIZE_MB * 1024 * 1024) {
+                alert(`"${file.name}" is too large (${(file.size / (1024 * 1024)).toFixed(1)} MB). Maximum allowed size is ${this.MAX_FILE_SIZE_MB} MB.`);
+                continue;
+            }
+
             const previewUrl = await this.generateReliablePreview(file);
             const fileObj = {
                 id: Math.random().toString(36).substring(2, 9),
@@ -173,7 +191,7 @@ class MediaConverter {
                 name: file.name,
                 size: file.size,
                 previewUrl: previewUrl,
-                status: 'idle', // 'idle' | 'converting' | 'done' | 'error'
+                status: 'idle',
                 progress: 0,
                 convertedBlob: null,
                 convertedUrl: null,
@@ -236,46 +254,51 @@ class MediaConverter {
                 }
 
                 return `
-                <div class="queue-card" id="card-${item.id}">
-                    <div class="queue-progress-bar" id="prog-${item.id}" style="width: ${item.progress}%;"></div>
-                    
-                    <div class="queue-preview-wrapper" data-id="${item.id}" title="Click to Compare / Preview">
-                        <img src="${item.previewUrl}" alt="Thumbnail" class="queue-preview" />
-                        <div class="queue-preview-badge">VIEW</div>
-                    </div>
+<div class="queue-card" id="card-${item.id}">
+    <div class="queue-progress-bar" id="prog-${item.id}" style="width: ${item.progress}%;"></div>
+    
+    <div class="queue-preview-wrapper" data-id="${item.id}" title="Click to Compare / Preview">
+        <img src="${item.previewUrl}" alt="Thumbnail" class="queue-preview" />
+    </div>
 
-                    <div class="queue-details">
-                        <span class="queue-filename" title="${item.name}">${item.name}</span>
-                        <div class="queue-meta">
-                            <span class="queue-meta-pill">${this.formatBytes(item.size)}</span>
-                            ${resultMeta}
-                        </div>
-                    </div>
+    <div class="queue-details">
+        <span class="queue-filename" title="${item.name}">${item.name}</span>
+        <div class="queue-meta">
+            <span class="queue-meta-pill">${this.formatBytes(item.size)}</span>
+            ${resultMeta}
+        </div>
+    </div>
 
-     <div class="queue-actions">
-    ${
-        item.status === 'done'
-            ? `
-                <button type="button" class="btn-single-convert btn-reconvert" data-id="${item.id}" title="Re-convert with new settings">
-                    <span>↺ Re-convert</span>
-                </button>
-                <button type="button" class="btn-compare-single" data-id="${item.id}">
-                    <span>🔍 Compare</span>
-                </button>
-                <a href="${item.convertedUrl}" download="${newFilename}" class="btn-download-single">
-                    <span>⬇ Download</span>
-                </a>
-              `
-            : `
-                <button type="button" class="btn-convert-all btn-single-convert" data-id="${item.id}">
-                    <span>Convert</span>
-                </button>
-              `
-    }
-    <button type="button" class="btn-remove-single" data-id="${item.id}" title="Remove file">✕</button>
+    <div class="queue-actions">
+        ${
+                    item.status === 'done'
+                        ? `
+                    <button type="button" class="btn-reconvert btn-single-convert" data-id="${item.id}" title="Re-convert">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        <span lang="en">Re-convert</span>
+                        <span lang="sv">Konvertera om</span>
+                    </button>
+                    <button type="button" class="btn-compare-single" data-id="${item.id}">
+                        <span lang="en">Compare</span>
+                        <span lang="sv">Jämför</span>
+                    </button>
+                    <a href="${item.convertedUrl}" download="${newFilename}" class="btn-download-single">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span lang="en">Download</span>
+                        <span lang="sv">Ladda ner</span>
+                    </a>
+                  `
+                        : `
+                    <button type="button" class="btn-single-convert" data-id="${item.id}">
+                        <span lang="en">Convert</span>
+                        <span lang="sv">Konvertera</span>
+                    </button>
+                  `
+                }
+        <button type="button" class="btn-remove-single" data-id="${item.id}" aria-label="Remove">✕</button>
+    </div>
 </div>
-                </div>
-            `;
+`;
             })
             .join('');
 
@@ -355,15 +378,15 @@ class MediaConverter {
                 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
         }
         const arrayBuffer = await pdfFile.arrayBuffer();
-        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const pdf = await window.pdfjsLib.getDocument({data: arrayBuffer}).promise;
         const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 2.0 });
+        const viewport = page.getViewport({scale: 2.0});
 
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
         canvas.height = viewport.height;
         const ctx = canvas.getContext('2d');
-        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+        await page.render({canvasContext: ctx, viewport: viewport}).promise;
 
         const img = new Image();
         img.src = canvas.toDataURL('image/png');
@@ -473,7 +496,7 @@ class MediaConverter {
             }
         }
 
-        return new Blob([binaryBuffer], { type: 'application/pdf' });
+        return new Blob([binaryBuffer], {type: 'application/pdf'});
     }
 
     /**
@@ -514,7 +537,7 @@ class MediaConverter {
         completeIco.set(icoHeader, 0);
         completeIco.set(pngBuffer, 22);
 
-        return new Blob([completeIco], { type: 'image/x-icon' });
+        return new Blob([completeIco], {type: 'image/x-icon'});
     }
 
     async convertAll() {
@@ -600,8 +623,8 @@ class MediaConverter {
         window.addEventListener('mousemove', onMove);
         window.addEventListener('mouseup', onEnd);
 
-        this.compareFrame.addEventListener('touchstart', onStart, { passive: true });
-        window.addEventListener('touchmove', onMove, { passive: true });
+        this.compareFrame.addEventListener('touchstart', onStart, {passive: true});
+        window.addEventListener('touchmove', onMove, {passive: true});
         window.addEventListener('touchend', onEnd);
     }
 
