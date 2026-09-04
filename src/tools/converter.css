@@ -17,7 +17,9 @@
     text-align: center;
     background: rgba(255, 255, 255, 0.015);
     cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,15 +69,29 @@ body.light-theme .converter-dropzone {
 }
 
 /* 2. Global Settings Bar */
+/* 2. Global Settings Bar (2-Column Studio Grid) */
 .converter-settings {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 16px;
-    align-items: center;
+    padding: 18px 20px;
+    align-items: start;
+}
+
+.settings-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-right-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 }
 
 .setting-group {
@@ -102,9 +118,10 @@ body.light-theme .converter-dropzone {
     padding: 8px 10px;
     border-radius: 6px;
     font-family: inherit;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     outline: none;
     transition: border-color 0.2s ease;
+    width: 100%;
 }
 
 .setting-select:focus,
@@ -112,9 +129,41 @@ body.light-theme .converter-dropzone {
     border-color: var(--accent);
 }
 
+.scale-inputs-wrap {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.custom-dim-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dim-input {
+    width: 65px;
+    text-align: center;
+    padding: 8px 6px;
+}
+
+.dim-separator {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
 .setting-range {
     accent-color: var(--accent);
     cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+    .converter-settings {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
 }
 
 /* 3. Action Toolbar */
@@ -146,7 +195,9 @@ body.light-theme .converter-dropzone {
     font-size: 0.84rem;
     font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
     white-space: nowrap;
 }
 
@@ -291,7 +342,9 @@ body.light-theme .queue-meta-pill {
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .btn-single-convert:hover {
@@ -335,7 +388,9 @@ body.light-theme .queue-meta-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 .btn-download-single:hover {
@@ -529,4 +584,43 @@ body.light-theme .queue-meta-pill {
     font-family: var(--font-mono), monospace;
     font-size: 0.78rem;
     color: var(--text-secondary);
+}
+
+/* ZIP Export Button */
+.btn-zip-all {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-zip-all:hover:not(:disabled) {
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.btn-zip-all:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Privacy Note */
+.batch-info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.privacy-note-mobile {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono), monospace;
 }
