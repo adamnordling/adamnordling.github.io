@@ -86,33 +86,33 @@ class MediaConverter {
         });
 
         // 3. Settings controls
-        // Updated: The disabled rules and opacity toggles have been removed
-        // Inside bindEvents() in converter.js:
         this.formatSelect.addEventListener('change', e => {
             this.targetFormat = e.target.value;
             const qualityLabel = document.querySelector('.setting-label-quality');
             const qualityPresetSub = document.getElementById('quality-preset-subtitle');
 
-            if (this.targetFormat === 'png') {
+            if (this.targetFormat === 'pdf') {
+                this.qualitySlider.disabled = true;
+                this.qualitySlider.style.opacity = '0.35';
+                this.qualitySlider.style.cursor = 'not-allowed';
+                this.qualityVal.textContent = '100% (Lossless)';
+                if (qualityPresetSub) qualityPresetSub.textContent = 'PDF creates a clean, uncompressed vector document wrapper';
+            } else if (this.targetFormat === 'png') {
+                this.qualitySlider.disabled = false;
+                this.qualitySlider.style.opacity = '1';
+                this.qualitySlider.style.cursor = 'pointer';
                 if (qualityLabel) {
-                    qualityLabel.innerHTML = `
-                <span lang="en">Color Quantization (PNG)</span>
-                <span lang="sv">Färgkvantisering (PNG)</span>
-            `;
+                    qualityLabel.innerHTML = `<span lang="en">Color Quantization (PNG)</span><span lang="sv">Färgkvantisering (PNG)</span>`;
                 }
-                if (qualityPresetSub) {
-                    qualityPresetSub.textContent = 'PNG is lossless: slider reduces color palette to save size';
-                }
+                if (qualityPresetSub) qualityPresetSub.textContent = 'PNG is lossless: slider reduces color palette to save size';
             } else {
+                this.qualitySlider.disabled = false;
+                this.qualitySlider.style.opacity = '1';
+                this.qualitySlider.style.cursor = 'pointer';
                 if (qualityLabel) {
-                    qualityLabel.innerHTML = `
-                <span lang="en">Quality</span>
-                <span lang="sv">Kvalitet</span>
-            `;
+                    qualityLabel.innerHTML = `<span lang="en">Quality</span><span lang="sv">Kvalitet</span>`;
                 }
-                if (qualityPresetSub) {
-                    qualityPresetSub.textContent = '● Balanced (80%) recommended';
-                }
+                if (qualityPresetSub) qualityPresetSub.textContent = '● Balanced (80%) recommended';
             }
         });
 
@@ -203,7 +203,28 @@ class MediaConverter {
         this.renderQueue();
     }
 
-    generateReliablePreview(file) {
+    async generateReliablePreview(file) {
+        // 1. If it's a PDF, render actual Page 1 as thumbnail (with crisp vector fallback)
+        if (file.type === 'application/pdf' || file.name.endsWith('.pdf')) {
+            const fallbackSvg = 'data:image/svg+xml;base64,' + btoa(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="9" y1="13" x2="15" y2="13"/>
+                <line x1="9" y1="17" x2="13" y2="17"/>
+            </svg>
+        `);
+
+            try {
+                // Asynchronously generate real page-1 image thumbnail
+                const img = await this.renderPdfToImage(file);
+                return img.src;
+            } catch {
+                return fallbackSvg;
+            }
+        }
+
+        // 2. Standard image reader
         return new Promise(resolve => {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -227,6 +248,7 @@ class MediaConverter {
     renderQueue() {
         this.batchCount.textContent = `${this.files.length} file${this.files.length === 1 ? '' : 's'}`;
         this.convertAllBtn.disabled = this.files.length === 0;
+
 
         if (this.files.length === 0) {
             this.queueContainer.innerHTML = '';
@@ -372,11 +394,20 @@ class MediaConverter {
 
     // PDF.js dynamic rasterizer for client-side PDF-to-Image decoding
     async renderPdfToImage(pdfFile) {
+        // Dynamically load PDF.js script tag if not yet present
         if (!window.pdfjsLib) {
-            await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
-            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
-                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                script.onload = () => {
+                    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    resolve();
+                };
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
         }
+
         const arrayBuffer = await pdfFile.arrayBuffer();
         const pdf = await window.pdfjsLib.getDocument({data: arrayBuffer}).promise;
         const page = await pdf.getPage(1);
@@ -386,11 +417,16 @@ class MediaConverter {
         canvas.width = viewport.width;
         canvas.height = viewport.height;
         const ctx = canvas.getContext('2d');
+
+        // Fill white background for PDF page rendering
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         await page.render({canvasContext: ctx, viewport: viewport}).promise;
 
         const img = new Image();
         img.src = canvas.toDataURL('image/png');
-        await new Promise(r => (img.onload = r));
+        await new Promise(r => img.onload = r);
         return img;
     }
 
@@ -541,18 +577,19 @@ class MediaConverter {
     }
 
     async convertAll() {
+        if (this.files.length === 0) return;
+
         this.convertAllBtn.disabled = true;
-        this.convertAllBtn.textContent = 'Converting...';
+        this.convertAllBtn.innerHTML = '<span lang="en">Converting...</span><span lang="sv">Konverterar...</span>';
 
         for (const fileItem of this.files) {
-            if (fileItem.status !== 'done') {
-                await this.convertSingleFile(fileItem);
-                this.renderQueue();
-            }
+            // Re-convert every item with the current settings
+            await this.convertSingleFile(fileItem);
+            this.renderQueue();
         }
 
         this.convertAllBtn.disabled = false;
-        this.convertAllBtn.textContent = 'Convert All';
+        this.convertAllBtn.innerHTML = '<span lang="en">Convert All</span><span lang="sv">Konvertera alla</span>';
     }
 
     clearAll() {
