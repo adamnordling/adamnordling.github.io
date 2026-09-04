@@ -99,29 +99,44 @@ class MediaConverter {
             const qualityLabel = document.querySelector('.setting-label-quality');
             const qualityPresetSub = document.getElementById('quality-preset-subtitle');
 
-            if (this.targetFormat === 'pdf') {
+            if (this.targetFormat === 'png') {
+                // Automatically set slider to 100% Lossless for PNG
+                this.qualitySlider.disabled = false;
+                this.qualitySlider.value = '1.0';
+                this.quality = 1.0;
+                this.qualitySlider.style.opacity = '1';
+                this.qualitySlider.style.cursor = 'pointer';
+                this.qualityVal.textContent = '100% (Lossless)';
+                if (qualityLabel) {
+                    qualityLabel.innerHTML = `<span lang="en">Quality / Color Depth</span><span lang="sv">Kvalitet / Färgdjup</span>`;
+                }
+                if (qualityPresetSub) {
+                    qualityPresetSub.textContent = 'PNG is lossless by default (drag down only to quantize & reduce size)';
+                }
+            } else if (this.targetFormat === 'pdf') {
                 this.qualitySlider.disabled = true;
+                this.qualitySlider.value = '1.0';
+                this.quality = 1.0;
                 this.qualitySlider.style.opacity = '0.35';
                 this.qualitySlider.style.cursor = 'not-allowed';
                 this.qualityVal.textContent = '100% (Lossless)';
-                if (qualityPresetSub) qualityPresetSub.textContent = 'PDF creates a clean vector document wrapper';
-            } else if (this.targetFormat === 'png') {
-                this.qualitySlider.disabled = false;
-                this.qualitySlider.style.opacity = '1';
-                this.qualitySlider.style.cursor = 'pointer';
-                if (qualityLabel) {
-                    qualityLabel.innerHTML = `<span lang="en">Color Quantization (PNG)</span><span lang="sv">Färgkvantisering (PNG)</span>`;
+                if (qualityPresetSub) {
+                    qualityPresetSub.textContent = 'PDF creates a clean vector document wrapper';
                 }
-                if (qualityPresetSub)
-                    qualityPresetSub.textContent = 'PNG is lossless: slider reduces color palette to save size';
             } else {
+                // Reset to balanced 80% for lossy formats (WebP, AVIF, JPEG)
                 this.qualitySlider.disabled = false;
+                this.qualitySlider.value = '0.80';
+                this.quality = 0.80;
                 this.qualitySlider.style.opacity = '1';
                 this.qualitySlider.style.cursor = 'pointer';
+                this.qualityVal.textContent = '80% (Recommended)';
                 if (qualityLabel) {
                     qualityLabel.innerHTML = `<span lang="en">Quality</span><span lang="sv">Kvalitet</span>`;
                 }
-                if (qualityPresetSub) qualityPresetSub.textContent = '● Balanced (80%) recommended';
+                if (qualityPresetSub) {
+                    qualityPresetSub.textContent = '● Balanced (80%) recommended';
+                }
             }
         });
 
@@ -273,7 +288,7 @@ class MediaConverter {
                 document.head.appendChild(script);
             });
         }
-        const converted = await window.heic2any({ blob: file, toType: 'image/jpeg', quality: 0.85 });
+        const converted = await window.heic2any({blob: file, toType: 'image/jpeg', quality: 0.85});
         return Array.isArray(converted) ? converted[0] : converted;
     }
 
@@ -403,10 +418,13 @@ class MediaConverter {
     }
 
     quantizeCanvas(ctx, width, height, quality) {
-        if (quality >= 0.95) return;
+        // True 32-bit lossless if quality >= 0.70
+        if (quality >= 0.70) return;
+
         const imgData = ctx.getImageData(0, 0, width, height);
         const data = imgData.data;
-        const step = Math.max(1, Math.round((1 - quality) * 32));
+        // Gentle step size to prevent harsh color banding
+        const step = Math.max(1, Math.round((0.70 - quality) * 16));
 
         for (let i = 0; i < data.length; i += 4) {
             data[i] = Math.floor(data[i] / step) * step;
@@ -454,9 +472,9 @@ class MediaConverter {
         }
 
         const arrayBuffer = await pdfFile.arrayBuffer();
-        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const pdf = await window.pdfjsLib.getDocument({data: arrayBuffer}).promise;
         const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 2.0 });
+        const viewport = page.getViewport({scale: 2.0});
 
         const canvas = document.createElement('canvas');
         canvas.width = viewport.width;
@@ -465,7 +483,7 @@ class MediaConverter {
 
         ctx.fillStyle = '#FFFFFF';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+        await page.render({canvasContext: ctx, viewport: viewport}).promise;
 
         const img = new Image();
         img.src = canvas.toDataURL('image/png');
@@ -511,16 +529,21 @@ class MediaConverter {
             // 2. Transparency handling:
             // JPEG and BMP do not support transparency -> automatically fill with solid white.
             // PNG, WebP, AVIF, and ICO preserve full alpha transparency automatically.
+// Enable maximum bicubic interpolation quality
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+// Fill solid white only for formats that do not support transparency
             if (['jpeg', 'jpg', 'bmp'].includes(this.targetFormat)) {
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
 
-            // Drawing to canvas automatically strips tracking EXIF & GPS metadata
+// Draw image with high-quality resampling
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-            // Apply PNG color quantization if PNG is chosen
-            if (this.targetFormat === 'png') {
+// Only apply PNG color quantization if the user intentionally dragged quality below 70%
+            if (this.targetFormat === 'png' && this.quality < 0.70) {
                 this.quantizeCanvas(ctx, canvas.width, canvas.height, this.quality);
             }
 
@@ -604,7 +627,7 @@ class MediaConverter {
             }
         }
 
-        return new Blob([binaryBuffer], { type: 'application/pdf' });
+        return new Blob([binaryBuffer], {type: 'application/pdf'});
     }
 
     async generateIcoBlob(canvas) {
@@ -636,7 +659,7 @@ class MediaConverter {
         completeIco.set(icoHeader, 0);
         completeIco.set(pngBuffer, 22);
 
-        return new Blob([completeIco], { type: 'image/x-icon' });
+        return new Blob([completeIco], {type: 'image/x-icon'});
     }
 
     async convertAll() {
@@ -673,7 +696,7 @@ class MediaConverter {
             zip.file(`${baseName}.${this.targetFormat}`, item.convertedBlob);
         });
 
-        const content = await zip.generateAsync({ type: 'blob' });
+        const content = await zip.generateAsync({type: 'blob'});
         const zipUrl = URL.createObjectURL(content);
         const a = document.createElement('a');
         a.href = zipUrl;
@@ -747,8 +770,8 @@ class MediaConverter {
         window.addEventListener('mousemove', onMove);
         window.addEventListener('mouseup', onEnd);
 
-        this.compareFrame.addEventListener('touchstart', onStart, { passive: true });
-        window.addEventListener('touchmove', onMove, { passive: true });
+        this.compareFrame.addEventListener('touchstart', onStart, {passive: true});
+        window.addEventListener('touchmove', onMove, {passive: true});
         window.addEventListener('touchend', onEnd);
     }
 
