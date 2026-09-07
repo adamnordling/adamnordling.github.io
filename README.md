@@ -14,24 +14,21 @@ copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
 
 Terminal / CLI Drawer (~ / bash):
 What it is: A collapsible bottom drawer or keyboard shortcut (e.g., pressing ` or ~) that gives a terminal where typing
-help, skills, education, or curl contact outputs structured text.
-Why it works: Fun, highly memorable for software engineers, and fits your Linux/Low-level skill profile.
+help, skills, education, or curl contact outputs structured text. Why it works: Fun, highly memorable for software
+engineers, and fits your Linux/Low-level skill profile.
 
 System Telemetry / Performance Footer Badge:
 What it is: A tiny, crisp line in the footer:
-⚡ Built with Vanilla JS · 0 Dependencies · 99/100 Lighthouse · Clean Code
-Why it works: Subtle flex on performance optimization and minimalist craftsmanship.
+⚡ Built with Vanilla JS · 0 Dependencies · 99/100 Lighthouse · Clean Code Why it works: Subtle flex on performance
+optimization and minimalist craftsmanship.
 
 lighthouse footer
 
 portfolio project??
 
-subnet calc tools
-final touches: correct email
+subnet calc tools final touches: correct email
 
 Adda cloudflare analytics och mer?
-
-
 
 Tools ideas:
 
@@ -39,12 +36,11 @@ png converter etc
 
 Optimize OS systems, SAFE, ,GOOD, VALID
 
+
+Gör en subabase
 ----------------
 
 
 
 
-npm install
-npm run format
-npm run lint:js
-npm run validate
+npm install npm run format npm run lint:js npm run validate

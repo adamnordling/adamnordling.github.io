@@ -7,7 +7,7 @@
         <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
         <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; worker-src 'self' blob: https://cdnjs.cloudflare.com; frame-src 'self' blob: data:;"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
         />
         <!-- Professional SEO & Metadata -->
         <title>Adam Nordling | Software Engineer</title>
@@ -31,7 +31,6 @@
 
         <!-- Stylesheets & Assets -->
         <link rel="stylesheet" href="./src/style.css" />
-        <link rel="stylesheet" href="./src/tools/converter.css" />
         <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
         <script type="application/ld+json">
             {
@@ -49,10 +48,10 @@
         </script>
     </head>
     <body class="light-theme">
-        <!-- Interactive Dot Matrix Background (Left & Right Flanks) -->
+        <!-- Interactive Dot Matrix Background -->
         <canvas id="bg-canvas" aria-hidden="true"></canvas>
-        <!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
-        <!-- BOTTOM-RIGHT KEYBOARD HOTKEYS WIDGET -->
+
+        <!-- KEYBOARD HOTKEYS WIDGET -->
         <aside class="hotkeys-indicator" aria-label="Keyboard shortcuts">
             <span class="hotkeys-prefix">
                 <span lang="en">Hotkeys:</span>
@@ -78,7 +77,7 @@
                 <span lang="sv">Typsnitt</span>
             </div>
             <div class="hotkey-item">
-                <kbd>1–4</kbd>
+                <kbd>1–3</kbd>
                 <span lang="en">Open Repo</span>
                 <span lang="sv">Öppna repo</span>
             </div>
@@ -88,9 +87,9 @@
                 <span lang="sv">Rulla</span>
             </div>
         </aside>
+
         <!-- TOP CONTROLS: Theme Toggle + Language Menu -->
         <div class="top-controls">
-            <!-- Theme Toggle Button -->
             <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
                 <svg
                     class="sun-icon"
@@ -103,7 +102,6 @@
                     stroke-width="2.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    aria-hidden="true"
                 >
                     <circle cx="12" cy="12" r="4"></circle>
                     <path d="M12 2v2"></path>
@@ -126,13 +124,11 @@
                     stroke-width="2.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    aria-hidden="true"
                 >
                     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                 </svg>
             </button>
 
-            <!-- Language Selector Dropdown -->
             <div class="lang-dropdown">
                 <button class="lang-trigger" type="button" aria-label="Select Language">
                     <span class="lang-current-label">EN</span>
@@ -160,7 +156,8 @@
                 </div>
             </div>
         </div>
-        <!-- TOP-RIGHT CLOCK WIDGET -->
+
+        <!-- CLOCK WIDGET -->
         <aside class="live-clock" aria-label="Current time and date">
             <div class="clock-time" id="clock-time">00:00:00</div>
             <div class="clock-details">
@@ -171,13 +168,13 @@
                 <span class="clock-year" id="clock-year">----</span>
             </div>
         </aside>
+
         <div class="portfolio-wrapper">
             <main class="main-container">
                 <!-- LEFT PANEL: Minimal Column -->
                 <section class="left-panel" aria-label="Introduction & Profile">
-                    <!-- 1. Profile Header Layout -->
+                    <!-- 1. Profile Header -->
                     <header class="profile-header">
-                        <!-- 3D Card Wrapper -->
                         <div class="profile-card-container">
                             <div class="profile-card-inner">
                                 <img
@@ -193,7 +190,6 @@
                             </div>
                         </div>
 
-                        <!-- Right Column: Socials, Name & Title -->
                         <div class="profile-info">
                             <div class="header-socials">
                                 <a
@@ -213,7 +209,6 @@
                                         stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        aria-hidden="true"
                                     >
                                         <path
                                             d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
@@ -238,7 +233,6 @@
                                         stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        aria-hidden="true"
                                     >
                                         <path
                                             d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
@@ -247,7 +241,6 @@
                                         <circle cx="4" cy="4" r="2"></circle>
                                     </svg>
                                 </a>
-                                <!-- Button 3 (Email with Zero-Scrape Obfuscation) -->
                                 <div class="email-wrapper">
                                     <button
                                         type="button"
@@ -266,7 +259,6 @@
                                             stroke-width="2"
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
-                                            aria-hidden="true"
                                         >
                                             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -315,22 +307,41 @@
                         </div>
                     </header>
 
-                    <!-- 2. Bio Quote -->
-                    <blockquote class="intro-quote">
-                        <span class="bio-teaser">
-                            <span lang="en"
-                                >Newly graduated software technology master's student, with a broad technical foundation
-                                in web development, software architecture, and machine learning...</span
-                            >
-                            <span lang="sv"
-                                >Nyexaminerad masterstudent inom programvaruteknik med en bred teknisk grund inom
-                                webbutveckling, mjukvaruarkitektur och maskininlärning...</span
-                            >
-                        </span>
-                        <button class="bio-toggle" aria-expanded="false" type="button">
-                            <span lang="en">[Read more]</span>
-                            <span lang="sv">[Läs mer]</span>
-                        </button>
+                    <!-- 2. Interactive Bio Quote -->
+                    <blockquote
+                        class="intro-quote bio-card"
+                        id="bio-card"
+                        tabindex="0"
+                        role="button"
+                        aria-expanded="false"
+                    >
+                        <div class="bio-teaser">
+                            <span lang="en">
+                                Newly graduated software technology master's student, with a broad technical foundation
+                                in web development, software architecture, and machine learning...
+                            </span>
+                            <span lang="sv">
+                                Nyexaminerad masterstudent inom programvaruteknik med en bred teknisk grund inom
+                                webbutveckling, mjukvaruarkitektur och maskininlärning...
+                            </span>
+                            <span class="bio-hint">
+                                <span class="bio-hint-text">
+                                    <span lang="en">more</span>
+                                    <span lang="sv">mer</span>
+                                </span>
+                                <svg
+                                    class="bio-chevron"
+                                    width="12"
+                                    height="12"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </span>
+                        </div>
 
                         <div class="bio-expandable">
                             <div class="bio-expandable-content">
@@ -616,29 +627,17 @@
                     </section>
                 </section>
 
-                <!-- RIGHT PANEL: Projects & Tools -->
-                <section class="right-panel" aria-label="Content Panel">
+                <!-- RIGHT PANEL: Projects Only -->
+                <section class="right-panel" aria-label="Projects Panel">
                     <div class="right-header">
                         <div class="header-title-group">
                             <h2 id="view-title">
-                                <span class="view-title-projects" lang="en">Projects</span>
-                                <span class="view-title-projects" lang="sv">Projekt</span>
-                                <span class="view-title-tools" lang="en" style="display: none">Tools</span>
-                                <span class="view-title-tools" lang="sv" style="display: none">Verktyg</span>
+                                <span lang="en">Projects</span>
+                                <span lang="sv">Projekt</span>
                             </h2>
-                            <button
-                                class="back-to-projects-btn"
-                                id="back-to-projects"
-                                type="button"
-                                style="display: none"
-                            >
-                                <span lang="en">← Back to Projects</span>
-                                <span lang="sv">← Tillbaka till Projekt</span>
-                            </button>
                         </div>
 
                         <div class="header-actions">
-                            <!-- 1. Category Filter -->
                             <div class="filter-dropdown" id="projects-filter">
                                 <button class="filter-trigger" id="active-filter-label" type="button">
                                     <span lang="en">Category:</span>
@@ -669,8 +668,8 @@
                                     </button>
                                     <button class="filter-btn" data-filter="web" type="button">
                                         <span>
-                                            <span lang="en">Web</span>
-                                            <span lang="sv">Webb</span>
+                                            <span lang="en">Web &amp; Tools</span>
+                                            <span lang="sv">Webb &amp; Verktyg</span>
                                         </span>
                                         <span class="filter-count"></span>
                                     </button>
@@ -687,89 +686,25 @@
                                     </button>
                                 </div>
                             </div>
-
-                            <!-- 2. Tools Menu Dropdown -->
-                            <div class="tools-dropdown">
-                                <button class="tools-trigger" type="button" aria-label="Open Tools Menu">
-                                    <span class="menu-icon">≡</span>
-                                    <span lang="en">Tools</span>
-                                    <span lang="sv">Verktyg</span>
-                                    <svg
-                                        class="chevron"
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </button>
-                                <div class="tools-menu">
-                                    <button class="tool-select-btn" data-tool="converter" type="button">
-                                        <strong>
-                                            <span lang="en">Media Converter</span>
-                                            <span lang="sv">Filkonverterare</span>
-                                        </strong>
-                                        <small>PNG, WebP, JPEG, PDF</small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="subnet" type="button">
-                                        <strong>
-                                            <span lang="en">Subnet / CIDR Calc</span>
-                                            <span lang="sv">Subnät / CIDR Calc</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">IP mask & Network analysis</span>
-                                            <span lang="sv">IP-mask & nätverksanalys</span>
-                                        </small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="nutrient" type="button">
-                                        <strong>
-                                            <span lang="en">Nutrient Engine</span>
-                                            <span lang="sv">Näringsmotor</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">Bioavailability & Ratios</span>
-                                            <span lang="sv">Biotillgänglighet & data</span>
-                                        </small>
-                                    </button>
-                                    <button class="tool-select-btn" data-tool="hash" type="button">
-                                        <strong>
-                                            <span lang="en">Dev Inspector</span>
-                                            <span lang="sv">Utvecklarinspektör</span>
-                                        </strong>
-                                        <small>
-                                            <span lang="en">Base64, JSON & Hashes</span>
-                                            <span lang="sv">Base64, JSON & Hashning</span>
-                                        </small>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
-                    <!-- PROJECTS VIEW (Default) -->
+                    <!-- PROJECTS VIEW -->
                     <div class="projects-view" id="projects-view">
                         <div class="apps-grid">
-                            <!-- Master's Thesis: Trajectory Data Augmentation Pipeline -->
+                            <!-- 1. Master's Thesis Card -->
                             <article
                                 class="app-card"
                                 data-category="ai"
                                 data-skills="python data lowlevel languages devops"
                             >
                                 <div class="app-img-container">
-                                    <!-- Live Status Badge -->
                                     <div class="app-status-badge is-live" data-live-enabled="true">
                                         <span class="status-dot"></span>
                                         <span class="status-label-live">
-                                            <span lang="en">M.Sc. Pipeline</span>
-                                            <span lang="sv">M.Sc. Pipeline</span>
-                                            <span class="status-ping">· Python 3.11</span>
+                                            <span>M.Sc. Pipeline · Python 3.11</span>
                                         </span>
                                     </div>
-
-                                    <!-- Trajectory Vector Graphic Visualization -->
                                     <svg
                                         viewBox="0 0 400 200"
                                         width="100%"
@@ -792,7 +727,6 @@
                                             </pattern>
                                         </defs>
                                         <rect width="100%" height="100%" fill="url(#grid)" />
-                                        <!-- Augmented Background Dispersion -->
                                         <path
                                             d="M 30 160 Q 120 40 220 120 T 370 50"
                                             fill="none"
@@ -801,28 +735,17 @@
                                             stroke-dasharray="4 4"
                                         />
                                         <path
-                                            d="M 30 140 Q 140 20 200 140 T 370 70"
-                                            fill="none"
-                                            stroke="rgba(139, 92, 246, 0.2)"
-                                            stroke-width="3"
-                                            stroke-dasharray="4 4"
-                                        />
-                                        <!-- Primary Mathematical Trajectory -->
-                                        <path
                                             d="M 30 150 Q 130 30 210 130 T 370 60"
                                             fill="none"
                                             stroke="url(#trajGrad)"
                                             stroke-width="2.5"
                                         />
-                                        <!-- Selection Centroids -->
                                         <circle cx="30" cy="150" r="4.5" fill="#3b82f6" />
                                         <circle cx="150" cy="65" r="5" fill="#60a5fa" />
                                         <circle cx="210" cy="130" r="4.5" fill="#8b5cf6" />
-                                        <circle cx="295" cy="85" r="4.5" fill="#a78bfa" />
                                         <circle cx="370" cy="60" r="5" fill="#38bdf8" />
                                     </svg>
                                 </div>
-
                                 <div class="app-content">
                                     <h3>
                                         <span lang="en">Trajectory ML Augmentation</span>
@@ -830,14 +753,12 @@
                                     </h3>
                                     <p>
                                         <span lang="en"
-                                            >A modular, configuration-driven Python framework evaluating selection
-                                            strategies (Outlierness, Uncertainty, Diversity) with Optuna across 200GB+
-                                            spatio-temporal datasets.</span
+                                            >A modular Python framework evaluating selection strategies (Outlierness,
+                                            Uncertainty, Diversity) with Optuna across 200GB+ datasets.</span
                                         >
                                         <span lang="sv"
-                                            >Ett modulärt, konfigurationsdrivet Python-ramverk som utvärderar
-                                            urvalsstrategier (Outlierness, Uncertainty, Diversity) med Optuna över
-                                            200GB+ spatial-temporala dataset.</span
+                                            >Ett modulärt Python-ramverk som utvärderar urvalsstrategier (Outlierness,
+                                            Uncertainty, Diversity) med Optuna över 200GB+ dataset.</span
                                         >
                                     </p>
                                     <div class="app-links">
@@ -846,7 +767,6 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
-                                            aria-label="GitHub repository for Trajectory Data Augmentation"
                                         >
                                             <span lang="en">GitHub Repository</span>
                                             <span lang="sv">GitHub-källkod</span>
@@ -856,14 +776,11 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-secondary"
-                                            aria-label="Read Trajectory Augmentation research paper on arXiv"
                                         >
                                             <span>arXiv Paper ↗</span>
                                         </a>
                                     </div>
                                 </div>
-
-                                <!-- Hover Context Drawer (100% Accurate Architecture from pyproject.toml / src/) -->
                                 <div class="app-tech-drawer">
                                     <div class="tech-drawer-inner">
                                         <div class="tech-drawer-label">
@@ -872,38 +789,248 @@
                                         </div>
                                         <p class="tech-drawer-text">
                                             <span lang="en"
-                                                >Architected in Python 3.11 with a strict <code>src/</code> layout, YAML
-                                                control centers, PyArrow Feather serialization, Numba JIT acceleration,
-                                                and Optuna HPO loops. Enforces static typing via Mypy and code standards
-                                                via Ruff.</span
+                                                >Python 3.11 with PyArrow Feather serialization, Numba JIT acceleration,
+                                                and Optuna HPO loops. Enforces static typing via Mypy and Ruff.</span
                                             >
                                             <span lang="sv"
-                                                >Arkitekturerad i Python 3.11 med strikt <code>src/</code>-layout,
-                                                YAML-konfigurationscenter, PyArrow Feather-serialisering, Numba
-                                                JIT-acceleration och Optuna HPO-loopar. Strikt typsäkrad via Mypy och
-                                                lintad med Ruff.</span
+                                                >Python 3.11 med PyArrow Feather-serialisering, Numba JIT-acceleration
+                                                och Optuna HPO-loopar. Typsäkrad via Mypy och Ruff.</span
                                             >
                                         </p>
                                     </div>
                                 </div>
                             </article>
-                            <article class="app-card" data-category="web" data-skills="web languages data">
+
+                            <!-- 2. "Everything" Web Utilities Hub Card -->
+                            <article
+                                class="app-card"
+                                data-category="web"
+                                data-skills="web languages security devops os"
+                            >
                                 <div class="app-img-container">
-                                    <!-- Live Status Badge (Change data-live-enabled to 'true' or 'false') -->
-                                    <div
-                                        class="app-status-badge"
-                                        data-live-enabled="false"
-                                        data-endpoint="http://localhost:3000"
-                                    >
+                                    <div class="app-status-badge" data-live-enabled="false">
                                         <span class="status-dot"></span>
                                         <span class="status-label-dev">
                                             <span lang="en">In Development</span>
                                             <span lang="sv">Under utveckling</span>
                                         </span>
-                                        <span class="status-label-live" style="display: none">
-                                            <span lang="en">Live</span>
-                                            <span lang="sv">Drift</span>
-                                            <span class="status-ping"></span>
+                                    </div>
+                                    <svg
+                                        viewBox="0 0 400 200"
+                                        width="100%"
+                                        height="100%"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        style="background: #121318; display: block"
+                                    >
+                                        <defs>
+                                            <pattern id="dotGrid" width="16" height="16" patternUnits="userSpaceOnUse">
+                                                <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.06)" />
+                                            </pattern>
+                                        </defs>
+                                        <rect width="100%" height="100%" fill="url(#dotGrid)" />
+                                        <g transform="translate(60, 45)">
+                                            <rect
+                                                x="0"
+                                                y="0"
+                                                width="70"
+                                                height="48"
+                                                rx="6"
+                                                fill="#1c1d24"
+                                                stroke="rgba(96,165,250,0.3)"
+                                                stroke-width="1.2"
+                                            />
+                                            <text
+                                                x="35"
+                                                y="28"
+                                                fill="#60a5fa"
+                                                font-family="monospace"
+                                                font-size="11"
+                                                text-anchor="middle"
+                                            >
+                                                CONVERT
+                                            </text>
+
+                                            <rect
+                                                x="105"
+                                                y="0"
+                                                width="70"
+                                                height="48"
+                                                rx="6"
+                                                fill="#1c1d24"
+                                                stroke="rgba(255,255,255,0.1)"
+                                                stroke-width="1"
+                                            />
+                                            <text
+                                                x="140"
+                                                y="28"
+                                                fill="#cbd5e1"
+                                                font-family="monospace"
+                                                font-size="11"
+                                                text-anchor="middle"
+                                            >
+                                                CIDR/IP
+                                            </text>
+
+                                            <rect
+                                                x="210"
+                                                y="0"
+                                                width="70"
+                                                height="48"
+                                                rx="6"
+                                                fill="#1c1d24"
+                                                stroke="rgba(255,255,255,0.1)"
+                                                stroke-width="1"
+                                            />
+                                            <text
+                                                x="245"
+                                                y="28"
+                                                fill="#cbd5e1"
+                                                font-family="monospace"
+                                                font-size="11"
+                                                text-anchor="middle"
+                                            >
+                                                SHA-256
+                                            </text>
+
+                                            <rect
+                                                x="52"
+                                                y="62"
+                                                width="70"
+                                                height="48"
+                                                rx="6"
+                                                fill="#1c1d24"
+                                                stroke="rgba(255,255,255,0.1)"
+                                                stroke-width="1"
+                                            />
+                                            <text
+                                                x="87"
+                                                y="90"
+                                                fill="#cbd5e1"
+                                                font-family="monospace"
+                                                font-size="11"
+                                                text-anchor="middle"
+                                            >
+                                                UTC/ISO
+                                            </text>
+
+                                            <rect
+                                                x="157"
+                                                y="62"
+                                                width="70"
+                                                height="48"
+                                                rx="6"
+                                                fill="#1c1d24"
+                                                stroke="rgba(96,165,250,0.3)"
+                                                stroke-width="1.2"
+                                            />
+                                            <text
+                                                x="192"
+                                                y="90"
+                                                fill="#60a5fa"
+                                                font-family="monospace"
+                                                font-size="11"
+                                                text-anchor="middle"
+                                            >
+                                                PARSER
+                                            </text>
+
+                                            <line
+                                                x1="70"
+                                                y1="24"
+                                                x2="105"
+                                                y2="24"
+                                                stroke="rgba(96,165,250,0.4)"
+                                                stroke-width="1.5"
+                                                stroke-dasharray="2 2"
+                                            />
+                                            <line
+                                                x1="175"
+                                                y1="24"
+                                                x2="210"
+                                                y2="24"
+                                                stroke="rgba(255,255,255,0.2)"
+                                                stroke-width="1"
+                                            />
+                                            <line
+                                                x1="87"
+                                                y1="48"
+                                                x2="87"
+                                                y2="62"
+                                                stroke="rgba(255,255,255,0.2)"
+                                                stroke-width="1"
+                                            />
+                                            <line
+                                                x1="192"
+                                                y1="48"
+                                                x2="192"
+                                                y2="62"
+                                                stroke="rgba(96,165,250,0.4)"
+                                                stroke-width="1.5"
+                                                stroke-dasharray="2 2"
+                                            />
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="app-content">
+                                    <h3>Everything</h3>
+                                    <p>
+                                        <span lang="en"
+                                            >An all-in-one, client-side digital Swiss Army knife. Features media
+                                            converters, subnet calculators, cryptographic hashers, and timezone
+                                            tools—100% private with zero server uploads.</span
+                                        >
+                                        <span lang="sv"
+                                            >En allt-i-ett klientbaserad digital verktygslåda. Innehåller
+                                            filkonverterare, subnätkalkylatorer, hashgeneratorer och
+                                            tidszonsverktyg—100% privat utan serveruppladdningar.</span
+                                        >
+                                    </p>
+                                    <div class="app-links">
+                                        <a
+                                            href="https://github.com/adamnordling/everything"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="btn-primary"
+                                        >
+                                            <span lang="en">GitHub Repository</span>
+                                            <span lang="sv">GitHub-källkod</span>
+                                        </a>
+                                        <span class="btn-secondary" style="cursor: default">
+                                            <span lang="en">In Development</span>
+                                            <span lang="sv">Under utveckling</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="app-tech-drawer">
+                                    <div class="tech-drawer-inner">
+                                        <div class="tech-drawer-label">
+                                            <span lang="en">Architecture &amp; Tech Focus</span>
+                                            <span lang="sv">Arkitektur &amp; Teknikfokus</span>
+                                        </div>
+                                        <p class="tech-drawer-text">
+                                            <span lang="en"
+                                                >Architected with TypeScript and Web Workers for zero-latency
+                                                client-side execution. Leverages HTML5 Canvas, Web Crypto API, and
+                                                WebAssembly for fast, serverless local computation.</span
+                                            >
+                                            <span lang="sv"
+                                                >Arkitekturerad med TypeScript och Web Workers för klientbaserad
+                                                exekvering utan latens. Utnyttjar HTML5 Canvas, Web Crypto API och
+                                                WebAssembly för snabba, lokala beräkningar.</span
+                                            >
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- 3. Nutritional App Card -->
+                            <article class="app-card" data-category="web" data-skills="web languages data">
+                                <div class="app-img-container">
+                                    <div class="app-status-badge" data-live-enabled="false">
+                                        <span class="status-dot"></span>
+                                        <span class="status-label-dev">
+                                            <span lang="en">In Development</span>
+                                            <span lang="sv">Under utveckling</span>
                                         </span>
                                     </div>
                                     <img
@@ -913,7 +1040,6 @@
                                         height="160"
                                         loading="lazy"
                                         decoding="async"
-                                        style="width: 100%; height: 100%; object-fit: cover"
                                     />
                                 </div>
                                 <div class="app-content">
@@ -937,7 +1063,6 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
-                                            aria-label="GitHub repository for Nutritional App"
                                         >
                                             <span lang="en">GitHub Repository</span>
                                             <span lang="sv">GitHub-källkod</span>
@@ -948,8 +1073,6 @@
                                         </span>
                                     </div>
                                 </div>
-
-                                <!-- Hover Context Drawer -->
                                 <div class="app-tech-drawer">
                                     <div class="tech-drawer-inner">
                                         <div class="tech-drawer-label">
@@ -959,325 +1082,17 @@
                                         <p class="tech-drawer-text">
                                             <span lang="en"
                                                 >Architected with modular TypeScript &amp; Express services, utilizing
-                                                SQLite for fast in-memory nutrient matrix lookups, reactive charts, and
-                                                automated daily micronutrient bioavailability ratios.</span
+                                                SQLite for fast in-memory nutrient matrix lookups and reactive
+                                                bioavailability charts.</span
                                             >
                                             <span lang="sv"
                                                 >Arkitekturerad med modulära TypeScript- &amp; Express-tjänster, SQLite
-                                                för snabba mikronäringsberäkningar i minnet, reaktiva grafer och
-                                                automatiserad analys av biotillgänglighet.</span
+                                                för snabba mikronäringsberäkningar i minnet och reaktiva grafer.</span
                                             >
                                         </p>
                                     </div>
                                 </div>
                             </article>
-                        </div>
-                    </div>
-
-                    <!-- TOOL ACTIVE VIEW (Hidden by default) -->
-                    <div class="tool-view" id="tool-view" style="display: none">
-                        <div class="tool-placeholder-card">
-                            <!-- Multilingual Tool Descriptions configured declaratively -->
-                            <!-- Converter Tool Interface -->
-                            <!-- Converter Tool Interface -->
-                            <div class="tool-content-item" data-tool-content="converter">
-                                <h3>
-                                    <span lang="en">Media &amp; File Converter</span>
-                                    <span lang="sv">Fil- och mediakonverterare</span>
-                                </h3>
-                                <p>
-                                    <span lang="en"
-                                        >Client-side batch format conversion with real-time Before/After
-                                        comparison.</span
-                                    >
-                                    <span lang="sv"
-                                        >Klientbaserad filkonvertering i batch med visuell
-                                        Före/Efter-kvalitetsjämförelse.</span
-                                    >
-                                </p>
-
-                                <div class="converter-container">
-                                    <!-- Drag & Drop Zone -->
-                                    <div class="converter-dropzone" id="converter-dropzone">
-                                        <svg
-                                            class="dropzone-icon"
-                                            width="28"
-                                            height="28"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                        >
-                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                            <polyline points="17 8 12 3 7 8"></polyline>
-                                            <line x1="12" y1="3" x2="12" y2="15"></line>
-                                        </svg>
-                                        <span class="dropzone-title">
-                                            <span lang="en"
-                                                >Drop files here, paste from clipboard (Ctrl+V), or browse</span
-                                            >
-                                            <span lang="sv">Släpp filer här, klistra in (Ctrl+V) eller bläddra</span>
-                                        </span>
-                                        <span class="dropzone-hint"
-                                            >PNG, JPEG, WebP, AVIF, HEIC, SVG, BMP, ICO, PDF</span
-                                        >
-                                        <input
-                                            type="file"
-                                            id="converter-file-input"
-                                            class="converter-file-input"
-                                            multiple
-                                            accept="image/*,.heic,.heif,.svg,application/pdf"
-                                        />
-                                    </div>
-
-                                    <!-- Global Settings Bar -->
-                                    <!-- Global Settings: 2-Column Balanced Grid -->
-                                    <div class="converter-settings">
-                                        <!-- Left Column: Format & Resolution stacked neatly -->
-                                        <div class="settings-left-col">
-                                            <div class="setting-group">
-                                                <label class="setting-label" for="converter-format">
-                                                    <span lang="en">Target Format</span>
-                                                    <span lang="sv">Målformat</span>
-                                                </label>
-                                                <select id="converter-format" class="setting-select">
-                                                    <option value="webp" selected>WebP (.webp)</option>
-                                                    <option value="avif">AVIF (.avif)</option>
-                                                    <option value="png">PNG (.png)</option>
-                                                    <option value="jpeg">JPEG (.jpg)</option>
-                                                    <option value="ico">Favicon / Icon (.ico)</option>
-                                                    <option value="bmp">Bitmap (.bmp)</option>
-                                                    <option value="pdf">Document (.pdf)</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="setting-group">
-                                                <label class="setting-label" for="converter-scale">
-                                                    <span lang="en">Resolution / Dimensions</span>
-                                                    <span lang="sv">Upplösning / Dimensioner</span>
-                                                </label>
-                                                <div class="scale-inputs-wrap">
-                                                    <select id="converter-scale" class="setting-select">
-                                                        <option value="1.0" selected>1.0x (Original)</option>
-                                                        <option value="0.5">0.5x (Compact)</option>
-                                                        <option value="2.0">2.0x (High-Res @2x)</option>
-                                                        <option value="custom">Custom (W × H)</option>
-                                                    </select>
-                                                    <!-- Compact inline inputs when Custom is selected -->
-                                                    <div
-                                                        class="custom-dim-row"
-                                                        id="custom-dim-row"
-                                                        style="display: none"
-                                                    >
-                                                        <input
-                                                            type="number"
-                                                            id="custom-width"
-                                                            class="setting-input dim-input"
-                                                            placeholder="W"
-                                                            min="1"
-                                                            max="8192"
-                                                        />
-                                                        <span class="dim-separator">×</span>
-                                                        <input
-                                                            type="number"
-                                                            id="custom-height"
-                                                            class="setting-input dim-input"
-                                                            placeholder="H"
-                                                            min="1"
-                                                            max="8192"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Right Column: Quality Slider -->
-                                        <div class="settings-right-col">
-                                            <div class="setting-group setting-group-quality">
-                                                <div class="setting-label">
-                                                    <span class="setting-label-quality">
-                                                        <span lang="en">Quality</span>
-                                                        <span lang="sv">Kvalitet</span>
-                                                    </span>
-                                                    <span
-                                                        id="converter-quality-val"
-                                                        style="color: var(--accent); font-weight: 600"
-                                                        >80% (Recommended)</span
-                                                    >
-                                                </div>
-                                                <input
-                                                    type="range"
-                                                    id="converter-quality"
-                                                    class="setting-range"
-                                                    min="0.05"
-                                                    max="1.0"
-                                                    step="0.05"
-                                                    value="0.80"
-                                                />
-                                                <div
-                                                    id="quality-preset-subtitle"
-                                                    style="
-                                                        display: flex;
-                                                        justify-content: space-between;
-                                                        font-size: 0.72rem;
-                                                        color: var(--text-muted);
-                                                        font-family: var(--font-mono), monospace;
-                                                    "
-                                                >
-                                                    <span>Max Space (30%)</span>
-                                                    <span style="color: var(--accent)">● Balanced (80%)</span>
-                                                    <span>Lossless (100%)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Action Toolbar -->
-                                    <div class="converter-actions">
-                                        <div class="batch-info-wrapper">
-                                            <span class="converter-batch-info" id="converter-batch-count">0 files</span>
-                                            <!-- Privacy Note for Mobile / Small Screens -->
-                                            <span class="privacy-note-mobile">🔒 Auto-sanitizes EXIF &amp; GPS</span>
-                                        </div>
-                                        <div class="converter-btn-group">
-                                            <button type="button" class="btn-clear-all" id="btn-clear-all">
-                                                <span lang="en">Clear</span>
-                                                <span lang="sv">Rensa</span>
-                                            </button>
-                                            <button type="button" class="btn-zip-all" id="btn-zip-all" disabled>
-                                                <svg
-                                                    width="13"
-                                                    height="13"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                >
-                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                    <polyline points="7 10 12 15 17 10" />
-                                                    <line x1="12" y1="15" x2="12" y2="3" />
-                                                </svg>
-                                                <span>ZIP</span>
-                                            </button>
-                                            <button type="button" class="btn-convert-all" id="btn-convert-all" disabled>
-                                                <span lang="en">Convert All</span>
-                                                <span lang="sv">Konvertera alla</span>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Conversion Queue Grid -->
-                                    <div class="converter-queue" id="converter-queue"></div>
-                                </div>
-                            </div>
-
-                            <!-- BEFORE / AFTER INTERACTIVE COMPARISON MODAL -->
-                            <div class="compare-modal-overlay" id="compare-modal" aria-hidden="true">
-                                <div class="compare-modal-window">
-                                    <div class="compare-modal-header">
-                                        <span class="compare-modal-title">
-                                            <span lang="en">Interactive Quality &amp; Compression Comparison</span>
-                                            <span lang="sv">Interaktiv kvalitets- och komprimeringsjämförelse</span>
-                                        </span>
-                                        <button
-                                            type="button"
-                                            class="compare-modal-close"
-                                            id="compare-close"
-                                            aria-label="Close Comparison"
-                                        >
-                                            ✕
-                                        </button>
-                                    </div>
-
-                                    <div class="compare-viewer-frame" id="compare-viewer-frame">
-                                        <!-- Original (Left Base) -->
-                                        <div class="compare-img-layer compare-layer-before">
-                                            <img id="compare-img-original" alt="Original Preview" />
-                                            <span class="compare-tag compare-tag-before" id="compare-tag-before"
-                                                >Original</span
-                                            >
-                                        </div>
-
-                                        <!-- Converted (Right Clipped Layer) -->
-                                        <div class="compare-img-layer compare-layer-after" id="compare-layer-after">
-                                            <img id="compare-img-converted" alt="Converted Preview" />
-                                            <span class="compare-tag compare-tag-after" id="compare-tag-after"
-                                                >Converted</span
-                                            >
-                                        </div>
-
-                                        <!-- Split Divider Line -->
-                                        <div class="compare-handle-line" id="compare-handle-line">
-                                            <div class="compare-handle-btn">◀ ▶</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="compare-modal-footer">
-                                        <span class="compare-footer-info" id="compare-footer-info">Quality: 88%</span>
-                                        <span class="dropzone-hint">
-                                            <span lang="en"
-                                                >Drag the center slider left and right to inspect detail
-                                                preservation</span
-                                            >
-                                            <span lang="sv"
-                                                >Dra mittenreglaget åt höger/vänster för att inspektera
-                                                detaljbevaring</span
-                                            >
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="tool-content-item" data-tool-content="subnet" style="display: none">
-                                <h3>
-                                    <span lang="en">Subnet &amp; CIDR Calculator</span>
-                                    <span lang="sv">Subnät- &amp; CIDR-kalkylator</span>
-                                </h3>
-                                <p>
-                                    <span lang="en"
-                                        >Interactive IP network calculation, mask translation, and broadcast range
-                                        lookup.</span
-                                    >
-                                    <span lang="sv"
-                                        >Interaktiv IP-nätverksberäkning, masköversättning och
-                                        broadcast-intervall.</span
-                                    >
-                                </p>
-                            </div>
-
-                            <div class="tool-content-item" data-tool-content="nutrient" style="display: none">
-                                <h3>
-                                    <span lang="en">Nutrient Bioavailability Engine</span>
-                                    <span lang="sv">Närings- och biotillgänglighetsmotor</span>
-                                </h3>
-                                <p>
-                                    <span lang="en"
-                                        >Micro-nutrient ratio modeling and absorption synergy analysis.</span
-                                    >
-                                    <span lang="sv"
-                                        >Modellering av mikronäringsförhållanden och analys av
-                                        absorptionssynergier.</span
-                                    >
-                                </p>
-                            </div>
-
-                            <div class="tool-content-item" data-tool-content="hash" style="display: none">
-                                <h3>
-                                    <span lang="en">Developer Inspector</span>
-                                    <span lang="sv">Utvecklarinspektör</span>
-                                </h3>
-                                <p>
-                                    <span lang="en"
-                                        >Real-time Base64 encoder/decoder, SHA-256 hash generator, and JSON
-                                        formatter.</span
-                                    >
-                                    <span lang="sv"
-                                        >Realtids Base64-omkodare, SHA-256 hashgenerator och JSON-formaterare.</span
-                                    >
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -1295,7 +1110,8 @@
             </div>
             <p class="copyright">© 2026 Adam Nordling</p>
         </footer>
-        <!-- CV / RESUME MODAL PREVIEW -->
+
+        <!-- CV MODAL PREVIEW -->
         <div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
             <div class="cv-modal-window">
                 <div class="cv-modal-header">
@@ -1318,12 +1134,11 @@
                     </div>
                 </div>
                 <div class="cv-modal-body">
-                    <!-- Changed 'src' to 'data-src' so it won't load until clicked -->
                     <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
                 </div>
             </div>
         </div>
+
         <script type="module" src="./src/main.js"></script>
-        <script type="module" src="./src/tools/converter.js"></script>
     </body>
 </html>

@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------------------
     // Mobile Touch-Dropdown Support
     // -------------------------------------------------------------------------
-    const allDropdownTriggers = document.querySelectorAll('.filter-trigger, .tools-trigger, .lang-trigger');
+    const allDropdownTriggers = document.querySelectorAll('.filter-trigger, .lang-trigger');
 
     allDropdownTriggers.forEach(trigger => {
         trigger.addEventListener('click', e => {
             if (window.innerWidth <= 1024) {
                 e.stopPropagation();
-                const parentDropdown = trigger.closest('.filter-dropdown, .tools-dropdown, .lang-dropdown');
+                const parentDropdown = trigger.closest('.filter-dropdown, .lang-dropdown');
                 parentDropdown?.classList.toggle('menu-open');
             }
         });
@@ -20,11 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', () => {
         document.querySelectorAll('.menu-open').forEach(el => el.classList.remove('menu-open'));
     });
+
     // -------------------------------------------------------------------------
-    // 1. Pure CSS-Driven Language Controller
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-    // 1. Pure CSS-Driven Language Controller
+    // 1. Language Controller
     // -------------------------------------------------------------------------
     const langDropdown = document.querySelector('.lang-dropdown');
     const langButtons = document.querySelectorAll('.lang-btn');
@@ -41,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const saved = localStorage.getItem('site_lang');
         if (saved) return saved;
 
-        // Check navigator browser languages
         const browserLangs = navigator.languages || [navigator.language || ''];
         const isSwedish = browserLangs.some(l => l.toLowerCase().startsWith('sv'));
         return isSwedish ? 'sv' : 'en';
@@ -60,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Auto-detect browser language or load saved preference
     setLanguage(getInitialLanguage());
+
     // -------------------------------------------------------------------------
     // 2. Projects Filtering
     // -------------------------------------------------------------------------
@@ -96,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.style.display = filterValue === 'all' || cardCategory === filterValue ? 'flex' : 'none';
                 });
 
-                // Auto-close menu immediately
                 if (filterDropdown) {
                     filterDropdown.classList.add('menu-closed');
                 }
@@ -111,22 +107,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 3. Dynamic Collapsible Bio Toggle
+    // 3. Interactive Collapsible Bio Card (Clickable on Desktop & Mobile)
     // -------------------------------------------------------------------------
-    const bioToggle = document.querySelector('.bio-toggle');
-    const bioExpandable = document.querySelector('.bio-expandable');
+    const bioCard = document.getElementById('bio-card');
 
-    if (bioToggle && bioExpandable) {
-        bioToggle.addEventListener('click', () => {
-            const isExpanded = bioExpandable.classList.toggle('is-expanded');
-            bioToggle.setAttribute('aria-expanded', String(isExpanded));
+    if (bioCard) {
+        bioCard.addEventListener('click', () => {
+            const selection = window.getSelection().toString();
+            if (selection.length > 0) return; // Don't collapse if user is selecting text
 
-            // Sync toggle labels in both languages
-            const enText = bioToggle.querySelector('[lang="en"]');
-            const svText = bioToggle.querySelector('[lang="sv"]');
+            const isExpanded = bioCard.classList.toggle('is-expanded');
+            bioCard.setAttribute('aria-expanded', String(isExpanded));
 
-            if (enText) enText.textContent = isExpanded ? '[Read less]' : '[Read more]';
-            if (svText) svText.textContent = isExpanded ? '[Läs mindre]' : '[Läs mer]';
+            const hintEn = bioCard.querySelector('.bio-hint-text [lang="en"]');
+            const hintSv = bioCard.querySelector('.bio-hint-text [lang="sv"]');
+
+            if (hintEn) hintEn.textContent = isExpanded ? 'less' : 'more';
+            if (hintSv) hintSv.textContent = isExpanded ? 'mindre' : 'mer';
+        });
+
+        bioCard.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                bioCard.click();
+            }
         });
     }
 
@@ -173,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.querySelector('.theme-toggle');
     const savedTheme = localStorage.getItem('site_theme');
 
-    // Default is Light; only remove if explicitly saved as 'dark'
     if (savedTheme === 'dark') {
         document.body.classList.remove('light-theme');
     } else {
@@ -212,65 +215,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 7. Tools View Switcher
-    // -------------------------------------------------------------------------
-    const projectsView = document.getElementById('projects-view');
-    const toolView = document.getElementById('tool-view');
-    const projectsFilter = document.getElementById('projects-filter');
-    const backToProjectsBtn = document.getElementById('back-to-projects');
-    const toolButtons = document.querySelectorAll('.tool-select-btn');
-    const toolContentItems = document.querySelectorAll('.tool-content-item');
-    const viewTitleProjects = document.querySelectorAll('.view-title-projects');
-    const viewTitleTools = document.querySelectorAll('.view-title-tools');
-
-    if (toolButtons.length > 0) {
-        toolButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const toolKey = btn.getAttribute('data-tool');
-
-                if (projectsView && toolView) {
-                    projectsView.style.display = 'none';
-                    toolView.style.display = 'block';
-                    if (projectsFilter) projectsFilter.style.display = 'none';
-
-                    viewTitleProjects.forEach(el => (el.style.display = 'none'));
-                    viewTitleTools.forEach(el => (el.style.display = 'inline'));
-                    if (backToProjectsBtn) backToProjectsBtn.style.display = 'inline-block';
-
-                    // Display active tool markup
-                    toolContentItems.forEach(item => {
-                        item.style.display = item.getAttribute('data-tool-content') === toolKey ? 'block' : 'none';
-                    });
-                }
-            });
-        });
-    }
-
-    if (backToProjectsBtn) {
-        backToProjectsBtn.addEventListener('click', () => {
-            if (projectsView && toolView) {
-                projectsView.style.display = 'block';
-                toolView.style.display = 'none';
-                if (projectsFilter) projectsFilter.style.display = 'inline-block';
-
-                viewTitleProjects.forEach(el => (el.style.display = 'inline'));
-                viewTitleTools.forEach(el => (el.style.display = 'none'));
-                backToProjectsBtn.style.display = 'none';
-            }
-        });
-    }
-
-    // -------------------------------------------------------------------------
-    // 8. Timezone-Accurate Live Clock with ISO Week & Year
+    // 7. Timezone-Accurate Live Clock with ISO Week & Year
     // -------------------------------------------------------------------------
     const clockTimeEl = document.getElementById('clock-time');
     const clockWeekNumEl = document.getElementById('clock-week-num');
     const clockYearEl = document.getElementById('clock-year');
 
-    // Calculate standard ISO-8601 week number
     function getISOWeekNumber(date) {
         const target = new Date(date.valueOf());
-        const dayNr = (date.getDay() + 6) % 7; // Monday is day 0
+        const dayNr = (date.getDay() + 6) % 7;
         target.setDate(target.getDate() - dayNr + 3);
         const firstThursday = target.valueOf();
         target.setMonth(0, 1);
@@ -282,37 +235,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateClock() {
         const now = new Date();
-
-        // 1. Time (HH:MM:SS) in user's local timezone
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        if (clockTimeEl) {
-            clockTimeEl.textContent = `${hours}:${minutes}`;
-        }
-
-        // 2. ISO Week Number & Year
-        if (clockWeekNumEl) {
-            clockWeekNumEl.textContent = String(getISOWeekNumber(now)).padStart(2, '0');
-        }
-        if (clockYearEl) {
-            clockYearEl.textContent = now.getFullYear();
-        }
+        if (clockTimeEl) clockTimeEl.textContent = `${hours}:${minutes}`;
+        if (clockWeekNumEl) clockWeekNumEl.textContent = String(getISOWeekNumber(now)).padStart(2, '0');
+        if (clockYearEl) clockYearEl.textContent = now.getFullYear();
     }
 
-    // Run immediately and update every second
     updateClock();
     setInterval(updateClock, 1000);
 
     // -------------------------------------------------------------------------
-    // 9. Live GitHub Activity Fetcher (XSS-Safe & Rate-Limit Resilient)
+    // 8. Live GitHub Activity Fetcher
     // -------------------------------------------------------------------------
     const activityFeed = document.getElementById('activity-feed');
     const GITHUB_USERNAME = 'adamnordling';
     const CACHE_KEY = `gh_commits_${GITHUB_USERNAME}`;
     const CACHE_TIME_KEY = `gh_commits_time_${GITHUB_USERNAME}`;
-    const TTL_MS = 60 * 1000; // 1-minute cache
+    const TTL_MS = 60 * 1000;
 
-    // XSS Sanitizer: Prevents HTML injection from commit titles
     function escapeHTML(str) {
         return str.replace(
             /[&<>'"]/g,
@@ -341,16 +282,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = Math.floor(seconds / i.secs);
             if (count >= 1) {
                 return `
-                        <span lang="en">${count}${i.labelEn}</span>
-                        <span lang="sv">${count} ${i.labelSv}</span>
-                    `;
+                    <span lang="en">${count}${i.labelEn}</span>
+                    <span lang="sv">${count} ${i.labelSv}</span>
+                `;
             }
         }
 
         return `
-                <span lang="en">just now</span>
-                <span lang="sv">just nu</span>
-            `;
+            <span lang="en">just now</span>
+            <span lang="sv">just nu</span>
+        `;
     }
 
     function renderCommits(items) {
@@ -358,11 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!items || items.length === 0) {
             activityFeed.innerHTML = `
-                    <div class="activity-skeleton">
-                        <span lang="en">No recent public commits found.</span>
-                        <span lang="sv">Inga nyliga offentliga commits hittades.</span>
-                    </div>
-                `;
+                <div class="activity-skeleton">
+                    <span lang="en">No recent public commits found.</span>
+                    <span lang="sv">Inga nyliga offentliga commits hittades.</span>
+                </div>
+            `;
             return;
         }
 
@@ -406,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCommits(JSON.parse(cached));
                 return;
             } catch {
-                // Ignore invalid cache and fetch fresh data
+                // Ignore
             }
         }
 
@@ -421,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             );
 
-            if (!res.ok) throw new Error('Search API request failed');
+            if (!res.ok) throw new Error('Search failed');
 
             const data = await res.json();
             const commits = data.items || [];
@@ -430,13 +371,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
             renderCommits(commits);
         } catch {
-            // Fallback: If search endpoint is busy, fetch standard events
             try {
                 const eventsRes = await fetch(
                     `https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`
                 );
 
-                if (!eventsRes.ok) throw new Error('Events API request failed');
+                if (!eventsRes.ok) throw new Error('Events failed');
 
                 const eventsData = await eventsRes.json();
 
@@ -468,14 +408,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Show clean message if API is down or rate-limited
                 if (activityFeed) {
                     activityFeed.innerHTML = `
-                            <div class="activity-skeleton">
-                                <span lang="en">GitHub activity temporarily unavailable.</span>
-                                <span lang="sv">GitHub-aktivitet tillfälligt otillgänglig.</span>
-                            </div>
-                        `;
+                        <div class="activity-skeleton">
+                            <span lang="en">GitHub activity temporarily unavailable.</span>
+                            <span lang="sv">GitHub-aktivitet tillfälligt otillgänglig.</span>
+                        </div>
+                    `;
                 }
             }
         }
@@ -483,6 +422,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadGitHubActivity();
 
+    // -------------------------------------------------------------------------
+    // 9. Email Obfuscated Copy Toast
+    // -------------------------------------------------------------------------
     const emailCopyBtn = document.getElementById('email-copy-btn');
     const emailToast = document.getElementById('email-toast');
     let toastTimeout = null;
@@ -491,20 +433,18 @@ document.addEventListener('DOMContentLoaded', () => {
         emailCopyBtn.addEventListener('click', async e => {
             e.preventDefault();
 
-            // Decode Base64 string at the exact millisecond of click
             const obf = emailCopyBtn.getAttribute('data-obf');
             if (!obf) return;
 
             let email = '';
             try {
-                email = atob(obf); // Decodes to "adamnordling@live.se"
+                email = atob(obf);
             } catch {
                 return;
             }
 
             let copied = false;
 
-            // 1. Try Modern Clipboard API (HTTPS & Localhost)
             if (navigator.clipboard && window.isSecureContext) {
                 try {
                     await navigator.clipboard.writeText(email);
@@ -514,25 +454,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 2. Safe Fallback for older browsers / plain HTTP
             if (!copied) {
                 try {
-                    const tempTextArea = document.createElement('textarea');
-                    tempTextArea.value = email;
-                    tempTextArea.style.position = 'fixed';
-                    tempTextArea.style.left = '-9999px';
-                    tempTextArea.setAttribute('readonly', '');
-                    document.body.appendChild(tempTextArea);
-                    tempTextArea.select();
+                    const temp = document.createElement('textarea');
+                    temp.value = email;
+                    temp.style.position = 'fixed';
+                    temp.style.left = '-9999px';
+                    document.body.appendChild(temp);
+                    temp.select();
                     document.execCommand('copy');
-                    document.body.removeChild(tempTextArea);
+                    document.body.removeChild(temp);
                     copied = true;
                 } catch {
-                    copied = false;
+                    // Fallback
                 }
             }
 
-            // Show confirmation toast
             emailToast.classList.add('is-visible');
 
             if (toastTimeout) clearTimeout(toastTimeout);
@@ -543,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 11. Resume / CV Preview Modal Controller
+    // 10. Resume / CV Preview Modal Controller
     // -------------------------------------------------------------------------
     const openCvBtn = document.getElementById('open-cv-modal');
     const closeCvBtn = document.getElementById('close-cv-modal');
@@ -552,12 +489,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openModal() {
         if (!cvModal) return;
-
-        // Only load the PDF when the user opens the modal
         if (cvIframe && !cvIframe.getAttribute('src')) {
             cvIframe.setAttribute('src', cvIframe.getAttribute('data-src'));
         }
-
         cvModal.classList.add('is-open');
         cvModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -567,20 +501,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cvModal) return;
         cvModal.classList.remove('is-open');
         cvModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
     }
 
     if (openCvBtn) openCvBtn.addEventListener('click', openModal);
     if (closeCvBtn) closeCvBtn.addEventListener('click', closeModal);
 
-    // Close on backdrop click
     if (cvModal) {
         cvModal.addEventListener('click', e => {
             if (e.target === cvModal) closeModal();
         });
     }
 
-    // Close on Escape key
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && cvModal?.classList.contains('is-open')) {
             closeModal();
@@ -588,7 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 12. Interactive Dot Matrix Canvas (Desktop Mouse + Mobile Touch Drag)
+    // 11. Interactive Dot Matrix Canvas
     // -------------------------------------------------------------------------
     const canvas = document.getElementById('bg-canvas');
     const portfolioWrapper = document.querySelector('.portfolio-wrapper');
@@ -599,7 +531,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let mouseX = -1000,
             mouseY = -1000;
 
-        // Settings
         const DARK_BASE_ALPHA = 0.12;
         const DARK_GLOW_ALPHA = 0.9;
         const LIGHT_BASE_ALPHA = 0.12;
@@ -615,7 +546,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', resize);
         resize();
 
-        // Mouse tracking (Desktop)
         window.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
@@ -626,7 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
             mouseY = -1000;
         });
 
-        // Touch & Drag Tracking (Mobile & Tablets)
         window.addEventListener(
             'touchstart',
             e => {
@@ -652,7 +581,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener(
             'touchend',
             () => {
-                // Fade out when finger lifts
                 setTimeout(() => {
                     mouseX = -1000;
                     mouseY = -1000;
@@ -667,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLight = document.body.classList.contains('light-theme');
             const isMobile = width <= 1024;
             const baseColor = isLight ? [0, 0, 0] : [255, 255, 255];
-            const activeColor = [59, 130, 246]; // Accent Blue
+            const activeColor = [59, 130, 246];
 
             const currentBaseAlpha = isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA;
             const currentGlowAlpha = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
@@ -679,7 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
                 let flankFade = 1.0;
 
-                // On desktop: fade behind middle container. On mobile: subtle full screen mesh
                 if (!isMobile) {
                     if (x < leftBoundary) {
                         const distToEdge = leftBoundary - x;
@@ -692,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (flankFade <= 0) continue;
                 } else {
-                    flankFade = 0.65; // Subtle full-screen mobile mesh
+                    flankFade = 0.65;
                 }
 
                 for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
@@ -726,7 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 13. Dynamic Category Filter Counts
+    // 12. Dynamic Category Filter Counts
     // -------------------------------------------------------------------------
     function updateCategoryCounts() {
         const allCards = document.querySelectorAll('.app-card');
@@ -737,12 +664,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const countSpan = btn.querySelector('.filter-count');
             if (!countSpan) return;
 
-            let count = 0;
-            if (category === 'all') {
-                count = allCards.length;
-            } else {
-                count = document.querySelectorAll(`.app-card[data-category="${category}"]`).length;
-            }
+            const count =
+                category === 'all'
+                    ? allCards.length
+                    : document.querySelectorAll(`.app-card[data-category="${category}"]`).length;
 
             countSpan.textContent = `(${count})`;
         });
@@ -751,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCategoryCounts();
 
     // -------------------------------------------------------------------------
-    // 14. Skill-to-Project Context Drawer (Hover on Desktop + Tap-Toggle on Mobile)
+    // 13. Skill-to-Project Context Drawer
     // -------------------------------------------------------------------------
     const skillItems = document.querySelectorAll('.skill-item[data-skill-id]');
     const allProjectCards = document.querySelectorAll('.app-card');
@@ -795,7 +720,6 @@ document.addEventListener('DOMContentLoaded', () => {
     skillItems.forEach(item => {
         const skillId = item.getAttribute('data-skill-id');
 
-        // 1. Mouse Hover (Desktop)
         item.addEventListener('mouseenter', () => {
             if (!activeSkillId) highlightSkill(skillId);
         });
@@ -804,15 +728,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!activeSkillId) clearHighlights();
         });
 
-        // 2. Tap / Click (Mobile Toggle & Desktop Pin)
         item.addEventListener('click', e => {
             e.stopPropagation();
 
             if (activeSkillId === skillId) {
-                // Tapping active skill toggles it OFF
                 clearHighlights();
             } else {
-                // Tapping new skill activates it
                 clearHighlights();
                 activeSkillId = skillId;
                 item.classList.add('skill-selected');
@@ -821,7 +742,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Tap anywhere else on the page to unclick / reset
     document.addEventListener('click', e => {
         if (!e.target.closest('.skill-item')) {
             clearHighlights();
@@ -829,60 +749,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 15. Configurable Live API Status Ping
-    // -------------------------------------------------------------------------
-    const statusBadges = document.querySelectorAll('.app-status-badge');
-
-    statusBadges.forEach(async badge => {
-        const isLiveEnabled = badge.getAttribute('data-live-enabled') === 'true';
-        const endpoint = badge.getAttribute('data-endpoint');
-        const devLabel = badge.querySelector('.status-label-dev');
-        const liveLabel = badge.querySelector('.status-label-live');
-        const pingSpan = badge.querySelector('.status-ping');
-
-        if (!isLiveEnabled) {
-            // Keep in Development mode
-            badge.classList.remove('is-live');
-            if (devLabel) devLabel.style.display = 'inline';
-            if (liveLabel) liveLabel.style.display = 'none';
-            return;
-        }
-
-        // Live Mode: Perform ping check
-        badge.classList.add('is-live');
-        if (devLabel) devLabel.style.display = 'none';
-        if (liveLabel) liveLabel.style.display = 'inline';
-
-        if (endpoint) {
-            const startTime = performance.now();
-
-            try {
-                await fetch(endpoint, {
-                    method: 'HEAD',
-                    mode: 'no-cors',
-                    cache: 'no-cache'
-                });
-
-                const pingTime = Math.round(performance.now() - startTime);
-
-                if (pingSpan) {
-                    pingSpan.textContent = `· ${pingTime}ms`;
-                }
-            } catch {
-                if (pingSpan) {
-                    pingSpan.textContent = '· online';
-                }
-            }
-        }
-    });
-
-    // -------------------------------------------------------------------------
-    // 16. Power-User Keyboard Shortcuts Controller
+    // 14. Power-User Keyboard Shortcuts Controller
     // -------------------------------------------------------------------------
     const fontTypes = ['default', 'serif', 'monospace'];
     let currentFontIndex = 0;
 
-    // Track which panel the mouse is over (defaults to left panel)
     const leftPanel = document.querySelector('.left-panel');
     const rightPanel = document.querySelector('.right-panel');
     let activeScrollTarget = leftPanel;
@@ -891,10 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (rightPanel) rightPanel.addEventListener('mouseenter', () => (activeScrollTarget = rightPanel));
 
     document.addEventListener('keydown', e => {
-        // 1. Ignore if typing in an input field
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
-
-        // 2. IGNORE modifier combinations (Ctrl+C, Cmd+C, Alt+Tab, etc.)
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         const key = e.key.toLowerCase();
@@ -911,7 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setLanguage(newLang);
         }
 
-        // 3. [ C ] -> Toggle CV Modal (Single 'c' tap only)
+        // 3. [ C ] -> Toggle CV Modal
         if (key === 'c') {
             e.preventDefault();
             if (cvModal?.classList.contains('is-open')) {
@@ -929,8 +797,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetFontBtn) targetFontBtn.click();
         }
 
-        // 5. [ 1 - 9 ] -> Open Project Repo
-        if (/^[1-9]$/.test(key)) {
+        // 5. [ 1 - 3 ] -> Open Project Repo
+        if (/^[1-3]$/.test(key)) {
             const visibleCards = Array.from(document.querySelectorAll('.app-card')).filter(
                 card => card.style.display !== 'none'
             );
@@ -958,7 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 17. Education Thesis Accordion Controller
+    // 15. Education Thesis Accordion Controller
     // -------------------------------------------------------------------------
     const eduItems = document.querySelectorAll('.edu-item');
 

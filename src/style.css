@@ -2,18 +2,14 @@
    1. COLOR PALETTE & CUSTOM PROPERTIES (MODERN SLATE DARK MODE)
    ========================================================================== */
 :root {
-    /* Soft Charcoal / Slate Base (Lighter, richer, easier on the eyes) */
-    --bg-color: #131418; /* Lifted from pitch black #0c0c0e */
-    --card-bg: #1c1d23; /* Clearly defined elevated card surfaces */
-    --border-color: #2e303b; /* Visible, elegant structural borders */
+    --bg-color: #131418;
+    --card-bg: #1c1d23;
+    --border-color: #2e303b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent: #60a5fa;
 
-    /* High-Legibility Typography (100% WCAG AAA Compliant) */
-    --text-primary: #f8fafc; /* Crisp, soft white -> Contrast: 14.5:1 */
-    --text-secondary: #cbd5e1; /* Clear slate gray -> Contrast: 9.8:1 */
-    --text-muted: #94a3b8; /* Soft slate text -> Contrast: 5.9:1 (Passes AAA) */
-    --accent: #60a5fa; /* Vibrant electric blue -> Contrast: 7.2:1 */
-
-    /* System font stacks */
     --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
     --font-mono:
@@ -30,7 +26,6 @@
     box-sizing: border-box;
 }
 
-/* Pure CSS declarative language visibility */
 html:not([lang='sv']) [lang='sv'],
 html[lang='sv'] [lang='en'] {
     display: none !important;
@@ -44,7 +39,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Page Outer Wrapper */
 .portfolio-wrapper {
     width: 100%;
     max-width: 1350px;
@@ -53,7 +47,6 @@ body {
     padding: 0 40px;
 }
 
-/* Main Split Container */
 .main-container {
     display: flex;
     gap: 60px;
@@ -61,7 +54,7 @@ body {
 }
 
 /* ==========================================================================
-   3. LEFT PANEL: Minimal Profile Column
+   3. LEFT PANEL: Profile Column
    ========================================================================== */
 .left-panel {
     flex: 0 0 42%;
@@ -94,7 +87,6 @@ body {
     color: var(--accent);
 }
 
-/* Profile Header Alignment */
 .profile-header {
     display: flex;
     align-items: center;
@@ -166,7 +158,7 @@ body {
 }
 
 .header-socials {
-    margin-top: auto; /* Centers the socials, name, and subtitle vertically */
+    margin-top: auto;
     display: flex;
     gap: 16px;
     margin-bottom: 12px;
@@ -182,7 +174,6 @@ body {
         color 200ms ease;
 }
 
-/* Choreographed waving timelines */
 .header-socials .social-btn-1 svg {
     animation: wave-button-1 15s ease-in-out infinite;
 }
@@ -195,12 +186,10 @@ body {
     animation: wave-button-3 15s ease-in-out infinite;
 }
 
-/* 1. Freeze ALL icons when hovering anywhere in the social area */
 .header-socials:hover svg {
     animation-play-state: paused !important;
 }
 
-/* 2. Scale only the specific hovered button */
 .header-socials a:hover,
 .header-socials button:hover {
     color: var(--text-primary);
@@ -208,7 +197,6 @@ body {
 }
 
 @keyframes wave-button-1 {
-    /* 1. Spin Forward: 0% -> 2.5% */
     0% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
@@ -222,7 +210,6 @@ body {
     11.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
-    /* 1. Spin Backward: 11.5% -> 14% */
     12.75% {
         transform: rotateY(-180deg) scale(1.1) translateY(0);
     }
@@ -233,8 +220,6 @@ body {
     33% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
-
-    /* 2. Pulse: 33% -> 35.5% & 44.5% -> 47% */
     34.25% {
         transform: scale(1.35);
     }
@@ -249,8 +234,6 @@ body {
     66% {
         transform: scale(1);
     }
-
-    /* 3. Bounce: 66% -> 68.5% & 77.5% -> 80% */
     67.25% {
         transform: translateY(-8px);
     }
@@ -268,7 +251,6 @@ body {
 }
 
 @keyframes wave-button-2 {
-    /* 2. Spin Forward: 2.5% -> 5% */
     0%,
     2.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
@@ -283,7 +265,6 @@ body {
     9% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
-    /* 2. Spin Backward: 9% -> 11.5% */
     10.25% {
         transform: rotateY(-180deg) scale(1.1) translateY(0);
     }
@@ -294,8 +275,6 @@ body {
     35.5% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
-
-    /* 2. Pulse: 35.5% -> 38% & 42% -> 44.5% */
     36.75% {
         transform: scale(1.35);
     }
@@ -310,8 +289,6 @@ body {
     68.5% {
         transform: scale(1);
     }
-
-    /* 3. Bounce: 68.5% -> 71% & 75% -> 77.5% */
     69.75% {
         transform: translateY(-8px);
     }
@@ -329,7 +306,6 @@ body {
 }
 
 @keyframes wave-button-3 {
-    /* 3. Spin Peak (Center of wave): 5% -> 7.5% */
     0%,
     5% {
         transform: rotateY(0deg) scale(1) translateY(0);
@@ -344,8 +320,6 @@ body {
     38% {
         transform: rotateY(0deg) scale(1) translateY(0);
     }
-
-    /* 3. Pulse Peak: 38% -> 40.5% */
     39.25% {
         transform: scale(1.35);
     }
@@ -353,8 +327,6 @@ body {
     71% {
         transform: scale(1);
     }
-
-    /* 3. Bounce Peak: 71% -> 73.5% */
     72.25% {
         transform: translateY(-8px);
     }
@@ -378,38 +350,68 @@ body {
     font-weight: 500;
 }
 
-/* Bio Structure & Collapsible Details */
-.intro-quote {
-    border-left: 2px solid var(--text-muted);
-    padding-left: 16px;
-    margin: 24px 0;
-    font-size: 0.95rem;
+/* Interactive Bio Quote */
+.intro-quote.bio-card {
+    border-left: 2px solid var(--border-color);
+    padding: 8px 0 8px 16px;
+    margin: 22px 0;
+    font-size: 0.94rem;
     color: var(--text-secondary);
+    cursor: pointer;
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease;
+    border-radius: 0 6px 6px 0;
+}
+
+.intro-quote.bio-card:hover,
+.intro-quote.bio-card:focus-visible {
+    border-left-color: var(--accent);
+    background: rgba(255, 255, 255, 0.015);
+}
+
+body.light-theme .intro-quote.bio-card:hover {
+    background: rgba(0, 0, 0, 0.015);
 }
 
 .bio-teaser {
-    text-align: left;
+    position: relative;
     line-height: 1.6;
+    display: inline;
 }
 
-.bio-toggle {
-    background: none;
-    border: none;
-    color: var(--text-muted);
+.bio-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     font-family: var(--font-mono), monospace;
-    font-size: 0.85rem;
-    cursor: pointer;
-    padding: 0 4px;
-    margin-left: 4px;
-    display: inline-block;
-    transition:
-        color 200ms ease,
-        transform 200ms ease;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 6px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    vertical-align: middle;
+    user-select: none;
 }
 
-.bio-toggle:hover {
-    color: var(--text-primary);
-    transform: scale(1.05);
+body.light-theme .bio-hint {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.intro-quote.bio-card:hover .bio-hint {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.bio-chevron {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.intro-quote.bio-card.is-expanded .bio-chevron {
+    transform: rotate(180deg);
 }
 
 .bio-expandable {
@@ -419,7 +421,7 @@ body {
     overflow: hidden;
 }
 
-.bio-expandable.is-expanded {
+.intro-quote.bio-card.is-expanded .bio-expandable {
     grid-template-rows: 1fr;
 }
 
@@ -430,13 +432,11 @@ body {
 .bio-expandable-content p {
     margin-top: 14px;
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    text-align: left;
+    font-size: 0.94rem;
     line-height: 1.6;
 }
 
 /* Education List */
-/* Education Accordion Cards */
 .education-list {
     list-style: none;
     padding-left: 0;
@@ -512,7 +512,6 @@ body {
     transform: rotate(180deg);
 }
 
-/* Smooth Accordion Drawer */
 .edu-drawer {
     display: grid;
     grid-template-rows: 0fr;
@@ -614,6 +613,28 @@ body.light-theme .thesis-btn {
     padding: 10px 0;
     gap: 3px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.skill-item:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--accent);
+}
+
+.skill-item:hover .skill-name {
+    color: var(--accent);
+}
+
+.skill-item.skill-selected {
+    border-bottom-color: var(--accent);
+    transform: translateX(4px);
+}
+
+.skill-item.skill-selected .skill-name {
+    color: var(--accent);
 }
 
 .skill-name {
@@ -633,14 +654,14 @@ body.light-theme .thesis-btn {
 }
 
 /* ==========================================================================
-   4. RIGHT PANEL: Scrollable Projects Grid & Tools
+   4. RIGHT PANEL: Projects Grid
    ========================================================================== */
 .right-panel {
     flex: 0 0 58%;
     max-height: 100%;
     overflow-y: auto;
     padding-right: 12px;
-    padding-bottom: 90px; /* Prevents floating clock/hotkeys from covering cards on desktop */
+    padding-bottom: 90px;
     scrollbar-width: thin;
     scrollbar-color: var(--border-color) transparent;
 }
@@ -667,34 +688,16 @@ body.light-theme .thesis-btn {
     gap: 10px;
 }
 
-.back-to-projects-btn {
-    background: none;
-    border: none;
-    color: var(--accent);
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 0;
-    margin-top: 4px;
-    display: inline-block;
-}
-
-.back-to-projects-btn:hover {
-    text-decoration: underline;
-}
-
-/* Common Dropdown System (Filter, Tools, Language) */
+/* Dropdowns (Filter & Language) */
 .filter-dropdown,
-.tools-dropdown,
 .lang-dropdown {
     position: relative;
     display: inline-block;
 }
 
 .filter-trigger,
-.tools-trigger,
 .lang-trigger {
-    background: var(--card-bg); /* Solid opaque background */
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     font-weight: 500;
@@ -710,27 +713,14 @@ body.light-theme .thesis-btn {
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.tools-trigger,
-.lang-trigger {
-    color: var(--text-primary);
-    font-weight: 500;
-}
-
-.lang-trigger {
-    height: 38px;
-    padding: 0 12px;
-}
-
 .filter-trigger:hover,
-.tools-trigger:hover,
 .lang-trigger:hover {
     border-color: var(--text-muted);
     color: var(--text-primary);
-    background: var(--card-bg); /* Solid opaque background */
+    background: var(--card-bg);
 }
 
 .filter-menu,
-.tools-menu,
 .lang-menu {
     position: absolute;
     top: 100%;
@@ -761,19 +751,7 @@ body.light-theme .thesis-btn {
     min-width: 140px;
 }
 
-.filter-menu::before,
-.tools-menu::before,
-.lang-menu::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 0;
-    right: 0;
-    height: 8px;
-}
-
 .filter-dropdown:hover .filter-menu,
-.tools-dropdown:hover .tools-menu,
 .lang-dropdown:hover .lang-menu {
     opacity: 1;
     pointer-events: auto;
@@ -781,7 +759,6 @@ body.light-theme .thesis-btn {
 }
 
 .filter-dropdown:hover .filter-trigger .chevron,
-.tools-dropdown:hover .tools-trigger .chevron,
 .lang-dropdown:hover .lang-trigger .chevron {
     transform: rotate(180deg);
 }
@@ -794,7 +771,6 @@ body.light-theme .thesis-btn {
 }
 
 .filter-dropdown.menu-open .filter-menu,
-.tools-dropdown.menu-open .tools-menu,
 .lang-dropdown.menu-open .lang-menu {
     opacity: 1 !important;
     pointer-events: auto !important;
@@ -842,34 +818,7 @@ body.light-theme .thesis-btn {
     font-weight: 600;
 }
 
-.tool-select-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    padding: 8px 12px;
-    border-radius: 6px;
-    text-align: left;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    transition: background 0.15s ease;
-}
-
-.tool-select-btn strong {
-    font-size: 0.88rem;
-}
-
-.tool-select-btn small {
-    color: var(--text-muted);
-    font-size: 0.76rem;
-}
-
-.tool-select-btn:hover {
-    background: rgba(255, 255, 255, 0.06);
-}
-
-/* Cards layout & styles */
+/* App Cards */
 .apps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -884,8 +833,11 @@ body.light-theme .thesis-btn {
     display: flex;
     flex-direction: column;
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        opacity 0.25s ease,
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
 }
 
 .app-card:hover {
@@ -893,19 +845,25 @@ body.light-theme .thesis-btn {
     border-color: var(--text-muted);
 }
 
+.app-card.skill-dimmed {
+    opacity: 0.28;
+    filter: grayscale(80%);
+}
+
+.app-card.skill-highlighted {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18);
+}
+
 .app-img-container {
     width: 100%;
     height: 160px;
     overflow: hidden;
     border-bottom: 1px solid var(--border-color);
+    position: relative;
 }
 
-/* ==========================================================================
-   APP CARDS & MEDIA VISUAL FILTERS
-   ========================================================================== */
-/* ==========================================================================
-   APP CARDS & MEDIA VISUAL FILTERS
-   ========================================================================== */
 .app-img-container img,
 .app-img-container svg {
     width: 100%;
@@ -919,7 +877,6 @@ body.light-theme .thesis-btn {
         transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Hover & Skill-highlight restores 100% color, contrast & vibrancy */
 .app-card:hover .app-img-container img,
 .app-card:hover .app-img-container svg,
 .app-card.skill-highlighted .app-img-container img,
@@ -985,43 +942,91 @@ body.light-theme .thesis-btn {
     border-color: var(--text-muted);
 }
 
-/* Tool View Canvas Container */
-.tool-placeholder-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 24px;
+/* Hover Context Drawer */
+.app-tech-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+        grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
+        background-color 200ms ease;
+    background: rgba(59, 130, 246, 0.04);
+    border-top: 1px solid transparent;
 }
 
-.tool-placeholder-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 6px;
+.app-tech-drawer.is-active {
+    grid-template-rows: 1fr;
+    border-top-color: var(--border-color);
 }
 
-.tool-placeholder-card p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+.tech-drawer-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: padding 350ms ease;
 }
 
-.tool-canvas-mockup {
-    border: 1px dashed var(--border-color);
-    border-radius: 8px;
-    min-height: 280px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
+.app-tech-drawer.is-active .tech-drawer-inner {
+    padding: 14px 20px 16px 20px;
+}
+
+.tech-drawer-label {
+    font-size: 0.74rem;
     font-family: var(--font-mono), monospace;
-    font-size: 0.88rem;
-    background: rgba(0, 0, 0, 0.15);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.tech-drawer-text {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.app-status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 3px 9px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    color: #f4f4f5;
+    user-select: none;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #f59e0b;
+}
+
+.app-status-badge.is-live .status-dot {
+    background-color: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+}
+
+.filter-count {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 8px;
 }
 
 /* ==========================================================================
-   5. INTERFACE PANELS & FLOATING ELEMENTS
+   5. FLOATING ELEMENTS & FOOTER
    ========================================================================== */
-
-/* Top Controls: Theme + Language Group */
 .top-controls {
     position: fixed;
     top: 24px;
@@ -1033,7 +1038,7 @@ body.light-theme .thesis-btn {
 }
 
 .theme-toggle {
-    background: var(--card-bg); /* Solid opaque background */
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     width: 38px;
@@ -1049,7 +1054,7 @@ body.light-theme .thesis-btn {
 .theme-toggle:hover {
     color: var(--text-primary);
     border-color: var(--text-muted);
-    background-color: var(--card-bg); /* Keeps dots hidden on hover */
+    background-color: var(--card-bg);
 }
 
 .theme-toggle .sun-icon {
@@ -1068,7 +1073,6 @@ body.light-theme .theme-toggle .moon-icon {
     display: block;
 }
 
-/* Font Switcher & Footer */
 .footer-controls {
     position: fixed;
     bottom: 24px;
@@ -1085,7 +1089,7 @@ body.light-theme .theme-toggle .moon-icon {
 }
 
 .font-btn {
-    background: var(--card-bg); /* Changed from transparent to solid opaque */
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-muted);
     width: 34px;
@@ -1118,7 +1122,7 @@ body.light-theme .theme-toggle .moon-icon {
 .font-btn.active {
     color: var(--text-primary);
     border-color: var(--text-primary);
-    background-color: var(--card-bg); /* Blocks dots behind button */
+    background-color: var(--card-bg);
 }
 
 .copyright {
@@ -1137,7 +1141,7 @@ body.light-theme {
     --text-primary: #09090b;
     --text-secondary: #27272a;
     --text-muted: #52525b;
-    --accent: #1d4ed8; /* Darker royal blue: passes WCAG AA & AAA contrast on white */
+    --accent: #1d4ed8;
 }
 
 body.light-theme .thesis-tag,
@@ -1152,10 +1156,6 @@ body.light-theme .profile-card-inner {
         rgba(0, 0, 0, 0.04) 0 0 0 1px;
 }
 
-body.light-theme .edu-link:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-}
-
 body.light-theme .profile-img {
     border: 1px solid rgba(0, 0, 0, 0.08);
 }
@@ -1164,22 +1164,13 @@ body.light-theme .font-btn:hover,
 body.light-theme .font-btn.active,
 body.light-theme .theme-toggle:hover,
 body.light-theme .lang-trigger:hover {
-    background-color: var(--card-bg); /* Solid white in light mode */
-}
-
-body.light-theme .tool-canvas-mockup {
-    background: rgba(0, 0, 0, 0.03);
+    background-color: var(--card-bg);
 }
 
 /* ==========================================================================
-   7. UNIVERSAL RESPONSIVE BREAKPOINTS (320px - 4K)
+   7. RESPONSIVE BREAKPOINTS
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   A. TABLETS, IPADS & COMPACT LAPTOPS (<= 1150px)
-   -------------------------------------------------------------------------- */
 @media (max-width: 1150px) {
-    /* 1. Hide desktop-only floating widgets completely */
     .live-clock,
     .hotkeys-indicator {
         display: none !important;
@@ -1199,9 +1190,8 @@ body.light-theme .tool-canvas-mockup {
         height: auto;
     }
 
-    /* 2. Flatten panels for flexible mobile reordering */
     .left-panel {
-        display: contents; /* Unlocks children to be ordered alongside .right-panel */
+        display: contents;
     }
 
     .right-panel {
@@ -1218,13 +1208,11 @@ body.light-theme .tool-canvas-mockup {
         padding-bottom: 20px;
     }
 
-    /* 3. The Requested Mobile/Tablet Order:
-          Profile (1) -> Bio (2) -> Education (3) -> PROJECTS (4) -> Skills (5) -> Activity (6) */
     .profile-header {
         order: 1;
     }
 
-    .intro-quote {
+    .intro-quote.bio-card {
         margin: 0;
         order: 2;
     }
@@ -1237,7 +1225,6 @@ body.light-theme .tool-canvas-mockup {
         order: 4;
     }
 
-    /* Projects & Tools appear right after Education! */
     .section-skills {
         order: 5;
     }
@@ -1246,7 +1233,6 @@ body.light-theme .tool-canvas-mockup {
         order: 6;
     }
 
-    /* Footer: sits naturally at the end of the page */
     .footer-controls {
         position: static;
         margin-top: 48px;
@@ -1256,15 +1242,11 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-/* --------------------------------------------------------------------------
-   B. STANDARD SMARTPHONES (<= 768px - iPhone 12/13/14/15, Galaxy S, Pixel)
-   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
     .portfolio-wrapper {
         padding: 70px 18px 60px 18px;
     }
 
-    /* Centered Header Layout */
     .profile-header {
         flex-direction: column;
         align-items: center;
@@ -1287,8 +1269,6 @@ body.light-theme .tool-canvas-mockup {
     .profile-info {
         align-items: center;
         width: 100%;
-        display: flex;
-        flex-direction: column;
     }
 
     .name-title {
@@ -1302,18 +1282,15 @@ body.light-theme .tool-canvas-mockup {
         gap: 20px;
     }
 
-    /* Perfectly centered CV Action Pill */
     .cv-action-wrapper {
         margin: 10px auto 0 auto !important;
         align-self: center;
-        display: inline-flex;
     }
 
-    .intro-quote {
+    .intro-quote.bio-card {
         padding-left: 14px;
     }
 
-    /* Right Header (Projects Title + Filters) */
     .right-header {
         flex-direction: column;
         align-items: flex-start;
@@ -1327,23 +1304,16 @@ body.light-theme .tool-canvas-mockup {
         gap: 8px;
     }
 
-    /* Full-width Cards */
     .apps-grid {
         grid-template-columns: 1fr;
         gap: 18px;
     }
 
-    .app-img-container {
-        height: 160px;
-    }
-
-    /* 2-column compact skills */
     .skills-grid {
         grid-template-columns: 1fr 1fr;
         column-gap: 20px;
     }
 
-    /* CV Modal: Native fullscreen mobile adaptation */
     .cv-modal-overlay {
         padding: 10px;
     }
@@ -1355,9 +1325,6 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-/* --------------------------------------------------------------------------
-   C. COMPACT / SMALL PHONES (<= 480px - iPhone SE, Galaxy Fold cover, Mini)
-   -------------------------------------------------------------------------- */
 @media (max-width: 480px) {
     .portfolio-wrapper {
         padding: 66px 14px 50px 14px;
@@ -1392,7 +1359,6 @@ body.light-theme .tool-canvas-mockup {
         font-size: 1.45rem;
     }
 
-    /* Single column skills on narrow screens */
     .skills-grid {
         grid-template-columns: 1fr;
         column-gap: 0;
@@ -1406,34 +1372,21 @@ body.light-theme .tool-canvas-mockup {
     .btn-primary,
     .btn-secondary {
         width: 100%;
-        padding: 10px 14px; /* Big thumb touch targets */
+        padding: 10px 14px;
     }
 
-    /* Education header stack */
     .edu-header {
         flex-direction: column;
         gap: 2px;
     }
 
-    .edu-school {
-        font-size: 0.8rem;
-    }
-
-    .thesis-box {
-        padding: 12px;
-    }
-
-    .filter-menu,
-    .tools-menu {
+    .filter-menu {
         left: 0;
         right: auto;
         min-width: 220px;
     }
 }
 
-/* --------------------------------------------------------------------------
-   D. ULTRAWIDE & 4K MONITORS (>= 1600px)
-   -------------------------------------------------------------------------- */
 @media (min-width: 1600px) {
     .portfolio-wrapper {
         max-width: 1440px;
@@ -1456,7 +1409,7 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-/* Live Clock Widget (Top-Right) */
+/* Clock & Activity Feed Styles */
 .live-clock {
     position: fixed;
     bottom: 72px;
@@ -1496,21 +1449,6 @@ body.light-theme .tool-canvas-mockup {
     opacity: 0.5;
 }
 
-/* Mobile adjust: stack cleanly if screen is very small */
-@media (max-width: 640px) {
-    .live-clock {
-        top: 24px;
-        right: 16px;
-        padding: 0 10px;
-        gap: 6px;
-    }
-
-    .clock-details {
-        padding-left: 6px;
-    }
-}
-
-/* GitHub Activity Feed */
 .activity-feed {
     display: flex;
     flex-direction: column;
@@ -1614,7 +1552,6 @@ body.light-theme .tool-canvas-mockup {
     }
 }
 
-/* Email Button & Copy Toast */
 .email-wrapper {
     position: relative;
     display: inline-flex;
@@ -1671,12 +1608,12 @@ body.light-theme .tool-canvas-mockup {
 }
 
 .toast-checkmark {
-    color: #10b981; /* Accent green checkmark */
+    color: #10b981;
     font-weight: bold;
 }
 
 .cv-action-wrapper {
-    margin-top: auto; /* Pushes CV to the absolute bottom of the image */
+    margin-top: auto;
     margin-bottom: 0;
     align-self: flex-start;
     display: inline-flex;
@@ -1685,9 +1622,9 @@ body.light-theme .tool-canvas-mockup {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    padding: 2px 8px; /* Reduced padding: sleeker and more compact */
+    padding: 2px 8px;
     font-family: var(--font-mono), monospace;
-    font-size: 0.72rem; /* Slightly smaller text */
+    font-size: 0.72rem;
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1740,14 +1677,13 @@ body.light-theme .tool-canvas-mockup {
     color: var(--border-color);
 }
 
-/* CV Modal Overlay & Window */
 .cv-modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 200;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
-    display: none; /* Changed from 'flex' to 'none' so it's completely hidden when closed */
+    display: none;
     align-items: center;
     justify-content: center;
     padding: 30px;
@@ -1757,7 +1693,7 @@ body.light-theme .tool-canvas-mockup {
 }
 
 .cv-modal-overlay.is-open {
-    display: flex; /* Shown only when opened */
+    display: flex;
     opacity: 1;
     pointer-events: auto;
 }
@@ -1838,7 +1774,6 @@ body.light-theme .tool-canvas-mockup {
     border: none;
 }
 
-/* Background Canvas: Fixed & Behind all elements */
 #bg-canvas {
     position: fixed;
     top: 0;
@@ -1849,147 +1784,6 @@ body.light-theme .tool-canvas-mockup {
     pointer-events: none;
 }
 
-/* Skill Item Hover Effect */
-.skill-item {
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.skill-item:hover {
-    transform: translateX(4px);
-    border-bottom-color: var(--accent);
-}
-
-.skill-item:hover .skill-name {
-    color: var(--accent);
-}
-
-/* Active skill tap feedback on touchscreens */
-.skill-item.skill-selected {
-    border-bottom-color: var(--accent);
-    transform: translateX(4px);
-}
-
-.skill-item.skill-selected .skill-name {
-    color: var(--accent);
-}
-
-/* Dynamic Project Highlighting & Dimming */
-.app-card {
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        opacity 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
-}
-
-.app-card.skill-dimmed {
-    opacity: 0.28;
-    filter: grayscale(80%);
-}
-
-.app-card.skill-highlighted {
-    border-color: var(--accent);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18);
-}
-
-/* Skill-Hover Tech Drawer (Accordion Animation) */
-.app-tech-drawer {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition:
-        grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
-        background-color 200ms ease;
-    background: rgba(59, 130, 246, 0.04);
-    border-top: 1px solid transparent;
-}
-
-.app-tech-drawer.is-active {
-    grid-template-rows: 1fr;
-    border-top-color: var(--border-color);
-}
-
-.tech-drawer-inner {
-    min-height: 0;
-    overflow: hidden;
-    padding: 0 20px;
-    transition: padding 350ms ease;
-}
-
-.app-tech-drawer.is-active .tech-drawer-inner {
-    padding: 14px 20px 16px 20px;
-}
-
-.tech-drawer-label {
-    font-size: 0.74rem;
-    font-family: var(--font-mono), monospace;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.tech-drawer-text {
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* Live API / Status Badge */
-.app-img-container {
-    position: relative;
-}
-
-.app-status-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.75); /* Dark frosted glass */
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    padding: 3px 9px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono), monospace;
-    font-size: 0.72rem;
-    color: #f4f4f5; /* Locked to white in both light and dark themes */
-    user-select: none;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #f59e0b; /* Amber for development */
-}
-
-.app-status-badge.is-live .status-dot {
-    background-color: #10b981; /* Green for Live */
-    box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
-}
-
-.status-ping {
-    color: #a1a1aa; /* Locked to light-gray */
-}
-
-/* Category Filter Count Badges */
-.filter-count {
-    font-family: var(--font-mono), monospace;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-left: 8px;
-}
-
-/* Bottom-Right Keyboard Hotkeys Indicator */
 .hotkeys-indicator {
     position: fixed;
     bottom: 24px;
@@ -2042,17 +1836,12 @@ body.light-theme .hotkey-item kbd {
     }
 }
 
-/* ==========================================================================
-   INTERACTION & SELECTION POLICIES
-   ========================================================================== */
-
-/* 1. Universal Theme-Colored Selection */
+/* Interaction Policies */
 ::selection {
     background-color: rgba(59, 130, 246, 0.32);
     color: var(--text-primary);
 }
 
-/* 2. Disallow dragging and phantom ghosting on all media & vector icons */
 img,
 svg,
 canvas {
@@ -2063,7 +1852,6 @@ canvas {
     pointer-events: auto;
 }
 
-/* 3. Strict Non-Selectable Controls & UI Chrome */
 button,
 .btn-primary,
 .btn-secondary,
@@ -2072,7 +1860,6 @@ button,
 .theme-toggle,
 .font-btn,
 .filter-trigger,
-.tools-trigger,
 .lang-trigger,
 .hotkeys-indicator,
 .live-clock,
@@ -2087,8 +1874,6 @@ button,
     -webkit-user-select: none;
 }
 
-/* 4. Explicitly Re-enable Selection for Crucial Content inside Clickables */
-/* (e.g., Recruiters copying the Degree name or School from the accordion header) */
 .edu-title,
 .edu-school,
 .edu-date,
@@ -2099,22 +1884,17 @@ button,
 .app-content h3,
 .app-content p,
 .tech-drawer-text,
-.bio-teaser,
-.intro-quote {
+.bio-teaser {
     user-select: text;
     -webkit-user-select: text;
 }
 
-/* ==========================================================================
-   PRINT STYLESHEET (Clean PDF / Paper Export for Recruiters)
-   ========================================================================== */
 @media print {
     #bg-canvas,
     .top-controls,
     .footer-controls,
     .live-clock,
     .hotkeys-indicator,
-    .tools-dropdown,
     #projects-filter,
     .email-toast {
         display: none !important;
