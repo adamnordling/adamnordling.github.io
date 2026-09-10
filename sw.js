@@ -14,21 +14,22 @@ const STATIC_ASSETS = [
 self.addEventListener('install', event => {
     // Force immediate activation; do not wait in limbo
     self.skipWaiting();
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
-    );
+    event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS)));
 });
 
 self.addEventListener('activate', event => {
     // Clean up old caches if CACHE_NAME increments
     event.waitUntil(
-        caches.keys().then(keys =>
-            Promise.all(
-                keys.map(key => {
-                    if (key !== CACHE_NAME) return caches.delete(key);
-                })
+        caches
+            .keys()
+            .then(keys =>
+                Promise.all(
+                    keys.map(key => {
+                        if (key !== CACHE_NAME) return caches.delete(key);
+                    })
+                )
             )
-        ).then(() => self.clients.claim())
+            .then(() => self.clients.claim())
     );
 });
 
@@ -41,15 +42,17 @@ self.addEventListener('fetch', event => {
         caches.open(CACHE_NAME).then(async cache => {
             const cachedResponse = await cache.match(event.request);
 
-            const fetchPromise = fetch(event.request).then(networkResponse => {
-                if (networkResponse && networkResponse.status === 200) {
-                    cache.put(event.request, networkResponse.clone());
-                }
-                return networkResponse;
-            }).catch(() => {
-                // Network failed; offline mode fallback
-                return cachedResponse;
-            });
+            const fetchPromise = fetch(event.request)
+                .then(networkResponse => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        cache.put(event.request, networkResponse.clone());
+                    }
+                    return networkResponse;
+                })
+                .catch(() => {
+                    // Network failed; offline mode fallback
+                    return cachedResponse;
+                });
 
             return cachedResponse || fetchPromise;
         })

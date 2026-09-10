@@ -3,22 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const schemaScript = document.createElement('script');
     schemaScript.type = 'application/ld+json';
     schemaScript.textContent = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Adam Nordling",
-        "jobTitle": "Software Engineer",
-        "alumniOf": {
-            "@type": "CollegeOrUniversity",
-            "name": "Linnaeus University"
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Adam Nordling',
+        jobTitle: 'Software Engineer',
+        alumniOf: {
+            '@type': 'CollegeOrUniversity',
+            name: 'Linnaeus University'
         },
-        "url": "https://adamnordling.github.io",
-        "sameAs": [
-            "https://github.com/adamnordling",
-            "https://linkedin.com/in/adamnordling"
-        ]
+        url: 'https://adamnordling.github.io',
+        sameAs: ['https://github.com/adamnordling', 'https://linkedin.com/in/adamnordling']
     });
     document.head.appendChild(schemaScript);
-    'use strict';
+    ('use strict');
 
     // -------------------------------------------------------------------------
     // Mobile Touch-Dropdown Support
@@ -167,9 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
         container.addEventListener('mouseenter', () => {
             containerRect = container.getBoundingClientRect();
         });
-        window.addEventListener('resize', () => {
-            containerRect = container.getBoundingClientRect();
-        }, {passive: true});
+        window.addEventListener(
+            'resize',
+            () => {
+                containerRect = container.getBoundingClientRect();
+            },
+            { passive: true }
+        );
 
         container.addEventListener('mousemove', e => {
             const x = e.clientX - containerRect.left;
@@ -299,11 +300,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
         const intervals = [
-            {labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000},
-            {labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000},
-            {labelEn: 'd ago', labelSv: 'd sedan', secs: 86400},
-            {labelEn: 'h ago', labelSv: 'h sedan', secs: 3600},
-            {labelEn: 'm ago', labelSv: 'm sedan', secs: 60}
+            { labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000 },
+            { labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000 },
+            { labelEn: 'd ago', labelSv: 'd sedan', secs: 86400 },
+            { labelEn: 'h ago', labelSv: 'h sedan', secs: 3600 },
+            { labelEn: 'm ago', labelSv: 'm sedan', secs: 60 }
         ];
 
         for (const i of intervals) {
@@ -414,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.payload.commits.map(c => ({
                             commit: {
                                 message: c.message,
-                                author: {date: e.created_at}
+                                author: { date: e.created_at }
                             },
                             repository: {
                                 name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
@@ -556,7 +557,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas && portfolioWrapper) {
         const ctx = canvas.getContext('2d');
         let width, height;
-        let mouseX = -1000, mouseY = -1000;
+        let mouseX = -1000,
+            mouseY = -1000;
         let isAnimating = false;
         let stopTimeout = null;
         let wrapperLeft = 0;
@@ -578,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSingleFrame();
         }
 
-        window.addEventListener('resize', updateBounds, {passive: true});
+        window.addEventListener('resize', updateBounds, { passive: true });
         updateBounds();
 
         function renderLoop() {
@@ -614,11 +616,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        window.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            wakeAnimation();
-        }, {passive: true});
+        window.addEventListener(
+            'mousemove',
+            e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                wakeAnimation();
+            },
+            { passive: true }
+        );
 
         window.addEventListener('mouseleave', () => {
             mouseX = -1000;
@@ -626,21 +632,29 @@ document.addEventListener('DOMContentLoaded', () => {
             wakeAnimation();
         });
 
-        window.addEventListener('touchmove', e => {
-            if (e.touches.length > 0) {
-                mouseX = e.touches[0].clientX;
-                mouseY = e.touches[0].clientY;
-                wakeAnimation();
-            }
-        }, {passive: true});
+        window.addEventListener(
+            'touchmove',
+            e => {
+                if (e.touches.length > 0) {
+                    mouseX = e.touches[0].clientX;
+                    mouseY = e.touches[0].clientY;
+                    wakeAnimation();
+                }
+            },
+            { passive: true }
+        );
 
-        window.addEventListener('touchend', () => {
-            setTimeout(() => {
-                mouseX = -1000;
-                mouseY = -1000;
-                wakeAnimation();
-            }, 200);
-        }, {passive: true});
+        window.addEventListener(
+            'touchend',
+            () => {
+                setTimeout(() => {
+                    mouseX = -1000;
+                    mouseY = -1000;
+                    wakeAnimation();
+                }, 200);
+            },
+            { passive: true }
+        );
 
         function draw() {
             ctx.clearRect(0, 0, width, height);
@@ -865,9 +879,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {
-                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             } else if (activeScrollTarget) {
-                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                activeScrollTarget.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             }
         }
     });
@@ -887,12 +901,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Service Worker Registration (Works on both HTTPS and Localhost)
     // -------------------------------------------------------------------------
-    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    if (
+        'serviceWorker' in navigator &&
+        (window.location.protocol === 'https:' ||
+            window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1')
+    ) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
+            navigator.serviceWorker
+                .register('./sw.js')
                 .then(reg => {
                     console.log('✅ Service Worker registered successfully! Scope:', reg.scope);
                 })
