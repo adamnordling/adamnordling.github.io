@@ -367,11 +367,87 @@ document.addEventListener('DOMContentLoaded', () => {
             .join('');
     }
 
+    // -------------------------------------------------------------------------
+    // 8. Live GitHub Activity Fetcher (Search-First with Event Fallback)
+    // -------------------------------------------------------------------------
     async function loadGitHubActivity() {
         const cached = sessionStorage.getItem(CACHE_KEY);
         const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
 
+        // 1. Check local session cache first
         if (cached && cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
+            try {
+                renderCommits(JSON.parse(cached));
+                return;
+            } catch {
+                // Ignore parse errors
+            }
+        }
+
+        // 2. Primary: Modern Commit Search API (Fetches latest commits across all repos)
+        try {
+            const res = await fetch(
+                `https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5`,
+                {
+                    headers: {
+                        // Official modern GitHub API header (fixes the deprecated cloak-preview CORS bug)
+                        Accept: 'application/vnd.github+json'
+                    }
+                }
+            );
+
+            if (!res.ok) throw new Error(`Search failed with status: ${res.status}`);
+
+            const data = await res.json();
+            const commits = data.items || [];
+
+            if (commits.length > 0) {
+                sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
+                sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+                renderCommits(commits);
+                return;
+            }
+        } catch {
+            // Search failed or rate-limited; gracefully proceed to fallback
+        }
+
+        // 3. Fallback: Public Events API (Higher rate limits)
+        try {
+            const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=30`);
+
+            if (!eventsRes.ok) throw new Error('Events endpoint unavailable');
+
+            const eventsData = await eventsRes.json();
+
+            const pushEvents = eventsData
+                .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
+                .flatMap(e =>
+                    e.payload.commits.map(c => ({
+                        commit: {
+                            message: c.message,
+                            author: { date: e.created_at }
+                        },
+                        repository: {
+                            name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
+                        },
+                        html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
+                        sha: c.sha
+                    }))
+                )
+                .slice(0, 5);
+
+            if (pushEvents.length > 0) {
+                sessionStorage.setItem(CACHE_KEY, JSON.stringify(pushEvents));
+                sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+                renderCommits(pushEvents);
+                return;
+            }
+        } catch {
+            // Both network calls failed
+        }
+
+        // 4. Last resort: Show cached data or graceful offline message
+        if (cached) {
             try {
                 renderCommits(JSON.parse(cached));
                 return;
@@ -380,72 +456,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        try {
-            const res = await fetch(
-                `https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5&_t=${Date.now()}`,
-                {
-                    headers: {
-                        Accept: 'application/vnd.github.cloak-preview+json'
-                    },
-                    cache: 'no-cache'
-                }
-            );
-
-            if (!res.ok) throw new Error('Search failed');
-
-            const data = await res.json();
-            const commits = data.items || [];
-
-            sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
-            sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-            renderCommits(commits);
-        } catch {
-            try {
-                const eventsRes = await fetch(
-                    `https://api.github.com/users/${GITHUB_USERNAME}/events/public?_t=${Date.now()}`
-                );
-
-                if (!eventsRes.ok) throw new Error('Events failed');
-
-                const eventsData = await eventsRes.json();
-
-                const pushEvents = eventsData
-                    .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
-                    .flatMap(e =>
-                        e.payload.commits.map(c => ({
-                            commit: {
-                                message: c.message,
-                                author: { date: e.created_at }
-                            },
-                            repository: {
-                                name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
-                            },
-                            html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
-                            sha: c.sha
-                        }))
-                    )
-                    .slice(0, 5);
-
-                renderCommits(pushEvents);
-            } catch {
-                if (cached) {
-                    try {
-                        renderCommits(JSON.parse(cached));
-                        return;
-                    } catch {
-                        // Ignore
-                    }
-                }
-
-                if (activityFeed) {
-                    activityFeed.innerHTML = `
-                        <div class="activity-skeleton">
-                            <span lang="en">GitHub activity temporarily unavailable.</span>
-                            <span lang="sv">GitHub-aktivitet tillfälligt otillgänglig.</span>
-                        </div>
-                    `;
-                }
-            }
+        if (activityFeed) {
+            activityFeed.innerHTML = `
+                <div class="activity-skeleton">
+                    <span lang="en">GitHub activity temporarily unavailable.</span>
+                    <span lang="sv">GitHub-aktivitet tillfälligt otillgänglig.</span>
+                </div>
+            `;
         }
     }
 

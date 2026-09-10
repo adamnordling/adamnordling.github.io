@@ -33,6 +33,11 @@
         <meta property="og:image" content="./src/assets/profile-picture-resized.webp" />
 
         <!-- Stylesheets & Assets -->
+        <!-- Preload Critical Rendering Path Assets -->
+        <link rel="preload" href="./src/style.css" as="style" />
+        <link rel="preload" href="./src/assets/profile-picture-resized.webp" as="image" type="image/webp" />
+
+        <!-- Stylesheets & Assets -->
         <link rel="stylesheet" href="./src/style.css" />
         <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
     </head>
@@ -1133,7 +1138,7 @@
                     </div>
                 </div>
                 <div class="cv-modal-body">
-                    <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"> </iframe>
+                    <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
                 </div>
             </div>
         </div>
