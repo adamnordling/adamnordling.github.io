@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Inject Schema.org JSON-LD dynamically to maintain strict CSP without inline script tags
+    const schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    schemaScript.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Adam Nordling",
+        "jobTitle": "Software Engineer",
+        "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Linnaeus University"
+        },
+        "url": "https://adamnordling.github.io",
+        "sameAs": [
+            "https://github.com/adamnordling",
+            "https://linkedin.com/in/adamnordling"
+        ]
+    });
+    document.head.appendChild(schemaScript);
     'use strict';
 
     // -------------------------------------------------------------------------
@@ -135,19 +154,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 4. 3D Tilt & Mouse Tracking Spotlight Effect
+    // 4. 3D Tilt & Mouse Tracking Spotlight Effect (Optimized: Cached Rect)
     // -------------------------------------------------------------------------
     const container = document.querySelector('.profile-card-container');
     const card = document.querySelector('.profile-card-inner');
     const spotlight = document.querySelector('.spotlight');
 
     if (container && card) {
+        let containerRect = container.getBoundingClientRect();
+
+        // Only recalculate rect when entering the card or resizing
+        container.addEventListener('mouseenter', () => {
+            containerRect = container.getBoundingClientRect();
+        });
+        window.addEventListener('resize', () => {
+            containerRect = container.getBoundingClientRect();
+        }, {passive: true});
+
         container.addEventListener('mousemove', e => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+            const x = e.clientX - containerRect.left;
+            const y = e.clientY - containerRect.top;
+            const centerX = containerRect.width / 2;
+            const centerY = containerRect.height / 2;
 
             const rotateX = -((y - centerY) / centerY) * 12;
             const rotateY = ((x - centerX) / centerX) * 12;
@@ -271,11 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
         const intervals = [
-            { labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000 },
-            { labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000 },
-            { labelEn: 'd ago', labelSv: 'd sedan', secs: 86400 },
-            { labelEn: 'h ago', labelSv: 'h sedan', secs: 3600 },
-            { labelEn: 'm ago', labelSv: 'm sedan', secs: 60 }
+            {labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000},
+            {labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000},
+            {labelEn: 'd ago', labelSv: 'd sedan', secs: 86400},
+            {labelEn: 'h ago', labelSv: 'h sedan', secs: 3600},
+            {labelEn: 'm ago', labelSv: 'm sedan', secs: 60}
         ];
 
         for (const i of intervals) {
@@ -386,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.payload.commits.map(c => ({
                             commit: {
                                 message: c.message,
-                                author: { date: e.created_at }
+                                author: {date: e.created_at}
                             },
                             repository: {
                                 name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
@@ -520,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 11. Interactive Dot Matrix Canvas
+    // 11. Interactive Dot Matrix Canvas (Battery & CPU Optimized)
     // -------------------------------------------------------------------------
     const canvas = document.getElementById('bg-canvas');
     const portfolioWrapper = document.querySelector('.portfolio-wrapper');
@@ -528,8 +556,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (canvas && portfolioWrapper) {
         const ctx = canvas.getContext('2d');
         let width, height;
-        let mouseX = -1000,
-            mouseY = -1000;
+        let mouseX = -1000, mouseY = -1000;
+        let isAnimating = false;
+        let stopTimeout = null;
+        let wrapperLeft = 0;
+        let wrapperRight = 0;
 
         const DARK_BASE_ALPHA = 0.12;
         const DARK_GLOW_ALPHA = 0.9;
@@ -538,56 +569,78 @@ document.addEventListener('DOMContentLoaded', () => {
         const DOT_SPACING = 28;
         const FADE_MARGIN = 100;
 
-        function resize() {
+        function updateBounds() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
+            const rect = portfolioWrapper.getBoundingClientRect();
+            wrapperLeft = rect.left;
+            wrapperRight = rect.right;
+            renderSingleFrame();
         }
 
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', updateBounds, {passive: true});
+        updateBounds();
+
+        function renderLoop() {
+            if (!isAnimating) return;
+            draw();
+            requestAnimationFrame(renderLoop);
+        }
+
+        function wakeAnimation() {
+            if (!isAnimating) {
+                isAnimating = true;
+                requestAnimationFrame(renderLoop);
+            }
+            clearTimeout(stopTimeout);
+            // Stop computing 400ms after the user stops moving the cursor
+            stopTimeout = setTimeout(() => {
+                isAnimating = false;
+                renderSingleFrame();
+            }, 400);
+        }
+
+        function renderSingleFrame() {
+            draw();
+        }
+
+        // Pause completely when tab is switched away
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                isAnimating = false;
+                clearTimeout(stopTimeout);
+            } else {
+                renderSingleFrame();
+            }
+        });
 
         window.addEventListener('mousemove', e => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-        });
+            wakeAnimation();
+        }, {passive: true});
 
         window.addEventListener('mouseleave', () => {
             mouseX = -1000;
             mouseY = -1000;
+            wakeAnimation();
         });
 
-        window.addEventListener(
-            'touchstart',
-            e => {
-                if (e.touches.length > 0) {
-                    mouseX = e.touches[0].clientX;
-                    mouseY = e.touches[0].clientY;
-                }
-            },
-            { passive: true }
-        );
+        window.addEventListener('touchmove', e => {
+            if (e.touches.length > 0) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+                wakeAnimation();
+            }
+        }, {passive: true});
 
-        window.addEventListener(
-            'touchmove',
-            e => {
-                if (e.touches.length > 0) {
-                    mouseX = e.touches[0].clientX;
-                    mouseY = e.touches[0].clientY;
-                }
-            },
-            { passive: true }
-        );
-
-        window.addEventListener(
-            'touchend',
-            () => {
-                setTimeout(() => {
-                    mouseX = -1000;
-                    mouseY = -1000;
-                }, 300);
-            },
-            { passive: true }
-        );
+        window.addEventListener('touchend', () => {
+            setTimeout(() => {
+                mouseX = -1000;
+                mouseY = -1000;
+                wakeAnimation();
+            }, 200);
+        }, {passive: true});
 
         function draw() {
             ctx.clearRect(0, 0, width, height);
@@ -600,19 +653,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentBaseAlpha = isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA;
             const currentGlowAlpha = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 
-            const rect = portfolioWrapper.getBoundingClientRect();
-            const leftBoundary = rect.left;
-            const rightBoundary = rect.right;
-
             for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
                 let flankFade = 1.0;
 
                 if (!isMobile) {
-                    if (x < leftBoundary) {
-                        const distToEdge = leftBoundary - x;
+                    if (x < wrapperLeft) {
+                        const distToEdge = wrapperLeft - x;
                         flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
-                    } else if (x > rightBoundary) {
-                        const distToEdge = x - rightBoundary;
+                    } else if (x > wrapperRight) {
+                        const distToEdge = x - wrapperRight;
                         flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
                     } else {
                         flankFade = 0;
@@ -645,11 +694,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     ctx.fill();
                 }
             }
-
-            requestAnimationFrame(draw);
         }
 
-        requestAnimationFrame(draw);
+        renderSingleFrame();
     }
 
     // -------------------------------------------------------------------------
@@ -818,9 +865,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {
-                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
             } else if (activeScrollTarget) {
-                activeScrollTarget.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
             }
         }
     });
@@ -839,4 +886,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+// -------------------------------------------------------------------------
+    // Service Worker Registration (Works on both HTTPS and Localhost)
+    // -------------------------------------------------------------------------
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => {
+                    console.log('✅ Service Worker registered successfully! Scope:', reg.scope);
+                })
+                .catch(err => {
+                    console.error('❌ Service Worker registration failed:', err);
+                });
+        });
+    }
 });

@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)"/>
     <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
+            content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
     />
     <meta name="google-site-verification" content="_zlVG6Lp7OOtmIKBssi-3lNJCLBvdo3qsZqCPmae1dQ"/>
     <!-- Professional SEO & Metadata -->
@@ -33,23 +33,6 @@
     <!-- Stylesheets & Assets -->
     <link rel="stylesheet" href="./src/style.css"/>
     <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg"/>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "Adam Nordling",
-            "jobTitle": "Software Engineer",
-            "alumniOf": {
-                "@type": "CollegeOrUniversity",
-                "name": "Linnaeus University"
-            },
-            "url": "https://adamnordling.github.io",
-            "sameAs": [
-                "https://github.com/adamnordling",
-                "https://linkedin.com/in/adamnordling"
-            ]
-        }
-    </script>
 </head>
 <body class="light-theme">
 <!-- Interactive Dot Matrix Background -->
@@ -1124,6 +1107,16 @@
                 <span lang="sv">Adam Nordling — CV</span>
             </div>
             <div class="cv-modal-actions">
+                <!-- Native tab link fallback for iOS Safari / Mobile -->
+                <a
+                        href="./src/assets/resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-secondary cv-modal-download-btn"
+                >
+                    <span lang="en">Open Tab ↗</span>
+                    <span lang="sv">Öppna flik ↗</span>
+                </a>
                 <a
                         href="./src/assets/resume.pdf"
                         download="Adam_Nordling_CV.pdf"
@@ -1138,7 +1131,10 @@
             </div>
         </div>
         <div class="cv-modal-body">
-            <iframe data-src="./src/assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
+            <iframe
+                    data-src="./src/assets/resume.pdf"
+                    title="Adam Nordling Resume PDF Preview">
+            </iframe>
         </div>
     </div>
 </div>

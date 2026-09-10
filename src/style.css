@@ -12,8 +12,7 @@
 
     --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
-    --font-mono:
-        ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     --font-stack: var(--font-default);
 }
 
@@ -127,13 +126,11 @@ body {
     border-radius: 12px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    box-shadow:
-        rgba(255, 255, 255, 0.08) 0 4px 25px 0,
-        rgba(255, 255, 255, 0.04) 0 0 0 1px;
-    transition:
-        transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        opacity 400ms;
+    box-shadow: rgba(255, 255, 255, 0.08) 0 4px 25px 0,
+    rgba(255, 255, 255, 0.04) 0 0 0 1px;
+    transition: transform 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 1000ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 400ms;
 }
 
 .profile-img {
@@ -169,9 +166,8 @@ body {
     align-items: center;
     justify-content: center;
     color: var(--text-muted);
-    transition:
-        transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        color 200ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 200ms ease;
 }
 
 .header-socials .social-btn-1 svg {
@@ -358,9 +354,8 @@ body {
     font-size: 0.94rem;
     color: var(--text-secondary);
     cursor: pointer;
-    transition:
-        border-color 0.25s ease,
-        background 0.25s ease;
+    transition: border-color 0.25s ease,
+    background 0.25s ease;
     border-radius: 0 6px 6px 0;
 }
 
@@ -448,9 +443,8 @@ body.light-theme .bio-hint {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     overflow: hidden;
-    transition:
-        border-color 0.2s ease,
-        transform 0.2s ease;
+    transition: border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .edu-item:hover {
@@ -614,9 +608,8 @@ body.light-theme .thesis-btn {
     gap: 3px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
+    transition: transform 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .skill-item:hover {
@@ -737,9 +730,8 @@ body.light-theme .thesis-btn {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-4px);
-    transition:
-        opacity 0.18s ease,
-        transform 0.18s ease;
+    transition: opacity 0.18s ease,
+    transform 0.18s ease;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     z-index: 50;
     backdrop-filter: blur(8px);
@@ -787,9 +779,8 @@ body.light-theme .thesis-btn {
     font-size: 0.85rem;
     text-align: left;
     cursor: pointer;
-    transition:
-        background 0.15s ease,
-        color 0.15s ease;
+    transition: background 0.15s ease,
+    color 0.15s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -832,12 +823,11 @@ body.light-theme .thesis-btn {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition:
-        transform 0.25s ease,
-        border-color 0.25s ease,
-        opacity 0.25s ease,
-        box-shadow 0.25s ease,
-        filter 0.25s ease;
+    transition: transform 0.25s ease,
+    border-color 0.25s ease,
+    opacity 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
 }
 
 .app-card:hover {
@@ -871,10 +861,9 @@ body.light-theme .thesis-btn {
     object-fit: cover;
     display: block;
     filter: grayscale(60%) opacity(0.85);
-    transition:
-        filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .app-card:hover .app-img-container img,
@@ -946,9 +935,8 @@ body.light-theme .thesis-btn {
 .app-tech-drawer {
     display: grid;
     grid-template-rows: 0fr;
-    transition:
-        grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
-        background-color 200ms ease;
+    transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms ease;
     background: rgba(59, 130, 246, 0.04);
     border-top: 1px solid transparent;
 }
@@ -1151,9 +1139,8 @@ body.light-theme .tech-drawer-label {
 }
 
 body.light-theme .profile-card-inner {
-    box-shadow:
-        rgba(0, 0, 0, 0.06) 0 4px 25px 0,
-        rgba(0, 0, 0, 0.04) 0 0 0 1px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0 4px 25px 0,
+    rgba(0, 0, 0, 0.04) 0 0 0 1px;
 }
 
 body.light-theme .profile-img {
@@ -1325,6 +1312,14 @@ body.light-theme .lang-trigger:hover {
     }
 }
 
+@media (max-width: 600px) {
+    
+    .cv-modal-title {
+        display: none;
+
+    }
+}
+
 @media (max-width: 480px) {
     .portfolio-wrapper {
         padding: 66px 14px 50px 14px;
@@ -1465,9 +1460,8 @@ body.light-theme .lang-trigger:hover {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.84rem;
-    transition:
-        border-color 0.2s ease,
-        transform 0.2s ease;
+    transition: border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .activity-item:hover {
@@ -1567,9 +1561,8 @@ body.light-theme .lang-trigger:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition:
-        transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
-        color 200ms ease;
+    transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    color 200ms ease;
 }
 
 .email-wrapper button.social-btn-3:hover {
@@ -1596,9 +1589,8 @@ body.light-theme .lang-trigger:hover {
     opacity: 0;
     pointer-events: none;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 60;
 }
 
@@ -1739,6 +1731,8 @@ body.light-theme .lang-trigger:hover {
 .cv-modal-download-btn {
     font-size: 0.8rem;
     padding: 6px 14px;
+    white-space: nowrap;
+    width: max-content;
 }
 
 .cv-modal-close {
@@ -1750,9 +1744,8 @@ body.light-theme .lang-trigger:hover {
     padding: 4px 8px;
     border-radius: 6px;
     line-height: 1;
-    transition:
-        color 0.15s ease,
-        background 0.15s ease;
+    transition: color 0.15s ease,
+    background 0.15s ease;
 }
 
 .cv-modal-close:hover {
@@ -1920,4 +1913,13 @@ button,
         page-break-inside: avoid;
         border: 1px solid #ccc !important;
     }
+}
+
+/* style.css */
+.section-edu,
+.section-skills,
+.section-activity,
+.apps-grid {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 400px;
 }
