@@ -1963,3 +1963,15 @@ button,
     content-visibility: auto;
     contain-intrinsic-size: 0 400px;
 }
+
+/* 100% invisible off-screen, but fully parsed by Googlebot */
+.seo-hidden-anchor {
+    position: fixed !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}

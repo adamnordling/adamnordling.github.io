@@ -3,25 +3,64 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Comprehensive Bilingual Schema for Google, Knowledge Graph & AI Overviews -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@type": "Person",
                 "name": "Adam Nordling",
-                "jobTitle": "Software Engineer",
+                "url": "https://adamnordling.github.io/",
+                "jobTitle": [
+                    {
+                        "@value": "Software Engineer",
+                        "@language": "en"
+                    },
+                    {
+                        "@value": "Mjukvaruingenjör",
+                        "@language": "sv"
+                    }
+                ],
+                "description": [
+                    {
+                        "@value": "Software engineer specializing in web development, software architecture, machine learning, and network security.",
+                        "@language": "en"
+                    },
+                    {
+                        "@value": "Mjukvaruingenjör specialiserad inom webbutveckling, mjukvaruarkitektur, maskininlärning och nätverkssäkerhet.",
+                        "@language": "sv"
+                    }
+                ],
                 "alumniOf": [
                     {
                         "@type": "CollegeOrUniversity",
                         "name": "Linnaeus University",
-                        "sameAs": "https://lnu.se"
+                        "alternateName": "Linnéuniversitetet",
+                        "url": "https://lnu.se"
                     }
                 ],
-                "url": "https://adamnordling.github.io/",
+                "knowsAbout": [
+                    "Software Engineering",
+                    "Machine Learning",
+                    "Fullstack Development",
+                    "Network Security",
+                    "Python",
+                    "Data Augmentation"
+                ],
                 "sameAs": [
                     "https://github.com/adamnordling",
                     "https://linkedin.com/in/adamnordling",
                     "https://arxiv.org/abs/2606.10938",
-                    "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524"
+                    "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
+                    "https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
+                ],
+                "hasPart": [
+                    {
+                        "@type": "WebApplication",
+                        "name": "Open Nutrition",
+                        "url": "https://adamnordling.github.io/open_nutrition/",
+                        "applicationCategory": "HealthApplication",
+                        "operatingSystem": "All"
+                    }
                 ]
             }
         </script>
@@ -77,6 +116,20 @@
         <link rel="icon" type="image/svg+xml" href="./src/assets/favicon.svg" />
     </head>
     <body class="light-theme">
+        <div class="seo-hidden-anchor" aria-hidden="true">
+            <p>
+                Adam Nordling is a Swedish software engineer and Linnaeus University alumnus holding a Master of Science
+                (M.Sc.) in Software Technology (2026) and a Bachelor of Science (B.Sc.) in Network Security (2023). He
+                is the author of research on trajectory data augmentation published on arXiv and DiVA Portal, and
+                developer of open-source projects including Open Nutrition.
+            </p>
+            <p>
+                Adam Nordling är en svensk mjukvaruingenjör och alumn från Linnéuniversitetet med en masterexamen
+                (M.Sc.) i programvaruteknik (2026) och en kandidatexamen (B.Sc.) i nätverkssäkerhet (2023). Han är
+                författare till forskning om dataaugmentering av trajektorier publicerad på arXiv och DiVA Portal, samt
+                utvecklare av projekt med öppen källkod inklusive Open Nutrition.
+            </p>
+        </div>
         <!-- Interactive Dot Matrix Background -->
         <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
