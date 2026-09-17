@@ -347,21 +347,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const shortSha = item.sha ? item.sha.substring(0, 7) : '';
 
                 return `
-                    <div class="activity-item">
+                    <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${commitMessage}">
                         <div class="activity-icon">⚡</div>
                         <div class="activity-body">
-                            <div class="activity-title">
-                                <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" title="${commitMessage}">
-                                    ${commitMessage}
-                                </a>
-                            </div>
+                            <div class="activity-title">${commitMessage}</div>
                             <div class="activity-desc">
                                 <span>${repoName}</span>
                                 ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
                             </div>
                             <div class="activity-time">${timeAgo(commitDate)}</div>
                         </div>
-                    </div>
+                    </a>
                 `;
             })
             .join('');

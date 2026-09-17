@@ -720,12 +720,14 @@ body.light-theme .thesis-btn {
     background: var(--card-bg);
 }
 
+/* In style.css, update .filter-menu, .lang-menu */
 .filter-menu,
 .lang-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    margin-top: 4px;
+    margin-top: 0; /* Remove the gap that breaks hover */
+    padding-top: 6px; /* Keep spacing without losing mouse contact */
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -743,6 +745,17 @@ body.light-theme .thesis-btn {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     z-index: 50;
     backdrop-filter: blur(8px);
+}
+
+/* Add an invisible hover bridge between the trigger button and the popup menu */
+.filter-menu::before,
+.lang-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
 }
 
 .lang-menu {
@@ -1455,11 +1468,13 @@ body.light-theme .lang-trigger:hover {
     opacity: 0.5;
 }
 
+/* In style.css, update .activity-item */
 .activity-feed {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-top: 4px;
+    padding-right: 4px; /* Room for hover transform without overflow clipping */
 }
 
 .activity-item {
@@ -1471,14 +1486,24 @@ body.light-theme .lang-trigger:hover {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.84rem;
+    text-decoration: none !important; /* Removes link underline */
+    color: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+    width: 100%;
     transition:
         border-color 0.2s ease,
-        transform 0.2s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .activity-item:hover {
-    border-color: var(--text-muted);
-    transform: translateX(4px);
+    border-color: var(--accent);
+    transform: translateX(2px); /* Controlled translation */
+}
+
+.activity-item:hover .activity-title {
+    color: var(--accent);
 }
 
 .activity-icon {
