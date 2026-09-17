@@ -1,22 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Inject Schema.org JSON-LD dynamically to maintain strict CSP without inline script tags
-    const schemaScript = document.createElement('script');
-    schemaScript.type = 'application/ld+json';
-    schemaScript.textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: 'Adam Nordling',
-        jobTitle: 'Software Engineer',
-        alumniOf: {
-            '@type': 'CollegeOrUniversity',
-            name: 'Linnaeus University'
-        },
-        url: 'https://adamnordling.github.io',
-        sameAs: ['https://github.com/adamnordling', 'https://linkedin.com/in/adamnordling']
-    });
-    document.head.appendChild(schemaScript);
-    ('use strict');
-
     // -------------------------------------------------------------------------
     // Mobile Touch-Dropdown Support
     // -------------------------------------------------------------------------
