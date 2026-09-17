@@ -36,8 +36,11 @@ png converter etc
 
 Optimize OS systems, SAFE, ,GOOD, VALID
 
-
 Gör en subabase
+
+clean up Skills.......
+
+bugs: Can't click github activity bugs: cant' click english smoothly from swedish Live demo GIFS on project
 ----------------
 
 
