@@ -47,3 +47,5 @@ bugs: Can't click github activity bugs: cant' click english smoothly from swedis
 
 
 npm install npm run format npm run lint:js npm run validate
+
+npm run validate npm run format:fix

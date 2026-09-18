@@ -1,0 +1,28 @@
+@layer base {
+    :root {
+        --bg-color: #131418;
+        --card-bg: #1c1d23;
+        --border-color: #2e303b;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent: #60a5fa;
+
+        --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+        --font-mono:
+            ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+            monospace;
+        --font-stack: var(--font-default);
+    }
+
+    body.light-theme {
+        --bg-color: #f4f4f5;
+        --card-bg: #ffffff;
+        --border-color: #e4e4e7;
+        --text-primary: #09090b;
+        --text-secondary: #27272a;
+        --text-muted: #52525b;
+        --accent: #1d4ed8;
+    }
+}

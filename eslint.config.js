@@ -1,38 +1,24 @@
 import js from '@eslint/js';
-import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-export default [
-    js.configs.recommended,
+export default tseslint.config(
     {
-        files: ['src/**/*.js', 'main.js'],
+        ignores: ['dist/**', 'node_modules/**', 'public/**']
+    },
+    js.configs.recommended,
+    ...tseslint.configs.strictTypeChecked,
+    {
         languageOptions: {
-            ecmaVersion: 2024,
-            sourceType: 'module',
-            globals: {
-                ...globals.browser,
-                ...globals.es2021
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname
             }
         },
         rules: {
-            // Error Prevention & Code Cleanliness
-            'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-            'no-undef': 'error',
-            'no-constant-condition': 'error',
-            'no-duplicate-imports': 'error',
-            'no-self-compare': 'error',
-            'no-template-curly-in-string': 'warn',
-
-            // Modern Best Practices
-            'prefer-const': 'error',
-            'no-var': 'error',
-            'object-shorthand': 'warn',
-            'prefer-arrow-callback': 'warn',
-            eqeqeq: ['error', 'always', { null: 'ignore' }],
-
-            // Strict Async & Security
-            'no-async-promise-executor': 'error',
-            'no-promise-executor-return': 'error',
-            'require-atomic-updates': 'error'
+            '@typescript-eslint/no-explicit-any': 'error',
+            '@typescript-eslint/explicit-function-return-type': 'warn',
+            '@typescript-eslint/no-non-null-assertion': 'warn',
+            'no-console': ['warn', {allow: ['warn', 'error']}]
         }
     }
-];
+);

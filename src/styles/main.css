@@ -1,0 +1,296 @@
+@import './layers.css';
+@import './variables.css';
+@import './reset.css';
+
+@import './components/profile.css';
+@import './components/bio.css';
+@import './components/education.css';
+@import './components/skills.css';
+@import './components/dropdowns.css';
+@import './components/cards.css';
+@import './components/widgets.css';
+@import './components/modal.css';
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS & PRINT (Overrides applied across layers)
+   ========================================================================== */
+@media (max-width: 1150px) {
+    .live-clock,
+    .hotkeys-indicator {
+        display: none !important;
+    }
+
+    .portfolio-wrapper {
+        height: auto;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 76px 28px 80px 28px;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        height: auto;
+    }
+
+    .left-panel {
+        display: contents;
+    }
+
+    .right-panel {
+        flex: none;
+        width: 100%;
+        max-height: none;
+        overflow-y: visible;
+        padding: 0;
+        order: 4;
+    }
+
+    .right-header {
+        position: static;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    .profile-header {
+        order: 1;
+    }
+
+    .intro-quote.bio-card {
+        margin: 0;
+        order: 2;
+    }
+
+    .section-edu {
+        order: 3;
+    }
+
+    .section-skills {
+        order: 5;
+    }
+
+    .section-activity {
+        order: 6;
+    }
+
+    .footer-controls {
+        position: static;
+        margin-top: 48px;
+        padding-bottom: 24px;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 900px) {
+    .hotkeys-indicator {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .portfolio-wrapper {
+        padding: 70px 18px 60px 18px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+        margin-bottom: 16px;
+    }
+
+    .profile-card-container {
+        width: 170px;
+        max-width: 170px;
+        margin: 0 auto;
+    }
+
+    .profile-img {
+        height: 170px;
+        border-radius: 16px;
+    }
+
+    .profile-info {
+        align-items: center;
+        width: 100%;
+    }
+
+    .name-title {
+        font-size: 1.65rem;
+    }
+
+    .header-socials {
+        justify-content: center;
+        margin-top: 2px;
+        margin-bottom: 8px;
+        gap: 20px;
+    }
+
+    .cv-action-wrapper {
+        margin: 10px auto 0 auto !important;
+        align-self: center;
+    }
+
+    .intro-quote.bio-card {
+        padding-left: 14px;
+    }
+
+    .right-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .apps-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 20px;
+    }
+
+    .cv-modal-overlay {
+        padding: 10px;
+    }
+
+    .cv-modal-window {
+        height: 94vh;
+        max-height: 94vh;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cv-modal-title {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-wrapper {
+        padding: 66px 14px 50px 14px;
+    }
+
+    .top-controls {
+        top: 14px;
+        left: 14px;
+        gap: 6px;
+    }
+
+    .theme-toggle,
+    .lang-trigger {
+        height: 34px;
+        padding: 0 10px;
+        font-size: 0.8rem;
+    }
+
+    .theme-toggle {
+        width: 34px;
+    }
+
+    .profile-card-container {
+        width: 150px;
+    }
+
+    .profile-img {
+        height: 150px;
+    }
+
+    .name-title {
+        font-size: 1.45rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .app-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 10px 14px;
+    }
+
+    .edu-header {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .filter-menu {
+        left: 0;
+        right: auto;
+        min-width: 220px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .portfolio-wrapper {
+        max-width: 1440px;
+        padding: 0 60px;
+    }
+
+    .left-panel {
+        flex: 0 0 40%;
+        padding-right: 40px;
+    }
+
+    .right-panel {
+        flex: 0 0 60%;
+        padding-left: 20px;
+    }
+
+    .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+    }
+}
+
+@media print {
+    #bg-canvas,
+    .top-controls,
+    .footer-controls,
+    .live-clock,
+    .hotkeys-indicator,
+    #projects-filter,
+    .email-toast {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .portfolio-wrapper {
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .main-container {
+        display: block !important;
+    }
+
+    .app-card {
+        page-break-inside: avoid;
+        border: 1px solid #ccc !important;
+    }
+}
