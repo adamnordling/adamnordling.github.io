@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 4. 3D Tilt & Mouse Tracking Spotlight Effect (Optimized: Cached Rect)
+    // 4. 3D Tilt Effect (rAF-Throttled to eliminate display stutter)
     // -------------------------------------------------------------------------
     const container = document.querySelector('.profile-card-container');
     const card = document.querySelector('.profile-card-inner');
@@ -141,22 +141,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (container && card) {
         let containerRect = container.getBoundingClientRect();
+        let mouseX = 0;
+        let mouseY = 0;
+        let isHovering = false;
+        let rafId = null;
 
-        // Only recalculate rect when entering the card or resizing
         container.addEventListener('mouseenter', () => {
             containerRect = container.getBoundingClientRect();
+            isHovering = true;
         });
+
         window.addEventListener(
             'resize',
             () => {
                 containerRect = container.getBoundingClientRect();
             },
-            {passive: true}
+            { passive: true }
         );
 
-        container.addEventListener('mousemove', e => {
-            const x = e.clientX - containerRect.left;
-            const y = e.clientY - containerRect.top;
+        function updateTilt() {
+            if (!isHovering) return;
+
+            const x = mouseX - containerRect.left;
+            const y = mouseY - containerRect.top;
             const centerX = containerRect.width / 2;
             const centerY = containerRect.height / 2;
 
@@ -170,15 +177,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 spotlight.style.opacity = '1';
                 spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.18), transparent 55%)`;
             }
-        });
+
+            rafId = null;
+        }
+
+        container.addEventListener(
+            'mousemove',
+            e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                // Schedule execution for the next screen refresh cycle (prevents lag on 120Hz/144Hz)
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateTilt);
+                }
+            },
+            { passive: true }
+        );
 
         container.addEventListener('mouseleave', () => {
+            isHovering = false;
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
             card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
             card.style.boxShadow = 'rgba(0, 0, 0, 0.29) 0 4px 25px 0';
-
-            if (spotlight) {
-                spotlight.style.opacity = '0';
-            }
+            if (spotlight) spotlight.style.opacity = '0';
         });
     }
 
@@ -257,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
 
     // -------------------------------------------------------------------------
-    // 8. Live GitHub Activity Fetcher
+    // 8. Live GitHub Activity Fetcher (Secure & Hardened)
     // -------------------------------------------------------------------------
     const activityFeed = document.getElementById('activity-feed');
     const GITHUB_USERNAME = 'adamnordling';
@@ -266,7 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const TTL_MS = 60 * 1000;
 
     function escapeHTML(str) {
-        return str.replace(
+        if (!str) return '';
+        return String(str).replace(
             /[&<>'"]/g,
             tag =>
                 ({
@@ -279,15 +305,14 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
-    function sanitizeGithubUrl(urlStr, fallback = '#') {
+    function sanitizeGithubUrl(urlStr, fallback) {
         try {
             const parsed = new URL(urlStr);
-            // Zero-Trust: MUST be https and MUST be directly on github.com
             if (parsed.protocol === 'https:' && parsed.hostname === 'github.com') {
                 return encodeURI(parsed.href);
             }
         } catch {
-            // Invalid URL format
+            // Invalid URL string
         }
         return fallback;
     }
@@ -295,11 +320,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
         const intervals = [
-            {labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000},
-            {labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000},
-            {labelEn: 'd ago', labelSv: 'd sedan', secs: 86400},
-            {labelEn: 'h ago', labelSv: 'h sedan', secs: 3600},
-            {labelEn: 'm ago', labelSv: 'm sedan', secs: 60}
+            { labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000 },
+            { labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000 },
+            { labelEn: 'd ago', labelSv: 'd sedan', secs: 86400 },
+            { labelEn: 'h ago', labelSv: 'h sedan', secs: 3600 },
+            { labelEn: 'm ago', labelSv: 'm sedan', secs: 60 }
         ];
 
         for (const i of intervals) {
@@ -338,29 +363,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const commitMessage = escapeHTML(rawMsg.split('\n')[0].trim());
                 const repoName = escapeHTML(item.repository?.name || item.repo_name || 'repository');
                 const rawUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
-                const safeCommitUrl = sanitizeGithubUrl(rawUrl, `https://github.com/${GITHUB_USERNAME}`);
-                const safeTitle = escapeHTML(commitMessage);
+                const commitUrl = sanitizeGithubUrl(rawUrl, `https://github.com/${GITHUB_USERNAME}`);
+                const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
+                const rawSha = item.sha ? String(item.sha).substring(0, 7) : '';
+                const shortSha = escapeHTML(rawSha);
 
                 return `
-    <a href="${safeCommitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${safeTitle}">
-        <div class="activity-icon">⚡</div>
-        <div class="activity-body">
-            <div class="activity-title">${safeTitle}</div>
-            <div class="activity-desc">
-                <span>${repoName}</span>
-                ${shortSha ? `<span>· <code>${escapeHTML(shortSha)}</code></span>` : ''}
-            </div>
-            <div class="activity-time">${timeAgo(commitDate)}</div>
-        </div>
-    </a>
-`;
+                    <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${commitMessage}">
+                        <div class="activity-icon">⚡</div>
+                        <div class="activity-body">
+                            <div class="activity-title">${commitMessage}</div>
+                            <div class="activity-desc">
+                                <span>${repoName}</span>
+                                ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
+                            </div>
+                            <div class="activity-time">${timeAgo(commitDate)}</div>
+                        </div>
+                    </a>
+                `;
             })
             .join('');
     }
 
-    // -------------------------------------------------------------------------
-    // 8. Live GitHub Activity Fetcher (Search-First with Event Fallback)
-    // -------------------------------------------------------------------------
     async function loadGitHubActivity() {
         const cached = sessionStorage.getItem(CACHE_KEY);
         const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
@@ -371,73 +395,75 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderCommits(JSON.parse(cached));
                 return;
             } catch {
-                // Ignore parse errors
+                sessionStorage.removeItem(CACHE_KEY);
+                sessionStorage.removeItem(CACHE_TIME_KEY);
             }
         }
 
         // 2. Primary: Modern Commit Search API (Fetches latest commits across all repos)
         try {
             const res = await fetch(
-                `https://api.github.com/search/commits?q=author:${GITHUB_USERNAME}&sort=author-date&order=desc&per_page=5`,
+                `https://api.github.com/search/commits?q=author:${encodeURIComponent(GITHUB_USERNAME)}&sort=author-date&order=desc&per_page=5`,
                 {
                     headers: {
-                        // Official modern GitHub API header (fixes the deprecated cloak-preview CORS bug)
                         Accept: 'application/vnd.github+json'
                     }
                 }
             );
 
-            if (!res.ok) throw new Error(`Search failed with status: ${res.status}`);
+            if (res.ok) {
+                const data = await res.json();
+                const commits = data.items || [];
 
-            const data = await res.json();
-            const commits = data.items || [];
-
-            if (commits.length > 0) {
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
-                sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-                renderCommits(commits);
-                return;
+                if (commits.length > 0) {
+                    sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
+                    sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+                    renderCommits(commits);
+                    return;
+                }
             }
         } catch {
-            // Search failed or rate-limited; gracefully proceed to fallback
+            // Search API failed or rate-limited; gracefully fallback
         }
 
-        // 3. Fallback: Public Events API (Higher rate limits)
+        // 3. Fallback: Public Events API (Higher rate limits: 60 req/hr vs Search's 10 req/min)
         try {
-            const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public?per_page=30`);
+            const eventsRes = await fetch(
+                `https://api.github.com/users/${encodeURIComponent(GITHUB_USERNAME)}/events/public?per_page=30`
+            );
 
-            if (!eventsRes.ok) throw new Error('Events endpoint unavailable');
+            if (eventsRes.ok) {
+                const eventsData = await eventsRes.json();
 
-            const eventsData = await eventsRes.json();
+                const pushEvents = eventsData
+                    .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
+                    .flatMap(e =>
+                        e.payload.commits.map(c => ({
+                            commit: {
+                                message: c.message,
+                                author: { date: e.created_at }
+                            },
+                            repository: {
+                                name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
+                            },
+                            html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
+                            sha: c.sha
+                        }))
+                    )
+                    .slice(0, 5);
 
-            const pushEvents = eventsData
-                .filter(e => e.type === 'PushEvent' && e.payload?.commits?.length > 0)
-                .flatMap(e =>
-                    e.payload.commits.map(c => ({
-                        commit: {
-                            message: c.message,
-                            author: {date: e.created_at}
-                        },
-                        repository: {
-                            name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
-                        },
-                        html_url: `https://github.com/${e.repo.name}/commit/${c.sha}`,
-                        sha: c.sha
-                    }))
-                )
-                .slice(0, 5);
-
-            if (pushEvents.length > 0) {
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify(pushEvents));
-                sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
-                renderCommits(pushEvents);
-                return;
+                if (pushEvents.length > 0) {
+                    sessionStorage.setItem(CACHE_KEY, JSON.stringify(pushEvents));
+                    sessionStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+                    renderCommits(pushEvents);
+                    return;
+                }
             }
         } catch {
             // Both network calls failed
         }
 
-        // 4. Last resort: Show cached data or graceful offline message
+        // 4. Fallback to cached data even if expired, or render unavailable notice
         if (cached) {
             try {
                 renderCommits(JSON.parse(cached));
@@ -517,21 +543,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------------------
-    // 10. Resume / CV Preview Modal Controller
+    // 10. Resume / CV Preview Modal with WCAG Focus Trap
     // -------------------------------------------------------------------------
     const openCvBtn = document.getElementById('open-cv-modal');
     const closeCvBtn = document.getElementById('close-cv-modal');
     const cvModal = document.getElementById('cv-modal');
     const cvIframe = cvModal ? cvModal.querySelector('iframe') : null;
+    let previousActiveElement = null;
+
+    function getFocusableElements(element) {
+        return Array.from(
+            element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        ).filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true');
+    }
 
     function openModal() {
         if (!cvModal) return;
+        previousActiveElement = document.activeElement;
+
         if (cvIframe && !cvIframe.getAttribute('src')) {
             cvIframe.setAttribute('src', cvIframe.getAttribute('data-src'));
         }
+
         cvModal.classList.add('is-open');
         cvModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+
+        // Focus the first interactive element inside the modal
+        const focusables = getFocusableElements(cvModal);
+        if (focusables.length > 0) {
+            focusables[0].focus();
+        }
     }
 
     function closeModal() {
@@ -539,22 +581,48 @@ document.addEventListener('DOMContentLoaded', () => {
         cvModal.classList.remove('is-open');
         cvModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+
+        // Restore focus to button that opened it
+        if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+            previousActiveElement.focus();
+        }
     }
 
-    if (openCvBtn) openCvBtn.addEventListener('click', openModal);
-    if (closeCvBtn) closeCvBtn.addEventListener('click', closeModal);
-
+    // Trap Focus inside Modal (tab cycling)
     if (cvModal) {
+        cvModal.addEventListener('keydown', e => {
+            if (!cvModal.classList.contains('is-open')) return;
+
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeModal();
+                return;
+            }
+
+            if (e.key === 'Tab') {
+                const focusables = getFocusableElements(cvModal);
+                if (focusables.length === 0) return;
+
+                const firstElement = focusables[0];
+                const lastElement = focusables[focusables.length - 1];
+
+                if (e.shiftKey && document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                } else if (!e.shiftKey && document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        });
+
         cvModal.addEventListener('click', e => {
             if (e.target === cvModal) closeModal();
         });
     }
 
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && cvModal?.classList.contains('is-open')) {
-            closeModal();
-        }
-    });
+    if (openCvBtn) openCvBtn.addEventListener('click', openModal);
+    if (closeCvBtn) closeCvBtn.addEventListener('click', closeModal);
 
     // -------------------------------------------------------------------------
     // 11. Interactive Dot Matrix Canvas (Battery & CPU Optimized)
@@ -588,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSingleFrame();
         }
 
-        window.addEventListener('resize', updateBounds, {passive: true});
+        window.addEventListener('resize', updateBounds, { passive: true });
         updateBounds();
 
         function renderLoop() {
@@ -631,7 +699,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mouseY = e.clientY;
                 wakeAnimation();
             },
-            {passive: true}
+            { passive: true }
         );
 
         window.addEventListener('mouseleave', () => {
@@ -649,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     wakeAnimation();
                 }
             },
-            {passive: true}
+            { passive: true }
         );
 
         window.addEventListener(
@@ -661,34 +729,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     wakeAnimation();
                 }, 200);
             },
-            {passive: true}
+            { passive: true }
         );
 
+        // Replace the draw() function inside the Canvas block of main.js:
         function draw() {
             ctx.clearRect(0, 0, width, height);
 
             const isLight = document.body.classList.contains('light-theme');
             const isMobile = width <= 1024;
-            const baseColor = isLight ? [0, 0, 0] : [255, 255, 255];
-            const activeColor = [59, 130, 246];
+            const baseColor = isLight ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, ';
+            const touchRadius = isMobile ? 100 : 140;
+            const touchRadiusSq = touchRadius * touchRadius; // SQUARED: avoids Math.sqrt
 
-            const currentBaseAlpha = isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA;
-            const currentGlowAlpha = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
+            const defaultAlpha = (isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA) * 0.7;
+
+            // --- PASS 1: Batch ALL inactive dots into ONE single path ---
+            ctx.beginPath();
+            ctx.fillStyle = `${baseColor}${defaultAlpha})`;
+
+            const activeDots = [];
 
             for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
                 let flankFade = 1.0;
-
                 if (!isMobile) {
                     if (x < wrapperLeft) {
-                        const distToEdge = wrapperLeft - x;
-                        flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
+                        flankFade = Math.min(1, Math.max(0, (wrapperLeft - x) / FADE_MARGIN));
                     } else if (x > wrapperRight) {
-                        const distToEdge = x - wrapperRight;
-                        flankFade = Math.min(1, Math.max(0, distToEdge / FADE_MARGIN));
+                        flankFade = Math.min(1, Math.max(0, (x - wrapperRight) / FADE_MARGIN));
                     } else {
-                        flankFade = 0;
+                        continue;
                     }
-                    if (flankFade <= 0) continue;
                 } else {
                     flankFade = 0.65;
                 }
@@ -696,25 +767,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
                     const dx = mouseX - x;
                     const dy = mouseY - y;
-                    const distToMouse = Math.sqrt(dx * dx + dy * dy);
-                    const touchRadius = isMobile ? 100 : 140;
+                    const distSq = dx * dx + dy * dy;
 
-                    let radius = 1.3;
-                    let alpha = currentBaseAlpha * 0.7 * flankFade;
-                    let color = baseColor;
-
-                    if (distToMouse < touchRadius) {
-                        const influence = 1 - distToMouse / touchRadius;
-                        radius = 1.3 + influence * 2.2;
-                        alpha = (currentBaseAlpha + influence * (currentGlowAlpha - currentBaseAlpha)) * flankFade;
-                        color = activeColor;
+                    if (distSq < touchRadiusSq) {
+                        // Save active dots for Pass 2
+                        activeDots.push({ x, y, distSq, flankFade });
+                    } else {
+                        // Add inactive dot to single batch
+                        ctx.moveTo(x + 1.3, y);
+                        ctx.arc(x, y, 1.3, 0, Math.PI * 2);
                     }
-
-                    ctx.beginPath();
-                    ctx.arc(x, y, radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
-                    ctx.fill();
                 }
+            }
+            // Single draw call for 90%+ of the screen!
+            ctx.fill();
+
+            // --- PASS 2: Only render dots close to the cursor ---
+            const glowAlphaMax = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
+
+            for (let i = 0; i < activeDots.length; i++) {
+                const dot = activeDots[i];
+                const dist = Math.sqrt(dot.distSq); // Only compute sqrt for ~10-20 dots!
+                const influence = 1 - dist / touchRadius;
+                const radius = 1.3 + influence * 2.2;
+                const alpha = (defaultAlpha + influence * (glowAlphaMax - defaultAlpha)) * dot.flankFade;
+
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(59, 130, 246, ${alpha})`;
+                ctx.fill();
             }
         }
 
@@ -887,9 +968,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {
-                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             } else if (activeScrollTarget) {
-                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
+                activeScrollTarget.scrollBy({ top: scrollAmount, behavior: 'smooth' });
             }
         }
     });
