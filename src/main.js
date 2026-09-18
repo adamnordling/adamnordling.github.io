@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             () => {
                 containerRect = container.getBoundingClientRect();
             },
-            { passive: true }
+            {passive: true}
         );
 
         container.addEventListener('mousemove', e => {
@@ -279,14 +279,27 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
+    function sanitizeGithubUrl(urlStr, fallback = '#') {
+        try {
+            const parsed = new URL(urlStr);
+            // Zero-Trust: MUST be https and MUST be directly on github.com
+            if (parsed.protocol === 'https:' && parsed.hostname === 'github.com') {
+                return encodeURI(parsed.href);
+            }
+        } catch {
+            // Invalid URL format
+        }
+        return fallback;
+    }
+
     function timeAgo(dateString) {
         const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
         const intervals = [
-            { labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000 },
-            { labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000 },
-            { labelEn: 'd ago', labelSv: 'd sedan', secs: 86400 },
-            { labelEn: 'h ago', labelSv: 'h sedan', secs: 3600 },
-            { labelEn: 'm ago', labelSv: 'm sedan', secs: 60 }
+            {labelEn: 'y ago', labelSv: 'år sedan', secs: 31536000},
+            {labelEn: 'mo ago', labelSv: 'mån sedan', secs: 2592000},
+            {labelEn: 'd ago', labelSv: 'd sedan', secs: 86400},
+            {labelEn: 'h ago', labelSv: 'h sedan', secs: 3600},
+            {labelEn: 'm ago', labelSv: 'm sedan', secs: 60}
         ];
 
         for (const i of intervals) {
@@ -324,23 +337,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const rawMsg = item.commit?.message || item.message || 'Code commit';
                 const commitMessage = escapeHTML(rawMsg.split('\n')[0].trim());
                 const repoName = escapeHTML(item.repository?.name || item.repo_name || 'repository');
-                const commitUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
-                const commitDate = item.commit?.author?.date || item.created_at || new Date().toISOString();
-                const shortSha = item.sha ? item.sha.substring(0, 7) : '';
+                const rawUrl = item.html_url || `https://github.com/${GITHUB_USERNAME}/${repoName}`;
+                const safeCommitUrl = sanitizeGithubUrl(rawUrl, `https://github.com/${GITHUB_USERNAME}`);
+                const safeTitle = escapeHTML(commitMessage);
 
                 return `
-                    <a href="${commitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${commitMessage}">
-                        <div class="activity-icon">⚡</div>
-                        <div class="activity-body">
-                            <div class="activity-title">${commitMessage}</div>
-                            <div class="activity-desc">
-                                <span>${repoName}</span>
-                                ${shortSha ? `<span>· <code>${shortSha}</code></span>` : ''}
-                            </div>
-                            <div class="activity-time">${timeAgo(commitDate)}</div>
-                        </div>
-                    </a>
-                `;
+    <a href="${safeCommitUrl}" target="_blank" rel="noopener noreferrer" class="activity-item" title="${safeTitle}">
+        <div class="activity-icon">⚡</div>
+        <div class="activity-body">
+            <div class="activity-title">${safeTitle}</div>
+            <div class="activity-desc">
+                <span>${repoName}</span>
+                ${shortSha ? `<span>· <code>${escapeHTML(shortSha)}</code></span>` : ''}
+            </div>
+            <div class="activity-time">${timeAgo(commitDate)}</div>
+        </div>
+    </a>
+`;
             })
             .join('');
     }
@@ -403,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.payload.commits.map(c => ({
                         commit: {
                             message: c.message,
-                            author: { date: e.created_at }
+                            author: {date: e.created_at}
                         },
                         repository: {
                             name: e.repo.name.replace(`${GITHUB_USERNAME}/`, '')
@@ -575,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSingleFrame();
         }
 
-        window.addEventListener('resize', updateBounds, { passive: true });
+        window.addEventListener('resize', updateBounds, {passive: true});
         updateBounds();
 
         function renderLoop() {
@@ -618,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mouseY = e.clientY;
                 wakeAnimation();
             },
-            { passive: true }
+            {passive: true}
         );
 
         window.addEventListener('mouseleave', () => {
@@ -636,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     wakeAnimation();
                 }
             },
-            { passive: true }
+            {passive: true}
         );
 
         window.addEventListener(
@@ -648,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     wakeAnimation();
                 }, 200);
             },
-            { passive: true }
+            {passive: true}
         );
 
         function draw() {
@@ -874,9 +887,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const scrollAmount = e.key === 'ArrowDown' ? 140 : -140;
 
             if (window.innerWidth <= 1024) {
-                window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                window.scrollBy({top: scrollAmount, behavior: 'smooth'});
             } else if (activeScrollTarget) {
-                activeScrollTarget.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+                activeScrollTarget.scrollBy({top: scrollAmount, behavior: 'smooth'});
             }
         }
     });
