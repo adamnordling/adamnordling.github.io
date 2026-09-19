@@ -1,0 +1,16 @@
+{
+  "name": "Adam Nordling — Portfolio",
+  "short_name": "Nordling",
+  "description": "Software Engineer specializing in Machine Learning, Web Architecture, and Security.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#131418",
+  "theme_color": "#131418",
+  "icons": [
+    {
+      "src": "./assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

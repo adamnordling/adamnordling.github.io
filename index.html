@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- Comprehensive Bilingual Schema for Google, Knowledge Graph & AI Overviews -->
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -109,7 +108,7 @@
 
     <!-- Preload Critical Rendering Path Assets -->
     <link rel="preload" href="./assets/profile-picture-resized.webp" as="image" type="image/webp"/>
-
+    <link rel="manifest" href="./manifest.webmanifest"/>
     <link rel="stylesheet" href="./src/styles/main.css"/>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg"/>
@@ -1200,7 +1199,7 @@
         <button class="font-btn" data-font="serif" aria-label="Serif Font" type="button">A</button>
         <button class="font-btn" data-font="monospace" aria-label="Monospace Font" type="button">A</button>
     </div>
-    <p class="copyright">© 2026 Adam Nordling</p>
+    <p class="copyright">© <span id="footer-year">2026</span> Adam Nordling</p>
 </footer>
 
 <!-- CV MODAL PREVIEW -->
@@ -1236,7 +1235,8 @@
             </div>
         </div>
         <div class="cv-modal-body">
-            <iframe data-src="./assets/resume.pdf" title="Adam Nordling Resume PDF Preview"></iframe>
+            <iframe data-src="./assets/resume.pdf#page=1&navpanes=0&zoom=80"
+                    title="Adam Nordling Resume PDF Preview"></iframe>
         </div>
     </div>
 </div>

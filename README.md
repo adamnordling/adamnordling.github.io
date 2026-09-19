@@ -1,4 +1,11 @@
-# portfolio
+# Portfolio — Adam Nordling
+
+[![CI/CD Pipeline](https://github.com/adamnordling/adamnordling.github.io/actions/workflows/pipeline.yml/badge.svg)](https://github.com/adamnordling/adamnordling.github.io/actions/workflows/pipeline.yml)
+[![Lighthouse 4x 100](https://img.shields.io/badge/Lighthouse-100%2F100-success?style=flat&logo=lighthouse)](https://adamnordling.github.io/)
+[![TypeScript Strict](https://img.shields.io/badge/TypeScript-StrictTypeChecked-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+
+> Zero-runtime, strictly-typed personal portfolio built with Vite, TypeScript ES modules, and CSS Cascade Layers. Fully
+> WCAG AA accessible and audited at 100/100 Lighthouse performance.
 
 Ideas for website and todolist:
 
@@ -44,7 +51,22 @@ bugs: Can't click github activity bugs: cant' click english smoothly from swedis
 ----------------
 
 
+Add Lighthouse CI (LHCI) to .github/workflows/ci.yml:
+Have GitHub Actions run Lighthouse on every pull request/commit, asserting scores of 100 across Performance,
+Accessibility, Best Practices, and SEO. Put the LHCI 4x 100 badge directly in your repo's README.md. Strict Content
+Security Policy (CSP):
+Avoid unsafe-inline styles by setting mouse coordinates via custom properties (element.style.setProperty ('--x', ...)),
+enabling a pure, hardened CSP without hash or unsafe directives. Keep the Live Bundle Under 30 KB Gzipped:
+Mention this explicitly in your repo: "Zero frameworks, strictly typed, 100/100 Lighthouse score, fully accessible,
+compiled with Vite".
 
+strict typescript, vanilla ES modules, CSS layers, VITE
+
+tryck musknappar, få en cursor med keypads - portfolio
+
+bugs: scorlling inside QTY scrolls the website too
+
+move insights and warning signs to top right
 
 npm install npm run format npm run lint:js npm run validate
 

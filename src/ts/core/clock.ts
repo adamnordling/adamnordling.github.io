@@ -4,6 +4,7 @@ export function initClock(): void {
     const clockTimeEl = qs('#clock-time');
     const clockWeekNumEl = qs('#clock-week-num');
     const clockYearEl = qs('#clock-year');
+    const footerYear = qs('#footer-year');
 
     function getISOWeekNumber(date: Date): number {
         const target = new Date(date.valueOf());
@@ -25,6 +26,7 @@ export function initClock(): void {
         if (clockTimeEl) clockTimeEl.textContent = `${hours}:${minutes}`;
         if (clockWeekNumEl) clockWeekNumEl.textContent = String(getISOWeekNumber(now)).padStart(2, '0');
         if (clockYearEl) clockYearEl.textContent = String(now.getFullYear());
+        if (footerYear) footerYear.textContent = String(now.getFullYear());
     }
 
     update();

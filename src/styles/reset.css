@@ -5,6 +5,10 @@
         box-sizing: border-box;
     }
 
+    html {
+        scrollbar-gutter: stable;
+    }
+
     html:not([lang='sv']) [lang='sv'],
     html[lang='sv'] [lang='en'] {
         display: none !important;
@@ -16,11 +20,23 @@
         font-family: var(--font-stack), sans-serif;
         line-height: 1.6;
         -webkit-font-smoothing: antialiased;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
     }
 
     ::selection {
         background-color: rgba(59, 130, 246, 0.32);
         color: var(--text-primary);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+
+    :focus:not(:focus-visible) {
+        outline: none;
     }
 
     img,
@@ -30,6 +46,18 @@
         -webkit-user-select: none;
         -webkit-user-drag: none;
         pointer-events: auto;
+    }
+
+    button svg,
+    a svg {
+        pointer-events: none;
+    }
+
+    button,
+    a,
+    input,
+    select {
+        touch-action: manipulation;
     }
 
     button,
