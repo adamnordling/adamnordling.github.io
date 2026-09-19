@@ -3,7 +3,7 @@ const STATIC_ASSETS = [
     './',
     './index.html',
     './404.html',
-    './site.webmanifest',
+    './manifest.webmanifest',
     './assets/favicons/favicon.ico',
     './assets/favicons/favicon-16x16.png',
     './assets/favicons/favicon-32x32.png',
