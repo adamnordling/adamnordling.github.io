@@ -1,9 +1,15 @@
-const CACHE_NAME = 'portfolio-cache-v3'; // 👈 Bumping to v3 clears the old cache
+const CACHE_NAME = 'portfolio-cache-v4'; // 👈 Bumped to v4 to clear old cache
 const STATIC_ASSETS = [
     './',
     './index.html',
     './404.html',
-    './assets/favicon.svg',
+    './site.webmanifest',
+    './assets/favicons/favicon.ico',
+    './assets/favicons/favicon-16x16.png',
+    './assets/favicons/favicon-32x32.png',
+    './assets/favicons/apple-touch-icon.png',
+    './assets/favicons/android-chrome-192x192.png',
+    './assets/favicons/android-chrome-512x512.png',
     './assets/profile-300.webp',
     './assets/profile-600.webp',
     './assets/nutrition-400.webp',
