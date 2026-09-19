@@ -2,7 +2,7 @@ import { initTheme } from './core/theme';
 import { initI18n } from './core/i18n';
 import { initClock } from './core/clock';
 import { initShortcuts } from './core/shortcuts';
-
+import { initPerformanceMonitoring } from './utils/dom';
 import { initCanvasBackground } from './features/canvas-bg';
 import { initCardTilt } from './features/tilt';
 import { initModal } from './features/modal';
@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initI18n();
     initClock();
     initShortcuts();
-
     initCanvasBackground();
     initCardTilt();
     initModal();
@@ -24,7 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillsAndBio();
     initClipboard();
 
-    void loadGitHubActivity();
+    // 2. Defer network API call until main thread is idle (Removes 1.4s critical chain!)
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            void loadGitHubActivity();
+        });
+    } else {
+        setTimeout(() => {
+            void loadGitHubActivity();
+        }, 300);
+    }
+
+    initPerformanceMonitoring();
 
     // Register Service Worker
     if (

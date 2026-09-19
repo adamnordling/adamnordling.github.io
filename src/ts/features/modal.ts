@@ -10,7 +10,10 @@ function getFocusableElements(element: HTMLElement): HTMLElement[] {
 
 export function openModal(): void {
     const cvModal = qs('#cv-modal');
+    const mainContent = qs('.portfolio-wrapper');
     if (!cvModal) return;
+
+    if (mainContent) mainContent.setAttribute('inert', '');
 
     previousActiveElement = document.activeElement as HTMLElement | null;
     const cvIframe = cvModal.querySelector('iframe');
@@ -32,7 +35,10 @@ export function openModal(): void {
 
 export function closeModal(): void {
     const cvModal = qs('#cv-modal');
+    const mainContent = qs('.portfolio-wrapper');
     if (!cvModal) return;
+
+    if (mainContent) mainContent.removeAttribute('inert');
 
     cvModal.classList.remove('is-open');
     cvModal.setAttribute('aria-hidden', 'true');

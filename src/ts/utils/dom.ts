@@ -33,3 +33,39 @@ export function on(
     if (!element) return;
     element.addEventListener(event, handler, options);
 }
+
+export function initPerformanceMonitoring(): void {
+    if (typeof PerformanceObserver === 'undefined') return;
+
+    try {
+        // 1. Observe Largest Contentful Paint (LCP)
+        const lcpObserver = new PerformanceObserver(entryList => {
+            const entries = entryList.getEntries();
+            if (entries.length > 0) {
+                const lastEntry = entries[entries.length - 1];
+                console.warn(`⚡ [Core Web Vitals] LCP: ${lastEntry.startTime.toFixed(1)}ms`);
+            }
+        });
+        lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+        // 2. Observe Cumulative Layout Shift (CLS)
+        let clsScore = 0;
+        const clsObserver = new PerformanceObserver(entryList => {
+            const entries = entryList.getEntries() as Array<
+                PerformanceEntry & {
+                    value: number;
+                    hadRecentInput: boolean;
+                }
+            >;
+            for (const entry of entries) {
+                if (!entry.hadRecentInput) {
+                    clsScore += entry.value;
+                }
+            }
+            console.warn(`⚡ [Core Web Vitals] CLS: ${clsScore.toFixed(3)}`);
+        });
+        clsObserver.observe({ type: 'layout-shift', buffered: true });
+    } catch {
+        // Ignore if browser doesn't support specific observer types
+    }
+}

@@ -24,6 +24,17 @@
         text-rendering: optimizeLegibility;
     }
 
+    h1,
+    h2,
+    h3,
+    h4 {
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
     ::selection {
         background-color: rgba(59, 130, 246, 0.32);
         color: var(--text-primary);

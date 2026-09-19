@@ -1,32 +1,30 @@
-const CACHE_NAME = 'portfolio-cache-v2';
+const CACHE_NAME = 'portfolio-cache-v3'; // 👈 Bumping to v3 clears the old cache
 const STATIC_ASSETS = [
     './',
     './index.html',
     './404.html',
     './assets/favicon.svg',
-    './assets/profile-picture-resized.webp',
-    './assets/nutrition-image.webp',
+    './assets/profile-300.webp',
+    './assets/profile-600.webp',
+    './assets/nutrition-400.webp',
+    './assets/nutrition-800.webp',
     './assets/resume.pdf'
 ];
 
 self.addEventListener('install', event => {
+    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
             return cache.addAll(STATIC_ASSETS);
         })
     );
-    self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(keys => {
             return Promise.all(
-                keys.map(key => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key);
-                    }
-                })
+                keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
             );
         })
     );
@@ -34,16 +32,12 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    // Only cache GET requests
     if (event.request.method !== 'GET') return;
-
-    // Never cache GitHub API calls
     if (event.request.url.includes('api.github.com')) return;
 
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
             if (cachedResponse) {
-                // Return cached asset, but fetch update in background (Stale-While-Revalidate)
                 fetch(event.request)
                     .then(networkResponse => {
                         if (networkResponse && networkResponse.status === 200) {

@@ -68,7 +68,7 @@
     <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)"/>
     <meta
             http-equiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
+            content="default-src 'self'; script-src 'self' 'inline-speculation-rules' 'sha256-edUy1rM6LV7T6cuSITb/AlpgXRZy61VLAZReN/zpOiA='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://api.github.com; frame-src 'self';"
     />
     <meta name="google-site-verification" content="_zlVG6Lp7OOtmIKBssi-3lNJCLBvdo3qsZqCPmae1dQ"/>
 
@@ -107,11 +107,43 @@
     <meta name="twitter:image" content="https://adamnordling.github.io/assets/og-image.png"/>
 
     <!-- Preload Critical Rendering Path Assets -->
-    <link rel="preload" href="./assets/profile-picture-resized.webp" as="image" type="image/webp"/>
+    <!-- Preload the Desktop Hero Portrait with high priority -->
+    <!-- Responsive Preload (Desktop gets 600, Mobile gets 300) -->
+    <link
+            rel="preload"
+            href="./assets/profile-600.webp"
+            as="image"
+            type="image/webp"
+            media="(min-width: 769px)"
+            fetchpriority="high"
+    />
+    <link
+            rel="preload"
+            href="./assets/profile-300.webp"
+            as="image"
+            type="image/webp"
+            media="(max-width: 768px)"
+            fetchpriority="high"
+    />
     <link rel="manifest" href="./manifest.webmanifest"/>
     <link rel="stylesheet" href="./src/styles/main.css"/>
+    <link rel="preconnect" href="https://api.github.com" crossorigin/>
+    <link rel="dns-prefetch" href="https://api.github.com"/>
+    <script type="speculationrules">
+        {
+          "prefetch": [
+            {
+              "source": "list",
+              "urls": ["./assets/resume.pdf"]
+            }
+          ]
+        }
+    </script>
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg"/>
+    <link rel="alternate" hreflang="en" href="https://adamnordling.github.io/"/>
+    <link rel="alternate" hreflang="sv" href="https://adamnordling.github.io/"/>
+    <link rel="alternate" hreflang="x-default" href="https://adamnordling.github.io/"/>
 </head>
 <body class="light-theme">
 <!-- Interactive Dot Matrix Background -->
@@ -243,15 +275,24 @@
             <header class="profile-header">
                 <div class="profile-card-container">
                     <div class="profile-card-inner">
-                        <img
-                                src="./assets/profile-picture-resized.webp"
-                                alt="Adam Nordling Profile Portrait"
-                                class="profile-img"
-                                width="293"
-                                height="255"
-                                fetchpriority="high"
-                                draggable="false"
-                        />
+                        <picture>
+                            <!-- 1. Mobile & Small Tablets: Force 300px file -->
+                            <source media="(max-width: 768px)" srcset="./assets/profile-300.webp" type="image/webp"/>
+
+                            <!-- 2. Desktop & Laptops: Force 600px crisp file -->
+                            <source media="(min-width: 769px)" srcset="./assets/profile-600.webp" type="image/webp"/>
+
+                            <!-- 3. Baseline Fallback: 600px -->
+                            <img
+                                    src="./assets/profile-600.webp"
+                                    alt="Adam Nordling Profile Portrait"
+                                    class="profile-img"
+                                    width="293"
+                                    height="255"
+                                    fetchpriority="high"
+                                    draggable="false"
+                            />
+                        </picture>
                         <div class="spotlight" aria-hidden="true"></div>
                     </div>
                 </div>
@@ -892,14 +933,24 @@
                                     style="display: block; line-height: 0"
                                     title="Open Nutrition live app"
                             >
-                                <img
-                                        src="./assets/nutrition-image.webp"
-                                        alt="Open Nutrition interface preview"
-                                        width="400"
-                                        height="160"
-                                        loading="lazy"
-                                        decoding="async"
-                                />
+                                <picture>
+                                    <!-- Mobile: Force 400px -->
+                                    <source media="(max-width: 768px)" srcset="./assets/nutrition-400.webp"
+                                            type="image/webp"/>
+
+                                    <!-- Desktop: Force 800px -->
+                                    <source media="(min-width: 769px)" srcset="./assets/nutrition-800.webp"
+                                            type="image/webp"/>
+
+                                    <img
+                                            src="./assets/nutrition-800.webp"
+                                            alt="Open Nutrition interface preview"
+                                            width="400"
+                                            height="160"
+                                            loading="lazy"
+                                            decoding="async"
+                                    />
+                                </picture>
                             </a>
                         </div>
                         <div class="app-content">

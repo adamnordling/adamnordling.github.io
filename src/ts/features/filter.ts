@@ -39,10 +39,21 @@ export function initProjectFilter(): void {
                 }
 
                 const filterValue = button.getAttribute('data-filter') ?? 'all';
-                cards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-                    card.style.display = filterValue === 'all' || cardCategory === filterValue ? 'flex' : 'none';
-                });
+
+                const updateCardVisibility = (): void => {
+                    cards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        card.style.display = filterValue === 'all' || cardCategory === filterValue ? 'flex' : 'none';
+                    });
+                };
+
+                if ('startViewTransition' in document) {
+                    document.startViewTransition(() => {
+                        updateCardVisibility();
+                    });
+                } else {
+                    updateCardVisibility();
+                }
 
                 filterDropdown?.classList.add('menu-closed');
             });

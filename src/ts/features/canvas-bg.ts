@@ -3,6 +3,7 @@ import { qs, on } from '../utils/dom';
 export function initCanvasBackground(): void {
     const canvas = qs('#bg-canvas') as HTMLCanvasElement | null;
     const portfolioWrapper = qs('.portfolio-wrapper');
+    const contentContainer = qs('.main-container');
     if (!canvas || !portfolioWrapper) return;
 
     const ctx = canvas.getContext('2d');
@@ -25,10 +26,11 @@ export function initCanvasBackground(): void {
     const FADE_MARGIN = 100;
 
     function updateBounds(): void {
-        if (!canvas || !portfolioWrapper) return;
+        if (!canvas || !contentContainer) return;
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
-        const rect = portfolioWrapper.getBoundingClientRect();
+
+        const rect = contentContainer.getBoundingClientRect();
         wrapperLeft = rect.left;
         wrapperRight = rect.right;
         draw();
