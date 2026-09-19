@@ -103,16 +103,17 @@
     }
 
     /* Anchors social icons cleanly above the name */
-    .header-socials {
+    .profile-links {
         display: flex;
         align-items: center;
         gap: 16px;
-        margin-bottom: 12px;
         min-height: 24px;
+        margin-top: auto;
+        margin-bottom: 4px;
     }
 
-    .header-socials a,
-    .header-socials button {
+    .profile-links a,
+    .profile-links button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -123,7 +124,7 @@
     }
 
     /* Guarantees SVGs render with explicit geometry & color on Cloudflare */
-    .header-socials svg {
+    .profile-links svg {
         width: 20px !important;
         height: 20px !important;
         min-width: 20px !important;
@@ -136,30 +137,30 @@
         stroke-linejoin: round;
     }
 
-    .header-socials a:hover svg,
-    .header-socials button:hover svg {
+    .profile-links a:hover svg,
+    .profile-links button:hover svg {
         stroke: var(--text-primary) !important;
     }
 
-    .header-socials a:hover,
-    .header-socials button:hover {
+    .profile-links a:hover,
+    .profile-links button:hover {
         color: var(--text-primary);
         transform: scale(1.3);
     }
 
-    .header-socials:hover svg {
+    .profile-links:hover svg {
         animation-play-state: paused !important;
     }
 
-    .header-socials .social-btn-1 svg {
+    .profile-links .contact-btn-1 svg {
         animation: wave-button-1 15s ease-in-out infinite;
     }
 
-    .header-socials .social-btn-2 svg {
+    .profile-links .contact-btn-2 svg {
         animation: wave-button-2 15s ease-in-out infinite;
     }
 
-    .header-socials .social-btn-3 svg {
+    .profile-links .contact-btn-3 svg {
         animation: wave-button-3 15s ease-in-out infinite;
     }
 

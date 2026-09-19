@@ -199,7 +199,7 @@
         align-items: center;
     }
 
-    .email-wrapper button.social-btn-3 {
+    .email-wrapper button.contact-btn-3 {
         background: transparent;
         border: none;
         cursor: pointer;
@@ -213,7 +213,7 @@
             color 200ms ease;
     }
 
-    .email-wrapper button.social-btn-3:hover {
+    .email-wrapper button.contact-btn-3:hover {
         color: var(--text-primary);
         transform: scale(1.3);
     }

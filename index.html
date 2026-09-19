@@ -81,8 +81,6 @@
     <meta name="author" content="Adam Nordling"/>
     <meta name="robots" content="index, follow"/>
     <link rel="canonical" href="https://adamnordling.github.io/"/>
-
-    <!-- Universal Social Preview (LinkedIn, Discord, WhatsApp, Facebook) -->
     <meta property="og:site_name" content="Adam Nordling"/>
     <meta property="og:title" content="Adam Nordling | Portfolio"/>
     <meta
@@ -107,23 +105,16 @@
     <meta name="twitter:image" content="https://adamnordling.github.io/assets/og-image.png"/>
 
     <!-- Preload Critical Rendering Path Assets -->
+    <!-- Responsive Preload: Downloads ONLY 300 on mobile, and ONLY 600 on desktop -->
     <link
             rel="preload"
+            as="image"
+            type="image/webp"
             href="./assets/profile-600.webp"
-            as="image"
-            type="image/webp"
-            media="(min-width: 769px)"
+            imagesrcset="./assets/profile-300.webp 300w, ./assets/profile-600.webp 600w"
+            imagesizes="(max-width: 768px) 170px, 293px"
             fetchpriority="high"
-            crossorigin
-    />
-    <link
-            rel="preload"
-            href="./assets/profile-300.webp"
-            as="image"
-            type="image/webp"
-            media="(max-width: 768px)"
-            fetchpriority="high"
-            crossorigin
+            crossorigin="anonymous"
     />
     <link rel="manifest" href="./manifest.webmanifest"/>
     <link rel="stylesheet" href="./src/styles/main.css"/>
@@ -266,13 +257,8 @@
                 <div class="profile-card-container">
                     <div class="profile-card-inner">
                         <picture>
-                            <!-- 1. Mobile & Small Tablets: Force 300px file -->
                             <source media="(max-width: 768px)" srcset="./assets/profile-300.webp" type="image/webp"/>
-
-                            <!-- 2. Desktop & Laptops: Force 600px crisp file -->
                             <source media="(min-width: 769px)" srcset="./assets/profile-600.webp" type="image/webp"/>
-
-                            <!-- 3. Baseline Fallback: 600px -->
                             <img
                                     src="./assets/profile-600.webp"
                                     alt="Adam Nordling Profile Portrait"
@@ -280,6 +266,7 @@
                                     width="293"
                                     height="255"
                                     fetchpriority="high"
+                                    crossorigin="anonymous"
                                     draggable="false"
                             />
                         </picture>
@@ -288,13 +275,13 @@
                 </div>
 
                 <div class="profile-info">
-                    <div class="header-socials">
+                    <div class="profile-links">
                         <a
                                 href="https://github.com/adamnordling"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="GitHub Profile"
-                                class="social-btn-1"
+                                class="contact-btn-1"
                         >
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +305,7 @@
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label="LinkedIn Profile"
-                                class="social-btn-2"
+                                class="contact-btn-2"
                         >
                             <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -341,7 +328,7 @@
                         <div class="email-wrapper">
                             <button
                                     type="button"
-                                    class="social-btn-3"
+                                    class="contact-btn-3"
                                     id="email-copy-btn"
                                     data-obf="YWRhbW5vcmRsaW5nQGxpdmUuc2U="
                                     aria-label="Copy email address to clipboard"
