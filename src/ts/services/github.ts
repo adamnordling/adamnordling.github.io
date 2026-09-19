@@ -14,10 +14,19 @@ interface CommitItem {
     sha?: string;
 }
 
+interface PushEventPayload {
+    type: string;
+    created_at: string;
+    repo: { name: string };
+    payload?: {
+        commits?: Array<{ message: string; sha: string }>;
+    };
+}
+
 const GITHUB_USERNAME = 'adamnordling';
 const CACHE_KEY = `gh_commits_${GITHUB_USERNAME}`;
 const CACHE_TIME_KEY = `gh_commits_time_${GITHUB_USERNAME}`;
-const TTL_MS = 60 * 1000;
+const TTL_MS = 60 * 1000; // 1 minute cache freshness
 
 function timeAgo(dateString: string): string {
     const seconds = Math.floor((Date.now() - new Date(dateString).getTime()) / 1000);
@@ -90,56 +99,34 @@ function renderCommits(items: CommitItem[]): void {
 
 export async function loadGitHubActivity(): Promise<void> {
     const activityFeed = qs('#activity-feed');
-    const cached = sessionStorage.getItem(CACHE_KEY);
-    const cachedTime = sessionStorage.getItem(CACHE_TIME_KEY);
+    const cached = localStorage.getItem(CACHE_KEY);
+    const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
-    if (cached && cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
+    // 1. INSTANT HYDRATION: If cached data exists in localStorage, render it immediately (0ms paint)
+    let hasRenderedCache = false;
+    if (cached) {
         try {
-            renderCommits(JSON.parse(cached) as CommitItem[]);
-            return;
-        } catch {
-            sessionStorage.removeItem(CACHE_KEY);
-            sessionStorage.removeItem(CACHE_TIME_KEY);
-        }
-    }
+            const parsed = JSON.parse(cached) as CommitItem[];
+            renderCommits(parsed);
+            hasRenderedCache = true;
 
-    // 1. Primary: Search API
-    try {
-        const res = await fetch(
-            `https://api.github.com/search/commits?q=author:${encodeURIComponent(GITHUB_USERNAME)}&sort=author-date&order=desc&per_page=5`,
-            { headers: { Accept: 'application/vnd.github+json' } }
-        );
-
-        if (res.ok) {
-            const data = (await res.json()) as { items?: CommitItem[] };
-            const commits = data.items ?? [];
-            if (commits.length > 0) {
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify(commits));
-                sessionStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
-                renderCommits(commits);
+            // If the cache is still fresh (< 1 minute), exit early without making a network request
+            if (cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
                 return;
             }
+        } catch {
+            localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem(CACHE_TIME_KEY);
         }
-    } catch {
-        // Fallback to events endpoint
     }
 
-    // 2. Fallback: Events API
+    // 2. PRIMARY: Public Events API (~12 KB payload vs Search API's 115 KB)
     try {
         const eventsRes = await fetch(
-            `https://api.github.com/users/${encodeURIComponent(GITHUB_USERNAME)}/events/public?per_page=30`
+            `https://api.github.com/users/${encodeURIComponent(GITHUB_USERNAME)}/events/public?per_page=10`
         );
 
         if (eventsRes.ok) {
-            interface PushEventPayload {
-                type: string;
-                created_at: string;
-                repo: { name: string };
-                payload?: {
-                    commits?: Array<{ message: string; sha: string }>;
-                };
-            }
-
             const eventsData = (await eventsRes.json()) as PushEventPayload[];
             const pushEvents: CommitItem[] = eventsData
                 .filter(e => e.type === 'PushEvent' && (e.payload?.commits?.length ?? 0) > 0)
@@ -159,9 +146,30 @@ export async function loadGitHubActivity(): Promise<void> {
                 .slice(0, 5);
 
             if (pushEvents.length > 0) {
-                sessionStorage.setItem(CACHE_KEY, JSON.stringify(pushEvents));
-                sessionStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+                localStorage.setItem(CACHE_KEY, JSON.stringify(pushEvents));
+                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
                 renderCommits(pushEvents);
+                return;
+            }
+        }
+    } catch {
+        // Events API failed; fall back to secondary
+    }
+
+    // 3. FALLBACK: Search API (if Events API had no recent push events)
+    try {
+        const res = await fetch(
+            `https://api.github.com/search/commits?q=author:${encodeURIComponent(GITHUB_USERNAME)}&sort=author-date&order=desc&per_page=5`,
+            { headers: { Accept: 'application/vnd.github+json' } }
+        );
+
+        if (res.ok) {
+            const data = (await res.json()) as { items?: CommitItem[] };
+            const commits = data.items ?? [];
+            if (commits.length > 0) {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(commits));
+                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+                renderCommits(commits);
                 return;
             }
         }
@@ -169,16 +177,8 @@ export async function loadGitHubActivity(): Promise<void> {
         // Both network requests failed
     }
 
-    if (cached) {
-        try {
-            renderCommits(JSON.parse(cached) as CommitItem[]);
-            return;
-        } catch {
-            // Ignore parse errors
-        }
-    }
-
-    if (activityFeed) {
+    // 4. If both failed and we haven't rendered any cache, show graceful notice
+    if (!hasRenderedCache && activityFeed) {
         activityFeed.innerHTML = `
             <div class="activity-skeleton">
                 <span lang="en">GitHub activity temporarily unavailable.</span>

@@ -107,8 +107,6 @@
     <meta name="twitter:image" content="https://adamnordling.github.io/assets/og-image.png"/>
 
     <!-- Preload Critical Rendering Path Assets -->
-    <!-- Preload the Desktop Hero Portrait with high priority -->
-    <!-- Responsive Preload (Desktop gets 600, Mobile gets 300) -->
     <link
             rel="preload"
             href="./assets/profile-600.webp"
@@ -116,6 +114,7 @@
             type="image/webp"
             media="(min-width: 769px)"
             fetchpriority="high"
+            crossorigin
     />
     <link
             rel="preload"
@@ -124,6 +123,7 @@
             type="image/webp"
             media="(max-width: 768px)"
             fetchpriority="high"
+            crossorigin
     />
     <link rel="manifest" href="./manifest.webmanifest"/>
     <link rel="stylesheet" href="./src/styles/main.css"/>
