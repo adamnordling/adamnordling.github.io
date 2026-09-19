@@ -20,6 +20,7 @@ interface PushEventPayload {
     repo: { name: string };
     payload?: {
         commits?: Array<{ message: string; sha: string }>;
+        action?: string;
     };
 }
 
@@ -102,7 +103,6 @@ export async function loadGitHubActivity(): Promise<void> {
     const cached = localStorage.getItem(CACHE_KEY);
     const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
-    // 1. INSTANT HYDRATION: If cached data exists in localStorage, render it immediately (0ms paint)
     let hasRenderedCache = false;
     if (cached) {
         try {
@@ -110,9 +110,8 @@ export async function loadGitHubActivity(): Promise<void> {
             renderCommits(parsed);
             hasRenderedCache = true;
 
-            // If the cache is still fresh (< 1 minute), exit early without making a network request
             if (cachedTime && Date.now() - Number(cachedTime) < TTL_MS) {
-                return;
+                return; // Fresh cache, skip network completely
             }
         } catch {
             localStorage.removeItem(CACHE_KEY);
@@ -120,7 +119,7 @@ export async function loadGitHubActivity(): Promise<void> {
         }
     }
 
-    // 2. PRIMARY: Public Events API (~12 KB payload vs Search API's 115 KB)
+    // ONLY use the lightning-fast Public Events API (~12 KB payload)
     try {
         const eventsRes = await fetch(
             `https://api.github.com/users/${encodeURIComponent(GITHUB_USERNAME)}/events/public?per_page=10`
@@ -153,31 +152,10 @@ export async function loadGitHubActivity(): Promise<void> {
             }
         }
     } catch {
-        // Events API failed; fall back to secondary
+        // Network error handled below gracefully
     }
 
-    // 3. FALLBACK: Search API (if Events API had no recent push events)
-    try {
-        const res = await fetch(
-            `https://api.github.com/search/commits?q=author:${encodeURIComponent(GITHUB_USERNAME)}&sort=author-date&order=desc&per_page=5`,
-            { headers: { Accept: 'application/vnd.github+json' } }
-        );
-
-        if (res.ok) {
-            const data = (await res.json()) as { items?: CommitItem[] };
-            const commits = data.items ?? [];
-            if (commits.length > 0) {
-                localStorage.setItem(CACHE_KEY, JSON.stringify(commits));
-                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
-                renderCommits(commits);
-                return;
-            }
-        }
-    } catch {
-        // Both network requests failed
-    }
-
-    // 4. If both failed and we haven't rendered any cache, show graceful notice
+    // If API failed or returned no push events and we have no cache, display graceful fallback
     if (!hasRenderedCache && activityFeed) {
         activityFeed.innerHTML = `
             <div class="activity-skeleton">

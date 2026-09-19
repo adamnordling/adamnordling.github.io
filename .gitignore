@@ -2,6 +2,9 @@
 # GLOBAL
 ###############################################################################
 
+pack-project.sh
+project-bundle.txt
+
 # Logs
 *.log
 logs/
