@@ -162,4 +162,78 @@
         height: 100%;
         border: none;
     }
+
+    /* ==========================================================================
+       CV MODAL MOBILE FALLBACK
+       ========================================================================== */
+    .cv-mobile-fallback {
+        display: none; /* Dold som standard på desktop */
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 24px;
+        text-align: center;
+        background: var(--card-bg);
+    }
+
+    .cv-fallback-icon {
+        color: var(--accent);
+        margin-bottom: 16px;
+        background: rgba(59, 130, 246, 0.08);
+        padding: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cv-mobile-fallback h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 8px;
+    }
+
+    .cv-mobile-fallback p {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        max-width: 320px;
+        line-height: 1.5;
+        margin-bottom: 24px;
+    }
+
+    .cv-fallback-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .cv-fallback-btn {
+        padding: 12px 18px !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* PÅ MOBIL / SURFPLATTA (<= 768px): Dölj den blockerade iframen helt */
+    @media (max-width: 768px) {
+        .cv-modal-body iframe {
+            display: none !important;
+        }
+
+        .cv-mobile-fallback {
+            display: flex !important;
+        }
+
+        .cv-modal-window {
+            height: auto !important;
+            max-height: 85vh;
+        }
+
+        .cv-modal-actions a {
+            display: none;
+        }
+    }
 }

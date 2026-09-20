@@ -129,11 +129,16 @@ compiled with Vite".
 
 strict typescript, vanilla ES modules, CSS layers, VITE
 
-tryck musknappar, få en cursor med keypads - portfolio
+mobile: Show a footer in the end, a scrolling with all the information we subsided from the media queries it should
+scroll until you click something, then the click shows what it does - remove showable tills 1200px
 
-bugs: scorlling inside QTY scrolls the website too
+nya buttons på github repo och in development? svarta buttons fult
 
-move insights and warning signs to top right
+panel divider missing on mobile dock diviver
+
+kolla om appen startas i svenksa elle renegleska
+
+bugs: scorlling inside QTY scrolls the website too move insights and warning signs to top right
 
 npm install npm run format npm run lint:js npm run validate
 

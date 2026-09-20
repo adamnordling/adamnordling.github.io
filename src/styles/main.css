@@ -318,12 +318,6 @@
     }
 }
 
-@media (max-width: 600px) {
-    .cv-modal-title {
-        display: none;
-    }
-}
-
 /* ==========================================================================
    9. ROTERAD MOBIL FIX (t.ex. iPhone 16 på 852x393 px / 956x440 px)
    Centrerad profil, skalad bild och 2 kolumner för projekten

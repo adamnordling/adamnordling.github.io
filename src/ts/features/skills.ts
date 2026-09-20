@@ -251,4 +251,45 @@ function initSkillsSystem(): void {
             closeAllEducation();
         }
     });
+
+    // ==========================================================================
+    // MOBIL AUTO-COLLAPSE NÄR MAN SKROLLAR FÖRBI
+    // ==========================================================================
+    const skillsSection = qs('.section-skills');
+    const eduSection = qs('.section-edu');
+
+    // 1. Stäng pratbubblan omedelbart så fort användaren drar med fingret på skärmen
+    window.addEventListener(
+        'scroll',
+        () => {
+            if (window.innerWidth <= 1150) {
+                closeAllBubbles();
+            }
+        },
+        { passive: true }
+    );
+
+    // 2. När man skrollar helt förbi sektionen på mobil/tablet -> fäll ihop lådorna automatiskt
+    if (typeof IntersectionObserver !== 'undefined') {
+        const autoCollapseObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    // När sektionen lämnar skärmen på mobil/tablet
+                    if (!entry.isIntersecting && window.innerWidth <= 1150) {
+                        if (entry.target.classList.contains('section-skills')) {
+                            collapseAllSkills();
+                        } else if (entry.target.classList.contains('section-edu')) {
+                            closeAllEducation();
+                        }
+                    }
+                });
+            },
+            {
+                threshold: 0.01 // Triggas när mindre än 10% av sektionen syns på skärmen
+            }
+        );
+
+        if (skillsSection) autoCollapseObserver.observe(skillsSection);
+        if (eduSection) autoCollapseObserver.observe(eduSection);
+    }
 }
