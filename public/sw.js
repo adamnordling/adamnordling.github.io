@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portfolio-cache-v4'; // 👈 Bumped to v4 to clear old cache
+const CACHE_NAME = 'portfolio-cache-v5'; // 👈 Bumpad till v5 för att aktivera direkt
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -39,16 +39,34 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
-    if (event.request.url.includes('api.github.com')) return;
+
+    // 1. GYLLENE REGEL: Fånga BARA upp anrop till din egen domän (same-origin)
+    // Låt Cloudflare Insights, GitHub API och tillägg skötas direkt av webbläsaren!
+    if (!event.request.url.startsWith(self.location.origin)) {
+        return;
+    }
+
+    const url = new URL(event.request.url);
+
+    // 2. Ignorera eventuella lokala utvecklingsfiler
+    if (
+        url.pathname.startsWith('/@') ||
+        url.pathname.includes('/src/') ||
+        url.searchParams.has('t')
+    ) {
+        return;
+    }
 
     event.respondWith(
         caches.match(event.request).then(cachedResponse => {
             if (cachedResponse) {
+                // Hämta färsk version i bakgrunden (stale-while-revalidate)
                 fetch(event.request)
                     .then(networkResponse => {
                         if (networkResponse && networkResponse.status === 200) {
                             caches.open(CACHE_NAME).then(cache => {
-                                cache.put(event.request, networkResponse);
+                                cache.put(event.request, networkResponse).catch(() => {
+                                });
                             });
                         }
                     })
@@ -58,16 +76,21 @@ self.addEventListener('fetch', event => {
                 return cachedResponse;
             }
 
-            return fetch(event.request).then(networkResponse => {
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+            return fetch(event.request)
+                .then(networkResponse => {
+                    if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+                        return networkResponse;
+                    }
+                    const responseToCache = networkResponse.clone();
+                    caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, responseToCache).catch(() => {
+                        });
+                    });
                     return networkResponse;
-                }
-                const responseToCache = networkResponse.clone();
-                caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, responseToCache);
+                })
+                .catch(() => {
+                    return caches.match('./index.html');
                 });
-                return networkResponse;
-            });
         })
     );
 });
