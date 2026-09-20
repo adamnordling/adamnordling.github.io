@@ -131,6 +131,92 @@
         contain-intrinsic-size: 0 400px;
     }
 
+    /* ==========================================================================
+       GITHUB TELEMETRY BAR (Ovanför commits)
+       ========================================================================== */
+    /* ==========================================================================
+           GITHUB TELEMETRY BAR (Ren telemetri - Inte klickbar)
+           ========================================================================== */
+    .activity-stats-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+        margin-bottom: 12px;
+    }
+
+    .stat-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border-radius: 6px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        font-family: var(--font-mono), monospace;
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        flex: 1;
+        justify-content: center;
+        /* Inte klickbara: vanlig pil, ingen pointer */
+        cursor: default;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Ingen klick/hover-effekt */
+    .stat-pill:hover {
+        border-color: var(--border-color);
+    }
+
+    .stat-num {
+        font-weight: 700;
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .stat-pill small {
+        font-size: 0.64rem;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .stat-pill.highlight-today {
+        border-color: rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.04);
+    }
+
+    .stat-pill.highlight-today .stat-num {
+        color: #10b981;
+    }
+
+    .stat-pulse-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #10b981;
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+    }
+
+    .stat-icon {
+        color: var(--text-muted);
+        flex-shrink: 0;
+    }
+
+    /* SVG Commit Icon istället för emoji */
+    .activity-item .activity-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted);
+        margin-top: 3px;
+        transition: color 0.2s ease;
+    }
+
+    .activity-item:hover .activity-icon {
+        color: var(--accent);
+    }
+
     .activity-feed {
         display: flex;
         flex-direction: column;

@@ -95,21 +95,6 @@
         display: contents;
     }
 
-    .right-panel {
-        flex: none;
-        width: 100%;
-        max-height: none;
-        overflow-y: visible;
-        padding: 0;
-        order: 4;
-    }
-
-    .right-header {
-        position: static;
-        padding-top: 10px;
-        padding-bottom: 20px;
-    }
-
     .profile-header {
         order: 1;
     }
@@ -119,14 +104,33 @@
         order: 2;
     }
 
+    /* 1. Utbildning */
     .section-edu {
         order: 3;
     }
 
+    /* 2. Kompetenser (flyttad FÖRE projekten) */
     .section-skills {
-        order: 5;
+        order: 4;
     }
 
+    /* 3. Projekt */
+    .right-panel {
+        flex: none;
+        width: 100%;
+        max-height: none;
+        overflow-y: visible;
+        padding: 0;
+        order: 5; /* 👈 Ändrad från 4 till 5 */
+    }
+
+    .right-header {
+        position: static;
+        padding-top: 28px; /* Ger lite fin luft efter kompetenserna */
+        padding-bottom: 20px;
+    }
+
+    /* 4. Senaste aktivitet */
     .section-activity {
         order: 6;
     }
