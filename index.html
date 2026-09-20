@@ -1551,6 +1551,8 @@
                     </div>
                 </div>
             </section>
+
+
         </section>
 
         <div class="panel-divider" aria-hidden="true"></div>
@@ -2059,10 +2061,94 @@
                 </div>
             </div>
         </section>
+
+
     </main>
 </div>
 
+<!-- ==========================================================================
+MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
+========================================================================== -->
+<footer class="mobile-telemetry-dock" aria-label="Site architecture and live performance specifications">
+    <!-- 1. INSPECTOR CARD MOVED TO TOP (Expands upwards) -->
+    <div class="m-inspector-card hidden" id="m-inspector-card">
+        <div class="m-inspector-header">
+            <span class="m-inspector-title" id="m-inspector-title">TELEMETRY</span>
+            <button type="button" class="m-inspector-close" id="m-inspector-close"
+                    aria-label="Resume rolling">✕
+            </button>
+        </div>
+        <p class="m-inspector-desc" id="m-inspector-desc">Select a metric to inspect.</p>
+    </div>
 
+    <!-- Rullande band med fjädrade sidotoner -->
+    <div class="m-marquee-viewport" id="mobile-marquee-viewport">
+        <div class="m-marquee-track" id="mobile-marquee-track">
+            <!-- SET 1 -->
+            <div class="m-marquee-group">
+                <button type="button" class="m-pill" data-metric="lh">
+                    <span class="m-pill-dot green"></span>
+                    <span class="m-pill-label">LH: 4×100</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="lcp">
+                    <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    <span class="m-pill-label">LCP: <span class="telemetry-live-lcp">--</span></span>
+                </button>
+                <button type="button" class="m-pill" data-metric="cls">
+                    <span class="m-pill-label">CLS: <span class="telemetry-live-cls">0.000</span></span>
+                </button>
+                <button type="button" class="m-pill" data-metric="runtime">
+                    <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span class="m-pill-label">Vite 5 · ESNext</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="ts">
+                    <span class="m-pill-label">TS Strict</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="layer">
+                    <span class="m-pill-label">CSS @layer</span>
+                </button>
+            </div>
+
+            <!-- SET 2 (Dubblerad för oändlig sömlös CSS-rullning) -->
+            <div class="m-marquee-group" aria-hidden="true">
+                <button type="button" class="m-pill" data-metric="lh" tabindex="-1">
+                    <span class="m-pill-dot green"></span>
+                    <span class="m-pill-label">LH: 4×100</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="lcp" tabindex="-1">
+                    <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    <span class="m-pill-label">LCP: <span class="telemetry-live-lcp">--</span></span>
+                </button>
+                <button type="button" class="m-pill" data-metric="cls" tabindex="-1">
+                    <span class="m-pill-label">CLS: <span class="telemetry-live-cls">0.000</span></span>
+                </button>
+                <button type="button" class="m-pill" data-metric="runtime" tabindex="-1">
+                    <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <span class="m-pill-label">Vite 5 · ESNext</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="ts" tabindex="-1">
+                    <span class="m-pill-label">TS Strict</span>
+                </button>
+                <button type="button" class="m-pill" data-metric="layer" tabindex="-1">
+                    <span class="m-pill-label">CSS @layer</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</footer>
 <!-- ==========================================================================
      UNIFIED COCKPIT DOCK / MOBILE HEADER
      ========================================================================== -->

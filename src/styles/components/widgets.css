@@ -735,6 +735,230 @@
     }
 
     /* ==========================================================================
+       MOBILE TELEMETRY MARQUEE FOOTER (Längst ner på sidan på mobil/tablet)
+       ========================================================================== */
+    .mobile-telemetry-dock {
+        display: none; /* Dold som standard på PC */
+    }
+
+    @media (max-width: 1150px), (max-height: 500px) and (orientation: landscape) {
+        /* 1. TOP-HEADER: Icke-följsam (stannar i toppen, följer inte med vid skroll) */
+        .status-dock {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: auto !important;
+            width: 100% !important;
+            left: 0 !important;
+        }
+
+        /* 1. Sits naturally at the absolute bottom of the document */
+        .mobile-telemetry-dock {
+            display: flex;
+            flex-direction: column;
+            position: relative; /* Normal document flow */
+            width: 100%;
+            margin: 0;
+            padding: 8px 12px 14px 12px; /* Slim, matching the top dock */
+            background: var(--card-bg);
+            border: none;
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15); /* Shadow points up */
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        /* 2. Absolute positioning makes it pop UP into the gap space */
+        .m-inspector-card {
+            position: absolute;
+            bottom: calc(100% + 12px); /* Pops up exactly above the footer */
+            left: 12px;
+            right: 12px;
+            padding: 10px 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Drop shadow for depth */
+            animation: fadeInCard 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(8px);
+            z-index: 101;
+        }
+
+        /* 3. Removed the :hover pause bug for mobile touch screens */
+        /* Pausa när användaren håller fingret eller när ett kort inspekteras */
+        .m-marquee-track.is-paused,
+        .m-marquee-track:hover {
+            animation-play-state: paused !important;
+        }
+
+        .m-dock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            font-family: var(--font-mono), monospace;
+        }
+
+        .m-dock-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+        }
+
+        .m-dock-edge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #10b981;
+            letter-spacing: 0.05em;
+        }
+
+        /* Utsnitt med mjuk toning i kanterna */
+        .m-marquee-viewport {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            padding: 4px 0;
+        }
+
+        .m-marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee-roll 22s linear infinite;
+        }
+
+        /* Pausa när användaren håller fingret eller när ett kort inspekteras */
+        .m-marquee-track.is-paused,
+        .m-marquee-track:hover {
+            animation-play-state: paused !important;
+        }
+
+        .m-marquee-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-right: 8px;
+        }
+
+        .m-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 30px;
+            padding: 0 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: var(--font-mono), monospace;
+            font-size: 0.74rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.light-theme .m-pill {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .m-pill.is-active {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--text-primary);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+        }
+
+        .m-pill-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .m-pill-dot.green {
+            background: #10b981;
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+        }
+
+        .m-pill-icon {
+            color: var(--accent);
+        }
+
+        /* 3. INSPEKTIONS-KORTET (Fälls fram under rullen vid klick) */
+        .m-inspector-card {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 8px;
+            animation: fadeInCard 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .m-inspector-card.hidden {
+            display: none;
+        }
+
+        .m-inspector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .m-inspector-title {
+            font-family: var(--font-mono), monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .m-inspector-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        .m-inspector-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        @keyframes marquee-roll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes fadeInCard {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    /* ==========================================================================
        4. STRICT RESPONSIVE HIERARCHY
        ========================================================================== */
     /* Tier 1 (<= 1600px): Drop secondary architectural tags */
@@ -745,24 +969,14 @@
         }
     }
 
-    /* Tier 2 (<= 1350px): Drop 0 KB runtime and copyright */
-    @media (max-width: 1350px) {
-        .pill-runtime,
-        .dock-copyright {
-            display: none;
-        }
-    }
-
     /* Tier 3 (<= 1100px Tablet): Hide hotkeys & telemetry */
     @media (max-width: 1150px) {
         .dock-hotkeys {
             display: none;
         }
-    }
 
-    @media (max-width: 975px) {
-        .dock-center .dock-lh-group {
-            display: none;
+        .dock-center {
+            display: none !important;
         }
     }
 
@@ -788,6 +1002,10 @@
             z-index: 100;
         }
 
+        .dock-center {
+            display: none !important;
+        }
+
         .dock-mobile-lang .lang-trigger {
             width: 36px;
             height: 30px;
@@ -808,12 +1026,6 @@
             font-family: var(--font-mono), monospace;
             font-weight: 700;
             font-size: 0.72rem;
-        }
-    }
-
-    @media (max-width: 575px) {
-        .dock-center {
-            display: none !important;
         }
     }
 
@@ -926,12 +1138,6 @@
 
         .portfolio-wrapper {
             padding-top: 60px !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .clock-details {
-            display: none;
         }
     }
 }

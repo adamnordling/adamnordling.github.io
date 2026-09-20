@@ -38,7 +38,7 @@ export function initPerformanceMonitoring(): void {
     if (typeof PerformanceObserver === 'undefined') return;
 
     try {
-        // 1. Observe Largest Contentful Paint (LCP) and update the dock in real time
+        // 1. Observe Largest Contentful Paint (LCP)
         const lcpObserver = new PerformanceObserver(entryList => {
             const entries = entryList.getEntries();
             if (entries.length > 0) {
@@ -46,22 +46,19 @@ export function initPerformanceMonitoring(): void {
                 const lcpMs = Math.round(lastEntry.startTime);
                 console.warn(`⚡ [Core Web Vitals] LCP: ${lcpMs.toString()}ms`);
 
-                const lcpEl = document.getElementById('telemetry-lcp');
-                if (lcpEl) {
-                    lcpEl.textContent = `${lcpMs.toString()}ms`;
-                }
+                // Updates BOTH the top dock and the mobile footer
+                document.querySelectorAll<HTMLElement>('#telemetry-lcp, .telemetry-live-lcp').forEach(el => {
+                    el.textContent = `${lcpMs.toString()}ms`;
+                });
             }
         });
         lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
-        // 2. Observe Cumulative Layout Shift (CLS) and update the dock in real time
+        // 2. Observe Cumulative Layout Shift (CLS)
         let clsScore = 0;
         const clsObserver = new PerformanceObserver(entryList => {
             const entries = entryList.getEntries() as Array<
-                PerformanceEntry & {
-                    value: number;
-                    hadRecentInput: boolean;
-                }
+                PerformanceEntry & { value: number; hadRecentInput: boolean }
             >;
             for (const entry of entries) {
                 if (!entry.hadRecentInput) {
@@ -70,13 +67,13 @@ export function initPerformanceMonitoring(): void {
             }
             console.warn(`⚡ [Core Web Vitals] CLS: ${clsScore.toFixed(3)}`);
 
-            const clsEl = document.getElementById('telemetry-cls');
-            if (clsEl) {
-                clsEl.textContent = clsScore.toFixed(3);
-            }
+            // Updates BOTH the top dock and the mobile footer
+            document.querySelectorAll<HTMLElement>('#telemetry-cls, .telemetry-live-cls').forEach(el => {
+                el.textContent = clsScore.toFixed(3);
+            });
         });
         clsObserver.observe({ type: 'layout-shift', buffered: true });
     } catch {
-        // Fallback gracefully on browsers without full observer support
+        // Fallback gracefully
     }
 }

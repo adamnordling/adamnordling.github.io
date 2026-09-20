@@ -12,6 +12,7 @@
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --check \"src/**/*.{ts,css,html}\"",
     "format:fix": "prettier --write \"src/**/*.{ts,css,html}\"",
+    "fix": "npm run lint:fix && npm run format:fix",
     "validate": "npm run typecheck && npm run lint && npm run format"
   },
   "prettier": {
