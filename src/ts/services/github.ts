@@ -225,7 +225,7 @@ export async function loadGitHubActivity(): Promise<void> {
         if (reposRes.status === 'fulfilled' && reposRes.value.ok) {
             const reposData = (await reposRes.value.json()) as GitHubRepoItem[];
 
-            // Hämta från de 3 senaste repona (t.ex. adamnordling.github.io och adamnordling)
+            // Hämta från de 3 senaste repona (t.ex. https://opennutrition.adamnordling.se och adamnordling)
             for (const repo of reposData.slice(0, 3)) {
                 try {
                     const commitsRes = await fetch(
