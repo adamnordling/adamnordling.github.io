@@ -14,12 +14,69 @@
 /* ==========================================================================
    RESPONSIVE BREAKPOINTS & PRINT (Overrides applied across layers)
    ========================================================================== */
-@media (max-width: 1150px) {
-    .live-clock,
-    .hotkeys-indicator {
-        display: none !important;
+/* ==========================================================================
+   LAPTOP BALANCED VIEWPORT (1151px to 1599px)
+   Maintains side flanks for dot matrix & prevents top controls overlap
+   ========================================================================== */
+/* ==========================================================================
+   LAPTOP BALANCED VIEWPORT (1151px to 1450px)
+   Maintains true desktop proportions & guarantees dot-matrix flanks
+   ========================================================================== */
+@media (min-width: 1151px) and (max-width: 1450px) {
+    /* 1. Guarantees 80px+ of open dot-matrix canvas on left and right */
+    .portfolio-wrapper {
+        width: calc(100vw - 160px) !important;
+        max-width: 1180px !important;
+        margin: 4vh auto !important;
+        padding: 0 16px !important;
+        height: calc(88vh - 44px) !important;
     }
 
+    /* 2. Natural gap matching the original desktop feel */
+    .main-container {
+        gap: 36px !important;
+    }
+
+    /* 3. Restore Left Panel dominance */
+    .left-panel {
+        flex: 0 0 43% !important;
+        padding-right: 20px !important;
+    }
+
+    .profile-card-container {
+        max-width: 250px !important;
+    }
+
+    .profile-img {
+        height: 220px !important;
+        aspect-ratio: auto !important;
+    }
+
+    .name-title {
+        font-size: 1.65rem !important;
+    }
+
+    /* 4. Keep Right Panel proportionate (stops projects from dominating) */
+    .right-panel {
+        flex: 0 0 57% !important;
+        padding-right: 8px !important;
+    }
+
+    .apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+        gap: 16px !important;
+    }
+
+    .app-img-container {
+        height: 145px !important;
+    }
+
+    .app-content {
+        padding: 16px 18px !important;
+    }
+}
+
+@media (max-width: 1150px) {
     .portfolio-wrapper {
         height: auto;
         min-height: 100vh;
@@ -72,20 +129,6 @@
 
     .section-activity {
         order: 6;
-    }
-
-    .footer-controls {
-        position: static;
-        margin-top: 48px;
-        padding-bottom: 24px;
-        align-items: center;
-        text-align: center;
-    }
-}
-
-@media (max-width: 900px) {
-    .hotkeys-indicator {
-        display: none;
     }
 }
 
@@ -265,9 +308,7 @@
 @media print {
     #bg-canvas,
     .top-controls,
-    .footer-controls,
-    .live-clock,
-    .hotkeys-indicator,
+    .status-dock,
     #projects-filter,
     .email-toast {
         display: none !important;

@@ -137,123 +137,6 @@
 <!-- Interactive Dot Matrix Background -->
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-<!-- KEYBOARD HOTKEYS WIDGET -->
-<aside class="hotkeys-indicator" aria-label="Keyboard shortcuts">
-            <span class="hotkeys-prefix">
-                <span lang="en">Hotkeys:</span>
-                <span lang="sv">Kortkommandon:</span>
-            </span>
-    <div class="hotkey-item">
-        <kbd>T</kbd>
-        <span lang="en">Theme</span>
-        <span lang="sv">Tema</span>
-    </div>
-    <div class="hotkey-item">
-        <kbd>L</kbd>
-        <span lang="en">Lang</span>
-        <span lang="sv">Språk</span>
-    </div>
-    <div class="hotkey-item">
-        <kbd>C</kbd>
-        <span>CV</span>
-    </div>
-    <div class="hotkey-item">
-        <kbd>F</kbd>
-        <span lang="en">Font</span>
-        <span lang="sv">Typsnitt</span>
-    </div>
-    <div class="hotkey-item">
-        <kbd>1–3</kbd>
-        <span lang="en">Open Repo</span>
-        <span lang="sv">Öppna repo</span>
-    </div>
-    <div class="hotkey-item">
-        <kbd>↑↓</kbd>
-        <span lang="en">Scroll</span>
-        <span lang="sv">Rulla</span>
-    </div>
-</aside>
-
-<!-- TOP CONTROLS: Theme Toggle + Language Menu -->
-<div class="top-controls">
-    <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
-        <svg
-                class="sun-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-        >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2"></path>
-            <path d="M12 20v2"></path>
-            <path d="m4.93 4.93 1.41 1.41"></path>
-            <path d="m17.66 17.66 1.41 1.41"></path>
-            <path d="M2 12h2"></path>
-            <path d="M22 12h2"></path>
-            <path d="m6.34 17.66-1.41 1.41"></path>
-            <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>
-        <svg
-                class="moon-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-        >
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-        </svg>
-    </button>
-
-    <div class="lang-dropdown">
-        <button class="lang-trigger" type="button" aria-label="Select Language">
-            <span class="lang-current-label">EN</span>
-            <svg
-                    class="chevron"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-            >
-                <path d="m6 9 6 6 6-6"/>
-            </svg>
-        </button>
-        <div class="lang-menu">
-            <button class="lang-btn active" data-lang="en" type="button">
-                <strong>English</strong>
-                <small>EN</small>
-            </button>
-            <button class="lang-btn" data-lang="sv" type="button">
-                <strong>Svenska</strong>
-                <small>SV</small>
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- CLOCK WIDGET -->
-<aside class="live-clock" aria-label="Current time and date">
-    <div class="clock-time" id="clock-time">00:00:00</div>
-    <div class="clock-details">
-                <span class="clock-week">
-                    <span lang="en">W</span><span lang="sv">V</span><span id="clock-week-num">--</span>
-                </span>
-        <span class="clock-divider">·</span>
-        <span class="clock-year" id="clock-year">----</span>
-    </div>
-</aside>
 
 <div class="portfolio-wrapper">
     <main class="main-container">
@@ -1225,18 +1108,188 @@
     </main>
 </div>
 
-<!-- FOOTER CONTROLS -->
-<footer class="footer-controls">
-    <div class="font-switcher" role="group" aria-label="Font configuration">
-        <button class="font-btn active" data-font="default" aria-label="Default System Font" type="button">
-            A
-        </button>
-        <button class="font-btn" data-font="serif" aria-label="Serif Font" type="button">A</button>
-        <button class="font-btn" data-font="monospace" aria-label="Monospace Font" type="button">A</button>
-    </div>
-    <p class="copyright">© <span id="footer-year">2026</span> Adam Nordling</p>
-</footer>
 
+<!-- ==========================================================================
+     UNIFIED COCKPIT DOCK / MOBILE HEADER
+     ========================================================================== -->
+<footer class="status-dock" role="contentinfo" aria-label="System status and site navigation">
+    <!-- LEFT GROUP: Fonts, Cloudflare Pulse, & Mobile Language Dropdown -->
+    <div class="dock-segment dock-left">
+
+        <div class="dock-system-status dock-desktop-only"
+             data-tooltip="Global Cloudflare Edge deployment active and nominal"
+             data-tooltip-align="start">
+            <span class="dock-pulse-dot"></span>
+            <span class="dock-status-label">CLOUDFLARE EDGE</span>
+        </div>
+
+        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
+        <!-- Font Switcher with Tooltips -->
+        <div class="font-switcher" role="group" aria-label="Font configuration">
+            <button class="font-btn active" data-font="default" data-tooltip="System Sans-Serif"
+                    aria-label="Default System Font" type="button">A
+            </button>
+            <button class="font-btn" data-font="serif" data-tooltip="Charter Serif" aria-label="Serif Font"
+                    type="button">A
+            </button>
+            <button class="font-btn" data-font="monospace" data-tooltip="Monospace Code" aria-label="Monospace Font"
+                    type="button">A
+            </button>
+        </div>
+
+
+        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
+
+        <!-- Desktop Cloudflare Edge -->
+
+
+        <span class="dock-copyright dock-desktop-only">© <span id="footer-year">2026</span> Adam Nordling</span>
+
+        <!-- Mobile Language Selector (Moves here on <= 750px) -->
+        <!-- Language Dropdown with "English" / "Svenska" -->
+        <div class="lang-dropdown dock-mobile-lang">
+            <button class="lang-trigger" type="button" aria-label="Select Language">
+        <span class="lang-trigger-text">
+            <span lang="en">English</span>
+            <span lang="sv">Svenska</span>
+        </span>
+                <span class="lang-current-label">EN</span>
+                <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+            <div class="lang-menu">
+                <button class="lang-btn active" data-lang="en" type="button">
+                    <strong>English</strong>
+                    <small>EN</small>
+                </button>
+                <button class="lang-btn" data-lang="sv" type="button">
+                    <strong>Svenska</strong>
+                    <small>SV</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTER GROUP: Lighthouse & Telemetry (Desktop only) -->
+    <div class="dock-segment dock-center" aria-label="Site architecture & performance telemetry">
+        <!-- Lighthouse 4x100 (Blue frame + Green 100 numbers) -->
+        <div class="dock-lh-group"
+             data-tooltip="Lighthouse CI Audit: Perfect 100 on Performance, Accessibility, Best Practices, and SEO">
+            <svg class="dock-svg-icon lh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+                <path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                <path d="M12 12l3-2"/>
+            </svg>
+            <span class="lh-title">LIGHTHOUSE</span>
+            <div class="lh-scores">
+                <span class="lh-item"><span class="lh-val">100</span><small>PERF</small></span>
+                <span class="lh-item"><span class="lh-val">100</span><small>A11Y</small></span>
+                <span class="lh-item"><span class="lh-val">100</span><small>BP</small></span>
+                <span class="lh-item"><span class="lh-val">100</span><small>SEO</small></span>
+            </div>
+        </div>
+
+        <!-- Live Vitals Pill -->
+        <div class="telemetry-pill live-vitals-pill"
+             data-tooltip="Live session Core Web Vitals measured via PerformanceObserver API">
+            <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            <span class="vitals-metric">LCP: <span id="telemetry-lcp" class="telemetry-live-val">--</span></span>
+            <span class="vitals-separator">·</span>
+            <span class="vitals-metric">CLS: <span id="telemetry-cls" class="telemetry-live-val">0.000</span></span>
+        </div>
+
+        <!-- 0 KB Runtime Pill -->
+        <div class="telemetry-pill pill-runtime"
+             data-tooltip="Pure Vanilla TypeScript with zero runtime client frameworks">
+            <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span class="pill-text">0 KB Runtime</span>
+        </div>
+
+        <!-- TS Strict Pill -->
+        <div class="telemetry-pill pill-ts"
+             data-tooltip="Strict typing enabled: noImplicitAny, strictNullChecks, noUnusedLocals">
+            <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span class="pill-text">TS Strict</span>
+        </div>
+
+        <!-- CSS Layer Pill -->
+        <div class="telemetry-pill pill-layer"
+             data-tooltip="Modular CSS cascade layers: reset, base, components, utilities">
+            <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span class="pill-text">CSS @layer</span>
+        </div>
+    </div>
+
+    <!-- RIGHT GROUP: Hotkeys, Mobile Theme Toggle, & Clock -->
+    <div class="dock-segment dock-right">
+        <!-- Desktop Hotkeys -->
+        <div class="dock-hotkeys dock-desktop-only" aria-label="Keyboard shortcuts">
+    <span class="hotkey-pill" data-tooltip="Press 'T' to toggle Light / Dark theme">
+        <kbd>T</kbd> <span lang="en">Theme</span><span lang="sv">Tema</span>
+    </span>
+            <span class="hotkey-pill" data-tooltip="Press 'L' to toggle English / Svenska">
+        <kbd>L</kbd> <span lang="en">Lang</span><span lang="sv">Språk</span>
+    </span>
+            <span class="hotkey-pill" data-tooltip="Press 'C' to open CV preview modal">
+        <kbd>C</kbd> <span>CV</span>
+    </span>
+            <span class="hotkey-pill" data-tooltip="Press 'F' to cycle System, Serif, Monospace fonts">
+        <kbd>F</kbd> <span lang="en">Font</span><span lang="sv">Typsnitt</span>
+    </span>
+            <span class="hotkey-pill" data-tooltip="Press keys 1, 2 or 3 to open project repositories"
+                  data-tooltip-align="end">
+        <kbd>1–3</kbd> <span lang="en">App</span><span lang="sv">App</span>
+    </span>
+        </div>
+
+        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
+
+        <!-- Theme Toggle (Embedded in Dock) -->
+        <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
+            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M22 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+            </svg>
+        </button>
+
+        <div class="dock-divider dock-mobile-only" aria-hidden="true"></div>
+
+        <!-- Live Clock -->
+        <div class="dock-clock" aria-label="Current time and ISO calendar week">
+            <span class="clock-time" id="clock-time">00:00:00</span>
+            <span class="clock-details">
+                <span class="clock-week">
+                    <span lang="en">W</span><span lang="sv">V</span><span id="clock-week-num">--</span>
+                </span>
+                <span class="clock-divider">·</span>
+                <span class="clock-year" id="clock-year">----</span>
+            </span>
+        </div>
+    </div>
+</footer>
 <!-- CV MODAL PREVIEW -->
 <div class="cv-modal-overlay" id="cv-modal" aria-hidden="true" role="dialog" aria-modal="true">
     <div class="cv-modal-window">

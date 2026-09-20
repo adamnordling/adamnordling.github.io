@@ -38,17 +38,23 @@ export function initPerformanceMonitoring(): void {
     if (typeof PerformanceObserver === 'undefined') return;
 
     try {
-        // 1. Observe Largest Contentful Paint (LCP)
+        // 1. Observe Largest Contentful Paint (LCP) and update the dock in real time
         const lcpObserver = new PerformanceObserver(entryList => {
             const entries = entryList.getEntries();
             if (entries.length > 0) {
                 const lastEntry = entries[entries.length - 1];
-                console.warn(`⚡ [Core Web Vitals] LCP: ${lastEntry.startTime.toFixed(1)}ms`);
+                const lcpMs = Math.round(lastEntry.startTime);
+                console.warn(`⚡ [Core Web Vitals] LCP: ${lcpMs.toString()}ms`);
+
+                const lcpEl = document.getElementById('telemetry-lcp');
+                if (lcpEl) {
+                    lcpEl.textContent = `${lcpMs.toString()}ms`;
+                }
             }
         });
         lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
-        // 2. Observe Cumulative Layout Shift (CLS)
+        // 2. Observe Cumulative Layout Shift (CLS) and update the dock in real time
         let clsScore = 0;
         const clsObserver = new PerformanceObserver(entryList => {
             const entries = entryList.getEntries() as Array<
@@ -63,9 +69,14 @@ export function initPerformanceMonitoring(): void {
                 }
             }
             console.warn(`⚡ [Core Web Vitals] CLS: ${clsScore.toFixed(3)}`);
+
+            const clsEl = document.getElementById('telemetry-cls');
+            if (clsEl) {
+                clsEl.textContent = clsScore.toFixed(3);
+            }
         });
         clsObserver.observe({ type: 'layout-shift', buffered: true });
     } catch {
-        // Ignore if browser doesn't support specific observer types
+        // Fallback gracefully on browsers without full observer support
     }
 }

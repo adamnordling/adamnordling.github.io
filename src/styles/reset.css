@@ -77,11 +77,8 @@
     .thesis-btn,
     .cv-action-wrapper,
     .theme-toggle,
-    .font-btn,
     .filter-trigger,
     .lang-trigger,
-    .hotkeys-indicator,
-    .live-clock,
     .app-status-badge,
     .profile-links,
     .activity-icon,
@@ -96,7 +93,7 @@
     .portfolio-wrapper {
         width: 100%;
         max-width: 1350px;
-        height: 90vh;
+        height: calc(88vh - 44px);
         margin: 5vh auto;
         padding: 0 40px;
     }
