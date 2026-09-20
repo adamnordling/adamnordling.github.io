@@ -2,13 +2,30 @@
     /* ==========================================================================
        CUSTOM STUDIO HUD TOOLTIPS (Replaces Native OS Tooltips)
        ========================================================================== */
-    [data-tooltip] {
+    /* ==========================================================================
+          BILINGUAL STUDIO HUD TOOLTIPS (Pure CSS EN / SV)
+          ========================================================================== */
+    [data-tooltip],
+    [data-tooltip-en] {
         position: relative;
     }
 
-    /* Tooltip Bubble */
+    /* Standard / Engelska */
     [data-tooltip]::before {
         content: attr(data-tooltip);
+    }
+
+    [data-tooltip-en]::before {
+        content: attr(data-tooltip-en);
+    }
+
+    /* Svenska: Slår automatiskt över när html har lang="sv" */
+    html[lang='sv'] [data-tooltip-sv]::before {
+        content: attr(data-tooltip-sv);
+    }
+
+    [data-tooltip]::before,
+    [data-tooltip-en]::before {
         position: absolute;
         bottom: calc(100% + 8px);
         left: 50%;
@@ -35,8 +52,9 @@
         z-index: 200;
     }
 
-    /* Little Arrow Caret */
-    [data-tooltip]::after {
+    /* Pil / Caret */
+    [data-tooltip]::after,
+    [data-tooltip-en]::after {
         content: '';
         position: absolute;
         bottom: calc(100% + 3px);
@@ -54,29 +72,49 @@
         z-index: 200;
     }
 
-    /* Reveal on Hover (Snappy 80ms delay, no OS lag) */
+    /* Hover reveal */
     [data-tooltip]:hover::before,
-    [data-tooltip]:hover::after {
+    [data-tooltip]:hover::after,
+    [data-tooltip-en]:hover::before,
+    [data-tooltip-en]:hover::after {
         opacity: 1;
         visibility: visible;
         transform: translateX(-50%) translateY(0);
         transition-delay: 80ms;
     }
 
-    /* Start-aligned tooltip for elements near the left screen edge */
-    [data-tooltip][data-tooltip-align='start']::before {
-        left: 0;
-        transform: translateX(0) translateY(4px);
+    /* Vänsterjusterad (så den inte klipper vänsterkanten) */
+    [data-tooltip-align='start']::before {
+        left: 0 !important;
+        transform: translateX(0) translateY(4px) !important;
     }
 
-    [data-tooltip][data-tooltip-align='start']::after {
-        left: 18px;
-        transform: translateX(0) translateY(4px);
+    [data-tooltip-align='start']::after {
+        left: 18px !important;
+        transform: translateX(0) translateY(4px) !important;
     }
 
-    [data-tooltip][data-tooltip-align='start']:hover::before,
-    [data-tooltip][data-tooltip-align='start']:hover::after {
-        transform: translateX(0) translateY(0);
+    [data-tooltip-align='start']:hover::before,
+    [data-tooltip-align='start']:hover::after {
+        transform: translateX(0) translateY(0) !important;
+    }
+
+    /* Högerjusterad (så den inte klipper högerkanten vid hotkeys) */
+    [data-tooltip-align='end']::before {
+        left: auto !important;
+        right: 0 !important;
+        transform: translateX(0) translateY(4px) !important;
+    }
+
+    [data-tooltip-align='end']::after {
+        left: auto !important;
+        right: 14px !important;
+        transform: translateX(0) translateY(4px) !important;
+    }
+
+    [data-tooltip-align='end']:hover::before,
+    [data-tooltip-align='end']:hover::after {
+        transform: translateX(0) translateY(0) !important;
     }
 
     body.light-theme [data-tooltip]::before {

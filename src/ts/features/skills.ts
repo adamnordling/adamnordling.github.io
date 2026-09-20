@@ -3,7 +3,7 @@ import { qs, qsa, on } from '../utils/dom';
 export function initSkillsAndBio(): void {
     initBioCard();
     initEducationAccordion();
-    initSkillHighlighting();
+    initSkillsSystem();
 }
 
 function initBioCard(): void {
@@ -44,18 +44,35 @@ function initEducationAccordion(): void {
     });
 }
 
-function initSkillHighlighting(): void {
-    const skillItems = qsa('.skill-item[data-skill-id]');
+function initSkillsSystem(): void {
+    const skillGroups = qsa('.skill-group');
+    const subSkillItems = qsa('.sub-skill-item[data-skill-id]');
     const allProjectCards = qsa('.app-card');
-    let activeSkillId: string | null = null;
+    let activeSubSkill: HTMLElement | null = null;
 
-    function highlightSkill(skillId: string): void {
+    // 1. Klick på en kategori-rad -> Fäll ut de vertikala språken
+    skillGroups.forEach(group => {
+        const header = qs('.skill-group-header', group);
+        on(header, 'click', e => {
+            e.stopPropagation();
+            const isCurrentlyExpanded = group.classList.contains('is-expanded');
+
+            // Stäng öppna bubblor om vi stänger raden
+            if (isCurrentlyExpanded) {
+                closeAllBubbles();
+            }
+
+            group.classList.toggle('is-expanded');
+        });
+    });
+
+    // 2. Koppla språket till projekten till höger
+    function highlightSkill(skillTokens: string[]): void {
         let hasMatch = false;
 
-        // Native for...of allows TypeScript's compiler to see hasMatch become true
         for (const card of allProjectCards) {
             const cardSkills = (card.getAttribute('data-skills') ?? '').split(' ');
-            const isMatch = cardSkills.includes(skillId);
+            const isMatch = skillTokens.some(token => cardSkills.includes(token));
             const drawer = qs('.app-tech-drawer', card);
 
             if (isMatch) {
@@ -76,45 +93,69 @@ function initSkillHighlighting(): void {
     }
 
     function clearHighlights(): void {
-        activeSkillId = null;
         allProjectCards.forEach(card => {
             card.classList.remove('skill-highlighted', 'skill-dimmed');
             qs('.app-tech-drawer', card)?.classList.remove('is-active');
         });
-        skillItems.forEach(item => {
-            item.classList.remove('skill-selected');
-        });
     }
 
-    skillItems.forEach(item => {
-        const skillId = item.getAttribute('data-skill-id');
-        if (!skillId) return;
+    function closeAllBubbles(): void {
+        subSkillItems.forEach(item => {
+            item.classList.remove('has-bubble-open', 'is-selected');
+        });
+        activeSubSkill = null;
+        clearHighlights();
+    }
 
+    // 3. Hantera interaktion på varje enskilt språk
+    subSkillItems.forEach(item => {
+        const skillTokens = (item.getAttribute('data-skill-id') ?? '').split(' ');
+
+        // Hover: Tänd projekt till höger
         on(item, 'mouseenter', () => {
-            if (activeSkillId === null) highlightSkill(skillId);
+            if (!activeSubSkill) {
+                highlightSkill(skillTokens);
+            }
         });
 
         on(item, 'mouseleave', () => {
-            if (activeSkillId === null) clearHighlights();
+            if (!activeSubSkill) {
+                clearHighlights();
+            }
         });
 
+        // Klick på språket -> Öppna White Talk Bubble & lås markeringen
         on(item, 'click', e => {
+            const target = e.target as HTMLElement | null;
+            if (target?.closest('.bubble-close-btn')) {
+                e.stopPropagation();
+                closeAllBubbles();
+                return;
+            }
+
+            // Klick i bubblans text stänger inte
+            if (target?.closest('.white-talk-bubble')) {
+                return;
+            }
+
             e.stopPropagation();
-            if (activeSkillId === skillId) {
-                clearHighlights();
-            } else {
-                clearHighlights();
-                activeSkillId = skillId;
-                item.classList.add('skill-selected');
-                highlightSkill(skillId);
+
+            const isAlreadyOpen = item.classList.contains('has-bubble-open');
+            closeAllBubbles();
+
+            if (!isAlreadyOpen) {
+                item.classList.add('has-bubble-open', 'is-selected');
+                activeSubSkill = item;
+                highlightSkill(skillTokens);
             }
         });
     });
 
+    // Klick utanför stänger bubblan
     on(document, 'click', e => {
         const target = e.target as HTMLElement | null;
-        if (!target?.closest('.skill-item')) {
-            clearHighlights();
+        if (!target?.closest('.sub-skill-item')) {
+            closeAllBubbles();
         }
     });
 }

@@ -532,59 +532,525 @@
                 </ul>
             </section>
 
-            <!-- 4. Skills Section -->
+            <!-- 4. Skills Section (Enhanced with Deep CV Experiences) -->
             <section class="section-skills">
                 <h2>
                     <span lang="en">Skills</span>
                     <span lang="sv">Kompetenser</span>
                 </h2>
                 <div class="skills-grid">
+                    <!-- VÄNSTER KOLUMN -->
                     <div class="skills-column">
-                        <div class="skill-item" data-skill-id="python">
-                            <span class="skill-name">Python &amp; ML</span>
-                            <span class="skill-score">TensorFlow, Keras, Scikit</span>
+
+                        <!-- 1. Programmeringsspråk -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Languages</span>
+                        <span lang="sv">Programmeringsspråk</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Python, TypeScript, C++, Java...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Python -->
+                                    <div class="sub-skill-item" data-skill-id="python">
+                                        <span>Python (3.11+)</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Python &amp; ML Architecture</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Primary language for machine learning research. Built a modular
+                                                framework evaluating 5 trajectory augmentation strategies across 200GB+
+                                                datasets using Optuna HPO, UMAP manifolds, PyArrow Feather
+                                                serialization, and Numba JIT.</p>
+                                            <p lang="sv">Mitt primära språk för ML-forskning. Utvecklade ett modulärt
+                                                ramverk i examensarbetet som utvärderar 5 dataaugmenteringsstrategier
+                                                över 200GB+ dataset med Optuna HPO, UMAP, PyArrow Feather och Numba
+                                                JIT.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- TypeScript / JS -->
+                                    <div class="sub-skill-item" data-skill-id="typescript languages">
+                                        <span>JavaScript &amp; TypeScript</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Fullstack &amp; Modern JS</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Built interactive SPAs including simulated desktop window
+                                                environments, real-time WebSocket chat systems (1DV528), and
+                                                zero-dependency TypeScript web engines with strict type checking.</p>
+                                            <p lang="sv">Byggt interaktiva SPAs med simulerade skrivbordsmiljöer,
+                                                realtidschatt via WebSockets (1DV528) samt ramverksoberoende
+                                                TypeScript-motorer med strikta typkontroller.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- C, C++ & CUDA -->
+                                    <div class="sub-skill-item" data-skill-id="lowlevel">
+                                        <span>C, C++ &amp; CUDA</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">GPU &amp; Parallel Systems</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Performance-critical computing (4DV657). Engineered
+                                                multithreaded, GPU-accelerated algorithms in C++ and NVIDIA CUDA,
+                                                focusing heavily on pointer arithmetic, thread synchronization, and
+                                                memory optimization.</p>
+                                            <p lang="sv">Prestandakritiska system (4DV657). Optimerat flertrådade,
+                                                GPU-accelererade algoritmer i C++ och CUDA med fokus på manuell
+                                                minneshantering, pekararitmetik och trådsynkronisering.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Java -->
+                                    <div class="sub-skill-item" data-skill-id="languages">
+                                        <span>Java</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Object-Oriented Architecture</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Solid foundation in enterprise design patterns, concurrent
+                                                multithreading, and robust object-oriented software engineering.</p>
+                                            <p lang="sv">Gedigen grund inom objektorienterade designmönster, samtidig
+                                                trådhantering (concurrency) och robust mjukvaruarkitektur.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- SQL -->
+                                    <div class="sub-skill-item" data-skill-id="data languages">
+                                        <span>SQL (MySQL, MariaDB)</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Database Engineering</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Relational schema design, query optimization, user session
+                                                indexing, and managing MySQL/MariaDB instances deployed via Docker.</p>
+                                            <p lang="sv">Relationell schemadesign, frågeoptimering, indexering av
+                                                användarsessioner samt drift av MySQL/MariaDB i Docker-containrar.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="web">
-                            <span class="skill-name">Web &amp; APIs</span>
-                            <span class="skill-score">Angular, Node, Express, Flask</span>
+
+                        <!-- 2. AI & Deep Learning -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">AI &amp; Deep Learning</span>
+                        <span lang="sv">AI &amp; Maskininlärning</span>
+                    </span>
+                                <span class="skill-horizontal-preview">TensorFlow, Keras, Optuna...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Deep Learning Neural Networks -->
+                                    <div class="sub-skill-item" data-skill-id="python ml">
+                                        <span>Neural Networks (CNN, RNN, LSTM)</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Deep Learning from Scratch</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Designed, trained, and validated neural architectures (CNN,
+                                                RNN, LSTM) from the ground up for complex image classification and
+                                                time-series problems (4DV661) using TensorFlow and Keras.</p>
+                                            <p lang="sv">Designat, tränat och utvärderat neurala nätverk från grunden
+                                                (CNN, RNN, LSTM) för komplex bildklassificering och tidsserieanalys
+                                                (4DV661) med TensorFlow och Keras.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Computer Vision & MoveNet -->
+                                    <div class="sub-skill-item" data-skill-id="python ml">
+                                        <span>MoveNet &amp; Computer Vision</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Pose &amp; Motion Analysis</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Co-developed an exercise classification app using Kinect and
+                                                MoveNet pose data. Served ML inferences via a Python Flask backend
+                                                connected to an Angular frontend (4DT907).</p>
+                                            <p lang="sv">Utvecklade en applikation för rörelseanalys baserad på Kinect-
+                                                och MoveNet-data för träningsövningar. Integrerade modellerna via
+                                                Flask-backend och Angular-frontend (4DT907).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Optuna & Scikit-Learn -->
+                                    <div class="sub-skill-item" data-skill-id="python data">
+                                        <span>Optuna HPO &amp; UMAP</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Automated HPO &amp; Topology</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Advanced hyperparameter optimization loops with Optuna,
+                                                topological geometric manifold analysis with UMAP, and Scikit-Learn
+                                                classification pipelines.</p>
+                                            <p lang="sv">Automatiserade hyperparameter-optimeringsloopar med Optuna,
+                                                geometrisk manifoldanalys med UMAP samt klassificeringsmodeller i
+                                                Scikit-Learn.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="lowlevel">
-                                    <span class="skill-name">
-                                        <span lang="en">Low-Level</span>
-                                        <span lang="sv">Lågnivå</span>
-                                    </span>
-                            <span class="skill-score">C, C++, CUDA</span>
+
+                        <!-- 3. Webb & Fullstack -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Web &amp; Fullstack</span>
+                        <span lang="sv">Webb &amp; Fullstack</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Node.js, Express, Angular, Flask...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Node.js & Express -->
+                                    <div class="sub-skill-item" data-skill-id="web">
+                                        <span>Node.js &amp; Express</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Backend Architecture</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Engineered secure REST backends with Node.js and Express: user
+                                                session management, OAuth authentication, MongoDB persistence, and CRUD
+                                                services (1DV528).</p>
+                                            <p lang="sv">Utvecklat säkra REST-backends i Node.js och Express med
+                                                OAuth-autentisering, MongoDB-databashantering, användarsessioner och
+                                                CRUD-funktionalitet (1DV528).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Angular & Frontend -->
+                                    <div class="sub-skill-item" data-skill-id="web languages">
+                                        <span>Angular &amp; WebSockets</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Frontend &amp; Realtime</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Experience building responsive Angular enterprise interfaces
+                                                (4DV652) as well as full-duplex WebSocket channels for live multi-user
+                                                communication.</p>
+                                            <p lang="sv">Erfarenhet av responsiva Angular-gränssnitt (4DV652) samt
+                                                realtidschatt och full-duplex-kommunikation via WebSockets.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Flask & Microservices -->
+                                    <div class="sub-skill-item" data-skill-id="web python">
+                                        <span>Flask Microservices</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Lightweight APIs</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Constructing lightweight Python Flask endpoints to serve
+                                                machine learning predictions directly to web clients.</p>
+                                            <p lang="sv">Byggt snabba mikrotjänster och API:er i Flask för att serva
+                                                maskininlärningsmodeller direkt till webbklienter.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="languages">
-                                    <span class="skill-name">
-                                        <span lang="en">Languages</span>
-                                        <span lang="sv">Språk</span>
-                                    </span>
-                            <span class="skill-score">TypeScript, Java, JS, SQL</span>
+
+                        <!-- 4. Databaser & Data Stack -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Data &amp; Databases</span>
+                        <span lang="sv">Data &amp; Databaser</span>
+                    </span>
+                                <span class="skill-horizontal-preview">MongoDB, Pandas, NumPy, PyArrow...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- MongoDB -->
+                                    <div class="sub-skill-item" data-skill-id="data">
+                                        <span>MongoDB (NoSQL)</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Document Databases</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Document database modeling, schema-less record storage, and
+                                                integrating MongoDB with Node.js/Express applications.</p>
+                                            <p lang="sv">Dokumentbaserad datamodellering, NoSQL-aggregation och sömlös
+                                                integration med Node.js/Express-applikationer.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pandas & NumPy -->
+                                    <div class="sub-skill-item" data-skill-id="data python">
+                                        <span>Pandas &amp; NumPy</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Vectorized Data</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">High-speed vectorized mathematical computations,
+                                                spatio-temporal data cleaning, and dataset transformation.</p>
+                                            <p lang="sv">Vektoriserade matematiska beräkningar, tvättning av
+                                                spatio-temporala dataset och datatransformation.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- PyArrow Feather -->
+                                    <div class="sub-skill-item" data-skill-id="data python">
+                                        <span>PyArrow Feather</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Zero-Copy Binary I/O</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Eliminated I/O bottlenecks in machine learning pipelines via
+                                                ultra-fast columnar Apache Arrow binary storage.</p>
+                                            <p lang="sv">Eliminerade I/O-flaskhalsar i ML-kedjor via blixtsnabb binär
+                                                kolumnlagring i Apache Arrow Feather-format.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
 
+                    <!-- HÖGER KOLUMN -->
                     <div class="skills-column">
-                        <div class="skill-item" data-skill-id="data">
-                            <span class="skill-name">Data Stack</span>
-                            <span class="skill-score">NumPy, Pandas, Databases</span>
+
+                        <!-- 5. Säkerhet & Nätverk -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Network Security</span>
+                        <span lang="sv">Säkerhet &amp; Nätverk</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Wireshark, Kali, OWASP, Kryptering...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Wireshark & Trafikanalys -->
+                                    <div class="sub-skill-item" data-skill-id="security">
+                                        <span>Wireshark &amp; Nätverksanalys</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Packet Inspection</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">B.Sc. Network Security graduate. Deep packet inspection via
+                                                Wireshark, traffic flow analysis, protocol validation (TCP/IP, RADIUS),
+                                                and threat detection (2DV702).</p>
+                                            <p lang="sv">Kandidatexamen i nätverkssäkerhet. Djupgående paketinspektion
+                                                med Wireshark, trafikanalys, protokollverifiering (TCP/IP, RADIUS) och
+                                                hotidentifiering (2DV702).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- OWASP & Kali Linux -->
+                                    <div class="sub-skill-item" data-skill-id="security">
+                                        <span>OWASP Top 10 &amp; Kali Linux</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Vulnerability Audits</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Hands-on vulnerability testing using Kali Linux tooling,
+                                                identifying architectural flaws according to OWASP Top 10, and defending
+                                                against web exploits.</p>
+                                            <p lang="sv">Sårbarhetsanalyser med verktyg i Kali Linux, identifiering av
+                                                säkerhetsbrister enligt OWASP Top 10 och skydd mot externa webbhot.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Kryptering & PKI -->
+                                    <div class="sub-skill-item" data-skill-id="security">
+                                        <span>Kryptering (PKI, AES, RSA)</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Applied Cryptography</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Practical cryptography: Public Key Infrastructure (PKI),
+                                                symmetric (AES) &amp; asymmetric (RSA) schemes, and IoT edge
+                                                communication security.</p>
+                                            <p lang="sv">Praktisk kryptografi: PKI-certifikatshantering, symmetrisk
+                                                (AES) och asymmetrisk (RSA) kryptering samt säkring av IoT-enheter.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="security">
-                            <span class="skill-name">Network Sec</span>
-                            <span class="skill-score">Wireshark, Protocols</span>
+
+                        <!-- 6. DevOps & CI/CD -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">DevOps &amp; Infra</span>
+                        <span lang="sv">DevOps &amp; Infrastruktur</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Docker, GitLab CI/CD, Scrum...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Docker -->
+                                    <div class="sub-skill-item" data-skill-id="devops">
+                                        <span>Docker Containerization</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Isolated Infrastructure</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Containerizing fullstack applications, database servers
+                                                (MariaDB), and Apache web servers for reproducible local and production
+                                                environments (1DV721).</p>
+                                            <p lang="sv">Containerisering av webbservrar (Apache2), databaser (MariaDB)
+                                                och fullstack-system för säkra och reproducerbara driftsmiljöer
+                                                (1DV721).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- GitLab CI/CD & Scrum -->
+                                    <div class="sub-skill-item" data-skill-id="devops">
+                                        <span>GitLab CI/CD &amp; Scrum Master</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Agile Pipeline Delivery</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Acted as Scrum Master (4DV652) leading agile sprint planning.
+                                                Built automated CI/CD deployment pipelines in GitLab with strict
+                                                verification steps.</p>
+                                            <p lang="sv">Agerade Scrum Master (4DV652) med ansvar för sprintplanering
+                                                och teamkommunikation. Byggde automatiserade CI/CD-pipelines i
+                                                GitLab.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Cloudflare Edge -->
+                                    <div class="sub-skill-item" data-skill-id="devops">
+                                        <span>Cloudflare Edge Deployment</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Global Edge CDN</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Configuring edge caching, HTTP/3 delivery, and Level 2
+                                                Content-Security-Policy rules for sub-50ms worldwide asset delivery.</p>
+                                            <p lang="sv">Driftsättning på Cloudflare Pages med global edge-caching,
+                                                HTTP/3 och strikta Content-Security-Policy-regler under 50ms.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="devops">
-                            <span class="skill-name">DevOps &amp; CI</span>
-                            <span class="skill-score">Docker, Git Pipelines</span>
+
+                        <!-- 7. System & OS -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Systems &amp; OS</span>
+                        <span lang="sv">System &amp; OS</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Linux, Ubuntu, Bash, Apache2...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Linux / FreeBSD -->
+                                    <div class="sub-skill-item" data-skill-id="os">
+                                        <span>Linux (Ubuntu / Arch) &amp; FreeBSD</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Unix System Admin</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Daily driver Unix workstations (CachyOS/Arch, Ubuntu).
+                                                Configuring Apache2 web servers, user privileges, and Unix system
+                                                daemons (1DV721).</p>
+                                            <p lang="sv">Daglig Unix-miljö (CachyOS/Arch, Ubuntu). Konfiguration av
+                                                Apache2-webbservrar, behörigheter och Unix-systemtjänster (1DV721).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bash Automation -->
+                                    <div class="sub-skill-item" data-skill-id="os">
+                                        <span>Bash Shell Scripting</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Workflow Automation</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Writing robust shell automation scripts for server setup,
+                                                automated repository bundle packaging, and environment
+                                                orchestration.</p>
+                                            <p lang="sv">Skriver robusta Bash-skript för automatiserad
+                                                serverkonfiguration, paketeringsverktyg och driftflöden.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="skill-item" data-skill-id="os">
-                            <span class="skill-name">OS &amp; Shell</span>
-                            <span class="skill-score">Linux, CachyOS, Bash</span>
+
+                        <!-- 8. Lågnivå & Parallellism -->
+                        <div class="skill-group">
+                            <div class="skill-group-header">
+                    <span class="skill-group-name">
+                        <span lang="en">Systems &amp; Parallelism</span>
+                        <span lang="sv">Lågnivå &amp; Parallellism</span>
+                    </span>
+                                <span class="skill-horizontal-preview">Multithreading, Sockets, Memory...</span>
+                            </div>
+                            <div class="skill-vertical-drawer">
+                                <div class="skill-vertical-list">
+                                    <!-- Multithreading & Memory -->
+                                    <div class="sub-skill-item" data-skill-id="lowlevel">
+                                        <span>Multithreading &amp; Concurrency</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Concurrent Execution</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Tackling race conditions, deadlocks, mutex locking mechanisms,
+                                                and maximizing CPU/GPU hardware throughput (4DV657).</p>
+                                            <p lang="sv">Hantering av kapplöpningstillstånd (race conditions),
+                                                mutex-lås, dödlägen och optimering av CPU/GPU-hårdvaruutnyttjande
+                                                (4DV657).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Sockets & Network Protocols -->
+                                    <div class="sub-skill-item" data-skill-id="lowlevel security">
+                                        <span>Network Sockets</span>
+                                        <div class="white-talk-bubble">
+                                            <div class="bubble-header">
+                                                <span class="bubble-title">Low-Level Networking</span>
+                                                <button type="button" class="bubble-close-btn">✕</button>
+                                            </div>
+                                            <p lang="en">Direct low-level socket communication in C/C++, building
+                                                protocol parsers and inspecting raw network frames.</p>
+                                            <p lang="sv">Lågnivå socket-programmering i C/C++, konstruktion av
+                                                protokollparsers och inspektion av råa nätverksramar.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </section>
-
             <!-- 5. Recent Activity Section -->
             <section class="section-activity">
                 <h2>
@@ -1113,46 +1579,48 @@
      UNIFIED COCKPIT DOCK / MOBILE HEADER
      ========================================================================== -->
 <footer class="status-dock" role="contentinfo" aria-label="System status and site navigation">
-    <!-- LEFT GROUP: Fonts, Cloudflare Pulse, & Mobile Language Dropdown -->
+    <!-- LEFT -->
     <div class="dock-segment dock-left">
 
         <div class="dock-system-status dock-desktop-only"
-             data-tooltip="Global Cloudflare Edge deployment active and nominal"
+             data-tooltip-en="Global Cloudflare Edge deployment active and nominal"
+             data-tooltip-sv="Global Cloudflare Edge-distribution aktiv och felfri"
              data-tooltip-align="start">
             <span class="dock-pulse-dot"></span>
             <span class="dock-status-label">CLOUDFLARE EDGE</span>
         </div>
 
         <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
-        <!-- Font Switcher with Tooltips -->
         <div class="font-switcher" role="group" aria-label="Font configuration">
-            <button class="font-btn active" data-font="default" data-tooltip="System Sans-Serif"
+            <button class="font-btn active" data-font="default"
+                    data-tooltip-en="System Sans-Serif font"
+                    data-tooltip-sv="Systemtypsnitt Sans-Serif"
                     aria-label="Default System Font" type="button">A
             </button>
-            <button class="font-btn" data-font="serif" data-tooltip="Charter Serif" aria-label="Serif Font"
-                    type="button">A
+            <button class="font-btn" data-font="serif"
+                    data-tooltip-en="Charter Serif font"
+                    data-tooltip-sv="Seriftypsnitt (Charter)"
+                    aria-label="Serif Font" type="button">A
             </button>
-            <button class="font-btn" data-font="monospace" data-tooltip="Monospace Code" aria-label="Monospace Font"
-                    type="button">A
+            <button class="font-btn" data-font="monospace"
+                    data-tooltip-en="Monospace Code font"
+                    data-tooltip-sv="Monospace (Kodtypsnitt)"
+                    aria-label="Monospace Font" type="button">A
             </button>
         </div>
 
 
         <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
 
-        <!-- Desktop Cloudflare Edge -->
-
-
         <span class="dock-copyright dock-desktop-only">© <span id="footer-year">2026</span> Adam Nordling</span>
 
-        <!-- Mobile Language Selector (Moves here on <= 750px) -->
-        <!-- Language Dropdown with "English" / "Svenska" -->
+        <!-- Mobile Language Selector -->
         <div class="lang-dropdown dock-mobile-lang">
             <button class="lang-trigger" type="button" aria-label="Select Language">
-        <span class="lang-trigger-text">
-            <span lang="en">English</span>
-            <span lang="sv">Svenska</span>
-        </span>
+                <span class="lang-trigger-text">
+                    <span lang="en">English</span>
+                    <span lang="sv">Svenska</span>
+                </span>
                 <span class="lang-current-label">EN</span>
                 <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2">
@@ -1172,14 +1640,13 @@
         </div>
     </div>
 
-    <!-- CENTER GROUP: Lighthouse & Telemetry (Desktop only) -->
-    <div class="dock-segment dock-center" aria-label="Site architecture & performance telemetry">
-        <!-- Lighthouse 4x100 (Blue frame + Green 100 numbers) -->
+    <!-- CENTER -->
+    <div class="dock-segment dock-center">
         <div class="dock-lh-group"
-             data-tooltip="Lighthouse CI Audit: Perfect 100 on Performance, Accessibility, Best Practices, and SEO">
+             data-tooltip-en="Lighthouse CI: Perfect 100 on Perf, A11y, Best Practices & SEO"
+             data-tooltip-sv="Lighthouse CI: 100 poäng inom prestanda, tillgänglighet, praxis & SEO">
             <svg class="dock-svg-icon lh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
-                 aria-hidden="true">
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
                 <path d="M12 12l3-2"/>
             </svg>
@@ -1192,11 +1659,11 @@
             </div>
         </div>
 
-        <!-- Live Vitals Pill -->
         <div class="telemetry-pill live-vitals-pill"
-             data-tooltip="Live session Core Web Vitals measured via PerformanceObserver API">
+             data-tooltip-en="Live session Core Web Vitals measured via PerformanceObserver API"
+             data-tooltip-sv="Core Web Vitals i realtid via PerformanceObserver API">
             <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
             </svg>
             <span class="vitals-metric">LCP: <span id="telemetry-lcp" class="telemetry-live-val">--</span></span>
@@ -1204,32 +1671,32 @@
             <span class="vitals-metric">CLS: <span id="telemetry-cls" class="telemetry-live-val">0.000</span></span>
         </div>
 
-        <!-- 0 KB Runtime Pill -->
         <div class="telemetry-pill pill-runtime"
-             data-tooltip="Pure Vanilla TypeScript with zero runtime client frameworks">
+             data-tooltip-en="Zero client frameworks. Pure compiled TypeScript."
+             data-tooltip-sv="Noll klientramverk. Ren kompilerad TypeScript.">
             <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
             <span class="pill-text">0 KB Runtime</span>
         </div>
 
-        <!-- TS Strict Pill -->
         <div class="telemetry-pill pill-ts"
-             data-tooltip="Strict typing enabled: noImplicitAny, strictNullChecks, noUnusedLocals">
+             data-tooltip-en="Strict typing enabled: noImplicitAny, strictNullChecks"
+             data-tooltip-sv="Strikt typning: noImplicitAny, strictNullChecks">
             <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="16 18 22 12 16 6"></polyline>
                 <polyline points="8 6 2 12 8 18"></polyline>
             </svg>
             <span class="pill-text">TS Strict</span>
         </div>
 
-        <!-- CSS Layer Pill -->
         <div class="telemetry-pill pill-layer"
-             data-tooltip="Modular CSS cascade layers: reset, base, components, utilities">
+             data-tooltip-en="Modular CSS cascade layers: reset, base, components, utilities"
+             data-tooltip-sv="Modulära CSS-lager: reset, base, components, utilities">
             <svg class="dock-svg-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                 <polyline points="2 17 12 22 22 17"></polyline>
                 <polyline points="2 12 12 17 22 12"></polyline>
@@ -1238,31 +1705,33 @@
         </div>
     </div>
 
-    <!-- RIGHT GROUP: Hotkeys, Mobile Theme Toggle, & Clock -->
+    <!-- RIGHT -->
     <div class="dock-segment dock-right">
-        <!-- Desktop Hotkeys -->
         <div class="dock-hotkeys dock-desktop-only" aria-label="Keyboard shortcuts">
-    <span class="hotkey-pill" data-tooltip="Press 'T' to toggle Light / Dark theme">
-        <kbd>T</kbd> <span lang="en">Theme</span><span lang="sv">Tema</span>
-    </span>
-            <span class="hotkey-pill" data-tooltip="Press 'L' to toggle English / Svenska">
-        <kbd>L</kbd> <span lang="en">Lang</span><span lang="sv">Språk</span>
-    </span>
-            <span class="hotkey-pill" data-tooltip="Press 'C' to open CV preview modal">
-        <kbd>C</kbd> <span>CV</span>
-    </span>
-            <span class="hotkey-pill" data-tooltip="Press 'F' to cycle System, Serif, Monospace fonts">
-        <kbd>F</kbd> <span lang="en">Font</span><span lang="sv">Typsnitt</span>
-    </span>
-            <span class="hotkey-pill" data-tooltip="Press keys 1, 2 or 3 to open project repositories"
-                  data-tooltip-align="end">
-        <kbd>1–3</kbd> <span lang="en">App</span><span lang="sv">App</span>
-    </span>
+            <span class="hotkey-pill" data-tooltip-en="Press 'T' to toggle theme"
+                  data-tooltip-sv="Tryck 'T' för att växla tema">
+                <kbd>T</kbd> <span lang="en">Theme</span><span lang="sv">Tema</span>
+            </span>
+            <span class="hotkey-pill" data-tooltip-en="Press 'L' to toggle language"
+                  data-tooltip-sv="Tryck 'L' för att växla språk">
+                <kbd>L</kbd> <span lang="en">Lang</span><span lang="sv">Språk</span>
+            </span>
+            <span class="hotkey-pill" data-tooltip-en="Press 'C' to preview CV"
+                  data-tooltip-sv="Tryck 'C' för att visa CV">
+                <kbd>C</kbd> <span>CV</span>
+            </span>
+            <span class="hotkey-pill" data-tooltip-en="Press 'F' to cycle typography"
+                  data-tooltip-sv="Tryck 'F' för att växla typsnitt">
+                <kbd>F</kbd> <span lang="en">Font</span><span lang="sv">Typsnitt</span>
+            </span>
+            <span class="hotkey-pill" data-tooltip-en="Press keys 1–3 to open project repos"
+                  data-tooltip-sv="Tryck 1–3 för att öppna projekt" data-tooltip-align="end">
+                <kbd>1–3</kbd> <span lang="en">App</span><span lang="sv">App</span>
+            </span>
         </div>
 
         <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
 
-        <!-- Theme Toggle (Embedded in Dock) -->
         <button class="theme-toggle" aria-label="Toggle Light/Dark Theme" type="button">
             <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1277,7 +1746,6 @@
 
         <div class="dock-divider dock-mobile-only" aria-hidden="true"></div>
 
-        <!-- Live Clock -->
         <div class="dock-clock" aria-label="Current time and ISO calendar week">
             <span class="clock-time" id="clock-time">00:00:00</span>
             <span class="clock-details">
