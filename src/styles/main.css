@@ -34,7 +34,7 @@
 
     /* 2. Natural gap matching the original desktop feel */
     .main-container {
-        gap: 36px !important;
+        gap: 50px !important;
     }
 
     /* 3. Restore Left Panel dominance */

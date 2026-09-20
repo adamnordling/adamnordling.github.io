@@ -1,10 +1,9 @@
 @layer components {
-    /* 1. Tillåt bubblor att sväva utanför sektionen utan att klippas */
     .section-skills {
         position: relative;
         z-index: 50;
         overflow: visible !important;
-        contain: none !important; /* Förhindrar att bubblor klipps mot utbildningen ovanför */
+        contain: none !important;
     }
 
     /* 2 rena kolumner med tunna linjer */
@@ -52,7 +51,7 @@
         color: var(--accent);
     }
 
-    /* FIX 1: När raden är aktiv/blå ska den STANNA på 4px och INTE studsa tillbaka */
+    /* Stanna på 4px när raden är öppen */
     .skill-group.is-expanded {
         transform: translateX(4px) !important;
         border-bottom-color: var(--accent);
@@ -167,7 +166,7 @@
         background: rgba(0, 0, 0, 0.04);
     }
 
-    /* FIX 2: När ett språk är klickat/blått ska det STANNA på 4px och INTE studsa tillbaka */
+    /* Stanna på 4px när språket är valt */
     .sub-skill-item.is-selected {
         color: var(--accent) !important;
         font-weight: 700;
@@ -177,54 +176,55 @@
     }
 
     /* ==========================================================================
-       WHITE TALK BUBBLE (Flyttad till höger kant + Ligger ÖVER ALLT)
+       WHITE TALK BUBBLE (Perfekt balanserad bredd och placering)
        ========================================================================== */
     .white-talk-bubble {
         position: absolute;
         bottom: calc(100% + 12px);
-        /* FIX 3: Placerad så att bubblans vänstra kant/pil möter HÖGRA kanten av det klickbara elementet */
-        left: calc(100% - 24px);
-        width: 320px;
-        background: #ffffff;
+        left: 45px;
+        width: 290px;
+        background-color: #ffffff !important; /* 100% ogenomskinlig */
         color: #0f172a;
         border-radius: 8px;
         padding: 14px 16px;
         box-shadow:
             0 20px 45px rgba(0, 0, 0, 0.4),
-            0 2px 10px rgba(0, 0, 0, 0.15);
-        /* FIX 4: Svävar över exakt alla andra sektioner och rubriker */
-        z-index: 9999 !important;
+            0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 99999 !important;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transform: translateY(8px) scale(0.96);
+        transform: translateY(6px) scale(0.97);
         transition:
-            opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-            transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-            visibility 0.2s;
+            opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.18s;
         border: 1px solid #cbd5e1;
+        isolation: isolate; /* Skapar ett eget isolerat lager */
     }
 
-    /* För element i höger kolumn: fälls inåt mot vänster så den inte klipper panelens högerkant */
+    /* Höger kolumn (t.ex. GitLab CI/CD):
+       Fälls inåt från höger med fast marginal så den ALDRIG kan gå utanför vänsterkanten! */
     .skills-column:last-child .white-talk-bubble {
         left: auto;
-        right: calc(100% - 24px);
+        right: 15px;
     }
 
-    /* Vit triangel-pekare som pekar direkt mot högra kanten av pillen */
+    /* Vit triangel-pekare nedåt */
     .white-talk-bubble::after {
         content: '';
         position: absolute;
         top: 100%;
-        left: 20px;
+        left: 24px;
         border-width: 8px;
         border-style: solid;
         border-color: #ffffff transparent transparent transparent;
     }
 
+    /* Triangel-pekare för höger kolumn */
     .skills-column:last-child .white-talk-bubble::after {
         left: auto;
-        right: 20px;
+        right: 28px;
     }
 
     /* Öppen bubbla */
@@ -245,7 +245,7 @@
     }
 
     .bubble-title {
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         font-weight: 700;
         font-family: var(--font-mono), monospace;
         color: #1d4ed8;
@@ -270,19 +270,33 @@
 
     .white-talk-bubble p {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 0.82rem;
-        line-height: 1.55;
+        font-size: 0.8rem;
+        line-height: 1.5;
         color: #334155;
         margin: 0;
         user-select: text;
         -webkit-user-select: text;
     }
 
+    .skills-column.has-active-bubble,
+    .skills-column:has(.has-bubble-open) {
+        z-index: 500 !important;
+    }
+
+    .skill-group.has-active-bubble,
+    .skill-group:has(.has-bubble-open) {
+        z-index: 600 !important;
+    }
+
+    .sub-skill-item.has-bubble-open {
+        z-index: 700 !important;
+    }
+
     /* Responsivt */
     @media (max-width: 900px) {
         .white-talk-bubble {
-            width: 280px;
-            left: 0 !important;
+            width: 270px;
+            left: 10px !important;
             right: auto !important;
         }
 

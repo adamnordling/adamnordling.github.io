@@ -69,6 +69,20 @@ export function initShortcuts(): void {
             }
         }
 
+        on(
+            window,
+            'mousemove',
+            (e: MouseEvent) => {
+                if (window.innerWidth > 1150) {
+                    const divider = qs('.panel-divider');
+                    const dividerX = divider
+                        ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
+                        : window.innerWidth / 2;
+                    activeScrollTarget = e.clientX < dividerX ? leftPanel : rightPanel;
+                }
+            },
+            { passive: true }
+        );
         // [ ↑ / ↓ ] -> Smart Scroll
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();

@@ -39,7 +39,9 @@ function initEducationAccordion(): void {
         const toggleBtn = qs('.edu-toggle-btn', item);
         on(toggleBtn, 'click', () => {
             const isOpen = item.classList.toggle('is-open');
-            toggleBtn?.setAttribute('aria-expanded', String(isOpen));
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-expanded', String(isOpen));
+            }
         });
     });
 }
@@ -50,23 +52,6 @@ function initSkillsSystem(): void {
     const allProjectCards = qsa('.app-card');
     let activeSubSkill: HTMLElement | null = null;
 
-    // 1. Klick på en kategori-rad -> Fäll ut de vertikala språken
-    skillGroups.forEach(group => {
-        const header = qs('.skill-group-header', group);
-        on(header, 'click', e => {
-            e.stopPropagation();
-            const isCurrentlyExpanded = group.classList.contains('is-expanded');
-
-            // Stäng öppna bubblor om vi stänger raden
-            if (isCurrentlyExpanded) {
-                closeAllBubbles();
-            }
-
-            group.classList.toggle('is-expanded');
-        });
-    });
-
-    // 2. Koppla språket till projekten till höger
     function highlightSkill(skillTokens: string[]): void {
         let hasMatch = false;
 
@@ -79,11 +64,11 @@ function initSkillsSystem(): void {
                 hasMatch = true;
                 card.classList.add('skill-highlighted');
                 card.classList.remove('skill-dimmed');
-                drawer?.classList.add('is-active');
+                if (drawer) drawer.classList.add('is-active');
             } else {
                 card.classList.add('skill-dimmed');
                 card.classList.remove('skill-highlighted');
-                drawer?.classList.remove('is-active');
+                if (drawer) drawer.classList.remove('is-active');
             }
         }
 
@@ -95,11 +80,16 @@ function initSkillsSystem(): void {
     function clearHighlights(): void {
         allProjectCards.forEach(card => {
             card.classList.remove('skill-highlighted', 'skill-dimmed');
-            qs('.app-tech-drawer', card)?.classList.remove('is-active');
+            const drawer = qs('.app-tech-drawer', card);
+            if (drawer) drawer.classList.remove('is-active');
         });
     }
 
     function closeAllBubbles(): void {
+        // Fix 1: Added explicit braces to avoid returning a void expression
+        qsa('.has-active-bubble').forEach(el => {
+            el.classList.remove('has-active-bubble');
+        });
         subSkillItems.forEach(item => {
             item.classList.remove('has-bubble-open', 'is-selected');
         });
@@ -107,11 +97,28 @@ function initSkillsSystem(): void {
         clearHighlights();
     }
 
-    // 3. Hantera interaktion på varje enskilt språk
+    function collapseAllSkills(): void {
+        closeAllBubbles();
+        skillGroups.forEach(group => {
+            group.classList.remove('is-expanded');
+        });
+    }
+
+    // 1. Kategori-rad klick
+    skillGroups.forEach(group => {
+        const header = qs('.skill-group-header', group);
+        on(header, 'click', e => {
+            e.stopPropagation();
+            const isCurrentlyExpanded = group.classList.contains('is-expanded');
+            closeAllBubbles();
+            group.classList.toggle('is-expanded', !isCurrentlyExpanded);
+        });
+    });
+
+    // 2. Sub-skill items
     subSkillItems.forEach(item => {
         const skillTokens = (item.getAttribute('data-skill-id') ?? '').split(' ');
 
-        // Hover: Tänd projekt till höger
         on(item, 'mouseenter', () => {
             if (!activeSubSkill) {
                 highlightSkill(skillTokens);
@@ -124,17 +131,15 @@ function initSkillsSystem(): void {
             }
         });
 
-        // Klick på språket -> Öppna White Talk Bubble & lås markeringen
         on(item, 'click', e => {
             const target = e.target as HTMLElement | null;
-            if (target?.closest('.bubble-close-btn')) {
+            if (target && target.closest('.bubble-close-btn')) {
                 e.stopPropagation();
                 closeAllBubbles();
                 return;
             }
 
-            // Klick i bubblans text stänger inte
-            if (target?.closest('.white-talk-bubble')) {
+            if (target && target.closest('.white-talk-bubble')) {
                 return;
             }
 
@@ -144,6 +149,11 @@ function initSkillsSystem(): void {
             closeAllBubbles();
 
             if (!isAlreadyOpen) {
+                const col = item.closest('.skills-column');
+                const grp = item.closest('.skill-group');
+                if (col) col.classList.add('has-active-bubble');
+                if (grp) grp.classList.add('has-active-bubble');
+
                 item.classList.add('has-bubble-open', 'is-selected');
                 activeSubSkill = item;
                 highlightSkill(skillTokens);
@@ -151,10 +161,12 @@ function initSkillsSystem(): void {
         });
     });
 
-    // Klick utanför stänger bubblan
+    // 3. Klick utanför (Fix 2 & 3: removed unnecessary optional chaining on non-nullish target)
     on(document, 'click', e => {
         const target = e.target as HTMLElement | null;
-        if (!target?.closest('.sub-skill-item')) {
+        if (!target || !target.closest('.section-skills')) {
+            collapseAllSkills();
+        } else if (!target.closest('.sub-skill-item') && !target.closest('.skill-group-header')) {
             closeAllBubbles();
         }
     });

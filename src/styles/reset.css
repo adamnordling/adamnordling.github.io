@@ -100,8 +100,9 @@
 
     .main-container {
         display: flex;
-        gap: 60px;
+        gap: 70px;
         height: 100%;
+        align-items: stretch;
     }
 
     .left-panel {
@@ -175,5 +176,61 @@
         height: 100vh;
         z-index: -1;
         pointer-events: none;
+    }
+
+    /* ==========================================================================
+       SEAMLESS NO-SCROLLBAR PANELS
+       ========================================================================== */
+    .left-panel,
+    .right-panel {
+        /* Döljer scrollbars på Firefox, IE/Edge & Chrome/Safari */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .left-panel::-webkit-scrollbar,
+    .right-panel::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* ==========================================================================
+       VERTICAL COCKPIT DIVIDER (Nu tydlig och skarp)
+       ========================================================================== */
+    /* ==========================================================================
+           SMOOTH ARCHITECTURAL PANEL DIVIDER
+           Fades out softly at top and bottom with subtle inset margins
+           ========================================================================== */
+    .panel-divider {
+        width: 1px;
+        flex-shrink: 0;
+        align-self: stretch;
+        margin: 24px 0; /* Ger linjen luft i toppen och botten */
+        /* Mörk bakgrund: mjuk toning med subtil vit kärna */
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.12) 15%,
+            rgba(255, 255, 255, 0.12) 85%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ljus bakgrund: mjuk toning med subtil mörkgrå kärna */
+    body.light-theme .panel-divider {
+        background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.12) 15%,
+            rgba(0, 0, 0, 0.12) 85%,
+            rgba(0, 0, 0, 0) 100%
+        );
+        box-shadow: none;
+    }
+
+    @media (max-width: 1150px) {
+        .panel-divider {
+            display: none !important;
+        }
     }
 }
