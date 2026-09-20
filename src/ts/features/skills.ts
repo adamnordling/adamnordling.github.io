@@ -32,6 +32,17 @@ function initBioCard(): void {
     });
 }
 
+// 1. UTBILDNING: Hantera utfällning, klick och stängning
+function closeAllEducation(): void {
+    qsa('.edu-item.is-open').forEach(item => {
+        item.classList.remove('is-open');
+        const toggleBtn = qs('.edu-toggle-btn', item);
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
 function initEducationAccordion(): void {
     const eduItems = qsa('.edu-item');
 
@@ -46,10 +57,12 @@ function initEducationAccordion(): void {
     });
 }
 
+// 2. KOMPETENSER & TANGENTBORDSNAVIGATION
 function initSkillsSystem(): void {
     const skillGroups = qsa('.skill-group');
     const subSkillItems = qsa('.sub-skill-item[data-skill-id]');
     const allProjectCards = qsa('.app-card');
+    const leftPanel = qs('.left-panel');
     let activeSubSkill: HTMLElement | null = null;
 
     function highlightSkill(skillTokens: string[]): void {
@@ -86,7 +99,6 @@ function initSkillsSystem(): void {
     }
 
     function closeAllBubbles(): void {
-        // Fix 1: Added explicit braces to avoid returning a void expression
         qsa('.has-active-bubble').forEach(el => {
             el.classList.remove('has-active-bubble');
         });
@@ -101,21 +113,39 @@ function initSkillsSystem(): void {
         closeAllBubbles();
         skillGroups.forEach(group => {
             group.classList.remove('is-expanded');
+            const header = qs('.skill-group-header', group);
+            if (header) header.setAttribute('aria-expanded', 'false');
         });
     }
 
-    // 1. Kategori-rad klick
+    // Kategori-klick & Tangentbord (Enter / Space)
     skillGroups.forEach(group => {
         const header = qs('.skill-group-header', group);
-        on(header, 'click', e => {
-            e.stopPropagation();
+        if (!header) return;
+
+        const toggleGroup = (): void => {
             const isCurrentlyExpanded = group.classList.contains('is-expanded');
             closeAllBubbles();
-            group.classList.toggle('is-expanded', !isCurrentlyExpanded);
+            const willExpand = !isCurrentlyExpanded;
+            group.classList.toggle('is-expanded', willExpand);
+            header.setAttribute('aria-expanded', String(willExpand));
+        };
+
+        on(header, 'click', e => {
+            e.stopPropagation();
+            toggleGroup();
+        });
+
+        // Tillåt öppning via Enter och Mellanslag
+        on(header, 'keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleGroup();
+            }
         });
     });
 
-    // 2. Sub-skill items
+    // Enskilda språk: Klick, Hover och Tangentbord (Enter, Space, Pilar)
     subSkillItems.forEach(item => {
         const skillTokens = (item.getAttribute('data-skill-id') ?? '').split(' ');
 
@@ -131,20 +161,7 @@ function initSkillsSystem(): void {
             }
         });
 
-        on(item, 'click', e => {
-            const target = e.target as HTMLElement | null;
-            if (target && target.closest('.bubble-close-btn')) {
-                e.stopPropagation();
-                closeAllBubbles();
-                return;
-            }
-
-            if (target && target.closest('.white-talk-bubble')) {
-                return;
-            }
-
-            e.stopPropagation();
-
+        const toggleSubSkill = (): void => {
             const isAlreadyOpen = item.classList.contains('has-bubble-open');
             closeAllBubbles();
 
@@ -158,16 +175,80 @@ function initSkillsSystem(): void {
                 activeSubSkill = item;
                 highlightSkill(skillTokens);
             }
+        };
+
+        on(item, 'click', e => {
+            const target = e.target as HTMLElement | null;
+            if (target && target.closest('.bubble-close-btn')) {
+                e.stopPropagation();
+                closeAllBubbles();
+                return;
+            }
+
+            if (target && target.closest('.white-talk-bubble')) {
+                return;
+            }
+
+            e.stopPropagation();
+            toggleSubSkill();
+        });
+
+        // Tangentbordsstöd: Enter/Space för att öppna, Pilar (↓/↑) för att navigera
+        on(item, 'keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleSubSkill();
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const next = item.nextElementSibling as HTMLElement | null;
+                if (next && next.classList.contains('sub-skill-item')) {
+                    next.focus();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prev = item.previousElementSibling as HTMLElement | null;
+                if (prev && prev.classList.contains('sub-skill-item')) {
+                    prev.focus();
+                }
+            }
         });
     });
 
-    // 3. Klick utanför (Fix 2 & 3: removed unnecessary optional chaining on non-nullish target)
+    // Skrolla panelen stänger öppna pratbubblor
+    if (leftPanel) {
+        on(
+            leftPanel,
+            'scroll',
+            () => {
+                if (activeSubSkill) closeAllBubbles();
+            },
+            { passive: true }
+        );
+    }
+
+    // 3. GLOBAL KLICK UTANFÖR & ESCAPE-TANGENT
     on(document, 'click', e => {
         const target = e.target as HTMLElement | null;
-        if (!target || !target.closest('.section-skills')) {
+        if (!target) return;
+
+        // Klick utanför kompetenser -> stäng pratbubbla & fäll ihop
+        if (!target.closest('.section-skills')) {
             collapseAllSkills();
         } else if (!target.closest('.sub-skill-item') && !target.closest('.skill-group-header')) {
             closeAllBubbles();
+        }
+
+        // Klick utanför utbildning -> stäng öppnade utbildningslådor
+        if (!target.closest('.section-edu')) {
+            closeAllEducation();
+        }
+    });
+
+    on(document, 'keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            // Escape stänger både kompetenser och utbildning!
+            collapseAllSkills();
+            closeAllEducation();
         }
     });
 }
