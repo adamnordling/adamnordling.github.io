@@ -220,4 +220,20 @@
     .app-card:nth-child(3) {
         view-transition-name: card-everything;
     }
+
+    /* ==========================================================================
+       TOUCH & MOBILE DISPLAY FOR PROJECT CARDS
+       No washed-out grayscale on touchscreens; full color and crisp touch
+       ========================================================================== */
+    @media (hover: none), (max-width: 900px) {
+        .app-img-container img,
+        .app-img-container svg {
+            filter: grayscale(0%) opacity(1) !important;
+        }
+
+        .app-card:active {
+            transform: scale(0.98);
+            border-color: var(--accent);
+        }
+    }
 }

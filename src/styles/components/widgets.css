@@ -737,32 +737,6 @@
     /* ==========================================================================
        4. STRICT RESPONSIVE HIERARCHY
        ========================================================================== */
-    /* Desktop (> 750px): Fix Theme Toggle to Top-Left */
-    @media (min-width: 751px) {
-        .dock-mobile-lang {
-            position: fixed;
-            top: 24px;
-            left: 68px;
-            z-index: 100;
-        }
-
-        .status-dock .theme-toggle {
-            position: fixed;
-            top: 24px;
-            left: 24px;
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            z-index: 100;
-        }
-
-        .lang-trigger-text {
-            display: none;
-        }
-    }
-
     /* Tier 1 (<= 1600px): Drop secondary architectural tags */
     @media (max-width: 1600px) {
         .pill-ts,
@@ -842,20 +816,64 @@
             display: none !important;
         }
     }
-    /* Tier 4 (<= 750px Phone): DOCK FLIPS TO TOP HEADER */
-    @media (max-width: 750px) {
+
+    /* 1. Desktop: Endast när skärmen är bredare än 750px OCH högre än 500px */
+    @media (min-width: 751px) and (min-height: 501px) {
+        .dock-mobile-lang {
+            position: fixed;
+            top: 66px;
+            left: 24px;
+            z-index: 100;
+        }
+
+        .status-dock .theme-toggle {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .dock-mobile-lang .lang-trigger {
+            width: 36px;
+            height: 30px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 0.74rem;
+        }
+
+        .dock-mobile-lang .lang-trigger .chevron,
+        .dock-mobile-lang .lang-trigger-text {
+            display: none !important;
+        }
+
+        .dock-mobile-lang .lang-current-label {
+            display: inline-block !important;
+            font-family: var(--font-mono), monospace;
+            font-weight: 700;
+            font-size: 0.72rem;
+        }
+    }
+
+    /* 2. Mobil Top Header: Gäller antingen vid mobil bredd (<= 750px) ELLER roterad mobil (<= 500px höjd) */
+    @media (max-width: 1150px), (max-height: 500px) and (orientation: landscape) {
         .status-dock {
-            top: 0;
-            bottom: auto;
-            height: 48px;
-            border-top: none;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            padding: 0 12px;
+            top: 0 !important;
+            bottom: auto !important;
+            height: 48px !important;
+            border-top: none !important;
+            border-bottom: 1px solid var(--border-color) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+            padding: 0 12px !important;
         }
 
         .profile-img {
-            margin-top: 25px;
+            margin-top: 20px !important;
         }
 
         .dock-desktop-only {
@@ -866,48 +884,46 @@
             display: block !important;
         }
 
-        .dock-center .dock-lh-group {
-            display: none !important;
-        }
-
         .dock-mobile-lang {
-            display: inline-block;
-            margin-left: 6px;
+            display: inline-block !important;
+            position: static !important;
+            margin-left: 6px !important;
         }
 
         .dock-mobile-lang .lang-trigger {
-            height: 30px;
-            padding: 0 8px;
-            font-size: 0.76rem;
-            gap: 5px;
+            height: 30px !important;
+            width: auto !important;
+            padding: 0 8px !important;
+            font-size: 0.76rem !important;
+            gap: 5px !important;
         }
 
         .dock-mobile-lang .lang-current-label {
-            display: none;
+            display: none !important;
         }
 
         .dock-mobile-lang .lang-trigger-text {
-            display: inline;
-            font-weight: 500;
+            display: inline !important;
+            font-weight: 500 !important;
         }
 
         .dock-right {
-            gap: 8px;
+            gap: 8px !important;
         }
 
         .status-dock .theme-toggle {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            border-radius: 6px;
+            position: static !important;
+            width: 30px !important;
+            height: 30px !important;
+            border: 1px solid var(--border-color) !important;
+            background: var(--card-bg) !important;
+            border-radius: 6px !important;
         }
 
         .clock-details .clock-year {
-            display: none;
+            display: none !important;
         }
 
-        /* Adjust portfolio top margin on mobile so it doesn't hide behind header */
         .portfolio-wrapper {
             padding-top: 60px !important;
         }
