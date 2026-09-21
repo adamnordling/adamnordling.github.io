@@ -96,6 +96,8 @@ Gör en subabase
 
 
 
+translate education all
+
 strict typescript, vanilla ES modules, CSS layers, VITE
 
 kolla om appen startas i svenksa elle renegleska

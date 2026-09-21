@@ -1408,5 +1408,24 @@
                 transform: translateY(0);
             }
         }
+
+        @media (max-width: 450px) {
+            .status-dock .dock-divider.dock-mobile-only,
+            .status-dock .clock-details,
+            .status-dock .clock-time {
+                display: none !important;
+            }
+
+            .status-dock .dock-left {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .status-dock .font-switcher {
+                display: flex !important;
+                justify-content: center;
+                margin: 0 auto;
+            }
+        }
     }
 }

@@ -230,32 +230,32 @@ export function initCanvasBackground(): void {
         updateBounds();
     });
 
-    // Desktop: Listen to BOTH left and right panel scrolls
-    const leftPanel = document.querySelector<HTMLElement>('.left-panel');
-    if (leftPanel) {
-        on(
-            leftPanel,
-            'scroll',
-            () => {
+    // Replace direct synchronous calls on scroll with a debounced/rAF batch runner
+    let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    function scheduleExclusionUpdate(): void {
+        if (reflowTimeout) clearTimeout(reflowTimeout);
+        reflowTimeout = setTimeout(() => {
+            requestAnimationFrame(() => {
                 updateExclusionRects();
                 wakeAnimation();
-            },
-            { passive: true }
-        );
+            });
+        }, 60);
+    }
+
+    // Desktop: Listen to panel scrolls safely
+    const leftPanel = document.querySelector<HTMLElement>('.left-panel');
+    if (leftPanel) {
+        on(leftPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
     }
 
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
     if (rightPanel) {
-        on(
-            rightPanel,
-            'scroll',
-            () => {
-                updateExclusionRects();
-                wakeAnimation();
-            },
-            { passive: true }
-        );
+        on(rightPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
     }
+
+    // Mobile / Tablet: Window scroll
+    on(window, 'scroll', scheduleExclusionUpdate, { passive: true });
 
     // Mobile / Tablet: Window scroll
     on(
