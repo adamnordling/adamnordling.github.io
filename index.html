@@ -102,8 +102,18 @@
     <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)"/>
 
     <!-- Preload Critical Rendering Path Assets -->
-    <!-- Responsive Preload: Downloads ONLY 300 on mobile, and ONLY 600 on desktop -->
-    <!-- Desktop: Förhandsladda 600px enbart på skärmar över 768px -->
+    <!-- MOBIL -->
+    <link
+            rel="preload"
+            as="image"
+            type="image/webp"
+            href="./assets/profile-300.webp"
+            media="(max-width: 768px)"
+            fetchpriority="high"
+    />
+
+    <!-- TABLET / DESKTOP -->
+    <!-- Desktop (769px+): Förhandsladda 600px -->
     <link
             rel="preload"
             as="image"
@@ -112,7 +122,7 @@
             media="(min-width: 769px)"
             fetchpriority="high"
     />
-    <!-- Mobil: Förhandsladda 300px enbart på skärmar upp till 768px -->
+    <!-- Mobil/Tablet (upp till 768px): Förhandsladda 300px -->
     <link
             rel="preload"
             as="image"
@@ -2557,20 +2567,22 @@
                                     title="Open Nutrition live app"
                             >
                                 <picture>
-                                    <!-- Mobile: Force 400px -->
-                                    <source media="(max-width: 768px)" srcset="./assets/nutrition-400.webp"
-                                            type="image/webp"/>
-
-                                    <!-- Desktop: Force 800px -->
-                                    <source media="(min-width: 769px)" srcset="./assets/nutrition-800.webp"
-                                            type="image/webp"/>
-
+                                    <source
+                                            media="(max-width: 768px)"
+                                            srcset="./assets/nutrition-400.webp 1x, ./assets/nutrition-800.webp 2x"
+                                            type="image/webp"
+                                    />
+                                    <source
+                                            media="(min-width: 769px)"
+                                            srcset="./assets/nutrition-400.webp 1x, ./assets/nutrition-800.webp 2x"
+                                            type="image/webp"
+                                    />
                                     <img
-                                            src="./assets/nutrition-800.webp"
+                                            src="./assets/nutrition-400.webp"
                                             alt="Open Nutrition interface preview"
                                             width="400"
-                                            height="160"
-                                            loading="lazy"
+                                            height="210"
+                                            fetchpriority="high"
                                             decoding="async"
                                     />
                                 </picture>
