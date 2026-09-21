@@ -64,8 +64,7 @@ interface MetricInfo {
 }
 
 function initMobileMarqueeTelemetry(): void {
-    // 1. Get the elements
-    // 1. Fetch raw elements
+    const rawViewport = document.getElementById('mobile-marquee-viewport');
     const rawTrack = document.getElementById('mobile-marquee-track');
     const rawCard = document.getElementById('m-inspector-card');
     const rawTitle = document.getElementById('m-inspector-title');
@@ -73,16 +72,19 @@ function initMobileMarqueeTelemetry(): void {
     const rawCloseBtn = document.getElementById('m-inspector-close');
     const pills = document.querySelectorAll<HTMLElement>('.m-pill');
 
-    // 2. Early return if any are missing
-    if (!rawTrack || !rawCard || !rawTitle || !rawDesc || !rawCloseBtn) return;
+    if (!rawViewport || !rawTrack || !rawCard || !rawTitle || !rawDesc || !rawCloseBtn) return;
 
-    // 3. Re-assign to strict constants.
-    // This permanently proves to TypeScript's closure analysis that these are HTMLElement (NEVER null)
+    const viewport: HTMLElement = rawViewport;
     const track: HTMLElement = rawTrack;
     const inspectorCard: HTMLElement = rawCard;
     const inspectorTitle: HTMLElement = rawTitle;
     const inspectorDesc: HTMLElement = rawDesc;
     const closeBtn: HTMLElement = rawCloseBtn;
+
+    const MARQUEE_DURATION = 22; // Matches CSS animation 22s
+    let currentTrackX = 0;
+    let activeMetricKey: string | null = null;
+    let resumeTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const metricData: Record<string, MetricInfo> = {
         lh: {
@@ -129,17 +131,158 @@ function initMobileMarqueeTelemetry(): void {
         }
     };
 
-    function closeInspector(): void {
+    function getTrackTranslateX(): number {
+        const style = window.getComputedStyle(track);
+        const transform = style.transform;
+        if (!transform || transform === 'none') return 0;
+        try {
+            const matrix = new DOMMatrix(transform);
+            return matrix.m41;
+        } catch {
+            const match = /matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([^,]+)/.exec(transform);
+            return match ? parseFloat(match[1]) : 0;
+        }
+    }
+
+    function resumeRolling(atX: number): void {
+        const halfWidth = track.scrollWidth / 2;
+        if (halfWidth <= 0) return;
+
+        let normalizedX = atX;
+        while (normalizedX > 0) normalizedX -= halfWidth;
+        while (normalizedX < -halfWidth) normalizedX += halfWidth;
+        currentTrackX = normalizedX;
+
+        const progress = Math.abs(normalizedX) / halfWidth;
+        const elapsed = progress * MARQUEE_DURATION;
+
         track.classList.remove('is-paused');
+        track.style.animation = `marquee-roll ${MARQUEE_DURATION.toString()}s linear infinite`;
+        track.style.animationDelay = `-${elapsed.toFixed(3)}s`;
+        track.style.transform = '';
+    }
+
+    function freezeRolling(): void {
+        currentTrackX = getTrackTranslateX();
+        track.style.animation = 'none';
+        track.style.transform = `translateX(${currentTrackX.toFixed(2)}px)`;
+        track.classList.add('is-paused');
+    }
+
+    function closeInspector(): void {
+        activeMetricKey = null;
         inspectorCard.classList.add('hidden');
         pills.forEach(p => {
             p.classList.remove('is-active');
         });
+
+        if (track.style.animation === 'none') {
+            resumeRolling(currentTrackX);
+        } else {
+            track.classList.remove('is-paused');
+        }
     }
 
+    function scheduleResume(): void {
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        resumeTimeout = setTimeout(() => {
+            // Only resume if user does NOT currently have an open inspector card
+            if (!activeMetricKey && inspectorCard.classList.contains('hidden')) {
+                resumeRolling(currentTrackX);
+            }
+        }, 1000);
+    }
+
+    // --- SWIPE / DRAG HANDLERS ---
+    let isPointerDown = false;
+    let isDragging = false;
+    let justSwiped = false;
+    let startX = 0;
+    let startY = 0;
+    let dragStartX = 0;
+
+    viewport.addEventListener('pointerdown', (e: PointerEvent) => {
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        isPointerDown = true;
+        isDragging = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        freezeRolling();
+        dragStartX = currentTrackX;
+    });
+
+    window.addEventListener('pointermove', (e: PointerEvent) => {
+        if (!isPointerDown) return;
+
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+
+        if (!isDragging) {
+            // Check if user is scrolling sideways vs vertical document scroll
+            if (Math.abs(deltaX) > 5 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                isDragging = true;
+                viewport.classList.add('is-dragging');
+                try {
+                    track.setPointerCapture(e.pointerId);
+                } catch {
+                    // Ignored if capture unsupported
+                }
+            } else if (Math.abs(deltaY) > 5) {
+                // Vertical page scroll: abort marquee drag
+                isPointerDown = false;
+                scheduleResume();
+                return;
+            }
+        }
+
+        if (isDragging) {
+            const halfWidth = track.scrollWidth / 2;
+            if (halfWidth > 0) {
+                let nextX = dragStartX + deltaX;
+                while (nextX > 0) nextX -= halfWidth;
+                while (nextX < -halfWidth) nextX += halfWidth;
+                currentTrackX = nextX;
+                track.style.transform = `translateX(${currentTrackX.toFixed(2)}px)`;
+            }
+        }
+    });
+
+    const onPointerUp = (e: PointerEvent): void => {
+        if (!isPointerDown) return;
+        isPointerDown = false;
+        viewport.classList.remove('is-dragging');
+
+        if (isDragging) {
+            isDragging = false;
+            justSwiped = true;
+            setTimeout(() => {
+                justSwiped = false;
+            }, 60);
+
+            try {
+                if (track.hasPointerCapture(e.pointerId)) {
+                    track.releasePointerCapture(e.pointerId);
+                }
+            } catch {
+                // Ignored
+            }
+        }
+
+        scheduleResume();
+    };
+
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+
+    // --- PILL CLICK LOGIC ---
     pills.forEach(pill => {
         pill.addEventListener('click', e => {
             e.stopPropagation();
+
+            // Prevent mobile browser focus-scroll fighting our layout
+            pill.blur();
+
+            if (justSwiped) return;
 
             const metricKey = pill.getAttribute('data-metric');
             if (!metricKey || !(metricKey in metricData)) return;
@@ -150,25 +293,37 @@ function initMobileMarqueeTelemetry(): void {
                 return;
             }
 
-            // 1. Pausa rullningen
-            track.classList.add('is-paused');
+            if (resumeTimeout) clearTimeout(resumeTimeout);
+            freezeRolling();
+
+            activeMetricKey = metricKey;
             pills.forEach(p => {
                 p.classList.remove('is-active');
             });
 
-            // 2. Markera samma märke i båda uppsättningarna
+            // Highlight in both sets
             document.querySelectorAll<HTMLElement>(`.m-pill[data-metric="${metricKey}"]`).forEach(p => {
                 p.classList.add('is-active');
             });
 
-            // 3. Fyll i data baserat på valt språk
             const currentLang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
             const data = metricData[metricKey];
             inspectorTitle.textContent = data.title[currentLang];
             inspectorDesc.textContent = data.desc[currentLang];
-
-            // 4. Visa kortet
             inspectorCard.classList.remove('hidden');
+
+            // Anchor view to the true bottom so BOTH the card text and pills stay in view
+            const anchorToBottom = (): void => {
+                window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                });
+            };
+
+            requestAnimationFrame(() => {
+                anchorToBottom();
+                setTimeout(anchorToBottom, 120);
+            });
         });
     });
 
@@ -177,10 +332,23 @@ function initMobileMarqueeTelemetry(): void {
         closeInspector();
     });
 
+    // Dismiss only when clicking outside pills AND outside inspector card
     document.addEventListener('click', e => {
         const target = e.target as HTMLElement | null;
-        if (!target || !target.closest('.m-pill')) {
-            closeInspector();
+        if (!target || !target.closest('.m-pill, .m-inspector-card')) {
+            if (!inspectorCard.classList.contains('hidden')) {
+                closeInspector();
+            }
+        }
+    });
+
+    window.addEventListener('site:languagechange', (e: Event) => {
+        const custom = e as CustomEvent<{ lang: 'en' | 'sv' }>;
+        const lang = custom.detail.lang;
+        if (activeMetricKey !== null) {
+            const data = metricData[activeMetricKey];
+            inspectorTitle.textContent = data.title[lang];
+            inspectorDesc.textContent = data.desc[lang];
         }
     });
 }

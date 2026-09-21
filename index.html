@@ -2085,10 +2085,27 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
     <div class="m-marquee-viewport" id="mobile-marquee-viewport">
         <div class="m-marquee-track" id="mobile-marquee-track">
             <!-- SET 1 -->
+            <!-- SET 1 -->
             <div class="m-marquee-group">
-                <button type="button" class="m-pill" data-metric="lh">
-                    <span class="m-pill-dot green"></span>
-                    <span class="m-pill-label">LH: 4×100</span>
+                <button type="button" class="m-pill m-pill-lh" data-metric="lh">
+                    <span class="m-pill-mobile-only">
+                        <span class="m-pill-dot green"></span>
+                        <span class="m-pill-label">LH: 4×100</span>
+                    </span>
+                    <span class="m-pill-tablet-only">
+                        <svg class="dock-svg-icon lh-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                            <path d="M12 12l3-2"/>
+                        </svg>
+                        <span class="lh-title">LIGHTHOUSE</span>
+                        <span class="lh-scores">
+                            <span class="lh-item"><span class="lh-val">100</span><small>PERF</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>A11Y</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>BP</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>SEO</small></span>
+                        </span>
+                    </span>
                 </button>
                 <button type="button" class="m-pill" data-metric="lcp">
                     <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -2117,9 +2134,25 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
 
             <!-- SET 2 (Dubblerad för oändlig sömlös CSS-rullning) -->
             <div class="m-marquee-group" aria-hidden="true">
-                <button type="button" class="m-pill" data-metric="lh" tabindex="-1">
-                    <span class="m-pill-dot green"></span>
-                    <span class="m-pill-label">LH: 4×100</span>
+                <button type="button" class="m-pill m-pill-lh" data-metric="lh" tabindex="-1">
+                    <span class="m-pill-mobile-only">
+                        <span class="m-pill-dot green"></span>
+                        <span class="m-pill-label">LH: 4×100</span>
+                    </span>
+                    <span class="m-pill-tablet-only">
+                        <svg class="dock-svg-icon lh-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/>
+                            <path d="M12 12l3-2"/>
+                        </svg>
+                        <span class="lh-title">LIGHTHOUSE</span>
+                        <span class="lh-scores">
+                            <span class="lh-item"><span class="lh-val">100</span><small>PERF</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>A11Y</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>BP</small></span>
+                            <span class="lh-item"><span class="lh-val">100</span><small>SEO</small></span>
+                        </span>
+                    </span>
                 </button>
                 <button type="button" class="m-pill" data-metric="lcp" tabindex="-1">
                     <svg class="m-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -2164,29 +2197,6 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
             <span class="dock-status-label">CLOUDFLARE EDGE</span>
         </div>
 
-        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
-        <div class="font-switcher" role="group" aria-label="Font configuration">
-            <button class="font-btn active" data-font="default"
-                    data-tooltip-en="System Sans-Serif font"
-                    data-tooltip-sv="Systemtypsnitt Sans-Serif"
-                    aria-label="Default System Font" type="button">A
-            </button>
-            <button class="font-btn" data-font="serif"
-                    data-tooltip-en="Charter Serif font"
-                    data-tooltip-sv="Seriftypsnitt (Charter)"
-                    aria-label="Serif Font" type="button">A
-            </button>
-            <button class="font-btn" data-font="monospace"
-                    data-tooltip-en="Monospace Code font"
-                    data-tooltip-sv="Monospace (Kodtypsnitt)"
-                    aria-label="Monospace Font" type="button">A
-            </button>
-        </div>
-
-
-        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
-
-        <span class="dock-copyright dock-desktop-only">© <span id="footer-year">2026</span> Adam Nordling</span>
 
         <!-- Mobile Language Selector -->
         <div class="lang-dropdown dock-mobile-lang">
@@ -2212,6 +2222,37 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                 </button>
             </div>
         </div>
+
+        <!-- Divider between A A A and Language on mobile/tablet -->
+        <div class="dock-divider dock-mobile-only" aria-hidden="true"></div>
+        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
+
+        <div class="font-switcher" role="group" aria-label="Font configuration">
+            <button class="font-btn active" data-font="default"
+                    data-tooltip-en="System Sans-Serif font"
+                    data-tooltip-sv="Systemtypsnitt Sans-Serif"
+                    aria-label="Default System Font" type="button">A
+            </button>
+            <button class="font-btn" data-font="serif"
+                    data-tooltip-en="Charter Serif font"
+                    data-tooltip-sv="Seriftypsnitt (Charter)"
+                    aria-label="Serif Font" type="button">A
+            </button>
+            <button class="font-btn" data-font="monospace"
+                    data-tooltip-en="Monospace Code font"
+                    data-tooltip-sv="Monospace (Kodtypsnitt)"
+                    aria-label="Monospace Font" type="button">A
+            </button>
+        </div>
+
+        <!-- Divider between A A A and Language on mobile/tablet -->
+        <div class="dock-divider dock-mobile-only" aria-hidden="true"></div>
+
+        <div class="dock-divider dock-desktop-only" aria-hidden="true"></div>
+
+        <span class="dock-copyright dock-desktop-only">© <span id="footer-year">2026</span> Adam Nordling</span>
+
+
     </div>
 
     <!-- CENTER -->

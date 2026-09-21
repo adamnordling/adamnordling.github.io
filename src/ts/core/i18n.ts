@@ -37,6 +37,8 @@ export function setLanguage(lang: Language): void {
     langButtons.forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
+
+    window.dispatchEvent(new CustomEvent('site:languagechange', { detail: { lang } }));
 }
 
 function getInitialLanguage(): Language {
