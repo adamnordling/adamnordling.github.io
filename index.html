@@ -117,14 +117,12 @@
             imagesrcset="./assets/profile-300.webp 300w, ./assets/profile-600.webp 600w"
             imagesizes="(max-width: 768px) 170px, 293px"
             fetchpriority="high"
-            crossorigin="anonymous"
     />
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./src/styles/main.css"/>
 
     <!-- External Connections -->
-    <link rel="preconnect" href="https://api.github.com" crossorigin/>
     <link rel="dns-prefetch" href="https://api.github.com"/>
     <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin/>
     <link rel="dns-prefetch" href="https://static.cloudflareinsights.com"/>
@@ -159,7 +157,7 @@
                                     width="293"
                                     height="255"
                                     fetchpriority="high"
-                                    crossorigin="anonymous"
+                                    decoding="async"
                                     draggable="false"
                             />
                         </picture>
@@ -2922,7 +2920,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                          stroke="currentColor" stroke-width="2">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
-                    <span class="m-pill-label">Vite 5 · ESNext</span>
+                    <span class="m-pill-label">Vite 8 · ESNext</span>
                 </button>
                 <button type="button" class="m-pill" data-metric="ts">
                     <span class="m-pill-label">TS Strict</span>

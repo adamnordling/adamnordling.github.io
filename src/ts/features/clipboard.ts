@@ -11,7 +11,7 @@ export function initClipboard(): void {
         const obf = emailCopyBtn?.getAttribute('data-obf');
         if (!obf) return;
 
-        let email = '';
+        let email: string;
         try {
             email = atob(obf);
         } catch {

@@ -12,12 +12,10 @@ function inlineCssPlugin(): Plugin {
             for (const [fileName, asset] of Object.entries(ctx.bundle)) {
                 if (fileName.endsWith('.css') && asset.type === 'asset') {
                     const cssContent = typeof asset.source === 'string' ? asset.source : asset.source.toString();
-                    // Inject CSS directly into a <style> block and remove external <link>
                     inlinedHtml = inlinedHtml.replace(
                         new RegExp(`<link[^>]*href="[^"]*${fileName}"[^>]*>`, 'i'),
                         `<style>${cssContent}</style>`
                     );
-                    // Also catch Vite's auto-generated link
                     inlinedHtml = inlinedHtml.replace(
                         /<link rel="stylesheet"[^>]*crossorigin[^>]*>/i,
                         `<style>${cssContent}</style>`
@@ -37,7 +35,7 @@ export default defineConfig({
     build: {
         outDir: 'dist',
         emptyOutDir: true,
-        target: 'es2022',
-        minify: 'esbuild'
+        target: 'es2022'
+        // 'minify' behöver inte sättas — Vite minifierar automatiskt med Rolldown/OXC!
     }
 });

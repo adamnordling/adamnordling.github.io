@@ -37,25 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initPerformanceMonitoring();
-
-    // Register Service Worker
-    if (
-        'serviceWorker' in navigator &&
-        (window.location.protocol === 'https:' ||
-            window.location.hostname === 'localhost' ||
-            window.location.hostname === '127.0.0.1')
-    ) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker
-                .register('./sw.js')
-                .then(reg => {
-                    console.warn('Service Worker registered! Scope:', reg.scope);
-                })
-                .catch((err: unknown) => {
-                    console.error('Service Worker registration failed:', err);
-                });
-        });
-    }
 });
 
 interface MetricInfo {
@@ -109,7 +90,7 @@ function initMobileMarqueeTelemetry(): void {
             }
         },
         runtime: {
-            title: { en: 'Vite 5 · ESNext', sv: 'Vite 5 · ESNext' },
+            title: { en: 'Vite 8 · ESNext', sv: 'Vite 8 · ESNext' },
             desc: {
                 en: 'Compiled directly to native ECMAScript modules with zero client framework overhead (no React/Vue weight).',
                 sv: 'Kompilerat direkt till webbläsarens native ES-moduler helt utan tunga ramverk som React eller Vue.'

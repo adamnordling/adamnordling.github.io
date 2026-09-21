@@ -224,7 +224,11 @@ export function initCanvasBackground(): void {
     }
 
     on(window, 'resize', updateBounds, { passive: true });
-    updateBounds();
+
+    // Måla canvas direkt, men skjut upp DOM-textmätningen 1 bildruta så TBT blir 0 ms
+    requestAnimationFrame(() => {
+        updateBounds();
+    });
 
     // Desktop: Listen to BOTH left and right panel scrolls
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
@@ -372,7 +376,7 @@ export function initCanvasBackground(): void {
             const isInCenterGutter = hasCenterGutter && x > leftPanelRight && x < rightPanelLeft;
 
             for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
-                let dotFade = 0;
+                let dotFade: number;
 
                 if (!isMobile) {
                     // Desktop structural fades (flanks and center canyon)
@@ -420,12 +424,13 @@ export function initCanvasBackground(): void {
                 }
 
                 if (minTextDist <= TEXT_CLEARANCE) {
-                    dotFade = 0;
-                } else if (minTextDist < TEXT_CLEARANCE + FADE_ZONE) {
-                    dotFade *= (minTextDist - TEXT_CLEARANCE) / FADE_ZONE;
+                    continue;
                 }
 
-                if (dotFade <= 0.02) continue;
+                if (minTextDist < TEXT_CLEARANCE + FADE_ZONE) {
+                    dotFade *= (minTextDist - TEXT_CLEARANCE) / FADE_ZONE;
+                    if (dotFade <= 0.02) continue;
+                }
 
                 const dx = mouseX - x;
                 const dy = mouseY - y;

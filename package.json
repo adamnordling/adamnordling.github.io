@@ -25,11 +25,14 @@
     "arrowParens": "avoid"
   },
   "devDependencies": {
-    "@eslint/js": "^9.10.0",
-    "eslint": "^9.10.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^8.6.0",
-    "vite": "^5.4.5"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "prettier": "^3.9.8",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "^8.70.0",
+    "vite": "^8.3.0"
+  },
+  "allowScripts": {
+    "esbuild@0.21.5": true
   }
 }

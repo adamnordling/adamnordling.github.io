@@ -82,8 +82,6 @@ language - more languages?
 
 Projects > hover the project to see a 10 sec video?
 
-Rolling with the image
-
 copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
 
 Terminal / CLI Drawer (~ / bash):
@@ -91,50 +89,14 @@ What it is: A collapsible bottom drawer or keyboard shortcut (e.g., pressing ` o
 help, skills, education, or curl contact outputs structured text. Why it works: Fun, highly memorable for software
 engineers, and fits your Linux/Low-level skill profile.
 
-System Telemetry / Performance Footer Badge:
-What it is: A tiny, crisp line in the footer:
-⚡ Built with Vanilla JS · 0 Dependencies · 99/100 Lighthouse · Clean Code Why it works: Subtle flex on performance
-optimization and minimalist craftsmanship.
-
-lighthouse footer
-
-portfolio project??
-
-subnet calc tools final touches: correct email
-
-Adda cloudflare analytics och mer?
-
-Tools ideas:
-
-png converter etc
-
-Optimize OS systems, SAFE, ,GOOD, VALID
-
 Gör en subabase
 
-clean up Skills.......
 
-bugs: Can't click github activity bugs: cant' click english smoothly from swedish Live demo GIFS on project
 ----------------
 
 
-Add Lighthouse CI (LHCI) to .github/workflows/ci.yml:
-Have GitHub Actions run Lighthouse on every pull request/commit, asserting scores of 100 across Performance,
-Accessibility, Best Practices, and SEO. Put the LHCI 4x 100 badge directly in your repo's README.md. Strict Content
-Security Policy (CSP):
-Avoid unsafe-inline styles by setting mouse coordinates via custom properties (element.style.setProperty ('--x', ...)),
-enabling a pure, hardened CSP without hash or unsafe directives. Keep the Live Bundle Under 30 KB Gzipped:
-Mention this explicitly in your repo: "Zero frameworks, strictly typed, 100/100 Lighthouse score, fully accessible,
-compiled with Vite".
 
 strict typescript, vanilla ES modules, CSS layers, VITE
-
-mobile: Show a footer in the end, a scrolling with all the information we subsided from the media queries it should
-scroll until you click something, then the click shows what it does - remove showable tills 1200px
-
-nya buttons på github repo och in development? svarta buttons fult
-
-panel divider missing on mobile dock diviver
 
 kolla om appen startas i svenksa elle renegleska
 
