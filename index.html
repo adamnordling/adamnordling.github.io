@@ -102,33 +102,14 @@
     <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)"/>
 
     <!-- Preload Critical Rendering Path Assets -->
-    <!-- MOBIL -->
+    <!-- Responsiv preload av profilbilden: matchar alltid exakt vad webbläsaren väljer -->
+    <!-- Förhandsladda profilbilden (LCP): matchar 1x, 2x, mobil och desktop exakt -->
     <link
             rel="preload"
             as="image"
             type="image/webp"
-            href="./assets/profile-300.webp"
-            media="(max-width: 768px)"
-            fetchpriority="high"
-    />
-
-    <!-- TABLET / DESKTOP -->
-    <!-- Desktop (769px+): Förhandsladda 600px -->
-    <link
-            rel="preload"
-            as="image"
-            type="image/webp"
-            href="./assets/profile-600.webp"
-            media="(min-width: 769px)"
-            fetchpriority="high"
-    />
-    <!-- Mobil/Tablet (upp till 768px): Förhandsladda 300px -->
-    <link
-            rel="preload"
-            as="image"
-            type="image/webp"
-            href="./assets/profile-300.webp"
-            media="(max-width: 768px)"
+            imagesrcset="./assets/profile-200.webp 200w, ./assets/profile-300.webp 300w, ./assets/profile-400.webp 400w, ./assets/profile-600.webp 600w"
+            imagesizes="(max-width: 956px) 175px, 293px"
             fetchpriority="high"
     />
 
@@ -137,7 +118,6 @@
 
     <!-- External Connections -->
     <link rel="dns-prefetch" href="https://api.github.com"/>
-    <link rel="dns-prefetch" href="https://static.cloudflareinsights.com"/>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.ico"/>
@@ -160,14 +140,14 @@
                 <div class="profile-card-container">
                     <div class="profile-card-inner">
                         <picture>
-                            <source media="(max-width: 768px)" srcset="./assets/profile-300.webp" type="image/webp"/>
-                            <source media="(min-width: 769px)" srcset="./assets/profile-600.webp" type="image/webp"/>
                             <img
-                                    src="./assets/profile-600.webp"
+                                    src="./assets/profile-300.webp"
+                                    srcset="./assets/profile-200.webp 200w, ./assets/profile-300.webp 300w, ./assets/profile-400.webp 400w, ./assets/profile-600.webp 600w"
+                                    sizes="(max-width: 956px) 175px, 293px"
                                     alt="Adam Nordling Profile Portrait"
                                     class="profile-img"
                                     width="293"
-                                    height="255"
+                                    height="253"
                                     fetchpriority="high"
                                     decoding="async"
                                     draggable="false"
@@ -2567,22 +2547,13 @@
                                     title="Open Nutrition live app"
                             >
                                 <picture>
-                                    <source
-                                            media="(max-width: 768px)"
-                                            srcset="./assets/nutrition-400.webp 1x, ./assets/nutrition-800.webp 2x"
-                                            type="image/webp"
-                                    />
-                                    <source
-                                            media="(min-width: 769px)"
-                                            srcset="./assets/nutrition-400.webp 1x, ./assets/nutrition-800.webp 2x"
-                                            type="image/webp"
-                                    />
                                     <img
-                                            src="./assets/nutrition-400.webp"
+                                            src="./assets/nutrition-300.webp"
+                                            srcset="./assets/nutrition-200.webp 200w, ./assets/nutrition-300.webp 300w, ./assets/nutrition-400.webp 400w, ./assets/nutrition-600.webp 600w, ./assets/nutrition-800.webp 800w"
+                                            sizes="(max-width: 520px) 90vw, (max-width: 956px) 45vw, 312px"
                                             alt="Open Nutrition interface preview"
-                                            width="400"
-                                            height="210"
-                                            fetchpriority="high"
+                                            width="312"
+                                            height="208"
                                             decoding="async"
                                     />
                                 </picture>
