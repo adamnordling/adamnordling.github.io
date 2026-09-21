@@ -1,178 +1,355 @@
 @layer components {
     .section-edu {
-        content-visibility: auto;
-        contain-intrinsic-size: 0 400px;
+        position: relative;
+        z-index: 40;
+        overflow: visible !important;
+        contain: none !important;
+        margin-bottom: 28px;
     }
 
     .education-list {
         list-style: none;
         padding-left: 0;
+        margin: 0;
     }
 
-    .edu-item {
-        margin-bottom: 8px;
-        border-radius: 8px;
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        overflow: hidden;
+    .edu-group {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         transition:
-            border-color 0.2s ease,
-            transform 0.2s ease;
+            transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+            border-color 0.2s ease;
     }
 
-    .edu-item:hover {
-        border-color: var(--text-muted);
+    body.light-theme .edu-group {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
-    .edu-toggle-btn {
+    .edu-group:hover {
+        transform: translateX(4px);
+        border-bottom-color: var(--accent);
+    }
+
+    .edu-group:hover .edu-degree-title {
+        color: var(--accent);
+    }
+
+    .edu-group.is-expanded {
+        transform: translateX(4px) !important;
+        border-bottom-color: var(--accent);
+        z-index: 60;
+    }
+
+    .edu-group.is-expanded .edu-degree-title {
+        color: var(--accent);
+    }
+
+    .edu-group-header {
         width: 100%;
         background: transparent;
         border: none;
         text-align: left;
-        padding: 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
         cursor: pointer;
+        padding: 0;
         font-family: inherit;
         color: inherit;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .edu-header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .edu-degree-title {
+        font-size: 0.94rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.3;
+        transition: color 0.15s ease;
+    }
+
+    .edu-date-badge {
+        font-family: var(--font-mono), monospace;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    .edu-school-preview {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        font-family: var(--font-mono), monospace;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: opacity 0.2s ease;
+    }
+
+    .edu-course-count {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    .edu-group.is-expanded .edu-school-preview {
+        color: var(--text-secondary);
+    }
+
+    /* Drawer */
+    .edu-vertical-drawer {
+        width: 100%;
+        display: grid;
+        grid-template-rows: 0fr;
+        overflow: hidden;
+        visibility: hidden;
+        transition:
+            grid-template-rows 280ms cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 280ms;
+    }
+
+    .edu-group.is-expanded .edu-vertical-drawer {
+        grid-template-rows: 1fr;
+        overflow: visible;
+        visibility: visible;
+    }
+
+    .edu-courses-container {
+        min-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: opacity 200ms ease;
+        padding-top: 10px;
+    }
+
+    .edu-group.is-expanded .edu-courses-container {
+        overflow: visible;
+        opacity: 1;
+    }
+
+    /* 2 Columns (8x8 for Master, 11x11 for Bachelor) */
+    .edu-courses-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 24px;
+        row-gap: 4px;
+        width: 100%;
+    }
+
+    .edu-course-col {
         display: flex;
         flex-direction: column;
         gap: 4px;
     }
 
-    .edu-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .edu-title {
-        font-weight: 600;
-        font-size: 0.94rem;
-        color: var(--text-primary);
-        user-select: text;
-        -webkit-user-select: text;
-    }
-
-    .edu-date {
+    /* Individual Course Item */
+    .course-item {
+        position: relative;
         font-family: var(--font-mono), monospace;
-        font-size: 0.82rem;
-        color: var(--text-muted);
-        white-space: nowrap;
-        user-select: text;
-        -webkit-user-select: text;
+        font-size: 0.77rem;
+        color: var(--text-secondary);
+        padding: 3px 6px;
+        border-radius: 4px;
+        width: fit-content;
+        cursor: pointer;
+        line-height: 1.4;
+        transition:
+            color 0.15s ease,
+            background 0.15s ease,
+            transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .edu-school-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-    }
-
-    .edu-school {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        user-select: text;
-        -webkit-user-select: text;
-    }
-
-    .edu-toggle-btn .chevron {
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    .course-item::before {
+        content: '› ';
         color: var(--text-muted);
     }
 
-    .edu-item.is-open .edu-toggle-btn .chevron {
-        transform: rotate(180deg);
+    .course-item:hover {
+        color: var(--accent);
+        transform: translateX(4px);
+        background: rgba(255, 255, 255, 0.04);
     }
 
-    .edu-drawer {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1);
-        background: rgba(255, 255, 255, 0.02);
-        border-top: 1px solid transparent;
+    body.light-theme .course-item:hover {
+        background: rgba(0, 0, 0, 0.04);
     }
 
-    .edu-item.is-open .edu-drawer {
-        grid-template-rows: 1fr;
-        border-top-color: var(--border-color);
+    .course-item.is-selected {
+        color: var(--accent) !important;
+        font-weight: 700;
+        background: rgba(59, 130, 246, 0.1) !important;
+        transform: translateX(4px) !important;
+        z-index: 100;
     }
 
-    .edu-drawer-content {
-        min-height: 0;
-        overflow: hidden;
+    .course-item.is-thesis {
+        font-weight: 600;
+        color: var(--text-primary);
     }
 
-    .thesis-box {
+    .course-item.is-thesis::before {
+        content: '★ ';
+        color: var(--accent);
+    }
+
+    .course-item .white-talk-bubble {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 15px;
+        width: 340px;
+        max-height: 420px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+        background-color: #ffffff !important;
+        color: #0f172a;
+        border-radius: 8px;
         padding: 14px 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+        box-shadow:
+            0 20px 45px rgba(0, 0, 0, 0.4),
+            0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 99999 !important;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(6px) scale(0.97);
+        transition:
+            opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.18s;
+        border: 1px solid #cbd5e1;
+        isolation: isolate;
     }
 
-    .thesis-tag {
+    .edu-course-col:last-child .course-item .white-talk-bubble {
+        left: auto;
+        right: 15px;
+    }
+
+    .course-bubble-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    .course-item .white-talk-bubble p {
+        font-size: 0.77rem;
+        line-height: 1.45;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+
+    /* Flip bubble inward on the right column */
+    .edu-course-col:last-child .course-item .white-talk-bubble {
+        left: auto;
+        right: 10px;
+    }
+
+    .course-item .white-talk-bubble::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 24px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #ffffff transparent transparent transparent;
+    }
+
+    .edu-course-col:last-child .course-item .white-talk-bubble::after {
+        left: auto;
+        right: 24px;
+    }
+
+    .course-item.has-bubble-open .white-talk-bubble {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .course-bubble-code {
+        font-size: 0.7rem;
+        font-weight: 700;
+        font-family: var(--font-mono), monospace;
+        color: #1d4ed8;
+        letter-spacing: 0.05em;
+    }
+
+    .course-bubble-credits {
         font-size: 0.7rem;
         font-family: var(--font-mono), monospace;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        font-weight: 600;
+        color: #64748b;
     }
 
-    body.light-theme .thesis-tag {
-        color: #1d4ed8;
-        font-weight: 700;
+    .course-bubble-meta {
+        margin-top: 8px;
+        padding-top: 6px;
+        border-top: 1px solid #e2e8f0;
+        font-size: 0.72rem;
+        color: #64748b;
+        line-height: 1.4;
     }
 
-    .thesis-title {
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-top: 2px;
-        user-select: text;
-        -webkit-user-select: text;
+    .course-bubble-meta strong {
+        color: #1e293b;
     }
 
-    .thesis-abstract {
-        font-size: 0.82rem;
-        color: var(--text-secondary);
-        line-height: 1.5;
-        user-select: text;
-        -webkit-user-select: text;
-    }
-
-    .thesis-links {
+    .course-links-row {
         display: flex;
         gap: 8px;
-        margin-top: 4px;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid #e2e8f0;
     }
 
-    .thesis-btn {
+    .course-ext-btn {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
-        color: var(--text-primary);
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.78rem;
+        gap: 4px;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        color: #0f172a !important;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.72rem;
         font-family: var(--font-mono), monospace;
+        font-weight: 600;
         text-decoration: none !important;
-        transition: all 0.2s ease;
+        transition: all 0.15s ease;
     }
 
-    body.light-theme .thesis-btn {
-        background: rgba(0, 0, 0, 0.03);
+    .course-ext-btn:hover {
+        background: #e2e8f0;
+        border-color: #94a3b8;
+        color: #1d4ed8 !important;
     }
 
-    .thesis-btn:hover {
-        border-color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.1);
-    }
+    @media (max-width: 768px) {
+        .edu-courses-grid {
+            grid-template-columns: 1fr;
+            row-gap: 2px;
+        }
 
-    .thesis-ext-icon {
-        font-size: 0.8rem;
-        color: var(--text-muted);
+        .course-item .white-talk-bubble {
+            width: 86vw;
+            left: 0 !important;
+            right: auto !important;
+        }
+
+        .course-item .white-talk-bubble::after {
+            left: 20px !important;
+            right: auto !important;
+        }
     }
 }

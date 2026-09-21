@@ -43,17 +43,92 @@ function closeAllEducation(): void {
     });
 }
 
+// 1. UTBILDNING: Hantera utfällning, kurser och pratbubblor
+// 1. UTBILDNING: Hantera utfällning, kurser och pratbubblor
 function initEducationAccordion(): void {
-    const eduItems = qsa('.edu-item');
+    const eduGroups = qsa('.edu-group');
+    const courseItems = qsa('.course-item');
 
-    eduItems.forEach(item => {
-        const toggleBtn = qs('.edu-toggle-btn', item);
-        on(toggleBtn, 'click', () => {
-            const isOpen = item.classList.toggle('is-open');
-            if (toggleBtn) {
-                toggleBtn.setAttribute('aria-expanded', String(isOpen));
+    function closeAllCourseBubbles(): void {
+        courseItems.forEach(item => {
+            item.classList.remove('has-bubble-open', 'is-selected');
+        });
+    }
+
+    // Toggle Master / Bachelor Group
+    eduGroups.forEach(group => {
+        const header = qs('.edu-group-header', group);
+        if (!header) return;
+
+        const toggleGroup = (): void => {
+            const isCurrentlyExpanded = group.classList.contains('is-expanded');
+            closeAllCourseBubbles();
+            const willExpand = !isCurrentlyExpanded;
+            group.classList.toggle('is-expanded', willExpand);
+            header.setAttribute('aria-expanded', String(willExpand));
+        };
+
+        on(header, 'click', e => {
+            e.stopPropagation();
+            toggleGroup();
+        });
+
+        on(header, 'keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleGroup();
             }
         });
+    });
+
+    // Course Bubbles (Click, Close button & Keyboard navigation)
+    courseItems.forEach(item => {
+        const toggleCourse = (): void => {
+            const isAlreadyOpen = item.classList.contains('has-bubble-open');
+            closeAllCourseBubbles();
+
+            if (!isAlreadyOpen) {
+                item.classList.add('has-bubble-open', 'is-selected');
+            }
+        };
+
+        on(item, 'click', e => {
+            const target = e.target as HTMLElement | null;
+            if (target?.closest('.bubble-close-btn')) {
+                e.stopPropagation();
+                closeAllCourseBubbles();
+                return;
+            }
+            if (target?.closest('.white-talk-bubble')) {
+                return;
+            }
+            e.stopPropagation();
+            toggleCourse();
+        });
+
+        on(item, 'keydown', (e: KeyboardEvent) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggleCourse();
+            }
+        });
+    });
+
+    // Global outside click to close open education elements
+    on(document, 'click', e => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+
+        if (!target.closest('.section-edu')) {
+            closeAllCourseBubbles();
+            eduGroups.forEach(group => {
+                group.classList.remove('is-expanded');
+                const header = qs('.edu-group-header', group);
+                header?.setAttribute('aria-expanded', 'false');
+            });
+        } else if (!target.closest('.course-item') && !target.closest('.edu-group-header')) {
+            closeAllCourseBubbles();
+        }
     });
 }
 

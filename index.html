@@ -366,173 +366,973 @@
                     <span lang="en">Education</span>
                     <span lang="sv">Utbildning</span>
                 </h2>
-                <ul class="education-list">
-                    <!-- Master's Degree -->
-                    <li class="edu-item">
-                        <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                    <span class="edu-header">
-                                        <span class="edu-title">
-                                            <span lang="en">Master's Degree in Software Technology (120 HP)</span>
-                                            <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
-                                        </span>
-                                        <span class="edu-date">2023 – 2026</span>
-                                    </span>
-                            <span class="edu-school-row">
-                                        <span lang="en">Linnaeus University, Växjö — M.Sc. Software Technology</span>
-                                        <span lang="sv">Linnéuniversitetet, Växjö — M.Sc. Programvaruteknik</span>
-                                        <svg
-                                                class="chevron"
-                                                width="12"
-                                                height="12"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                        >
-                                            <path d="m6 9 6 6 6-6"></path>
-                                        </svg>
-                                    </span>
+                <div class="education-list">
+                    <!-- Master's Programme (16 Courses · 9 in Col 1, 7 in Col 2) -->
+                    <div class="edu-group">
+                        <button type="button" class="edu-group-header" aria-expanded="false">
+                            <span class="edu-header-top">
+                                <span class="edu-degree-title">
+                                    <span lang="en">M.Sc. Software Technology (120 Credits)</span>
+                                    <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
+                                </span>
+                                <span class="edu-date-badge">2023 – 2026</span>
+                            </span>
+                            <span class="edu-school-preview">
+                                <span lang="en">Linnaeus University — </span>
+                                <span lang="sv">Linnéuniversitetet — </span>
+                                <span class="edu-course-count">16 courses</span>
+                            </span>
                         </button>
-                        <div class="edu-drawer">
-                            <div class="edu-drawer-content">
-                                <div class="thesis-box">
-                                    <div class="thesis-header">
-                                        <span class="thesis-tag">Master's Thesis · 2026</span>
-                                        <h3 class="thesis-title">
-                                            A Systematic Approach for Selecting Trajectories for Data
-                                            Augmentation
-                                        </h3>
-                                    </div>
-                                    <p class="thesis-abstract">
-                                                <span lang="en"
-                                                >Trajectory data augmentation mitigates data scarcity in machine
-                                                    learning, but preserving spatio-temporal coherence remains
-                                                    challenging. This thesis establishes a systematic and scalable
-                                                    framework evaluating five selection strategies: Outlierness,
-                                                    Diversity, Representativeness, Uncertainty, and Random selection
-                                                    across four datasets (animal behavior, maritime AIS, and urban
-                                                    traffic). Using an Optuna-based hyperparameter optimization loop and
-                                                    UMAP topological analysis, the findings prove that systematic
-                                                    selection (specifically Outlierness and Uncertainty) offers superior
-                                                    stability over random sampling, demonstrating that strategic data
-                                                    selection is a primary determinant of augmentation success.</span
-                                                >
-                                        <span lang="sv"
-                                        >Dataaugmentering av trajektorier minskar databrist inom
-                                                    maskininlärning, men att bevara rumslig och tidsmässig koherens är
-                                                    komplext. Detta examensarbete utvecklar ett systematiskt och
-                                                    skalbart ramverk för att utvärdera fem urvalsstrategier:
-                                                    Outlierness, Diversity, Representativeness, Uncertainty och Random
-                                                    selection över fyra dataset (djurbeteende, marin AIS och
-                                                    stadstrafik). Genom en Optuna-baserad hyperparameteroptimering och
-                                                    UMAP-topologisk analys visar resultaten att systematiskt urval
-                                                    (särskilt Outlierness och Uncertainty) ger överlägsen stabilitet
-                                                    gentemot slumpmässigt urval, vilket etablerar att strategiskt
-                                                    dataurval är en avgörande faktor för framgångsrik
-                                                    augmentering.</span
-                                        >
-                                    </p>
-                                    <div class="thesis-links">
-                                        <a
-                                                href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524&amp;dswid=-850"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn"
-                                                aria-label="View Master's Thesis on DiVA Portal"
-                                        >
-                                            <span>DiVA Portal</span>
-                                            <span class="thesis-ext-icon">↗</span>
-                                        </a>
-                                        <a
-                                                href="https://arxiv.org/abs/2606.10938"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn thesis-arxiv"
-                                                aria-label="View Master's Thesis preprint on arXiv"
-                                        >
-                                            <span>arXiv</span>
-                                            <span class="thesis-ext-icon">↗</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                        <div class="edu-vertical-drawer">
+                            <div class="edu-courses-container">
+                                <div class="edu-courses-grid">
+                                    <!-- Column 1 (9 Courses) -->
+                                    <div class="edu-course-col">
+                                        <!-- 1. Systems Modeling and Simulation -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Systems Modeling (4DV650)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV650 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Systems Modeling and Simulation</div>
+                                                <p lang="en">Design and evaluation of deterministic and stochastic
+                                                    models. Focuses on event-driven simulations, continuous physical
+                                                    systems, queueing bottleneck analysis, agent-based multi-agent
+                                                    systems, and Monte Carlo sampling.</p>
+                                                <p lang="sv">Design och utvärdering av deterministiska och stokastiska
+                                                    modeller. Fokuserar på händelsestyrda simuleringar, köteori,
+                                                    agentbaserade system och Monte Carlo-metoder.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Practical Work:</strong> Simulated queueing bottlenecks and agent interactions in Simulink/Modelica. Written take-home examination.</span>
+                                                    <span lang="sv"><strong>Examination:</strong> Simuleringsmoduler i Simulink/Modelica samt teoretisk hemtentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <!-- Bachelor's Degree -->
-                    <li class="edu-item">
-                        <button type="button" class="edu-toggle-btn" aria-expanded="false">
-                                    <span class="edu-header">
-                                        <span class="edu-title">
-                                            <span lang="en">Bachelor's Degree in Network Security (180 HP)</span>
-                                            <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
-                                        </span>
-                                        <span class="edu-date">2020 – 2023</span>
-                                    </span>
-                            <span class="edu-school-row">
-                                        <span lang="en">Linnaeus University, Växjö — B.Sc. Network Security</span>
-                                        <span lang="sv">Linnéuniversitetet, Växjö — B.Sc. Nätverkssäkerhet</span>
-                                        <svg
-                                                class="chevron"
-                                                width="12"
-                                                height="12"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                        >
-                                            <path d="m6 9 6 6 6-6"></path>
-                                        </svg>
-                                    </span>
-                        </button>
-                        <div class="edu-drawer">
-                            <div class="edu-drawer-content">
-                                <div class="thesis-box">
-                                    <div class="thesis-header">
-                                        <span class="thesis-tag">Bachelor's Thesis · 2023</span>
-                                        <h3 class="thesis-title">
-                                            Edge Computing Security for IoT: A Systematic Literature Review
-                                        </h3>
+                                        <!-- 2. Code Transformation -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Code Transformation (4DV507)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV507 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Code Transformation and
+                                                    Interpretation
+                                                </div>
+                                                <p lang="en">Full compiler pipeline construction: lexical analysis,
+                                                    Context-Free Grammars with ANTLR, Abstract Syntax Tree (AST)
+                                                    construction, symbol tables, static type checking, target code
+                                                    generation to Python, and bytecode execution via ASM.</p>
+                                                <p lang="sv">Komplett kompilatorkonstruktion: lexikal analys,
+                                                    syntaxanalys med ANTLR, AST-konstruktion, symboltabeller, statisk
+                                                    typkontroll, kodgenerering till Python och ASM-bytekod.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Built 4-stage compiler in Java from scratch; written campus exam on parsing theory and bytecode interpreters.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Skrev 4-stegs kompilator i Java med ANTLR och ASM-interpretator; salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 3. Model-based Development -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Model-based Project (4DV651)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV651 · 10 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Project in Model-based Development
+                                                </div>
+                                                <p lang="en">Model-Driven Software Engineering (MDSE): domain-specific
+                                                    modeling using the Eclipse Modeling Framework (EMF), Model-to-Model
+                                                    (M2M) transformations with QVTo, Model-to-Text (M2T) generation with
+                                                    Acceleo, and Papyrus UML Profiles.</p>
+                                                <p lang="sv">Modellbaserad mjukvaruutveckling (MDSE): metamodellering i
+                                                    EMF, M2M-transformationer i QVTo, M2T-kodgenerering i Acceleo och
+                                                    UML-profiler i Papyrus.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Engineered an end-to-end model transformation pipeline deployed in Docker, supported by group architecture and reflection reports.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Konstruerade en komplett modelltrafoskedja körd i Docker samt teknisk slutrapport.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 4. Formal Methods -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Formal Methods (4DV701)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV701 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Formal Methods</div>
+                                                <p lang="en">Mathematical reasoning and correctness verification:
+                                                    axiomatic semantics, Hoare logic (preconditions, postconditions,
+                                                    loop invariants) in Dafny, concurrent timed automata, and temporal
+                                                    logic (LTL/CTL) verification in UPPAAL.</p>
+                                                <p lang="sv">Formell programkorrekthet och matematisk verifiering:
+                                                    Hoare-logik och automatiska bevis i Dafny samt modellprovning av
+                                                    tidskritiska automater (LTL/CTL) i UPPAAL.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Practical Labs:</strong> Formally verified recursive algorithms in Dafny; modeled reactive systems in UPPAAL; final theoretical home exam.</span>
+                                                    <span lang="sv"><strong>Laborationer:</strong> Bevisade algoritmer i Dafny; verifierade tillståndsrymder i UPPAAL; hemtentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 5. Selected Topics in CS -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Selected Topics in CS (4DV504)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV504 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Selected Topics in Computer Science
+                                                </div>
+                                                <p lang="en">Advanced research seminar analyzing contemporary software
+                                                    engineering paradigms: Self-Adaptive Software Systems, feedback
+                                                    loops, runtime verification, and Human-Computer Interaction
+                                                    (HCI).</p>
+                                                <p lang="sv">Avancerad forskningskurs med fokus på självadaptiva
+                                                    programvarusystem, arkitekturella återkopplingsloopar och
+                                                    människa-datorinteraktion.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Outputs:</strong> Published a popular-science research blog post, completed double-blind peer reviews, and delivered a video defense on state-of-the-art literature.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Författade populärvetenskaplig artikel, peer review och muntlig videopresentation.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 6. Machine Learning -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Machine Learning (4DV660)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV660 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Machine Learning</div>
+                                                <p lang="en">Mathematical modeling and scientific pipeline
+                                                    implementation: multiple linear regression, logistic classification,
+                                                    decision trees, random forests, kernel Support Vector Machines
+                                                    (SVM), K-Means clustering, and PCA dimensionality reduction.</p>
+                                                <p lang="sv">Matematisk modellering och maskininlärningspipor: multipel
+                                                    regression, logistisk klassificering, beslutsträd, SVM,
+                                                    K-Means-klustring och PCA.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> Programmed 7 end-to-end Python pipelines in NumPy, Pandas, and Scikit-Learn evaluating bias-variance tradeoffs and F-statistics.</span>
+                                                    <span lang="sv"><strong>Uppgifter:</strong> Implementerade 7 maskininlärningspipor i Scikit-Learn och Pandas i Jupyter Notebook.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 7. Parallel Computing -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Parallel Computing (4DV657)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV657 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Parallel Computing</div>
+                                                <p lang="en">High-performance computing and concurrent architectures:
+                                                    multi-core cache coherence, memory walls, C++11 concurrency, OpenMP
+                                                    compiler directives, MPI message-passing, and massively parallel
+                                                    SIMT CUDA programming on GPU architectures.</p>
+                                                <p lang="sv">Högpresterande och parallell beräkning: minneshierarkier,
+                                                    C++11-flertrådning, OpenMP-direktiv, distribuerad MPI och SIMT
+                                                    CUDA-programmering på NVIDIA GPU.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Benchmarked parallel sorting and Pearson correlation in C++/OpenMP; engineered CUDA reduction kernels on LNU GPU clusters; live oral code defense.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Optimerade parallell sortering och Pearson-korrelation; skrev CUDA-kernels för GPU-reduktioner.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 8. Data Intensive Systems -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Data Intensive Systems (4DV652)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV652 · 10 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Project in Data Intensive Systems</div>
+                                                <p lang="en">Engineering large-scale data architectures: exploratory
+                                                    data cleansing, training and scaling machine learning pipelines, and
+                                                    deploying distributed data consumption services in realistic
+                                                    production settings.</p>
+                                                <p lang="sv">Storskaliga dataintensiva system: datatvätt, feature
+                                                    engineering, träning och skalning av ML-modeller samt konstruktion
+                                                    av distribuerade dataflöden.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Delivered 18 progressive agile milestones across data ingestion, feature extraction, model tuning, and final deployment.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Levererade 18 iterativa milstolpar från dataingestion och modelloptimering till driftsättning.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 9. Deep Machine Learning (Moved to Col 1) -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Deep Machine Learning (4DV661)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV661 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Deep Machine Learning</div>
+                                                <p lang="en">Deep neural architectures: Convolutional Neural Networks
+                                                    (CNNs) for computer vision, optimization algorithms (Adam, RMSProp),
+                                                    regularization (dropout, batch norm), Recurrent Neural Networks
+                                                    (RNNs), LSTMs for time-series, and Reinforcement Learning (RL).</p>
+                                                <p lang="sv">Djupa neurala nätverk: CNN för datorseende,
+                                                    optimeringsalgoritmer, regularisering (dropout/batch norm), RNN och
+                                                    LSTM för tidsserier samt förstärkningsinlärning.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> Programmed neural classifiers in TensorFlow/Keras, tuned hyperparameters, trained sequence LSTMs, and evaluated convergence.</span>
+                                                    <span lang="sv"><strong>Uppgifter:</strong> Tränade konvolutionella nätverk, byggde tidsserie-LSTMs och utvärderade konvergens.</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="thesis-abstract">
-                                                <span lang="en"
-                                                >A systematic literature review (SLR) analyzing 82 primary studies
-                                                    from an initial pool of 1,667 articles across four digital libraries
-                                                    to evaluate IoT security threats in edge computing. The research
-                                                    examines distinct vulnerabilities across sensors, gateways, and
-                                                    actuators, mitigations spanning IDS, firewalls, and cryptography,
-                                                    and the architectural advantages of integrating blockchain and 5G
-                                                    technologies to enhance security, privacy, and trust in edge
-                                                    environments.</span
-                                                >
-                                        <span lang="sv"
-                                        >En systematisk litteraturstudie (SLR) som analyserar 82 primära
-                                                    studier från ett urval av 1 667 artiklar över fyra digitala
-                                                    bibliotek för att utvärdera säkerhetshot mot IoT i edge
-                                                    computing-miljöer. Studien granskar unika sårbarheter hos sensorer,
-                                                    gateways och ställdon, motåtgärder via IDS, brandväggar och
-                                                    kryptografi, samt de arkitektoniska fördelarna med att integrera
-                                                    blockkedje- och 5G-teknik för att stärka säkerhet, integritet och
-                                                    tillit i distribuerade edge-miljöer.</span
-                                        >
-                                    </p>
-                                    <div class="thesis-links">
-                                        <a
-                                                href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518&amp;dswid=-3108"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="thesis-btn"
-                                                aria-label="View Bachelor's Thesis on DiVA Portal"
-                                        >
-                                            <span>DiVA Portal</span>
-                                            <span class="thesis-ext-icon">↗</span>
-                                        </a>
+
+                                    <!-- Column 2 (7 Courses · Master's Thesis aligned at bottom) -->
+                                    <div class="edu-course-col">
+                                        <!-- 10. Lean Startup -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Lean Startup (2DV614)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV614 · 5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Lean Startup</div>
+                                                <p lang="en">Entrepreneurship under extreme uncertainty: Design Thinking
+                                                    principles (empathy, ideation, prototyping), Lean Canvas assumption
+                                                    mapping, rapid customer discovery, building MVPs, and the
+                                                    Build-Measure-Learn feedback loop.</p>
+                                                <p lang="sv">Entreprenörskap under osäkerhet: Design Thinking, Lean
+                                                    Canvas-modellering, kundintervjuer, framtagning av MVP och iterativa
+                                                    Build-Measure-Learn-loopar.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Formulated business model hypotheses, validated real user assumptions, constructed an MVP prototype, and pitched in seminar rounds.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Byggde och validerade en MVP mot riktiga användare med Lean Canvas och pitchseminarier.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 11. Information Visualization -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Information Visualization (4DV805)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV805 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Information Visualization</div>
+                                                <p lang="en">Perception theory, cognitive design, pre-attentive
+                                                    processing, dynamic query filters, zooming/panning, multidimensional
+                                                    data visualization (parallel coordinates, scatterplot matrices), and
+                                                    interactive Plotly Dash web dashboards.</p>
+                                                <p lang="sv">Perceptionsteori, kognitiv design, dynamisk filtrering och
+                                                    visualisering av flerdimensionella datamängder (parallella
+                                                    koordinater) i interaktiva Dash-gränssnitt.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Project:</strong> Built the Barcelona 2017 Traffic Accident visual analytics dashboard in Python (Dash, Pandas, Plotly); individual oral theory exam.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade interaktiv dashboard för Barcelonas trafikolyckor 2017 i Plotly/Dash; muntlig salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 12. Data Mining -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Data Mining (4DV510)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV510 · 5 HP (A1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Data Mining</div>
+                                                <p lang="en">Algorithmic data mining from first principles: K-Means,
+                                                    DBSCAN density clustering, Sammon Mapping, graph modularity, Fast
+                                                    Newman community detection, Local Outlier Factor (LOF), and vector
+                                                    space document retrieval.</p>
+                                                <p lang="sv">Algoritmisk data mining från grunden:
+                                                    DBSCAN-densitetsklustring, Sammon Mapping, Fast
+                                                    Newman-nätverksdetektering, LOF-avvikelseanalys och text mining.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Framework:</strong> Engineered an extensible Python Data Mining Software Framework integrating clustering, dimensionality reduction, and network algorithms; oral defense.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade ett modulärt Data Mining-ramverk i Python med egna algoritmer; muntlig tentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 13. Visualization Project -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Visualization Project (4DV807)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV807 · 10 HP (A1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Project in Visualization and Data
+                                                    Analysis
+                                                </div>
+                                                <p lang="en">Visual analytics engineering: coupling statistical analysis
+                                                    and machine learning backends with interactive web dashboards on
+                                                    large datasets (VAST Challenge data), containerized in Docker, and
+                                                    formal user study evaluation.</p>
+                                                <p lang="sv">Visuell dataanalys: integration av maskininlärning och
+                                                    interaktiva webbdashboards för storskaliga dataströmmar (VAST
+                                                    Challenge), paketerat i Docker, samt användarstudier.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Deployed a full visual analytics application, executed formal quantitative user usability studies, and passed an individual technical interview.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Levererade Dockeriserat visual analytics-system, genomförde användarstudie och teknisk intervju.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 14. Advanced Visualization -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Advanced Visualization (4DV806)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV806 · 5 HP (A1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Advanced Information Visualization and
+                                                    Applications
+                                                </div>
+                                                <p lang="en">Advanced visual analytics: hierarchical tree layouts,
+                                                    non-linear dimensionality reduction projections (t-SNE, UMAP),
+                                                    temporal visual representations, and text document
+                                                    visualization.</p>
+                                                <p lang="sv">Avancerad visualisering: hierarkiska trädlayouter,
+                                                    icke-linjär dimensionsreduktion (t-SNE, UMAP),
+                                                    tidsserievisualisering och text mining.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Built 3 interactive visual applications combining clustering with non-linear projections; passed comprehensive theoretical oral examination.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade 3 applikationer för trädlayouter och UMAP/t-SNE-projektioner; muntlig tentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 15. Scientific Methods in CS -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Scientific Methods in CS (4DV502)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">4DV502 · 5 HP (A1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Scientific Methods in Computer
+                                                    Science
+                                                </div>
+                                                <p lang="en">Research methodology: epistemology, systematic literature
+                                                    reviews (SLR), empirical experimental design, data collection
+                                                    standards, research ethics, and academic opposition.</p>
+                                                <p lang="sv">Forskningsmetodik: vetenskapsteori, systematiska
+                                                    litteraturöversikter (SLR), empirisk experimentdesign,
+                                                    forskningsetik och vetenskaplig opposition.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Delivered a peer-reviewed research proposal for the Master’s thesis project and served as official opponent on a peer thesis plan.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Författade och försvarade forskningsplan för examensarbetet samt genomförde opposition.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 16. Master's Thesis -->
+                                        <div class="course-item is-thesis" tabindex="0" role="button">
+                                            <span>Master's Thesis (5DV50E)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">5DV50E · 30 HP (A2E)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Master's Thesis in Computer Science
+                                                </div>
+                                                <p lang="en"><strong>A Systematic Approach for Selecting Trajectories
+                                                    for Data Augmentation</strong>: Framework evaluating 5 strategic
+                                                    trajectory selection heuristics with an automated Optuna HPO loop
+                                                    and UMAP topological analysis across 200GB+ trajectory archives
+                                                    (Foxes, Starkey, AIS, Car).</p>
+                                                <p lang="sv"><strong>Systematiskt urval av trajektorier för
+                                                    dataaugmentering</strong>: Forskningsramverk som utvärderar fem
+                                                    urvalsstrategier för geospatial dataaugmentering med Optuna
+                                                    HPO-loopar och topologisk UMAP-analys.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> 39-page research manuscript, Python augmentation architecture, thesis defense, and official student opposition.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> 39-sidig forskningsrapport, Python-ramverk, muntligt försvar och studentopposition.</span>
+                                                </div>
+                                                <div class="course-links-row">
+                                                    <a href="https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524"
+                                                       target="_blank" rel="noopener noreferrer" class="course-ext-btn">
+                                                        <span>DiVA Portal ↗</span>
+                                                    </a>
+                                                    <a href="https://arxiv.org/abs/2606.10938" target="_blank"
+                                                       rel="noopener noreferrer" class="course-ext-btn">
+                                                        <span>arXiv ↗</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+
+                    <!-- Bachelor's Programme (22 Courses · 11x11 Grid) -->
+                    <div class="edu-group">
+                        <button type="button" class="edu-group-header" aria-expanded="false">
+                            <span class="edu-header-top">
+                                <span class="edu-degree-title">
+                                    <span lang="en">B.Sc. Network Security (180 Credits)</span>
+                                    <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
+                                </span>
+                                <span class="edu-date-badge">2020 – 2023</span>
+                            </span>
+                            <span class="edu-school-preview">
+                                <span lang="en">Linnaeus University — </span>
+                                <span lang="sv">Linnéuniversitetet — </span>
+                                <span class="edu-course-count">22 courses</span>
+                            </span>
+                        </button>
+                        <div class="edu-vertical-drawer">
+                            <div class="edu-courses-container">
+                                <div class="edu-courses-grid">
+                                    <!-- Column 1 (11 Courses) -->
+                                    <div class="edu-course-col">
+                                        <!-- 1. Basic Mathematics -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Basic Mathematics (1MA441)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1MA441 · 7.5 HP (G1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Basic Mathematics for Computer
+                                                    Scientists
+                                                </div>
+                                                <p lang="en">Mathematical foundations: logic, set theory, functions,
+                                                    inequalities, exponential/logarithmic functions, complex numbers,
+                                                    sequences, number theory, combinatorics, systems of linear
+                                                    equations, and matrices.</p>
+                                                <p lang="sv">Matematiska grunder: logik, mängdlära, funktioner,
+                                                    olikheter, exponential- och logaritmfunktioner, komplexa tal,
+                                                    talföljder, talteori, kombinatorik och matriser.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Examination:</strong> Written take-home examination covering the entire course syllabus, followed by an oral defense examination.</span>
+                                                    <span lang="sv"><strong>Examination:</strong> Skriftlig hemtentamen över hela kursplanen samt avslutande muntlig examination.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 2. Intro to Programming -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Intro to Programming (1DV501)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV501 · 7.5 HP (G1N)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Introduction to Programming</div>
+                                                <p lang="en">Python programming: variables, boolean logic, loops,
+                                                    functions, data structures, file I/O, recursion, and implementing
+                                                    data structures from scratch.</p>
+                                                <p lang="sv">Programmering i Python: variabler, logik, loopar,
+                                                    funktioner, datastrukturer, filhantering, rekursion och
+                                                    datastrukturimplementation.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Mini-Project:</strong> Built a word frequency text analyzer on 100K sentences implementing custom HashSets (with rehashing) and Binary Search Trees; timed practical programming exam.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade textanalysator med hash-sets och binära sökträd; tidsbegränsad praktisk salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 3. Computer Security -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Computer Security (1DV700)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV700 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Computer Security</div>
+                                                <p lang="en">Foundational security: symmetric and public-key
+                                                    cryptography, buffer overflows, operating system security, risk
+                                                    modeling, and corporate ISO/IEC 27002 policies.</p>
+                                                <p lang="sv">Säkerhetsgrunder: symmetrisk och asymmetrisk kryptografi,
+                                                    buffertspill, operativsystemsskydd, riskanalys och ISO/IEC
+                                                    27002.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> Python encryption scripts, corporate ISO/IEC 27002 policy design, and timed written exam with risk calculations.</span>
+                                                    <span lang="sv"><strong>Uppgifter:</strong> Python-kryptering, framtagning av ISO 27002-säkerhetspolicy och salstentamen med riskkalkyler.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 4. Technical Communication -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Technical Communication (1DV510)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV510 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Technical Information and
+                                                    Communication
+                                                </div>
+                                                <p lang="en">Scientific communication: research database searching, IEEE
+                                                    referencing standards, academic technical report structure (Aim,
+                                                    Method, Results, Discussion), LaTeX typesetting, and oral
+                                                    presentation rhetoric.</p>
+                                                <p lang="sv">Vetenskaplig kommunikation: informationssökning,
+                                                    IEEE-referensstandard, rapportstruktur, typsättning i LaTeX och
+                                                    presentationsteknik.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Authored a full technical research report, conducted peer opposition, and defended in an oral seminar.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Författade vetenskaplig rapport i LaTeX, genomförde opposition och muntligt försvar.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 5. Database Technology -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Database Technology (1DV503)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV503 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Database Technology</div>
+                                                <p lang="en">Relational database systems: conceptual Entity-Relationship
+                                                    (E/R) modeling, relational algebra, SQL DDL/DML, transaction
+                                                    management (ACID properties), B-tree indexing, and application
+                                                    connectivity.</p>
+                                                <p lang="sv">Relationsdatabaser: E/R-modellering, relationsalgebra, SQL,
+                                                    transaktionshantering (ACID), indexering och
+                                                    applikationsintegration.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Implemented relational database in MySQL; built Python application with `mysql-connector-python`; passed mandatory oral examination.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Byggde MySQL-databas och Python-applikation via `mysql-connector`; muntlig tentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 6. Object-Oriented Prog -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Object-Oriented Prog (1DV502)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV502 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Object-Oriented Programming</div>
+                                                <p lang="en">Java OOP principles: encapsulation, inheritance,
+                                                    polymorphism, interfaces, UML class diagrams, design patterns, JUnit
+                                                    unit testing, Gradle build automation, and GitLab CI/CD
+                                                    pipelines.</p>
+                                                <p lang="sv">Objektorienterad programmering i Java: inkapsling, arv,
+                                                    polymorfism, gränssnitt, designmönster, enhetstestning i JUnit,
+                                                    Gradle och GitLab CI/CD.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Implemented a full Monopoly game engine following Google Java standards; built recipe inventory manager; comprehensive written exam.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Konstruerade Monopol-spelmotor enligt Google Java-standard; skriftlig salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 7. Discrete Mathematics -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Discrete Mathematics (1MA462)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1MA462 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Discrete Mathematics</div>
+                                                <p lang="en">Discrete structures: combinatorics, counting techniques,
+                                                    generating functions, recurrence relations, binary relations,
+                                                    partial orders, graph theory, and cellular automata models (Conway's
+                                                    Game of Life).</p>
+                                                <p lang="sv">Diskret matematik: kombinatorik, genererande funktioner,
+                                                    differensekvationer, partialordningar, grafteori och cellulära
+                                                    automater.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Examination:</strong> Authored scientific project report on recurrence relations and cellular automata; written campus examination.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Projektrapport om differensekvationer och cellulära automater samt skriftlig salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 8. Project in CS -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Project in CS (1DV508)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV508 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Project Course in Computer Science
+                                                </div>
+                                                <p lang="en">Agile software development: delivering in a 10-person Scrum
+                                                    team, sprint planning, backlog grooming, Git workflow, desktop GUI
+                                                    development in JavaFX, and MySQL database integration.</p>
+                                                <p lang="sv">Agil mjukvaruutveckling i team: Scrum-ramverket,
+                                                    sprintplanering, versionshantering i Git, GUI-arkitektur i JavaFX
+                                                    och MySQL-databasintegration.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Project:</strong> Engineered the "Team Carbon" hotel booking desktop application in JavaFX/MySQL; delivered stakeholder sprint reviews and YouTube video demo.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade hotellbokningssystem i JavaFX och MySQL; sprintdemo och videopresentation.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 9. Computer Technology 1 -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Computer Technology 1 (1DT301)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DT301 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Computer Technology I</div>
+                                                <p lang="en">Microcomputer architectures (AVR ATmega2560/ATmega16):
+                                                    assembly programming, instruction sets, register mapping, digital
+                                                    I/O, software/hardware timers, interrupts, LCD modules, and embedded
+                                                    C.</p>
+                                                <p lang="sv">Mikrodatorarkitektur på AVR (ATmega2560): assembler,
+                                                    registermappning, digital I/O, hårdvarutimers, avbrottshantering,
+                                                    LCD-skärmar och inbyggd C.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Labs:</strong> Programmed 6 hardware modules in PICSimLab & Atmel Studio; wrote C drivers for JHD202C displays; final written exam.</span>
+                                                    <span lang="sv"><strong>Laborationer:</strong> 6 hårdvarulabbar i PICSimLab/Atmel Studio; skrev C-drivrutin för LCD; salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 10. OO Analysis & Design -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>OO Analysis &amp; Design (1DV607)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV607 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Object Oriented Analysis and Design
+                                                    using UML
+                                                </div>
+                                                <p lang="en">Object-oriented software engineering: domain modeling, UML
+                                                    Class and Sequence diagrams, mapping design models to Java, reverse
+                                                    engineering, responsibility-driven design (MVC), and GoF design
+                                                    patterns.</p>
+                                                <p lang="sv">Objektorienterad mjukvaruarkitektur: domänmodellering,
+                                                    formell UML (klass- och sekvensdiagram), MVC-separation,
+                                                    GoF-designmönster och kodrefaktorisering.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> Designed and implemented 3 Java applications with UML models and GitLab CI/CD pipelines; defended designs in code reviews.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> 3 applikationer med formella UML-modeller och GitLab CI/CD; muntligt arkitekturförsvar.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 11. Operating Systems -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Operating Systems (1DV512)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV512 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Operating Systems</div>
+                                                <p lang="en">OS kernel mechanisms: multi-threaded process scheduling,
+                                                    CPU execution algorithms, synchronization locks, deadlocks, main
+                                                    memory paging, virtual memory, and file-system structures.</p>
+                                                <p lang="sv">Operativsystemets kärna: schemaläggning,
+                                                    processynkronisering, dödlägen, virtuellt minne, sidallokering och
+                                                    filsystem.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> 3 individual theoretical evaluations on memory/scheduling + 2 collaborative group projects emulating CPU scheduling and synchronization in Java.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> 3 individuella teoretiska inlämningar samt 2 grupparbeten med schemaläggningssimulatorer.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Column 2 (11 Courses) -->
+                                    <div class="edu-course-col">
+                                        <!-- 12. Web Technology 1 (Elective) -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Web Technology 1 (1ME321)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1ME321 · 7.5 HP (G1F) · Elective</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Web Technology 1 (Elective Course)
+                                                </div>
+                                                <p lang="en">Web foundations: client-server communication, HTTP
+                                                    protocols, semantic HTML5, responsive CSS layouts, media
+                                                    integration, accessibility standards, and usability evaluation.</p>
+                                                <p lang="sv">Webbteknologier (valbar kurs): klient-server-kommunikation,
+                                                    semantisk HTML5, responsiv CSS-layout, tillgänglighet och
+                                                    användbarhetsanalys.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Deployed a fully standards-compliant responsive website; authored a comprehensive website usability evaluation; written exam.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade responsiv webbplats enligt W3C-standard, användbarhetsrapport och salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 13. Computer Networks -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Computer Networks (1DV701)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV701 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Computer Networks - An Introduction
+                                                </div>
+                                                <p lang="en">5-layer Internet protocol stack: application protocols
+                                                    (HTTP, DNS, DHCP), transport layer (TCP flow/congestion control,
+                                                    UDP), routing algorithms (RIP, OSPF, BGP), and data link layer.</p>
+                                                <p lang="sv">Datanätverk och Internetstacken: protokoll (HTTP, DNS,
+                                                    DHCP), transportlager (TCP/UDP), routing (RIP, OSPF, BGP) och
+                                                    datalänkprotokoll.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Labs:</strong> Wireshark packet analysis; implemented multi-threaded HTTP web server in C; coded RFC-compliant TFTP UDP server; GNS3 routing; written exam.</span>
+                                                    <span lang="sv"><strong>Laborationer:</strong> Paketanalys i Wireshark; skrev HTTP-webbserver i C; skrev RFC-kompatibel TFTP-server; salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 14. Cryptography and Coding Theory -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Cryptography (1MA464)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1MA464 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Cryptography and Coding Theory</div>
+                                                <p lang="en">Mathematical cryptology and algebraic coding: symmetric
+                                                    block ciphers (AES with GF(2^8) Galois Field arithmetic, DES),
+                                                    public-key crypto (RSA, ElGamal, Diffie-Hellman), digital
+                                                    signatures, Hamming codes, syndrome decoding, and CRC.</p>
+                                                <p lang="sv">Matematisk kryptologi och kodningsteori: AES med Galois
+                                                    Field-aritmetik, RSA, ElGamal, Diffie-Hellman, digitala signaturer,
+                                                    Hammingkoder och CRC.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Project:</strong> Implemented and cryptanalyzed cipher algorithms in Wolfram Mathematica; written campus examination with formal mathematical proofs.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Implementerade kryptoanalys i Wolfram Mathematica samt skriftlig salstentamen med matematiska bevis.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 15. Internet Security -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Internet Security (2DV702)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV702 · 7.5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Internet Security</div>
+                                                <p lang="en">Network threat mitigation: Public Key Infrastructure (PKI),
+                                                    X.509 Certificate Signing Requests, SSL/TLS, PGP/GPG encrypted
+                                                    email, IPsec, web vulnerability audits, and GNU/Linux firewalls
+                                                    (iptables/nftables).</p>
+                                                <p lang="sv">Nätverkssäkerhet: PKI, certifikathantering, SSL/TLS,
+                                                    PGP/GPG-kryptering, webbsårbarhetstestning i sandbox och Linux
+                                                    iptables/nftables-brandväggar.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Labs:</strong> 4 laboratory reports (TLS configuration, PGP encryption, web penetration testing on LNU Student Shop, iptables firewall filtering); written exam.</span>
+                                                    <span lang="sv"><strong>Laborationer:</strong> 4 labbrapporter (TLS, PGP, penetrationstestning i sandbox, iptables-filtrering); salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 16. System Administration -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>System Administration (1DV721)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV721 · 7.5 HP (G1F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Systems Administration</div>
+                                                <p lang="en">Infrastructure administration: installing and hardening
+                                                    Unix/Linux servers, routine backup/restore operations, Bash
+                                                    automation scripting, network flow analysis, QoS metrics (latency,
+                                                    jitter), and Service Level Agreements (SLAs).</p>
+                                                <p lang="sv">Systemadministration: Linux-serverdrift,
+                                                    Bash-automatisering, nätverksflödesanalys i Wireshark, QoS-policyer
+                                                    och SLA-modellering.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Assignments:</strong> Programmed Bash automation scripts; hardened a live Linux server; executed flow analysis in Wireshark; oral architecture examination.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Skriptade Bash-automatisering, härdade Linux-server, flödesanalys i Wireshark och muntlig tentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 17. Current Topics in CS -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Current Topics in CS (2DV505)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV505 · 7.5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Current Topics within Computer
+                                                    Science
+                                                </div>
+                                                <p lang="en">Research self-study focusing on Human-Computer Interaction
+                                                    (HCI): scientific paper analysis, popular science communication,
+                                                    emerging interactive technologies (VR/AR, robotics), and peer
+                                                    review.</p>
+                                                <p lang="sv">Forskningsfördjupning inom människa-datorinteraktion (HCI):
+                                                    vetenskaplig analys, populärvetenskaplig publicering, framväxande
+                                                    interaktiva teknologier och peer review.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Outputs:</strong> Published an accessible popular science blog post on an academic paper; created a recorded state-of-the-art video presentation; completed peer critiques.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Författade populärvetenskaplig artikel, producerade forskningspresentation på video samt opposition.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 18. Mobile & Wireless Security -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Wireless Security (2DV703)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV703 · 7.5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Mobile and Wireless Data Security</div>
+                                                <p lang="en">Wireless protocols and defense: auditing WEP, WPA2, and
+                                                    WPA3 standards, enterprise 802.1X/RADIUS backend authentication,
+                                                    encrypted VPN tunnels, MFA access control, and hardware-encrypted
+                                                    USB testing.</p>
+                                                <p lang="sv">Trådlös datasäkerhet: granskning av WEP/WPA2/WPA3,
+                                                    802.1X/RADIUS-företagsautentisering, krypterade VPN-tunnlar, MFA och
+                                                    mobil hårdvarukryptering.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Labs:</strong> 6 hands-on lab modules with technical reports; live seminar presentations; written exam report.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> 6 praktiska labbmoduler med tekniska rapporter, seminariepresentationer och skriftlig tentamensrapport.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 19. Digital Forensics -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Digital Forensics (2DV704)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV704 · 7.5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Digital Forensics</div>
+                                                <p lang="en">Electronic evidence lifecycle and cybercrime law (Budapest
+                                                    Convention, ACPO principles): Windows registry parsing, Prefetch
+                                                    analysis, browser history carving, network packet persistence
+                                                    footprints, and chain-of-custody.</p>
+                                                <p lang="sv">Digital forensik och IT-brottslagstiftning:
+                                                    Windows-registeranalys, Prefetch-spårsäkring, webbhistorik,
+                                                    minnesextraktion, nätverksspår och bevisintegritet.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Investigations:</strong> Completed 3 practical forensic cases in DeterLab virtual environments (target triage, artifact timeline reconstruction, complex incident footprint analysis).</span>
+                                                    <span lang="sv"><strong>Undersökningar:</strong> 3 forensiska utredningsfall i DeterLab (spårsäkring, tidslinjerekonstruktion och intrångsanalys).</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 20. Web Programming -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Web Programming (1DV528)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1DV528 · 15 HP (G1F/G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Web Programming</div>
+                                                <p lang="en">Fullstack web engineering: client-side SPAs with
+                                                    WebSockets, Node.js and Express MVC backends, MongoDB Atlas
+                                                    persistence via Mongoose, OAuth integration, and automated web
+                                                    scrapers (Cheerio/Axios).</p>
+                                                <p lang="sv">Fullstack webbutveckling: SPA i ren JavaScript med
+                                                    WebSockets, Node.js och Express MVC-backends, MongoDB Atlas via
+                                                    Mongoose, OAuth och web scraping i Cheerio.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Built 6 applications: responsive site, async REST quiz, Windows 10 desktop simulator SPA, automated scraper, CRUD snippet service, and production GitLab webhook dashboard.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> 6 applikationer: Windows 10 PWD/SPA med realtidschatt, web scraper, CRUD-tjänst och produktionsdashboard.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 21. Web Technology 2 -->
+                                        <div class="course-item" tabindex="0" role="button">
+                                            <span>Web Technology 2 (1ME322)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">1ME322 · 7.5 HP (G2F)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Web Technology 2</div>
+                                                <p lang="en">Client-side scripting: DOM tree manipulation, asynchronous
+                                                    browser event handling, dynamic UI components, state persistence,
+                                                    and debugging with developer tools.</p>
+                                                <p lang="sv">Klientsidans skriptprogrammering: DOM-manipulering,
+                                                    asynkrona händelser, dynamiska gränssnittskomponenter,
+                                                    tillståndshantering och felsökning i webbläsaren.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Projects:</strong> Developed and deployed interactive web applications demonstrating dynamic DOM alterations and custom event architectures; written exam.</span>
+                                                    <span lang="sv"><strong>Projekt:</strong> Utvecklade och driftsatte interaktiva klientsideapplikationer med anpassade händelser; salstentamen.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 22. Bachelor's Thesis -->
+                                        <div class="course-item is-thesis" tabindex="0" role="button">
+                                            <span>Bachelor's Thesis (2DV50E)</span>
+                                            <div class="white-talk-bubble">
+                                                <div class="bubble-header">
+                                                    <span class="course-bubble-code">2DV50E · 15 HP (G2E)</span>
+                                                    <button type="button" class="bubble-close-btn">✕</button>
+                                                </div>
+                                                <div class="course-bubble-title">Degree Project at Bachelor Level</div>
+                                                <p lang="en"><strong>Edge Computing Security for IoT: A Systematic
+                                                    Literature Review</strong>: SLR evaluating 82 primary studies from
+                                                    1,667 papers to classify threats across sensors, gateways, and edge
+                                                    cloud nodes, examining firewalls, cryptography, blockchain, and 5G.
+                                                </p>
+                                                <p lang="sv"><strong>Edge Computing Security for IoT: En systematisk
+                                                    litteraturstudie</strong>: SLR som granskade 82 primärstudier från 1
+                                                    667 artiklar för att kartlägga sårbarheter, IDS, kryptografi och
+                                                    arkitekturer i edge-miljöer.</p>
+                                                <div class="course-bubble-meta">
+                                                    <span lang="en"><strong>Deliverables:</strong> Authored a formal scientific thesis report in IEEE format, defended findings in an academic presentation, and served as official student opponent.</span>
+                                                    <span lang="sv"><strong>Moment:</strong> Författade vetenskaplig uppsats, genomförde muntligt försvar och agerade opponent på peer-arbete.</span>
+                                                </div>
+                                                <div class="course-links-row">
+                                                    <a href="https://diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
+                                                       target="_blank" rel="noopener noreferrer" class="course-ext-btn">
+                                                        <span>DiVA Portal ↗</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <!-- 4. Skills Section (Deep Real-World Technical Experience) -->
             <!-- 4. Skills Section (Strict Max 3 Previews, Ordered Languages, 100% Bilingual) -->

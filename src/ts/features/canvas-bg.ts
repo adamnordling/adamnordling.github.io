@@ -48,33 +48,32 @@ export function initCanvasBackground(): void {
         '.name-title',
         '.subtitle',
         '#view-title',
-        '.right-header h2',
-        '.section-activity h2',
         '.section-edu h2',
         '.section-skills h2',
+        '.right-header h2',
+        '.section-activity h2',
         'h1',
         'h2',
         'h3',
-        // Bio line boxes
+        // Education degree headers & course lines
+        '.edu-degree-title',
+        '.edu-date-badge',
+        '.edu-school-preview span',
+        '.edu-course-count',
+        '.course-item > span:first-child',
+        // Bio lines
         '.bio-teaser',
         '.bio-expandable-content p',
-        // Education text lines
-        '.edu-title',
-        '.edu-date',
-        '.edu-school-row span',
-        '.thesis-tag',
-        '.thesis-title',
-        '.thesis-abstract',
-        // Skills text lines
+        // Skills lines
         '.skill-group-name',
         '.skill-horizontal-preview',
         '.sub-skill-item > span:first-child',
-        // Projects text lines
+        // Projects lines
         '.app-content h3',
         '.app-content p',
         '.tech-drawer-label',
         '.tech-drawer-text',
-        // Recent activity text lines
+        // Activity lines
         '.activity-title',
         '.activity-desc',
         '.activity-time',
@@ -113,10 +112,17 @@ export function initCanvasBackground(): void {
         if (techDrawer && !techDrawer.classList.contains('is-active')) return false;
 
         // 2. Skip closed thesis box in education
-        const eduDrawer = el.closest('.edu-drawer');
+        // Skip closed education drawers & course bubbles
+        const eduDrawer = el.closest('.edu-vertical-drawer');
         if (eduDrawer) {
-            const eduItem = el.closest('.edu-item');
-            if (!eduItem || !eduItem.classList.contains('is-open')) return false;
+            const eduGroup = el.closest('.edu-group');
+            if (!eduGroup || !eduGroup.classList.contains('is-expanded')) return false;
+        }
+
+        const courseBubble = el.closest('.course-item .white-talk-bubble');
+        if (courseBubble) {
+            const courseItem = el.closest('.course-item');
+            if (!courseItem || !courseItem.classList.contains('has-bubble-open')) return false;
         }
 
         // 3. Skip collapsed bio paragraphs
@@ -154,20 +160,11 @@ export function initCanvasBackground(): void {
     function updateExclusionRects(): void {
         textExclusions = [];
 
-        // 1. Precise line-by-line text measurements
+        // 1. Precise line-by-line text measurements (keeps dots flowing around headings & text)
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
             try {
-                // For single-line headings, getBoundingClientRect is fast and exact
-                if (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
-                    const r = el.getBoundingClientRect();
-                    if (r.width > 0 && r.height > 0 && r.bottom >= -15 && r.top <= height + 15) {
-                        textExclusions.push(r);
-                        return;
-                    }
-                }
-
                 textRange.selectNodeContents(el);
                 const rects = textRange.getClientRects();
                 for (let i = 0; i < rects.length; i++) {

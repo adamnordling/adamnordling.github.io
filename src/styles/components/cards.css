@@ -111,39 +111,101 @@
 
     .app-links {
         display: flex;
-        gap: 12px;
+        gap: 10px;
+        margin-top: auto;
     }
 
     .btn-primary,
     .btn-secondary {
-        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        font-weight: 500;
         text-decoration: none;
-        padding: 8px 16px;
+        padding: 8px 14px;
         border-radius: 6px;
-        text-align: center;
         flex: 1;
-        transition: all 0.2s ease;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
+        /* Completely flat: no transforms or vertical jumping */
+        transform: none !important;
+        transition:
+            background-color 0.18s ease,
+            border-color 0.18s ease,
+            color 0.18s ease;
     }
 
+    /* --- DARK MODE (Default) --- */
+    /* Primary: Solid neutral dark grey */
     .btn-primary {
-        background-color: var(--text-primary);
-        color: var(--bg-color);
-        font-weight: 500;
+        background-color: #27272a;
+        border: 1px solid #3f3f46;
+        color: #f4f4f5;
     }
 
     .btn-primary:hover {
-        opacity: 0.9;
+        background-color: #3f3f46;
+        border-color: #52525b;
+        color: #ffffff;
     }
 
+    .btn-primary:active {
+        background-color: #202023;
+    }
+
+    /* Secondary: Muted neutral surface grey */
     .btn-secondary {
-        background-color: transparent;
-        color: var(--text-secondary);
-        border: 1px solid var(--border-color);
+        background-color: #1a1b21;
+        border: 1px solid #2e303b;
+        color: #a1a1aa;
     }
 
     .btn-secondary:hover {
-        color: var(--text-primary);
-        border-color: var(--text-muted);
+        background-color: #27272a;
+        border-color: #3f3f46;
+        color: #f4f4f5;
+    }
+
+    .btn-secondary:active {
+        background-color: #16171c;
+    }
+
+    /* --- LIGHT MODE --- */
+    /* Primary: Clean neutral mid-grey */
+    body.light-theme .btn-primary {
+        background-color: #e4e4e7;
+        border: 1px solid #d4d4d8;
+        color: #18181b;
+    }
+
+    body.light-theme .btn-primary:hover {
+        background-color: #d4d4d8;
+        border-color: #a1a1aa;
+        color: #09090b;
+    }
+
+    body.light-theme .btn-primary:active {
+        background-color: #c4c4c8;
+    }
+
+    /* Secondary: Soft light grey */
+    body.light-theme .btn-secondary {
+        background-color: #f4f4f5;
+        border: 1px solid #e4e4e7;
+        color: #52525b;
+    }
+
+    body.light-theme .btn-secondary:hover {
+        background-color: #e4e4e7;
+        border-color: #d4d4d8;
+        color: #18181b;
+    }
+
+    body.light-theme .btn-secondary:active {
+        background-color: #dadadd;
     }
 
     .app-tech-drawer {
