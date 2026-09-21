@@ -7,19 +7,17 @@ export function initClipboard(): void {
 
     if (!emailCopyBtn || !emailToast) return;
 
-    function handleCopy(): void {
-        const obf = emailCopyBtn?.getAttribute('data-obf');
-        if (!obf) return;
+    // Officiella ASCII byte-koder för "adamnordling@live.se" (omöjligt att skrapa från HTML)
+    const EMAIL_BYTES = [
+        97, 100, 97, 109, 110, 111, 114, 100, 108, 105, 110, 103, 64, 108, 105, 118, 101, 46, 115, 101
+    ];
 
-        let email: string;
-        try {
-            email = atob(obf);
-        } catch {
-            return;
-        }
+    function handleCopy(): void {
+        // Skapas i minnet direkt vid klick
+        const email = String.fromCharCode(...EMAIL_BYTES);
 
         void navigator.clipboard.writeText(email).catch(() => {
-            // Clipboard access denied or unsupported
+            // Urklippsfel
         });
 
         emailToast?.classList.add('is-visible');

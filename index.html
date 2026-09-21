@@ -109,13 +109,22 @@
 
     <!-- Preload Critical Rendering Path Assets -->
     <!-- Responsive Preload: Downloads ONLY 300 on mobile, and ONLY 600 on desktop -->
+    <!-- Desktop: Förhandsladda 600px enbart på skärmar över 768px -->
     <link
             rel="preload"
             as="image"
             type="image/webp"
             href="./assets/profile-600.webp"
-            imagesrcset="./assets/profile-300.webp 300w, ./assets/profile-600.webp 600w"
-            imagesizes="(max-width: 768px) 170px, 293px"
+            media="(min-width: 769px)"
+            fetchpriority="high"
+    />
+    <!-- Mobil: Förhandsladda 300px enbart på skärmar upp till 768px -->
+    <link
+            rel="preload"
+            as="image"
+            type="image/webp"
+            href="./assets/profile-300.webp"
+            media="(max-width: 768px)"
             fetchpriority="high"
     />
 
@@ -124,7 +133,6 @@
 
     <!-- External Connections -->
     <link rel="dns-prefetch" href="https://api.github.com"/>
-    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin/>
     <link rel="dns-prefetch" href="https://static.cloudflareinsights.com"/>
 
     <!-- Favicon -->
@@ -221,7 +229,6 @@
                                     type="button"
                                     class="contact-btn-3"
                                     id="email-copy-btn"
-                                    data-obf="YWRhbW5vcmRsaW5nQGxpdmUuc2U="
                                     aria-label="Copy email address to clipboard"
                             >
                                 <svg

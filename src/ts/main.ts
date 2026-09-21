@@ -24,19 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
     initClipboard();
     initZoneScrolling();
     initMobileMarqueeTelemetry();
+    initPerformanceMonitoring();
 
-    // 2. Defer network API call until main thread is idle (Removes 1.4s critical chain!)
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => {
-            void loadGitHubActivity();
-        });
-    } else {
+    window.addEventListener('load', () => {
         setTimeout(() => {
             void loadGitHubActivity();
-        }, 300);
-    }
+        }, 1500);
+    });
 
-    initPerformanceMonitoring();
+    // Döda alla kvarvarande gamla service workers för gott
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .getRegistrations()
+            .then(regs => {
+                for (const r of regs) {
+                    void r.unregister();
+                }
+            })
+            .catch(() => {});
+    }
 });
 
 interface MetricInfo {
