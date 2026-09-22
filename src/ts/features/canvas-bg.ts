@@ -100,7 +100,10 @@ export function initCanvasBackground(): void {
         '.btn-primary',
         '.btn-secondary',
         // Footer navigation pills
-        '.m-pill'
+        '.m-pill',
+        // Activity
+        '.stat-pill',
+        '.activity-item'
     ];
 
     // Guards against phantom barriers from closed drawers, collapsed accordions, or hidden talk bubbles
@@ -226,9 +229,18 @@ export function initCanvasBackground(): void {
     on(window, 'resize', updateBounds, { passive: true });
 
     // Måla canvas direkt, men skjut upp DOM-textmätningen 1 bildruta så TBT blir 0 ms
-    requestAnimationFrame(() => {
-        updateBounds();
-    });
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(
+            () => {
+                updateBounds();
+            },
+            { timeout: 1000 }
+        );
+    } else {
+        setTimeout(() => {
+            updateBounds();
+        }, 200);
+    }
 
     // Replace direct synchronous calls on scroll with a debounced/rAF batch runner
     let reflowTimeout: ReturnType<typeof setTimeout> | null = null;

@@ -32,30 +32,28 @@ function initBioCard(): void {
     });
 }
 
-// 1. UTBILDNING: Hantera utfällning, klick och stängning
-function closeAllEducation(): void {
-    qsa('.edu-item.is-open').forEach(item => {
-        item.classList.remove('is-open');
-        const toggleBtn = qs('.edu-toggle-btn', item);
-        if (toggleBtn) {
-            toggleBtn.setAttribute('aria-expanded', 'false');
-        }
+// =============================================================================
+// 1. EDUCATION SECTION
+// =============================================================================
+export function closeAllCourseBubbles(): void {
+    qsa('.course-item').forEach(item => {
+        item.classList.remove('has-bubble-open', 'is-selected');
     });
 }
 
-// 1. UTBILDNING: Hantera utfällning, kurser och pratbubblor
-// 1. UTBILDNING: Hantera utfällning, kurser och pratbubblor
+export function closeAllEducation(): void {
+    closeAllCourseBubbles();
+    qsa('.edu-group').forEach(group => {
+        group.classList.remove('is-expanded');
+        const header = qs('.edu-group-header', group);
+        if (header) header.setAttribute('aria-expanded', 'false');
+    });
+}
+
 function initEducationAccordion(): void {
     const eduGroups = qsa('.edu-group');
     const courseItems = qsa('.course-item');
 
-    function closeAllCourseBubbles(): void {
-        courseItems.forEach(item => {
-            item.classList.remove('has-bubble-open', 'is-selected');
-        });
-    }
-
-    // Toggle Master / Bachelor Group
     eduGroups.forEach(group => {
         const header = qs('.edu-group-header', group);
         if (!header) return;
@@ -81,7 +79,6 @@ function initEducationAccordion(): void {
         });
     });
 
-    // Course Bubbles (Click, Close button & Keyboard navigation)
     courseItems.forEach(item => {
         const toggleCourse = (): void => {
             const isAlreadyOpen = item.classList.contains('has-bubble-open');
@@ -99,9 +96,7 @@ function initEducationAccordion(): void {
                 closeAllCourseBubbles();
                 return;
             }
-            if (target?.closest('.white-talk-bubble')) {
-                return;
-            }
+            if (target?.closest('.white-talk-bubble')) return;
             e.stopPropagation();
             toggleCourse();
         });
@@ -114,26 +109,24 @@ function initEducationAccordion(): void {
         });
     });
 
-    // Global outside click to close open education elements
-    on(document, 'click', e => {
+    on(document, 'click', (e: MouseEvent) => {
         const target = e.target as HTMLElement | null;
         if (!target) return;
 
         if (!target.closest('.section-edu')) {
-            closeAllCourseBubbles();
-            eduGroups.forEach(group => {
-                group.classList.remove('is-expanded');
-                const header = qs('.edu-group-header', group);
-                header?.setAttribute('aria-expanded', 'false');
-            });
+            closeAllEducation();
         } else if (!target.closest('.course-item') && !target.closest('.edu-group-header')) {
             closeAllCourseBubbles();
         }
     });
 }
 
-// 2. KOMPETENSER & TANGENTBORDSNAVIGATION
+// =============================================================================
+// 2. SKILLS SECTION
+// =============================================================================
 function initSkillsSystem(): void {
+    const skillsSection = qs('.section-skills');
+    const eduSection = qs('.section-edu');
     const skillGroups = qsa('.skill-group');
     const subSkillItems = qsa('.sub-skill-item[data-skill-id]');
     const allProjectCards = qsa('.app-card');
@@ -160,9 +153,7 @@ function initSkillsSystem(): void {
             }
         }
 
-        if (!hasMatch) {
-            clearHighlights();
-        }
+        if (!hasMatch) clearHighlights();
     }
 
     function clearHighlights(): void {
@@ -193,7 +184,6 @@ function initSkillsSystem(): void {
         });
     }
 
-    // Kategori-klick & Tangentbord (Enter / Space)
     skillGroups.forEach(group => {
         const header = qs('.skill-group-header', group);
         if (!header) return;
@@ -211,7 +201,6 @@ function initSkillsSystem(): void {
             toggleGroup();
         });
 
-        // Tillåt öppning via Enter och Mellanslag
         on(header, 'keydown', (e: KeyboardEvent) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -220,20 +209,16 @@ function initSkillsSystem(): void {
         });
     });
 
-    // Enskilda språk: Klick, Hover och Tangentbord (Enter, Space, Pilar)
     subSkillItems.forEach(item => {
         const skillTokens = (item.getAttribute('data-skill-id') ?? '').split(' ');
 
+        // Native mouseenter/mouseleave: zero bubbling, zero hover lag
         on(item, 'mouseenter', () => {
-            if (!activeSubSkill) {
-                highlightSkill(skillTokens);
-            }
+            if (!activeSubSkill) highlightSkill(skillTokens);
         });
 
         on(item, 'mouseleave', () => {
-            if (!activeSubSkill) {
-                clearHighlights();
-            }
+            if (!activeSubSkill) clearHighlights();
         });
 
         const toggleSubSkill = (): void => {
@@ -254,21 +239,16 @@ function initSkillsSystem(): void {
 
         on(item, 'click', e => {
             const target = e.target as HTMLElement | null;
-            if (target && target.closest('.bubble-close-btn')) {
+            if (target?.closest('.bubble-close-btn')) {
                 e.stopPropagation();
                 closeAllBubbles();
                 return;
             }
-
-            if (target && target.closest('.white-talk-bubble')) {
-                return;
-            }
-
+            if (target?.closest('.white-talk-bubble')) return;
             e.stopPropagation();
             toggleSubSkill();
         });
 
-        // Tangentbordsstöd: Enter/Space för att öppna, Pilar (↓/↑) för att navigera
         on(item, 'keydown', (e: KeyboardEvent) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -276,20 +256,39 @@ function initSkillsSystem(): void {
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 const next = item.nextElementSibling as HTMLElement | null;
-                if (next && next.classList.contains('sub-skill-item')) {
-                    next.focus();
-                }
+                if (next?.classList.contains('sub-skill-item')) next.focus();
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 const prev = item.previousElementSibling as HTMLElement | null;
-                if (prev && prev.classList.contains('sub-skill-item')) {
-                    prev.focus();
-                }
+                if (prev?.classList.contains('sub-skill-item')) prev.focus();
             }
         });
     });
 
-    // Skrolla panelen stänger öppna pratbubblor
+    // Close on click outside
+    on(document, 'click', (e: MouseEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+
+        if (!target.closest('.section-skills')) {
+            collapseAllSkills();
+        } else if (!target.closest('.sub-skill-item') && !target.closest('.skill-group-header')) {
+            closeAllBubbles();
+        }
+
+        if (!target.closest('.section-edu')) {
+            closeAllEducation();
+        }
+    });
+
+    // Escape closes both sections
+    on(document, 'keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            collapseAllSkills();
+            closeAllEducation();
+        }
+    });
+
     if (leftPanel) {
         on(
             leftPanel,
@@ -301,55 +300,22 @@ function initSkillsSystem(): void {
         );
     }
 
-    // 3. GLOBAL KLICK UTANFÖR & ESCAPE-TANGENT
-    on(document, 'click', e => {
-        const target = e.target as HTMLElement | null;
-        if (!target) return;
-
-        // Klick utanför kompetenser -> stäng pratbubbla & fäll ihop
-        if (!target.closest('.section-skills')) {
-            collapseAllSkills();
-        } else if (!target.closest('.sub-skill-item') && !target.closest('.skill-group-header')) {
-            closeAllBubbles();
-        }
-
-        // Klick utanför utbildning -> stäng öppnade utbildningslådor
-        if (!target.closest('.section-edu')) {
-            closeAllEducation();
-        }
-    });
-
-    on(document, 'keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            // Escape stänger både kompetenser och utbildning!
-            collapseAllSkills();
-            closeAllEducation();
-        }
-    });
-
-    // ==========================================================================
-    // MOBIL AUTO-COLLAPSE NÄR MAN SKROLLAR FÖRBI
-    // ==========================================================================
-    const skillsSection = qs('.section-skills');
-    const eduSection = qs('.section-edu');
-
-    // 1. Stäng pratbubblan omedelbart så fort användaren drar med fingret på skärmen
+    // Mobile: instant bubble close on scroll
     window.addEventListener(
         'scroll',
         () => {
-            if (window.innerWidth <= 1150) {
-                closeAllBubbles();
-            }
+            if (window.innerWidth <= 1150) closeAllBubbles();
         },
         { passive: true }
     );
 
-    // 2. När man skrollar helt förbi sektionen på mobil/tablet -> fäll ihop lådorna automatiskt
+    // =========================================================================
+    // MOBILE AUTO-COLLAPSE (Restored)
+    // =========================================================================
     if (typeof IntersectionObserver !== 'undefined') {
         const autoCollapseObserver = new IntersectionObserver(
             entries => {
                 entries.forEach(entry => {
-                    // När sektionen lämnar skärmen på mobil/tablet
                     if (!entry.isIntersecting && window.innerWidth <= 1150) {
                         if (entry.target.classList.contains('section-skills')) {
                             collapseAllSkills();
@@ -359,9 +325,7 @@ function initSkillsSystem(): void {
                     }
                 });
             },
-            {
-                threshold: 0.01 // Triggas när mindre än 10% av sektionen syns på skärmen
-            }
+            { threshold: 0.01 }
         );
 
         if (skillsSection) autoCollapseObserver.observe(skillsSection);
