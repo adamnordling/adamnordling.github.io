@@ -36,7 +36,8 @@
         width: 100%;
         height: 100%;
         border-radius: 12px;
-        overflow: hidden; /* Clips image & spotlight strictly to 12px radius */
+        overflow: hidden;
+        isolation: isolate; /* Native GPU boundary clipping without expensive radial masks */
         transform: translateZ(0);
         will-change: transform;
         backface-visibility: hidden;

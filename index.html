@@ -4,103 +4,23 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- Primary Metadata -->
-        <title>Adam Nordling - Portfolio</title>
+        <!-- 1. PRIMARY SEARCH ENGINE METADATA -->
+        <title>Adam Nordling — Software Engineer Portfolio</title>
         <meta
             name="description"
-            content="Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web development, software architecture, machine learning, and network security."
+            content="Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web architecture, machine learning pipelines, and network security."
         />
         <meta name="author" content="Adam Nordling" />
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <link rel="canonical" href="https://adamnordling.se/" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-
-        <!-- Structured Data -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "Person",
-                "@id": "https://adamnordling.se/#person",
-                "name": "Adam Nordling",
-                "url": "https://adamnordling.se/",
-                "mainEntityOfPage": "https://adamnordling.se/",
-                "jobTitle": ["Software Engineer", "Mjukvaruingenjör"],
-                "description": "Software engineer and Master of Science graduate in Software Technology from Linnaeus University, specializing in web architecture, machine learning, data augmentation, and network security.",
-                "alumniOf": [
-                    {
-                        "@type": "CollegeOrUniversity",
-                        "name": "Linnaeus University",
-                        "alternateName": "Linnéuniversitetet",
-                        "url": "https://lnu.se"
-                    }
-                ],
-                "knowsAbout": [
-                    "Software Engineering",
-                    "Machine Learning",
-                    "Fullstack Development",
-                    "Network Security",
-                    "Python",
-                    "Data Augmentation",
-                    "Trajectory Analysis",
-                    "TypeScript",
-                    "Deep Learning"
-                ],
-                "sameAs": [
-                    "https://github.com/adamnordling",
-                    "https://www.linkedin.com/in/adamnordling",
-                    "https://orcid.org/0009-0004-3989-6796",
-                    "https://arxiv.org/abs/2606.10938",
-                    "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
-                    "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
-                ],
-                "hasPart": [
-                    {
-                        "@type": "WebApplication",
-                        "name": "Open Nutrition",
-                        "url": "https://opennutrition.adamnordling.se/",
-                        "applicationCategory": "HealthApplication",
-                        "operatingSystem": "All"
-                    }
-                ]
-            }
-        </script>
-
-        <!-- Open Graph Metadata -->
-        <meta property="og:site_name" content="Adam Nordling" />
-        <meta property="og:title" content="Adam Nordling - Portfolio" />
-        <meta
-            property="og:description"
-            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://adamnordling.se/" />
-        <meta property="og:image" content="https://adamnordling.se/assets/og-image.png" />
-        <meta property="og:image:secure_url" content="https://adamnordling.se/assets/og-image.png" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-
-        <!-- Twitter / X Card -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Adam Nordling - Portfolio" />
-        <meta
-            name="twitter:description"
-            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
-        />
-        <meta name="twitter:image" content="https://adamnordling.se/assets/og-image.png" />
 
         <!-- Language Alternatives -->
         <link rel="alternate" hreflang="en" href="https://adamnordling.se/" />
         <link rel="alternate" hreflang="sv" href="https://adamnordling.se/" />
         <link rel="alternate" hreflang="x-default" href="https://adamnordling.se/" />
 
-        <!-- Theme -->
-        <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
-
-        <!-- Preload Critical Rendering Path Assets -->
-        <!-- Responsiv preload av profilbilden: matchar alltid exakt vad webbläsaren väljer -->
-        <!-- Förhandsladda profilbilden (LCP): matchar 1x, 2x, mobil och desktop exakt -->
+        <!-- 2. CRITICAL RENDERING PATH (Discovered immediately by browser preload scanner) -->
         <link
             rel="preload"
             as="image"
@@ -109,19 +29,114 @@
             imagesizes="(max-width: 480px) 150px, (max-width: 956px) 175px, 250px"
             fetchpriority="high"
         />
-
-        <!-- Stylesheets -->
         <link rel="stylesheet" href="./src/styles/main.css" />
 
-        <!-- External Connections -->
-        <link rel="dns-prefetch" href="https://api.github.com" />
-
-        <!-- Favicon -->
+        <!-- 3. THEME & APP CONFIGURATION -->
+        <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
         <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png" />
         <link rel="manifest" href="./manifest.webmanifest" />
+
+        <!-- 4. OPEN GRAPH (LinkedIn, Facebook, Discord) -->
+        <meta property="og:site_name" content="Adam Nordling" />
+        <meta property="og:title" content="Adam Nordling — Software Engineer Portfolio" />
+        <meta
+            property="og:description"
+            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
+        />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://adamnordling.se/" />
+        <meta property="og:image" content="https://adamnordling.se/assets/og-image.png" />
+        <meta property="og:image:secure_url" content="https://adamnordling.se/assets/og-image.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="profile:first_name" content="Adam" />
+        <meta property="profile:last_name" content="Nordling" />
+
+        <!-- 5. TWITTER / X CARD -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Adam Nordling — Software Engineer Portfolio" />
+        <meta
+            name="twitter:description"
+            content="Explore projects in fullstack web development, machine learning pipelines, and network security."
+        />
+        <meta name="twitter:image" content="https://adamnordling.se/assets/og-image.png" />
+
+        <!-- 6. ENRICHED SCHEMA.ORG GRAPH (Entities linked for Google Search Knowledge Graph) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "WebSite",
+                        "@id": "https://adamnordling.se/#website",
+                        "url": "https://adamnordling.se/",
+                        "name": "Adam Nordling",
+                        "publisher": {
+                            "@id": "https://adamnordling.se/#person"
+                        },
+                        "inLanguage": ["en", "sv"]
+                    },
+                    {
+                        "@type": "ProfilePage",
+                        "@id": "https://adamnordling.se/#webpage",
+                        "url": "https://adamnordling.se/",
+                        "name": "Adam Nordling — Software Engineer Portfolio",
+                        "isPartOf": {
+                            "@id": "https://adamnordling.se/#website"
+                        },
+                        "about": {
+                            "@id": "https://adamnordling.se/#person"
+                        },
+                        "mainEntity": {
+                            "@id": "https://adamnordling.se/#person"
+                        }
+                    },
+                    {
+                        "@type": "Person",
+                        "@id": "https://adamnordling.se/#person",
+                        "name": "Adam Nordling",
+                        "givenName": "Adam",
+                        "familyName": "Nordling",
+                        "url": "https://adamnordling.se/",
+                        "image": "https://adamnordling.se/assets/profile-400.webp",
+                        "jobTitle": ["Software Engineer", "Mjukvaruingenjör"],
+                        "description": "Software engineer and Master of Science graduate in Software Technology from Linnaeus University, specializing in web architecture, machine learning, data augmentation, and network security.",
+                        "alumniOf": [
+                            {
+                                "@type": "CollegeOrUniversity",
+                                "name": "Linnaeus University",
+                                "alternateName": "Linnéuniversitetet",
+                                "url": "https://lnu.se"
+                            }
+                        ],
+                        "knowsAbout": [
+                            "Software Engineering",
+                            "Machine Learning",
+                            "Fullstack Development",
+                            "Network Security",
+                            "Python",
+                            "Data Augmentation",
+                            "Trajectory Analysis",
+                            "TypeScript",
+                            "Deep Learning"
+                        ],
+                        "sameAs": [
+                            "https://github.com/adamnordling",
+                            "https://www.linkedin.com/in/adamnordling",
+                            "https://orcid.org/0009-0004-3989-6796",
+                            "https://arxiv.org/abs/2606.10938",
+                            "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A2057524",
+                            "https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1764518"
+                        ]
+                    }
+                ]
+            }
+        </script>
     </head>
     <body class="light-theme">
         <!-- Interactive Dot Matrix Background -->

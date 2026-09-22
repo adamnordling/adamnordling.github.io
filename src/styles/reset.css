@@ -5,6 +5,11 @@
         box-sizing: border-box;
     }
 
+    :root:not([lang='sv']) [lang='sv'],
+    :root[lang='sv'] [lang='en'] {
+        display: none !important;
+    }
+
     html,
     body {
         overflow-x: hidden;
@@ -17,11 +22,6 @@
     .left-panel,
     .right-panel {
         overscroll-behavior: contain;
-    }
-
-    html:not([lang='sv']) [lang='sv'],
-    html[lang='sv'] [lang='en'] {
-        display: none !important;
     }
 
     body {
