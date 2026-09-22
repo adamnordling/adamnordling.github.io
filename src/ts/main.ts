@@ -12,27 +12,29 @@ import { initClipboard } from './features/clipboard';
 import { loadGitHubActivity } from './services/github';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. CRITICAL (Must be ready immediately for first paint & layout stability)
     initTheme();
     initI18n();
-    initClock();
-    initShortcuts();
-    initCanvasBackground();
-    initCardTilt();
-    initModal();
-    initProjectFilter();
     initSkillsAndBio();
-    initClipboard();
-    initZoneScrolling();
-    initMobileMarqueeTelemetry();
-    initPerformanceMonitoring();
+    initProjectFilter();
+    initModal();
 
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            void loadGitHubActivity();
-        }, 1500);
+    // 2. NON-CRITICAL (Deferred via rAF so First Paint & LCP render without any JS blockage)
+    requestAnimationFrame(() => {
+        initClock();
+        initCanvasBackground();
+        initCardTilt();
+        initClipboard();
+        initShortcuts();
+        initZoneScrolling();
+        initMobileMarqueeTelemetry();
+        initPerformanceMonitoring();
     });
 
-    // Döda alla kvarvarande gamla service workers för gott
+    // 3. LAZY ACTIVITY (Only fetches GitHub API when scrolled near feed or during idle)
+    initLazyGitHubActivity();
+
+    // Kill stale legacy service workers
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .getRegistrations()
@@ -44,6 +46,28 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(() => {});
     }
 });
+
+function initLazyGitHubActivity(): void {
+    const activityFeed = document.getElementById('activity-feed');
+    if (!activityFeed) return;
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting) {
+                    observer.disconnect();
+                    void loadGitHubActivity();
+                }
+            },
+            { rootMargin: '300px' }
+        );
+        observer.observe(activityFeed);
+    } else {
+        setTimeout(() => {
+            void loadGitHubActivity();
+        }, 4000);
+    }
+}
 
 interface MetricInfo {
     title: { en: string; sv: string };
@@ -173,14 +197,12 @@ function initMobileMarqueeTelemetry(): void {
     function scheduleResume(): void {
         if (resumeTimeout) clearTimeout(resumeTimeout);
         resumeTimeout = setTimeout(() => {
-            // Only resume if user does NOT currently have an open inspector card
             if (!activeMetricKey && inspectorCard.classList.contains('hidden')) {
                 resumeRolling(currentTrackX);
             }
         }, 1000);
     }
 
-    // --- SWIPE / DRAG HANDLERS ---
     let isPointerDown = false;
     let isDragging = false;
     let justSwiped = false;
@@ -205,7 +227,6 @@ function initMobileMarqueeTelemetry(): void {
         const deltaY = e.clientY - startY;
 
         if (!isDragging) {
-            // Check if user is scrolling sideways vs vertical document scroll
             if (Math.abs(deltaX) > 5 && Math.abs(deltaX) > Math.abs(deltaY)) {
                 isDragging = true;
                 viewport.classList.add('is-dragging');
@@ -215,7 +236,6 @@ function initMobileMarqueeTelemetry(): void {
                     // Ignored if capture unsupported
                 }
             } else if (Math.abs(deltaY) > 5) {
-                // Vertical page scroll: abort marquee drag
                 isPointerDown = false;
                 scheduleResume();
                 return;
@@ -261,12 +281,9 @@ function initMobileMarqueeTelemetry(): void {
     window.addEventListener('pointerup', onPointerUp);
     window.addEventListener('pointercancel', onPointerUp);
 
-    // --- PILL CLICK LOGIC ---
     pills.forEach(pill => {
         pill.addEventListener('click', e => {
             e.stopPropagation();
-
-            // Prevent mobile browser focus-scroll fighting our layout
             pill.blur();
 
             if (justSwiped) return;
@@ -288,7 +305,6 @@ function initMobileMarqueeTelemetry(): void {
                 p.classList.remove('is-active');
             });
 
-            // Highlight in both sets
             document.querySelectorAll<HTMLElement>(`.m-pill[data-metric="${metricKey}"]`).forEach(p => {
                 p.classList.add('is-active');
             });
@@ -299,7 +315,6 @@ function initMobileMarqueeTelemetry(): void {
             inspectorDesc.textContent = data.desc[currentLang];
             inspectorCard.classList.remove('hidden');
 
-            // Anchor view to the true bottom so BOTH the card text and pills stay in view
             const anchorToBottom = (): void => {
                 window.scrollTo({
                     top: document.documentElement.scrollHeight,
@@ -319,7 +334,6 @@ function initMobileMarqueeTelemetry(): void {
         closeInspector();
     });
 
-    // Dismiss only when clicking outside pills AND outside inspector card
     document.addEventListener('click', e => {
         const target = e.target as HTMLElement | null;
         if (!target || !target.closest('.m-pill, .m-inspector-card')) {
@@ -340,7 +354,6 @@ function initMobileMarqueeTelemetry(): void {
     });
 }
 
-// Lägg till denna funktion längst ner i src/ts/main.ts (eller anropa den i DOMContentLoaded)
 function initZoneScrolling(): void {
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
@@ -350,18 +363,15 @@ function initZoneScrolling(): void {
     window.addEventListener(
         'wheel',
         (e: WheelEvent) => {
-            // Only active on desktop split view
             if (window.innerWidth <= 1150) return;
 
             const target = e.target as HTMLElement | null;
             const isInsideLeft = !!target?.closest('.left-panel');
             const isInsideRight = !!target?.closest('.right-panel');
 
-            // If mouse is outside the content panels (flanks, divider canyon, top/bottom voids):
             if (!isInsideLeft && !isInsideRight) {
                 e.preventDefault();
 
-                // Exact physical X coordinate of the 1px divider
                 const dividerX = divider
                     ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
                     : window.innerWidth / 2;

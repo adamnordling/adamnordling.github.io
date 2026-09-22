@@ -15,6 +15,7 @@ export function initCanvasBackground(): void {
     let mouseY = -1000;
     let isAnimating = false;
     let stopTimeout: ReturnType<typeof setTimeout> | null = null;
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
     let wrapperLeft = 0;
     let wrapperRight = 0;
@@ -37,14 +38,11 @@ export function initCanvasBackground(): void {
     const DOT_SPACING = 28;
     const FADE_MARGIN = 100;
 
-    // =========================================================================
-    // 🎚️ SENSITIVITY METER: Tweak clearance distance here
-    // =========================================================================
-    const TEXT_CLEARANCE = 4; // Dead-zone in pixels directly around letters & icons (100% invisible)
-    const FADE_ZONE = 6; // Smooth transition zone in pixels (ramps from 0% to 100% opacity)
+    // Clearance distance in pixels around letters & icons
+    const TEXT_CLEARANCE = 4;
+    const FADE_ZONE = 6;
 
     const textSelectors = [
-        // Titles & Headings
         '.name-title',
         '.subtitle',
         '#view-title',
@@ -55,67 +53,51 @@ export function initCanvasBackground(): void {
         'h1',
         'h2',
         'h3',
-        // Education degree headers & course lines
         '.edu-degree-title',
         '.edu-date-badge',
         '.edu-school-preview span',
         '.edu-course-count',
         '.course-item > span:first-child',
-        // Bio lines
         '.bio-teaser',
         '.bio-expandable-content p',
-        // Skills lines
         '.skill-group-name',
         '.skill-horizontal-preview',
         '.sub-skill-item > span:first-child',
-        // Projects lines
         '.app-content h3',
         '.app-content p',
         '.tech-drawer-label',
         '.tech-drawer-text',
-        // Activity lines
         '.activity-title',
         '.activity-desc',
         '.activity-time',
-        // Modals & Flyouts
         '.white-talk-bubble p',
         '.m-inspector-desc'
     ];
 
     const visualSelectors = [
-        // Profile picture
         '.profile-img',
-        // Social & contact SVG icons
         '.profile-links a svg',
         '.profile-links button svg',
-        // Badges & buttons
         '.cv-action-wrapper',
         '.bio-hint',
         '.thesis-btn',
         '.filter-trigger',
-        // Project card illustrations & preview images
         '.app-img-container img',
         '.app-img-container svg',
         '.app-status-badge',
         '.btn-primary',
         '.btn-secondary',
-        // Footer navigation pills
         '.m-pill',
-        // Activity
         '.stat-pill',
         '.activity-item'
     ];
 
-    // Guards against phantom barriers from closed drawers, collapsed accordions, or hidden talk bubbles
     function isElementVisible(el: HTMLElement): boolean {
         if (el.offsetWidth === 0 || el.offsetHeight === 0) return false;
 
-        // 1. Skip closed tech drawer under project cards
         const techDrawer = el.closest('.app-tech-drawer');
         if (techDrawer && !techDrawer.classList.contains('is-active')) return false;
 
-        // 2. Skip closed thesis box in education
-        // Skip closed education drawers & course bubbles
         const eduDrawer = el.closest('.edu-vertical-drawer');
         if (eduDrawer) {
             const eduGroup = el.closest('.edu-group');
@@ -128,32 +110,27 @@ export function initCanvasBackground(): void {
             if (!courseItem || !courseItem.classList.contains('has-bubble-open')) return false;
         }
 
-        // 3. Skip collapsed bio paragraphs
         const bioExpandable = el.closest('.bio-expandable');
         if (bioExpandable) {
             const bioCard = el.closest('.bio-card');
             if (!bioCard || !bioCard.classList.contains('is-expanded')) return false;
         }
 
-        // 4. Skip collapsed skills categories
         const skillDrawer = el.closest('.skill-vertical-drawer');
         if (skillDrawer) {
             const skillGroup = el.closest('.skill-group');
             if (!skillGroup || !skillGroup.classList.contains('is-expanded')) return false;
         }
 
-        // 5. Skip all closed skill talk bubbles
         const talkBubble = el.closest('.white-talk-bubble');
         if (talkBubble) {
             const subSkill = el.closest('.sub-skill-item');
             if (!subSkill || !subSkill.classList.contains('has-bubble-open')) return false;
         }
 
-        // 6. Skip hidden inspector card
         const inspector = el.closest('.m-inspector-card');
         if (inspector && inspector.classList.contains('hidden')) return false;
 
-        // 7. Skip closed CV modal
         const modal = el.closest('#cv-modal');
         if (modal && !modal.classList.contains('is-open')) return false;
 
@@ -161,9 +138,15 @@ export function initCanvasBackground(): void {
     }
 
     function updateExclusionRects(): void {
+        // 1. Mobile/tablet screens never need heavy text exclusion (background is behind cards)
+        if (window.innerWidth <= 1150) {
+            textExclusions = [];
+            return;
+        }
+
         textExclusions = [];
 
-        // 1. Precise line-by-line text measurements (keeps dots flowing around headings & text)
+        // 2. Desktop line-by-line text measurements
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
@@ -184,7 +167,7 @@ export function initCanvasBackground(): void {
             }
         });
 
-        // 2. Exact visual boundaries for icons, SVGs, images, and buttons
+        // 3. Desktop visual boundaries for buttons/images
         const visualEls = document.querySelectorAll<HTMLElement | SVGElement>(visualSelectors.join(', '));
         visualEls.forEach(el => {
             if (!isElementVisible(el as HTMLElement)) return;
@@ -194,6 +177,8 @@ export function initCanvasBackground(): void {
             }
         });
     }
+
+    let hasMeasuredExclusions = false;
 
     function updateBounds(): void {
         if (!canvas || !contentContainer) return;
@@ -222,13 +207,26 @@ export function initCanvasBackground(): void {
             hasCenterGutter = false;
         }
 
-        updateExclusionRects();
+        // Only measure text on desktop AND only after the deferred initialization has passed
+        if (hasMeasuredExclusions && window.innerWidth > 1150) {
+            updateExclusionRects();
+        }
         draw();
     }
 
-    on(window, 'resize', updateBounds, { passive: true });
+    // Debounced resize listener prevents mobile emulation boot from triggering layout reflows
+    on(
+        window,
+        'resize',
+        () => {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateBounds();
+            }, 150);
+        },
+        { passive: true }
+    );
 
-    // 1. Sätt canvas-storleken direkt vid start utan att göra dyra textmätningar
     function initCanvasDimensions(): void {
         if (!canvas) return;
         width = canvas.width = window.innerWidth;
@@ -238,28 +236,28 @@ export function initCanvasBackground(): void {
 
     initCanvasDimensions();
 
-    // 2. Kör de detaljerade text-uteslutningarna EFTER att sidstarten är helt klar (eller vid första musrörelse)
-    let hasMeasuredExclusions = false;
-
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         hasMeasuredExclusions = true;
-        updateBounds();
+        if (window.innerWidth > 1150) {
+            updateBounds();
+        }
     }
 
-    // Kör 1.5s efter load (helt utanför TBT- och LCP-fönstret)
+    // Defer heavy text measurements well beyond initial render window
     window.addEventListener('load', () => {
         setTimeout(runDeferredExclusionUpdate, 1500);
     });
 
-    // Om användaren rör musen/skärmen innan 1.5s har gått: mät direkt
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
 
-    // Replace direct synchronous calls on scroll with a debounced/rAF batch runner
     let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
 
     function scheduleExclusionUpdate(): void {
+        // Skip entirely on mobile/tablet screens
+        if (window.innerWidth <= 1150 || !hasMeasuredExclusions) return;
+
         if (reflowTimeout) clearTimeout(reflowTimeout);
         reflowTimeout = setTimeout(() => {
             requestAnimationFrame(() => {
@@ -269,7 +267,6 @@ export function initCanvasBackground(): void {
         }, 60);
     }
 
-    // Desktop: Listen to panel scrolls safely
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
     if (leftPanel) {
         on(leftPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
@@ -280,15 +277,13 @@ export function initCanvasBackground(): void {
         on(rightPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
     }
 
-    // Mobile / Tablet: Window scroll
-    on(window, 'scroll', scheduleExclusionUpdate, { passive: true });
-
-    // Re-calculate when bio, education, or skills expand/collapse
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
         on(mainWrapper, 'transitionend', () => {
-            updateExclusionRects();
-            wakeAnimation();
+            if (window.innerWidth > 1150) {
+                updateExclusionRects();
+                wakeAnimation();
+            }
         });
     }
 
@@ -394,7 +389,6 @@ export function initCanvasBackground(): void {
                 let dotFade: number;
 
                 if (!isMobile) {
-                    // Desktop structural fades (flanks and center canyon)
                     if (isInCenterGutter && y >= wrapperTop && y <= wrapperBottom) {
                         const gutterWidth = rightPanelLeft - leftPanelRight;
                         const normalized = (x - leftPanelRight) / gutterWidth;
@@ -411,47 +405,42 @@ export function initCanvasBackground(): void {
                         const distToDock = dockTop - y;
                         dotFade = Math.min(1, Math.max(0, Math.min(distFromWrapper, distToDock) / 16)) * 0.7;
                     } else {
-                        // Desktop main body: dots are fully present in background
                         dotFade = 0.55;
                     }
                 } else {
-                    // Mobile & Tablet: full background coverage
                     dotFade = 0.65;
                 }
 
                 if (dotFade <= 0) continue;
 
-                // =============================================================
-                // UNIFIED BARRIER AROUND ALL VISIBLE LINES, HEADINGS & ICONS
-                // (Runs identically across PC, Tablet & Mobile)
-                // =============================================================
-                const maxZone = TEXT_CLEARANCE + FADE_ZONE;
-                const maxZoneSq = maxZone * maxZone;
-                const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
-                let minTextDistSq = 999999;
+                // On mobile, textExclusions is empty, skipping this entire loop
+                if (textExclusions.length > 0) {
+                    const maxZone = TEXT_CLEARANCE + FADE_ZONE;
+                    const maxZoneSq = maxZone * maxZone;
+                    const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
+                    let minTextDistSq = 999999;
 
-                for (let i = 0; i < textExclusions.length; i++) {
-                    const r = textExclusions[i];
-                    const dx = Math.max(0, r.left - x, x - r.right);
-                    const dy = Math.max(0, r.top - y, y - r.bottom);
-                    const dSq = dx * dx + dy * dy;
+                    for (let i = 0; i < textExclusions.length; i++) {
+                        const r = textExclusions[i];
+                        const dx = Math.max(0, r.left - x, x - r.right);
+                        const dy = Math.max(0, r.top - y, y - r.bottom);
+                        const dSq = dx * dx + dy * dy;
 
-                    if (dSq < minTextDistSq) {
-                        minTextDistSq = dSq;
-                        if (minTextDistSq === 0) break;
+                        if (dSq < minTextDistSq) {
+                            minTextDistSq = dSq;
+                            if (minTextDistSq === 0) break;
+                        }
                     }
-                }
 
-                // If point is strictly inside clearance boundary, skip immediately (no Math.sqrt needed!)
-                if (minTextDistSq <= clearSq) {
-                    continue;
-                }
+                    if (minTextDistSq <= clearSq) {
+                        continue;
+                    }
 
-                // Only calculate Math.sqrt for dots right on the smooth edge threshold
-                if (minTextDistSq < maxZoneSq) {
-                    const dist = Math.sqrt(minTextDistSq);
-                    dotFade *= (dist - TEXT_CLEARANCE) / FADE_ZONE;
-                    if (dotFade <= 0.02) continue;
+                    if (minTextDistSq < maxZoneSq) {
+                        const dist = Math.sqrt(minTextDistSq);
+                        dotFade *= (dist - TEXT_CLEARANCE) / FADE_ZONE;
+                        if (dotFade <= 0.02) continue;
+                    }
                 }
 
                 const dx = mouseX - x;
