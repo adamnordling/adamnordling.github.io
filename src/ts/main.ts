@@ -12,15 +12,15 @@ import { initClipboard } from './features/clipboard';
 import { loadGitHubActivity } from './services/github';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. CRITICAL (Must be ready immediately for first paint & layout stability)
+    // 1. Critical styling & structure setup
     initTheme();
     initI18n();
     initSkillsAndBio();
     initProjectFilter();
     initModal();
 
-    // 2. NON-CRITICAL (Deferred via rAF so First Paint & LCP render without any JS blockage)
-    requestAnimationFrame(() => {
+    // 2. Yield to the main thread so First Paint and LCP render immediately
+    setTimeout(() => {
         initClock();
         initCanvasBackground();
         initCardTilt();
@@ -29,12 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initZoneScrolling();
         initMobileMarqueeTelemetry();
         initPerformanceMonitoring();
-    });
+    }, 0);
 
-    // 3. LAZY ACTIVITY (Only fetches GitHub API when scrolled near feed or during idle)
+    // 3. Lazy-load GitHub activity when scrolled into view
     initLazyGitHubActivity();
 
-    // Kill stale legacy service workers
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker
             .getRegistrations()
@@ -65,7 +64,7 @@ function initLazyGitHubActivity(): void {
     } else {
         setTimeout(() => {
             void loadGitHubActivity();
-        }, 4000);
+        }, 3000);
     }
 }
 
@@ -92,7 +91,7 @@ function initMobileMarqueeTelemetry(): void {
     const inspectorDesc: HTMLElement = rawDesc;
     const closeBtn: HTMLElement = rawCloseBtn;
 
-    const MARQUEE_DURATION = 22; // Matches CSS animation 22s
+    const MARQUEE_DURATION = 22;
     let currentTrackX = 0;
     let activeMetricKey: string | null = null;
     let resumeTimeout: ReturnType<typeof setTimeout> | null = null;

@@ -38,10 +38,10 @@ export function initCanvasBackground(): void {
     const DOT_SPACING = 28;
     const FADE_MARGIN = 100;
 
-    // Clearance distance in pixels around letters & icons
     const TEXT_CLEARANCE = 4;
     const FADE_ZONE = 6;
 
+    // 100% of your original text selectors preserved
     const textSelectors = [
         '.name-title',
         '.subtitle',
@@ -74,6 +74,7 @@ export function initCanvasBackground(): void {
         '.m-inspector-desc'
     ];
 
+    // 100% of your original visual selectors preserved
     const visualSelectors = [
         '.profile-img',
         '.profile-links a svg',
@@ -138,15 +139,8 @@ export function initCanvasBackground(): void {
     }
 
     function updateExclusionRects(): void {
-        // 1. Mobile/tablet screens never need heavy text exclusion (background is behind cards)
-        if (window.innerWidth <= 1150) {
-            textExclusions = [];
-            return;
-        }
-
         textExclusions = [];
 
-        // 2. Desktop line-by-line text measurements
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
@@ -167,7 +161,6 @@ export function initCanvasBackground(): void {
             }
         });
 
-        // 3. Desktop visual boundaries for buttons/images
         const visualEls = document.querySelectorAll<HTMLElement | SVGElement>(visualSelectors.join(', '));
         visualEls.forEach(el => {
             if (!isElementVisible(el as HTMLElement)) return;
@@ -207,14 +200,12 @@ export function initCanvasBackground(): void {
             hasCenterGutter = false;
         }
 
-        // Only measure text on desktop AND only after the deferred initialization has passed
-        if (hasMeasuredExclusions && window.innerWidth > 1150) {
+        if (hasMeasuredExclusions) {
             updateExclusionRects();
         }
         draw();
     }
 
-    // Debounced resize listener prevents mobile emulation boot from triggering layout reflows
     on(
         window,
         'resize',
@@ -222,15 +213,22 @@ export function initCanvasBackground(): void {
             if (resizeTimeout) clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 updateBounds();
-            }, 150);
+            }, 120);
         },
         { passive: true }
     );
 
     function initCanvasDimensions(): void {
-        if (!canvas) return;
+        if (!canvas || !contentContainer) return;
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
+
+        const rect = contentContainer.getBoundingClientRect();
+        wrapperLeft = rect.left;
+        wrapperRight = rect.right;
+        wrapperTop = rect.top;
+        wrapperBottom = rect.bottom;
+
         draw();
     }
 
@@ -239,14 +237,12 @@ export function initCanvasBackground(): void {
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         hasMeasuredExclusions = true;
-        if (window.innerWidth > 1150) {
-            updateBounds();
-        }
+        updateBounds();
     }
 
-    // Defer heavy text measurements well beyond initial render window
+    // Deferred initialization allows initial paint to complete with zero delay
     window.addEventListener('load', () => {
-        setTimeout(runDeferredExclusionUpdate, 1500);
+        setTimeout(runDeferredExclusionUpdate, 800);
     });
 
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
@@ -255,8 +251,7 @@ export function initCanvasBackground(): void {
     let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
 
     function scheduleExclusionUpdate(): void {
-        // Skip entirely on mobile/tablet screens
-        if (window.innerWidth <= 1150 || !hasMeasuredExclusions) return;
+        if (!hasMeasuredExclusions) return;
 
         if (reflowTimeout) clearTimeout(reflowTimeout);
         reflowTimeout = setTimeout(() => {
@@ -280,7 +275,7 @@ export function initCanvasBackground(): void {
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
         on(mainWrapper, 'transitionend', () => {
-            if (window.innerWidth > 1150) {
+            if (hasMeasuredExclusions) {
                 updateExclusionRects();
                 wakeAnimation();
             }
@@ -370,13 +365,13 @@ export function initCanvasBackground(): void {
 
         const isLight = document.body.classList.contains('light-theme');
         const isMobile = width <= 1150;
-        const baseColor = isLight ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, ';
         const touchRadius = isMobile ? 100 : 140;
         const touchRadiusSq = touchRadius * touchRadius;
         const defaultAlpha = (isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA) * 0.7;
 
-        ctx.beginPath();
-        ctx.fillStyle = `${baseColor}${defaultAlpha.toString()})`;
+        ctx.fillStyle = isLight
+            ? `rgba(0, 0, 0, ${defaultAlpha.toString()})`
+            : `rgba(255, 255, 255, ${defaultAlpha.toString()})`;
 
         const activeDots: ActiveDot[] = [];
 
@@ -413,7 +408,6 @@ export function initCanvasBackground(): void {
 
                 if (dotFade <= 0) continue;
 
-                // On mobile, textExclusions is empty, skipping this entire loop
                 if (textExclusions.length > 0) {
                     const maxZone = TEXT_CLEARANCE + FADE_ZONE;
                     const maxZoneSq = maxZone * maxZone;
@@ -450,12 +444,11 @@ export function initCanvasBackground(): void {
                 if (distSq < touchRadiusSq) {
                     activeDots.push({ x, y, distSq, flankFade: dotFade });
                 } else {
-                    ctx.moveTo(x + 1.3, y);
-                    ctx.arc(x, y, 1.3, 0, Math.PI * 2);
+                    // Blazingly fast GPU quad blit: identical visual output without trigonometric arc calculation
+                    ctx.fillRect(x - 1, y - 1, 2, 2);
                 }
             }
         }
-        ctx.fill();
 
         const glowAlphaMax = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 

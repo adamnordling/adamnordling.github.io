@@ -121,12 +121,16 @@
         align-items: center;
         justify-content: center;
         color: var(--text-muted);
+        /* GPU layer promotion prevents main-thread style recalcs */
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
         transition:
             transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
             color 200ms ease;
     }
 
-    /* Guarantees SVGs render with explicit geometry & color on Cloudflare */
     .profile-links svg {
         width: 20px !important;
         height: 20px !important;
@@ -138,6 +142,12 @@
         stroke-width: 2px !important;
         stroke-linecap: round;
         stroke-linejoin: round;
+        /* Hardware accelerate the 3D wave rotations on GPU */
+        will-change: transform;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     .profile-links a:hover svg,
