@@ -228,18 +228,33 @@ export function initCanvasBackground(): void {
 
     on(window, 'resize', updateBounds, { passive: true });
 
-    // Måla canvas direkt, men skjut upp DOM-textmätningen 1 bildruta så TBT blir 0 ms
+    // 1. Sätt canvas-storleken direkt vid start utan att göra dyra textmätningar
+    function initCanvasDimensions(): void {
+        if (!canvas) return;
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        draw();
+    }
+
+    initCanvasDimensions();
+
+    // 2. Kör de detaljerade text-uteslutningarna EFTER att sidstarten är helt klar (eller vid första musrörelse)
+    let hasMeasuredExclusions = false;
+
+    function runDeferredExclusionUpdate(): void {
+        if (hasMeasuredExclusions) return;
+        hasMeasuredExclusions = true;
+        updateBounds();
+    }
+
+    // Kör 1.5s efter load (helt utanför TBT- och LCP-fönstret)
     window.addEventListener('load', () => {
-        if ('requestIdleCallback' in window) {
-            window.requestIdleCallback(() => {
-                updateBounds();
-            });
-        } else {
-            setTimeout(() => {
-                updateBounds();
-            }, 300);
-        }
+        setTimeout(runDeferredExclusionUpdate, 1500);
     });
+
+    // Om användaren rör musen/skärmen innan 1.5s har gått: mät direkt
+    window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
+    window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
 
     // Replace direct synchronous calls on scroll with a debounced/rAF batch runner
     let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
