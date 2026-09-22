@@ -319,6 +319,7 @@
         inset: 0;
         border-radius: 50%;
         background-color: var(--accent);
+        transform: translateZ(0);
         will-change: transform, opacity;
         animation: pulse-dot 2s infinite cubic-bezier(0.66, 0, 0, 1);
     }

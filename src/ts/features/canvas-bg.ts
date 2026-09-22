@@ -16,6 +16,7 @@ export function initCanvasBackground(): void {
     let isAnimating = false;
     let stopTimeout: ReturnType<typeof setTimeout> | null = null;
     let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+    let scrollRafId: number | null = null;
 
     let wrapperLeft = 0;
     let wrapperRight = 0;
@@ -38,10 +39,11 @@ export function initCanvasBackground(): void {
     const DOT_SPACING = 28;
     const FADE_MARGIN = 100;
 
-    const TEXT_CLEARANCE = 4;
-    const FADE_ZONE = 6;
+    // Clearance distance in pixels directly around letters & icons
+    const TEXT_CLEARANCE = 4; // Dead-zone in pixels directly around letters & icons (100% invisible)
+    const FADE_ZONE = 6; // Smooth transition zone in pixels (ramps from 0% to 100% opacity)
 
-    // 100% of your original text selectors preserved
+    // Complete original text selectors
     const textSelectors = [
         '.name-title',
         '.subtitle',
@@ -74,7 +76,7 @@ export function initCanvasBackground(): void {
         '.m-inspector-desc'
     ];
 
-    // 100% of your original visual selectors preserved
+    // Complete original visual selectors
     const visualSelectors = [
         '.profile-img',
         '.profile-links a svg',
@@ -141,6 +143,7 @@ export function initCanvasBackground(): void {
     function updateExclusionRects(): void {
         textExclusions = [];
 
+        // 1. Precise line-by-line text measurements (keeps dots flowing around headings & text)
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
@@ -161,6 +164,7 @@ export function initCanvasBackground(): void {
             }
         });
 
+        // 2. Exact visual boundaries for icons, SVGs, images, and buttons
         const visualEls = document.querySelectorAll<HTMLElement | SVGElement>(visualSelectors.join(', '));
         visualEls.forEach(el => {
             if (!isElementVisible(el as HTMLElement)) return;
@@ -213,7 +217,7 @@ export function initCanvasBackground(): void {
             if (resizeTimeout) clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 updateBounds();
-            }, 120);
+            }, 100);
         },
         { passive: true }
     );
@@ -240,7 +244,6 @@ export function initCanvasBackground(): void {
         updateBounds();
     }
 
-    // Deferred initialization allows initial paint to complete with zero delay
     window.addEventListener('load', () => {
         setTimeout(runDeferredExclusionUpdate, 800);
     });
@@ -248,35 +251,38 @@ export function initCanvasBackground(): void {
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
 
-    let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
-
-    function scheduleExclusionUpdate(): void {
+    // Smooth scroll handler tracks window and panel positions with zero lag
+    function handleScrollUpdate(): void {
         if (!hasMeasuredExclusions) return;
-
-        if (reflowTimeout) clearTimeout(reflowTimeout);
-        reflowTimeout = setTimeout(() => {
-            requestAnimationFrame(() => {
-                updateExclusionRects();
+        if (scrollRafId === null) {
+            scrollRafId = requestAnimationFrame(() => {
+                scrollRafId = null;
+                updateBounds();
                 wakeAnimation();
             });
-        }, 60);
+        }
     }
 
+    // 1. Mobile & tablet window scroll listener (eliminates ghost boxes and dead spots)
+    on(window, 'scroll', handleScrollUpdate, { passive: true });
+
+    // 2. Desktop panel scroll listeners
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
     if (leftPanel) {
-        on(leftPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
+        on(leftPanel, 'scroll', handleScrollUpdate, { passive: true });
     }
 
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
     if (rightPanel) {
-        on(rightPanel, 'scroll', scheduleExclusionUpdate, { passive: true });
+        on(rightPanel, 'scroll', handleScrollUpdate, { passive: true });
     }
 
+    // 3. Re-calculate when bio, education, or skills accordion transitions finish
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
         on(mainWrapper, 'transitionend', () => {
             if (hasMeasuredExclusions) {
-                updateExclusionRects();
+                updateBounds();
                 wakeAnimation();
             }
         });
@@ -365,15 +371,18 @@ export function initCanvasBackground(): void {
 
         const isLight = document.body.classList.contains('light-theme');
         const isMobile = width <= 1150;
+        const baseColor = isLight ? 'rgba(0, 0, 0, ' : 'rgba(255, 255, 255, ';
         const touchRadius = isMobile ? 100 : 140;
         const touchRadiusSq = touchRadius * touchRadius;
         const defaultAlpha = (isLight ? LIGHT_BASE_ALPHA : DARK_BASE_ALPHA) * 0.7;
 
-        ctx.fillStyle = isLight
-            ? `rgba(0, 0, 0, ${defaultAlpha.toString()})`
-            : `rgba(255, 255, 255, ${defaultAlpha.toString()})`;
+        ctx.beginPath();
+        ctx.fillStyle = `${baseColor}${defaultAlpha.toString()})`;
 
         const activeDots: ActiveDot[] = [];
+        const maxZone = TEXT_CLEARANCE + FADE_ZONE;
+        const maxZoneSq = maxZone * maxZone;
+        const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
 
         for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
             const isLeftFlank = x < wrapperLeft;
@@ -408,10 +417,8 @@ export function initCanvasBackground(): void {
 
                 if (dotFade <= 0) continue;
 
+                // Precision text avoidance: checks actual distance to all visible text and visual rects
                 if (textExclusions.length > 0) {
-                    const maxZone = TEXT_CLEARANCE + FADE_ZONE;
-                    const maxZoneSq = maxZone * maxZone;
-                    const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
                     let minTextDistSq = 999999;
 
                     for (let i = 0; i < textExclusions.length; i++) {
@@ -444,12 +451,15 @@ export function initCanvasBackground(): void {
                 if (distSq < touchRadiusSq) {
                     activeDots.push({ x, y, distSq, flankFade: dotFade });
                 } else {
-                    // Blazingly fast GPU quad blit: identical visual output without trigonometric arc calculation
-                    ctx.fillRect(x - 1, y - 1, 2, 2);
+                    // Original smooth 1.3px circle geometry
+                    ctx.moveTo(x + 1.3, y);
+                    ctx.arc(x, y, 1.3, 0, Math.PI * 2);
                 }
             }
         }
+        ctx.fill();
 
+        // Glowing cursor reaction dots with radial light
         const glowAlphaMax = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 
         for (let i = 0; i < activeDots.length; i++) {

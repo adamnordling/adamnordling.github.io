@@ -156,7 +156,7 @@
         align-items: center;
         position: sticky;
         top: 0;
-        background-color: var(--bg-color);
+        background: transparent;
         padding-bottom: 20px;
         z-index: 10;
     }
@@ -164,6 +164,7 @@
     .right-header h2 {
         font-size: 1.5rem;
         font-weight: 700;
+        width: fit-content;
     }
 
     .header-actions {
