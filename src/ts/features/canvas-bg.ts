@@ -1,5 +1,13 @@
 import { qs, on } from '../utils/dom';
 
+interface CachedRect {
+    pageLeft: number;
+    pageTop: number;
+    width: number;
+    height: number;
+    isRightPanel: boolean;
+}
+
 export function initCanvasBackground(): void {
     const canvas = qs('#bg-canvas') as HTMLCanvasElement | null;
     const portfolioWrapper = qs('.portfolio-wrapper');
@@ -28,8 +36,8 @@ export function initCanvasBackground(): void {
     let rightPanelLeft = 0;
     let hasCenterGutter = false;
 
-    // Line-by-line text and icon bounding rects
-    let textExclusions: DOMRect[] = [];
+    let cachedExclusionRects: CachedRect[] = [];
+    let activeViewportExclusions: DOMRect[] = [];
     const textRange = document.createRange();
 
     const DARK_BASE_ALPHA = 0.12;
@@ -39,11 +47,9 @@ export function initCanvasBackground(): void {
     const DOT_SPACING = 28;
     const FADE_MARGIN = 100;
 
-    // Clearance distance in pixels directly around letters & icons
-    const TEXT_CLEARANCE = 4; // Dead-zone in pixels directly around letters & icons (100% invisible)
-    const FADE_ZONE = 6; // Smooth transition zone in pixels (ramps from 0% to 100% opacity)
+    const TEXT_CLEARANCE = 4;
+    const FADE_ZONE = 6;
 
-    // Complete original text selectors
     const textSelectors = [
         '.name-title',
         '.subtitle',
@@ -67,8 +73,6 @@ export function initCanvasBackground(): void {
         '.sub-skill-item > span:first-child',
         '.app-content h3',
         '.app-content p',
-        '.tech-drawer-label',
-        '.tech-drawer-text',
         '.activity-title',
         '.activity-desc',
         '.activity-time',
@@ -76,7 +80,6 @@ export function initCanvasBackground(): void {
         '.m-inspector-desc'
     ];
 
-    // Complete original visual selectors
     const visualSelectors = [
         '.profile-img',
         '.profile-links a svg',
@@ -97,9 +100,6 @@ export function initCanvasBackground(): void {
 
     function isElementVisible(el: HTMLElement): boolean {
         if (el.offsetWidth === 0 || el.offsetHeight === 0) return false;
-
-        const techDrawer = el.closest('.app-tech-drawer');
-        if (techDrawer && !techDrawer.classList.contains('is-active')) return false;
 
         const eduDrawer = el.closest('.edu-vertical-drawer');
         if (eduDrawer) {
@@ -140,39 +140,94 @@ export function initCanvasBackground(): void {
         return true;
     }
 
-    function updateExclusionRects(): void {
-        textExclusions = [];
+    function cacheDocumentExclusions(): void {
+        cachedExclusionRects = [];
+        const isDesktop = window.innerWidth > 1150;
+        const rightPanelEl = document.querySelector<HTMLElement>('.right-panel');
+        const leftPanelEl = document.querySelector<HTMLElement>('.left-panel');
 
-        // 1. Precise line-by-line text measurements (keeps dots flowing around headings & text)
+        const windowScrollY = window.scrollY;
+        const leftScrollY = isDesktop && leftPanelEl ? leftPanelEl.scrollTop : 0;
+        const rightScrollY = isDesktop && rightPanelEl ? rightPanelEl.scrollTop : 0;
+
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
+            const inRightPanel = isDesktop && !!el.closest('.right-panel');
+            const inLeftPanel = isDesktop && !!el.closest('.left-panel');
+            const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
+
             try {
                 textRange.selectNodeContents(el);
                 const rects = textRange.getClientRects();
                 for (let i = 0; i < rects.length; i++) {
                     const r = rects[i];
-                    if (r.width > 0 && r.height > 0 && r.bottom >= -15 && r.top <= height + 15) {
-                        textExclusions.push(r);
+                    if (r.width > 0 && r.height > 0) {
+                        cachedExclusionRects.push({
+                            pageLeft: r.left,
+                            pageTop: r.top + currentScrollY,
+                            width: r.width,
+                            height: r.height,
+                            isRightPanel: inRightPanel
+                        });
                     }
                 }
             } catch {
                 const r = el.getBoundingClientRect();
-                if (r.width > 0 && r.height > 0 && r.bottom >= -15 && r.top <= height + 15) {
-                    textExclusions.push(r);
+                if (r.width > 0 && r.height > 0) {
+                    cachedExclusionRects.push({
+                        pageLeft: r.left,
+                        pageTop: r.top + currentScrollY,
+                        width: r.width,
+                        height: r.height,
+                        isRightPanel: inRightPanel
+                    });
                 }
             }
         });
 
-        // 2. Exact visual boundaries for icons, SVGs, images, and buttons
         const visualEls = document.querySelectorAll<HTMLElement | SVGElement>(visualSelectors.join(', '));
         visualEls.forEach(el => {
             if (!isElementVisible(el as HTMLElement)) return;
+            const inRightPanel = isDesktop && !!el.closest('.right-panel');
+            const inLeftPanel = isDesktop && !!el.closest('.left-panel');
+            const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
+
             const r = el.getBoundingClientRect();
-            if (r.width > 0 && r.height > 0 && r.bottom >= -15 && r.top <= height + 15) {
-                textExclusions.push(r);
+            if (r.width > 0 && r.height > 0) {
+                cachedExclusionRects.push({
+                    pageLeft: r.left,
+                    pageTop: r.top + currentScrollY,
+                    width: r.width,
+                    height: r.height,
+                    isRightPanel: inRightPanel
+                });
             }
         });
+
+        updateViewportExclusionsMath();
+    }
+
+    function updateViewportExclusionsMath(): void {
+        const isDesktop = window.innerWidth > 1150;
+        const rightPanelEl = document.querySelector<HTMLElement>('.right-panel');
+        const leftPanelEl = document.querySelector<HTMLElement>('.left-panel');
+
+        const windowScrollY = window.scrollY;
+        const leftScrollY = isDesktop && leftPanelEl ? leftPanelEl.scrollTop : 0;
+        const rightScrollY = isDesktop && rightPanelEl ? rightPanelEl.scrollTop : 0;
+
+        activeViewportExclusions = [];
+        for (let i = 0; i < cachedExclusionRects.length; i++) {
+            const item = cachedExclusionRects[i];
+            const scrollOffset = isDesktop ? (item.isRightPanel ? rightScrollY : leftScrollY) : windowScrollY;
+            const top = item.pageTop - scrollOffset;
+            const bottom = top + item.height;
+
+            if (bottom >= -15 && top <= height + 15) {
+                activeViewportExclusions.push(new DOMRect(item.pageLeft, top, item.width, item.height));
+            }
+        }
     }
 
     let hasMeasuredExclusions = false;
@@ -205,7 +260,7 @@ export function initCanvasBackground(): void {
         }
 
         if (hasMeasuredExclusions) {
-            updateExclusionRects();
+            cacheDocumentExclusions();
         }
         draw();
     }
@@ -241,7 +296,8 @@ export function initCanvasBackground(): void {
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         hasMeasuredExclusions = true;
-        updateBounds();
+        cacheDocumentExclusions();
+        draw();
     }
 
     window.addEventListener('load', () => {
@@ -251,39 +307,35 @@ export function initCanvasBackground(): void {
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
 
-    // Smooth scroll handler tracks window and panel positions with zero lag
-    function handleScrollUpdate(): void {
+    function handleSmoothScroll(): void {
         if (!hasMeasuredExclusions) return;
         if (scrollRafId === null) {
             scrollRafId = requestAnimationFrame(() => {
                 scrollRafId = null;
-                updateBounds();
-                wakeAnimation();
+                updateViewportExclusionsMath();
+                draw();
             });
         }
     }
 
-    // 1. Mobile & tablet window scroll listener (eliminates ghost boxes and dead spots)
-    on(window, 'scroll', handleScrollUpdate, { passive: true });
+    on(window, 'scroll', handleSmoothScroll, { passive: true });
 
-    // 2. Desktop panel scroll listeners
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
     if (leftPanel) {
-        on(leftPanel, 'scroll', handleScrollUpdate, { passive: true });
+        on(leftPanel, 'scroll', handleSmoothScroll, { passive: true });
     }
 
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
     if (rightPanel) {
-        on(rightPanel, 'scroll', handleScrollUpdate, { passive: true });
+        on(rightPanel, 'scroll', handleSmoothScroll, { passive: true });
     }
 
-    // 3. Re-calculate when bio, education, or skills accordion transitions finish
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
         on(mainWrapper, 'transitionend', () => {
             if (hasMeasuredExclusions) {
-                updateBounds();
-                wakeAnimation();
+                cacheDocumentExclusions();
+                draw();
             }
         });
     }
@@ -417,12 +469,16 @@ export function initCanvasBackground(): void {
 
                 if (dotFade <= 0) continue;
 
-                // Precision text avoidance: checks actual distance to all visible text and visual rects
-                if (textExclusions.length > 0) {
+                if (activeViewportExclusions.length > 0) {
                     let minTextDistSq = 999999;
 
-                    for (let i = 0; i < textExclusions.length; i++) {
-                        const r = textExclusions[i];
+                    for (let i = 0; i < activeViewportExclusions.length; i++) {
+                        const r = activeViewportExclusions[i];
+
+                        // Snabb horisontell & vertikal avgränsning innan dyr distansberäkning
+                        if (x < r.left - maxZone || x > r.right + maxZone) continue;
+                        if (y < r.top - maxZone || y > r.bottom + maxZone) continue;
+
                         const dx = Math.max(0, r.left - x, x - r.right);
                         const dy = Math.max(0, r.top - y, y - r.bottom);
                         const dSq = dx * dx + dy * dy;
@@ -451,7 +507,6 @@ export function initCanvasBackground(): void {
                 if (distSq < touchRadiusSq) {
                     activeDots.push({ x, y, distSq, flankFade: dotFade });
                 } else {
-                    // Original smooth 1.3px circle geometry
                     ctx.moveTo(x + 1.3, y);
                     ctx.arc(x, y, 1.3, 0, Math.PI * 2);
                 }
@@ -459,7 +514,6 @@ export function initCanvasBackground(): void {
         }
         ctx.fill();
 
-        // Glowing cursor reaction dots with radial light
         const glowAlphaMax = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
 
         for (let i = 0; i < activeDots.length; i++) {

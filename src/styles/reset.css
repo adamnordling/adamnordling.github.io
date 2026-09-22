@@ -14,6 +14,11 @@
         scrollbar-gutter: stable;
     }
 
+    .left-panel,
+    .right-panel {
+        overscroll-behavior: contain;
+    }
+
     html:not([lang='sv']) [lang='sv'],
     html[lang='sv'] [lang='en'] {
         display: none !important;

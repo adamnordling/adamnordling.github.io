@@ -37,8 +37,8 @@
         height: 100%;
         border-radius: 12px;
         overflow: hidden; /* Clips image & spotlight strictly to 12px radius */
-        -webkit-mask-image: -webkit-radial-gradient(white, black); /* Fixes Chrome/Safari 3D corner leak */
-        mask-image: radial-gradient(white, black);
+        transform: translateZ(0);
+        will-change: transform;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         box-shadow:

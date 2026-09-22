@@ -12,15 +12,23 @@ import { initClipboard } from './features/clipboard';
 import { loadGitHubActivity } from './services/github';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Critical styling & structure setup
+    // 1. Critical visual setup
     initTheme();
     initI18n();
     initSkillsAndBio();
     initProjectFilter();
     initModal();
 
-    // 2. Yield to the main thread so First Paint and LCP render immediately
-    setTimeout(() => {
+    // 2. Schedule secondary background widgets in an idle slice to prevent long-task TBT
+    const scheduleSecondary = (cb: () => void): void => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(cb, { timeout: 1500 });
+        } else {
+            setTimeout(cb, 100);
+        }
+    };
+
+    scheduleSecondary(() => {
         initClock();
         initCanvasBackground();
         initCardTilt();
@@ -29,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initZoneScrolling();
         initMobileMarqueeTelemetry();
         initPerformanceMonitoring();
-    }, 0);
+    });
 
-    // 3. Lazy-load GitHub activity when scrolled into view
     initLazyGitHubActivity();
 
     if ('serviceWorker' in navigator) {
@@ -359,6 +366,15 @@ function initZoneScrolling(): void {
     const divider = document.querySelector<HTMLElement>('.panel-divider');
     if (!leftPanel || !rightPanel) return;
 
+    let cachedDividerX = 0;
+    const updateDividerX = (): void => {
+        cachedDividerX = divider
+            ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
+            : window.innerWidth / 2;
+    };
+    updateDividerX();
+    window.addEventListener('resize', updateDividerX, { passive: true });
+
     window.addEventListener(
         'wheel',
         (e: WheelEvent) => {
@@ -369,19 +385,13 @@ function initZoneScrolling(): void {
             const isInsideRight = !!target?.closest('.right-panel');
 
             if (!isInsideLeft && !isInsideRight) {
-                e.preventDefault();
-
-                const dividerX = divider
-                    ? divider.getBoundingClientRect().left + divider.offsetWidth / 2
-                    : window.innerWidth / 2;
-
-                if (e.clientX < dividerX) {
+                if (e.clientX < cachedDividerX) {
                     leftPanel.scrollBy({ top: e.deltaY, behavior: 'auto' });
                 } else {
                     rightPanel.scrollBy({ top: e.deltaY, behavior: 'auto' });
                 }
             }
         },
-        { passive: false }
+        { passive: true }
     );
 }

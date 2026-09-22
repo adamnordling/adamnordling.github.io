@@ -22,7 +22,17 @@ export function initI18n(): void {
         });
     }
 
-    setLanguage(getInitialLanguage());
+    const targetLang = getInitialLanguage();
+    // Only trigger DOM re-stamp if language is Swedish (different from default index.html "en")
+    if (document.documentElement.lang !== targetLang) {
+        setLanguage(targetLang);
+    } else {
+        const langLabel = qs('.lang-current-label');
+        if (langLabel) {
+            langLabel.textContent = targetLang.toUpperCase();
+        }
+    }
+
     initMobileDropdowns();
 }
 

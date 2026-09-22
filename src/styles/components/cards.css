@@ -3,8 +3,6 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 20px;
-        content-visibility: auto;
-        contain-intrinsic-size: 0 400px;
     }
 
     .app-card {
@@ -14,17 +12,17 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        transform: translateZ(0);
+        will-change: transform;
         box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.06),
             0 10px 24px -4px rgba(0, 0, 0, 0.5);
-        will-change: transform;
         transition:
             transform 0.2s ease,
             background-color 0.2s ease,
             border-color 0.2s ease;
     }
 
-    /* Vid hover i mörkt läge: lyft kortet med ljusare kant och subtil accentglöd */
     .app-card:hover {
         transform: translateY(-3px);
         border-color: rgba(255, 255, 255, 0.2);
@@ -42,17 +40,6 @@
     body.light-theme .app-card:hover {
         background-color: #ffffff;
         box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
-    }
-
-    .app-card.skill-dimmed {
-        opacity: 0.28;
-        filter: grayscale(80%);
-    }
-
-    .app-card.skill-highlighted {
-        border-color: var(--accent);
-        transform: translateY(-4px);
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.18);
     }
 
     .app-img-container {
@@ -77,9 +64,7 @@
     }
 
     .app-card:hover .app-img-container img,
-    .app-card:hover .app-img-container svg,
-    .app-card.skill-highlighted .app-img-container img,
-    .app-card.skill-highlighted .app-img-container svg {
+    .app-card:hover .app-img-container svg {
         filter: grayscale(0%) opacity(1);
         transform: scale(1.02);
     }
@@ -129,7 +114,6 @@
         cursor: pointer;
         user-select: none;
         -webkit-user-select: none;
-        /* Completely flat: no transforms or vertical jumping */
         transform: none !important;
         transition:
             background-color 0.18s ease,
@@ -137,8 +121,6 @@
             color 0.18s ease;
     }
 
-    /* --- DARK MODE (Default) --- */
-    /* Primary: Solid neutral dark grey */
     .btn-primary {
         background-color: #27272a;
         border: 1px solid #3f3f46;
@@ -155,7 +137,6 @@
         background-color: #202023;
     }
 
-    /* Secondary: Muted neutral surface grey */
     .btn-secondary {
         background-color: #1a1b21;
         border: 1px solid #2e303b;
@@ -172,8 +153,6 @@
         background-color: #16171c;
     }
 
-    /* --- LIGHT MODE --- */
-    /* Primary: Clean neutral mid-grey */
     body.light-theme .btn-primary {
         background-color: #e4e4e7;
         border: 1px solid #d4d4d8;
@@ -190,7 +169,6 @@
         background-color: #c4c4c8;
     }
 
-    /* Secondary: Soft light grey */
     body.light-theme .btn-secondary {
         background-color: #f4f4f5;
         border: 1px solid #e4e4e7;
@@ -205,56 +183,6 @@
 
     body.light-theme .btn-secondary:active {
         background-color: #dadadd;
-    }
-
-    .app-tech-drawer {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition:
-            grid-template-rows 350ms cubic-bezier(0.16, 1, 0.3, 1),
-            background-color 200ms ease;
-        background: rgba(59, 130, 246, 0.04);
-        border-top: 1px solid transparent;
-    }
-
-    .app-tech-drawer.is-active {
-        grid-template-rows: 1fr;
-        border-top-color: var(--border-color);
-    }
-
-    .tech-drawer-inner {
-        min-height: 0;
-        overflow: hidden;
-        padding: 0 20px;
-        transition: padding 350ms ease;
-    }
-
-    .app-tech-drawer.is-active .tech-drawer-inner {
-        padding: 14px 20px 16px 20px;
-    }
-
-    .tech-drawer-label {
-        font-size: 0.74rem;
-        font-family: var(--font-mono), monospace;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-
-    body.light-theme .tech-drawer-label {
-        color: #1d4ed8;
-        font-weight: 700;
-    }
-
-    .tech-drawer-text {
-        font-size: 0.82rem;
-        color: var(--text-secondary);
-        line-height: 1.5;
-        margin: 0;
-        user-select: text;
-        -webkit-user-select: text;
     }
 
     .app-status-badge {
@@ -288,22 +216,6 @@
         box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
     }
 
-    .app-card:nth-child(1) {
-        view-transition-name: card-trajectory;
-    }
-
-    .app-card:nth-child(2) {
-        view-transition-name: card-nutrition;
-    }
-
-    .app-card:nth-child(3) {
-        view-transition-name: card-everything;
-    }
-
-    /* ==========================================================================
-       TOUCH & MOBILE DISPLAY FOR PROJECT CARDS
-       No washed-out grayscale on touchscreens; full color and crisp touch
-       ========================================================================== */
     @media (hover: none), (max-width: 900px) {
         .app-img-container img,
         .app-img-container svg {
