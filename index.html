@@ -148,7 +148,7 @@
                                         alt="Adam Nordling Profile Portrait"
                                         class="profile-img"
                                         width="293"
-                                        height="253"
+                                        height="255"
                                         fetchpriority="high"
                                         decoding="async"
                                         draggable="false"
@@ -325,8 +325,8 @@
                                         of which are openly shared and open-source.
                                     </p>
                                     <p>
-                                        My core toolkit includes Python, JavaScript/TypeScript, Java, C++, SQL, Docker,
-                                        Linux, and GitLab CI/CD.
+                                        Explore the sections below for an in-depth breakdown of my education, technical
+                                        toolkit, and recent activity.
                                     </p>
                                 </div>
                                 <div lang="sv">
@@ -342,8 +342,8 @@
                                         öppen källkod.
                                     </p>
                                     <p>
-                                        Min kärnverktygslåda inkluderar Python, JavaScript/TypeScript, Java, C++, SQL,
-                                        Docker, Linux och GitLab CI/CD.
+                                        Utforska sektionerna nedan för en fördjupad genomgång av min utbildning,
+                                        tekniska kompetenser och senaste aktivitet.
                                     </p>
                                 </div>
                             </div>
@@ -3432,7 +3432,7 @@
                                 </div>
                             </article>
 
-                            <!-- 2. Open Nutrition Card (Now Live & Ranked #2) -->
+                            <!-- 2. Open Nutrition Card -->
                             <article class="app-card" data-category="web" data-skills="web languages data devops">
                                 <div class="app-img-container">
                                     <div class="app-status-badge is-live" data-live-enabled="true">
@@ -3446,28 +3446,259 @@
                                         href="https://opennutrition.adamnordling.se/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        style="display: block; line-height: 0"
-                                        title="Open Nutrition live app"
+                                        class="app-img-link"
+                                        title="Open Nutrition live web app"
                                     >
-                                        <picture>
-                                            <img
-                                                src="./assets/nutrition-300.webp"
-                                                srcset="
-                                                    ./assets/nutrition-200.webp 200w,
-                                                    ./assets/nutrition-300.webp 300w,
-                                                    ./assets/nutrition-400.webp 400w,
-                                                    ./assets/nutrition-500.webp 500w,
-                                                    ./assets/nutrition-700.webp 700w,
-                                                    ./assets/nutrition-800.webp 800w
-                                                "
-                                                sizes="(max-width: 520px) 92vw, (max-width: 956px) 45vw, 312px"
-                                                alt="Open Nutrition interface preview"
-                                                width="312"
-                                                height="208"
-                                                decoding="async"
-                                                fetchpriority="high"
+                                        <svg
+                                            viewBox="0 0 400 200"
+                                            width="100%"
+                                            height="100%"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            style="background: #0d1217; display: block"
+                                        >
+                                            <defs>
+                                                <linearGradient id="nutriGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                    <stop offset="0%" stop-color="#10b981" />
+                                                    <stop offset="50%" stop-color="#14b8a6" />
+                                                    <stop offset="100%" stop-color="#06b6d4" />
+                                                </linearGradient>
+                                                <linearGradient id="nutriArea" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                    <stop offset="0%" stop-color="rgba(16, 185, 129, 0.28)" />
+                                                    <stop offset="100%" stop-color="rgba(6, 182, 212, 0.0)" />
+                                                </linearGradient>
+                                                <pattern
+                                                    id="nutriGrid"
+                                                    width="20"
+                                                    height="20"
+                                                    patternUnits="userSpaceOnUse"
+                                                >
+                                                    <path
+                                                        d="M 20 0 L 0 0 0 20"
+                                                        fill="none"
+                                                        stroke="rgba(255, 255, 255, 0.035)"
+                                                        stroke-width="1"
+                                                    />
+                                                </pattern>
+                                            </defs>
+                                            <rect width="100%" height="100%" fill="url(#nutriGrid)" />
+
+                                            <!-- Axes -->
+                                            <line
+                                                x1="30"
+                                                y1="162"
+                                                x2="225"
+                                                y2="162"
+                                                stroke="rgba(255, 255, 255, 0.12)"
+                                                stroke-width="1"
                                             />
-                                        </picture>
+                                            <line
+                                                x1="30"
+                                                y1="40"
+                                                x2="30"
+                                                y2="162"
+                                                stroke="rgba(255, 255, 255, 0.12)"
+                                                stroke-width="1"
+                                            />
+
+                                            <!-- Bioavailability Absorption Area & Curve -->
+                                            <path
+                                                d="M 30 162 C 65 158 85 85 130 74 C 175 63 190 120 225 135 L 225 162 Z"
+                                                fill="url(#nutriArea)"
+                                            />
+                                            <path
+                                                d="M 30 162 C 65 158 85 85 130 74 C 175 63 190 120 225 135"
+                                                fill="none"
+                                                stroke="url(#nutriGrad)"
+                                                stroke-width="2.5"
+                                            />
+
+                                            <!-- Unoptimized Baseline (Antinutrient inhibition) -->
+                                            <path
+                                                d="M 30 162 C 70 162 95 136 135 130 C 175 124 195 150 225 154"
+                                                fill="none"
+                                                stroke="rgba(244, 63, 94, 0.45)"
+                                                stroke-width="1.8"
+                                                stroke-dasharray="3 3"
+                                            />
+
+                                            <!-- Peak Absorption Node -->
+                                            <circle cx="130" cy="74" r="5" fill="#10b981" />
+                                            <circle
+                                                cx="130"
+                                                cy="74"
+                                                r="9"
+                                                fill="none"
+                                                stroke="rgba(16, 185, 129, 0.35)"
+                                                stroke-width="1.5"
+                                            />
+
+                                            <!-- Peak Tag Badge -->
+                                            <rect
+                                                x="75"
+                                                y="42"
+                                                width="110"
+                                                height="22"
+                                                rx="4"
+                                                fill="#141c22"
+                                                stroke="rgba(16, 185, 129, 0.4)"
+                                                stroke-width="1"
+                                            />
+                                            <text
+                                                x="130"
+                                                y="56"
+                                                fill="#34d399"
+                                                font-family="monospace"
+                                                font-size="9.5"
+                                                font-weight="600"
+                                                text-anchor="middle"
+                                            >
+                                                BIOAVAIL: +82%
+                                            </text>
+
+                                            <!-- Axis Baseline Labels -->
+                                            <text x="35" y="178" fill="#64748b" font-family="monospace" font-size="8">
+                                                ABSORPTION
+                                            </text>
+                                            <text x="165" y="178" fill="#f43f5e" font-family="monospace" font-size="8">
+                                                RAW INTAKE
+                                            </text>
+
+                                            <!-- Right Side Telemetry Pills: Micronutrients & Antinutrient Reduction -->
+                                            <!-- Pill 1: Iron -->
+                                            <g transform="translate(245, 42)">
+                                                <rect
+                                                    x="0"
+                                                    y="0"
+                                                    width="130"
+                                                    height="34"
+                                                    rx="5"
+                                                    fill="#141a21"
+                                                    stroke="rgba(16, 185, 129, 0.28)"
+                                                    stroke-width="1"
+                                                />
+                                                <circle cx="14" cy="17" r="4" fill="#10b981" />
+                                                <text
+                                                    x="26"
+                                                    y="16"
+                                                    fill="#f1f5f9"
+                                                    font-family="monospace"
+                                                    font-size="10"
+                                                    font-weight="600"
+                                                >
+                                                    Fe · IRON
+                                                </text>
+                                                <text
+                                                    x="26"
+                                                    y="27"
+                                                    fill="#64748b"
+                                                    font-family="monospace"
+                                                    font-size="8"
+                                                >
+                                                    88% NET UPTAKE
+                                                </text>
+                                                <text
+                                                    x="120"
+                                                    y="21"
+                                                    fill="#10b981"
+                                                    font-family="monospace"
+                                                    font-size="10"
+                                                    font-weight="700"
+                                                    text-anchor="end"
+                                                >
+                                                    ✓
+                                                </text>
+                                            </g>
+
+                                            <!-- Pill 2: Magnesium -->
+                                            <g transform="translate(245, 84)">
+                                                <rect
+                                                    x="0"
+                                                    y="0"
+                                                    width="130"
+                                                    height="34"
+                                                    rx="5"
+                                                    fill="#141a21"
+                                                    stroke="rgba(6, 182, 212, 0.28)"
+                                                    stroke-width="1"
+                                                />
+                                                <circle cx="14" cy="17" r="4" fill="#06b6d4" />
+                                                <text
+                                                    x="26"
+                                                    y="16"
+                                                    fill="#f1f5f9"
+                                                    font-family="monospace"
+                                                    font-size="10"
+                                                    font-weight="600"
+                                                >
+                                                    Mg · MAGNESIUM
+                                                </text>
+                                                <text
+                                                    x="26"
+                                                    y="27"
+                                                    fill="#64748b"
+                                                    font-family="monospace"
+                                                    font-size="8"
+                                                >
+                                                    380mg PROFILE
+                                                </text>
+                                                <text
+                                                    x="120"
+                                                    y="21"
+                                                    fill="#06b6d4"
+                                                    font-family="monospace"
+                                                    font-size="10"
+                                                    font-weight="700"
+                                                    text-anchor="end"
+                                                >
+                                                    ✓
+                                                </text>
+                                            </g>
+
+                                            <!-- Pill 3: Phytates -->
+                                            <g transform="translate(245, 126)">
+                                                <rect
+                                                    x="0"
+                                                    y="0"
+                                                    width="130"
+                                                    height="34"
+                                                    rx="5"
+                                                    fill="#141a21"
+                                                    stroke="rgba(244, 63, 94, 0.25)"
+                                                    stroke-width="1"
+                                                />
+                                                <circle cx="14" cy="17" r="4" fill="#fb7185" />
+                                                <text
+                                                    x="26"
+                                                    y="16"
+                                                    fill="#f1f5f9"
+                                                    font-family="monospace"
+                                                    font-size="10"
+                                                    font-weight="600"
+                                                >
+                                                    PHYTATES
+                                                </text>
+                                                <text
+                                                    x="26"
+                                                    y="27"
+                                                    fill="#fb7185"
+                                                    font-family="monospace"
+                                                    font-size="8"
+                                                >
+                                                    -74% INHIBITION
+                                                </text>
+                                                <text
+                                                    x="120"
+                                                    y="21"
+                                                    fill="#fb7185"
+                                                    font-family="monospace"
+                                                    font-size="9"
+                                                    font-weight="700"
+                                                    text-anchor="end"
+                                                >
+                                                    MIN
+                                                </text>
+                                            </g>
+                                        </svg>
                                     </a>
                                 </div>
                                 <div class="app-content">
@@ -3913,7 +4144,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                             >
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
-                            <span class="m-pill-label">Vite 5 · ESNext</span>
+                            <span class="m-pill-label">Vite 8 · ESNext</span>
                         </button>
                         <button type="button" class="m-pill" data-metric="ts" tabindex="-1">
                             <span class="m-pill-label">TS Strict</span>
@@ -4092,7 +4323,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                     >
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                     </svg>
-                    <span class="pill-text">Vite 5 · ESNext</span>
+                    <span class="pill-text">Vite 8 · ESNext</span>
                 </div>
 
                 <div

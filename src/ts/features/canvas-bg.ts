@@ -257,17 +257,6 @@ export function initCanvasBackground(): void {
     // Mobile / Tablet: Window scroll
     on(window, 'scroll', scheduleExclusionUpdate, { passive: true });
 
-    // Mobile / Tablet: Window scroll
-    on(
-        window,
-        'scroll',
-        () => {
-            updateExclusionRects();
-            wakeAnimation();
-        },
-        { passive: true }
-    );
-
     // Re-calculate when bio, education, or skills expand/collapse
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
@@ -410,25 +399,32 @@ export function initCanvasBackground(): void {
                 // UNIFIED BARRIER AROUND ALL VISIBLE LINES, HEADINGS & ICONS
                 // (Runs identically across PC, Tablet & Mobile)
                 // =============================================================
-                let minTextDist = 9999;
+                const maxZone = TEXT_CLEARANCE + FADE_ZONE;
+                const maxZoneSq = maxZone * maxZone;
+                const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
+                let minTextDistSq = 999999;
+
                 for (let i = 0; i < textExclusions.length; i++) {
                     const r = textExclusions[i];
                     const dx = Math.max(0, r.left - x, x - r.right);
                     const dy = Math.max(0, r.top - y, y - r.bottom);
-                    const dist = Math.hypot(dx, dy);
+                    const dSq = dx * dx + dy * dy;
 
-                    if (dist < minTextDist) {
-                        minTextDist = dist;
-                        if (minTextDist === 0) break;
+                    if (dSq < minTextDistSq) {
+                        minTextDistSq = dSq;
+                        if (minTextDistSq === 0) break;
                     }
                 }
 
-                if (minTextDist <= TEXT_CLEARANCE) {
+                // If point is strictly inside clearance boundary, skip immediately (no Math.sqrt needed!)
+                if (minTextDistSq <= clearSq) {
                     continue;
                 }
 
-                if (minTextDist < TEXT_CLEARANCE + FADE_ZONE) {
-                    dotFade *= (minTextDist - TEXT_CLEARANCE) / FADE_ZONE;
+                // Only calculate Math.sqrt for dots right on the smooth edge threshold
+                if (minTextDistSq < maxZoneSq) {
+                    const dist = Math.sqrt(minTextDistSq);
+                    dotFade *= (dist - TEXT_CLEARANCE) / FADE_ZONE;
                     if (dotFade <= 0.02) continue;
                 }
 

@@ -37,11 +37,20 @@ export function initShortcuts(): void {
 
     on(document, 'keydown', (e: KeyboardEvent) => {
         const activeTag = (document.activeElement?.tagName || '').toUpperCase();
+
         if (['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag)) return;
         if (e.ctrlKey || e.metaKey || e.altKey) return;
 
         const key = e.key.toLowerCase();
 
+        // ➕ REPLACE your modal shortcut check with this at the top of document keydown:
+        if (isModalOpen()) {
+            if (e.key === 'Escape' || key === 'c') {
+                e.preventDefault();
+                closeModal();
+            }
+            return; // Safely blocks 1, 2, 3, T, L, F, and arrows while CV is open!
+        }
         // [ T ] -> Toggle Theme
         if (key === 't') {
             toggleTheme();

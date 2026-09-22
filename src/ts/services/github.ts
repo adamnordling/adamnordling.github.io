@@ -38,7 +38,7 @@ const GITHUB_USERNAME = 'adamnordling';
 const CACHE_COMMITS_KEY = `gh_commits_${GITHUB_USERNAME}`;
 const CACHE_STATS_KEY = `gh_stats_${GITHUB_USERNAME}`;
 const CACHE_TIME_KEY = `gh_time_${GITHUB_USERNAME}`;
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minuter lokal cache
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache to avoid GitHub IP rate-limits
 
 function isToday(dateString: string): boolean {
     const d = new Date(dateString);
@@ -76,7 +76,6 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
     const activityFeed = qs('#activity-feed');
     if (!activityFeed) return;
 
-    // 1. Telemetri-bar med EXAKTA tal (ingen "200+"-fallback)
     const statsBarHtml = `
         <div class="activity-stats-bar">
             <div class="stat-pill ${stats.today > 0 ? 'highlight-today' : ''}" title="Commits pushed today">
@@ -86,7 +85,7 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
                 <small lang="sv">IDAG</small>
             </div>
 
-            <div class="stat-pill" title="Exact total public commits on GitHub">
+            <div class="stat-pill" title="Total public commits">
                 <svg class="stat-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
@@ -127,7 +126,6 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
         </svg>
     `;
 
-    // 2. Visar ALLTID ditt riktiga commit-meddelande
     const commitsHtml = items
         .slice(0, 5)
         .map(item => {
@@ -160,27 +158,24 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
 
 export async function loadGitHubActivity(): Promise<void> {
     const activityFeed = qs('#activity-feed');
+    let fallbackCommits: CommitItem[] = [];
+    let fallbackStats = { today: 0, totalCommits: 200, totalRepos: 4 };
+
     const cachedCommits = localStorage.getItem(CACHE_COMMITS_KEY);
     const cachedStats = localStorage.getItem(CACHE_STATS_KEY);
     const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
 
     if (cachedCommits && cachedStats) {
         try {
-            const parsedCommits = JSON.parse(cachedCommits) as CommitItem[];
-            const parsedStats = JSON.parse(cachedStats) as { today: number; totalCommits: number; totalRepos: number };
+            fallbackCommits = JSON.parse(cachedCommits) as CommitItem[];
+            fallbackStats = JSON.parse(cachedStats) as typeof fallbackStats;
 
-            // Använd bara cache om den inte har den gamla "Pushed updates"-texten
-            const hasGenericText = parsedCommits.some(c => c.commit.message.startsWith('Pushed updates'));
-
-            if (parsedCommits.length > 0 && !hasGenericText) {
-                renderActivity(parsedCommits, parsedStats);
-
+            if (fallbackCommits.length > 0) {
+                renderActivity(fallbackCommits, fallbackStats);
+                // If cache is fresh, exit early and prevent unneeded API hits
                 if (cachedTime && Date.now() - Number(cachedTime) < CACHE_TTL_MS) {
                     return;
                 }
-            } else {
-                localStorage.removeItem(CACHE_COMMITS_KEY);
-                localStorage.removeItem(CACHE_STATS_KEY);
             }
         } catch {
             localStorage.removeItem(CACHE_COMMITS_KEY);
@@ -191,9 +186,6 @@ export async function loadGitHubActivity(): Promise<void> {
     try {
         const headers = { Accept: 'application/vnd.github.v3+json' };
 
-        // 1. Hämta dina senast pushade repon (sorterade efter senaste aktivitet)
-        // 2. Hämta användarens profil för totala repos
-        // 3. Sök exakt totala antalet commits du skrivit på GitHub
         const [reposRes, userRes, searchRes] = await Promise.allSettled([
             fetch(
                 `https://api.github.com/users/${encodeURIComponent(GITHUB_USERNAME)}/repos?sort=pushed&direction=desc&per_page=5`,
@@ -212,20 +204,20 @@ export async function loadGitHubActivity(): Promise<void> {
             })
         ]);
 
+        // If rate limited, keep showing cached or graceful fallback stats
         if (reposRes.status === 'fulfilled' && reposRes.value.status === 403) {
-            const resetTime = reposRes.value.headers.get('x-ratelimit-reset');
-            const resetMinutes = resetTime ? Math.ceil((Number(resetTime) * 1000 - Date.now()) / 60000) : 60;
-            console.warn(`⚡ [GitHub API] Rate limit nådd (403). Återställs om ~${resetMinutes.toString()} minuter.`);
+            console.warn('⚡ [GitHub API] Rate limit hit (403). Using preserved cache/fallbacks.');
+            if (fallbackCommits.length > 0) {
+                renderActivity(fallbackCommits, fallbackStats);
+            }
             return;
         }
 
         const allCommits: CommitItem[] = [];
 
-        // Hämta RIKTIGA commits direkt från dina senast uppdaterade repon
         if (reposRes.status === 'fulfilled' && reposRes.value.ok) {
             const reposData = (await reposRes.value.json()) as GitHubRepoItem[];
 
-            // Hämta alla commits parallellt på samma gång (skär ner tiden från 1500ms till 300ms)
             const commitPromises = reposData.slice(0, 3).map(async repo => {
                 try {
                     const commitsRes = await fetch(
@@ -256,15 +248,17 @@ export async function loadGitHubActivity(): Promise<void> {
             }
         }
 
-        // Sortera kronologiskt, nyast överst
+        if (allCommits.length === 0 && fallbackCommits.length > 0) {
+            renderActivity(fallbackCommits, fallbackStats);
+            return;
+        }
+
         allCommits.sort((a, b) => new Date(b.commit.author.date).getTime() - new Date(a.commit.author.date).getTime());
         const finalCommits = allCommits.slice(0, 5);
-
-        // Räkna commits gjorda idag (lokalt datum)
         const commitsToday = finalCommits.filter(c => isToday(c.commit.author.date)).length;
 
-        // Räkna EXAKT totala commits från Search API
-        let exactTotalCommits = finalCommits.length;
+        // Preserve previous total count if Search API hit the 10 req/min limit
+        let exactTotalCommits = fallbackStats.totalCommits;
         if (searchRes.status === 'fulfilled' && searchRes.value.ok) {
             try {
                 const searchData = (await searchRes.value.json()) as GitHubSearchCommitResponse;
@@ -272,12 +266,11 @@ export async function loadGitHubActivity(): Promise<void> {
                     exactTotalCommits = searchData.total_count;
                 }
             } catch {
-                // Fallback till faktiskt antal
+                // Keep fallback
             }
         }
 
-        // Räkna totala publika repos
-        let totalPublicRepos = 4;
+        let totalPublicRepos = fallbackStats.totalRepos;
         if (userRes.status === 'fulfilled' && userRes.value.ok) {
             try {
                 const userData = (await userRes.value.json()) as GitHubUserResponse;
@@ -285,7 +278,7 @@ export async function loadGitHubActivity(): Promise<void> {
                     totalPublicRepos = userData.public_repos;
                 }
             } catch {
-                // Fallback
+                // Keep fallback
             }
         }
 
@@ -295,23 +288,22 @@ export async function loadGitHubActivity(): Promise<void> {
             totalRepos: totalPublicRepos
         };
 
-        console.warn(
-            `⚡ [GitHub Feed] Klart! Laddade ${finalCommits.length.toString()} äkta commits. Totalt: ${stats.totalCommits.toString()} st.`
-        );
-
         if (finalCommits.length > 0) {
             localStorage.setItem(CACHE_COMMITS_KEY, JSON.stringify(finalCommits));
             localStorage.setItem(CACHE_STATS_KEY, JSON.stringify(stats));
             localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+            renderActivity(finalCommits, stats);
         }
-
-        renderActivity(finalCommits, stats);
         return;
     } catch (err: unknown) {
         console.error('GitHub API Fetch Error:', err);
+        if (fallbackCommits.length > 0) {
+            renderActivity(fallbackCommits, fallbackStats);
+            return;
+        }
     }
 
-    if (activityFeed) {
+    if (activityFeed && fallbackCommits.length === 0) {
         activityFeed.innerHTML = `
             <div class="activity-skeleton">
                 <span lang="en">GitHub activity temporarily unavailable.</span>
