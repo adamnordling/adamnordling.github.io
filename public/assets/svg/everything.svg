@@ -1,0 +1,31 @@
+<svg viewBox="0 0 400 200" width="400" height="200" xmlns="http://www.w3.org/2000/svg"
+     style="background: #121318; display: block">
+    <defs>
+        <pattern id="dotGrid" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.06)"/>
+        </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#dotGrid)"/>
+    <g transform="translate(60, 45)">
+        <rect x="0" y="0" width="70" height="48" rx="6" fill="#1c1d24" stroke="rgba(96,165,250,0.3)"
+              stroke-width="1.2"/>
+        <text x="35" y="28" fill="#60a5fa" font-family="monospace" font-size="11" text-anchor="middle">CONVERT</text>
+        <rect x="105" y="0" width="70" height="48" rx="6" fill="#1c1d24" stroke="rgba(255,255,255,0.1)"
+              stroke-width="1"/>
+        <text x="140" y="28" fill="#cbd5e1" font-family="monospace" font-size="11" text-anchor="middle">CIDR/IP</text>
+        <rect x="210" y="0" width="70" height="48" rx="6" fill="#1c1d24" stroke="rgba(255,255,255,0.1)"
+              stroke-width="1"/>
+        <text x="245" y="28" fill="#cbd5e1" font-family="monospace" font-size="11" text-anchor="middle">SHA-256</text>
+        <rect x="52" y="62" width="70" height="48" rx="6" fill="#1c1d24" stroke="rgba(255,255,255,0.1)"
+              stroke-width="1"/>
+        <text x="87" y="90" fill="#cbd5e1" font-family="monospace" font-size="11" text-anchor="middle">UTC/ISO</text>
+        <rect x="157" y="62" width="70" height="48" rx="6" fill="#1c1d24" stroke="rgba(96,165,250,0.3)"
+              stroke-width="1.2"/>
+        <text x="192" y="90" fill="#60a5fa" font-family="monospace" font-size="11" text-anchor="middle">PARSER</text>
+        <line x1="70" y1="24" x2="105" y2="24" stroke="rgba(96,165,250,0.4)" stroke-width="1.5" stroke-dasharray="2 2"/>
+        <line x1="175" y1="24" x2="210" y2="24" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="87" y1="48" x2="87" y2="62" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="192" y1="48" x2="192" y2="62" stroke="rgba(96,165,250,0.4)" stroke-width="1.5"
+              stroke-dasharray="2 2"/>
+    </g>
+</svg>

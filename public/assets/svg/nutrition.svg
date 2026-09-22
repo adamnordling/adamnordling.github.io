@@ -1,0 +1,65 @@
+<svg viewBox="0 0 400 200" width="400" height="200" xmlns="http://www.w3.org/2000/svg"
+     style="background: #0d1217; display: block">
+    <defs>
+        <linearGradient id="nutriGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#10b981"/>
+            <stop offset="50%" stop-color="#14b8a6"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+        </linearGradient>
+        <linearGradient id="nutriArea" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(16, 185, 129, 0.28)"/>
+            <stop offset="100%" stop-color="rgba(6, 182, 212, 0.0)"/>
+        </linearGradient>
+        <pattern id="nutriGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.035)" stroke-width="1"/>
+        </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#nutriGrid)"/>
+    <line x1="30" y1="162" x2="225" y2="162" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1"/>
+    <line x1="30" y1="40" x2="30" y2="162" stroke="rgba(255, 255, 255, 0.12)" stroke-width="1"/>
+    <path d="M 30 162 C 65 158 85 85 130 74 C 175 63 190 120 225 135 L 225 162 Z" fill="url(#nutriArea)"/>
+    <path d="M 30 162 C 65 158 85 85 130 74 C 175 63 190 120 225 135" fill="none" stroke="url(#nutriGrad)"
+          stroke-width="2.5"/>
+    <path d="M 30 162 C 70 162 95 136 135 130 C 175 124 195 150 225 154" fill="none" stroke="rgba(244, 63, 94, 0.45)"
+          stroke-width="1.8" stroke-dasharray="3 3"/>
+    <circle cx="130" cy="74" r="5" fill="#10b981"/>
+    <circle cx="130" cy="74" r="9" fill="none" stroke="rgba(16, 185, 129, 0.35)" stroke-width="1.5"/>
+    <rect x="75" y="42" width="110" height="22" rx="4" fill="#141c22" stroke="rgba(16, 185, 129, 0.4)"
+          stroke-width="1"/>
+    <text x="130" y="56" fill="#34d399" font-family="monospace" font-size="9.5" font-weight="600" text-anchor="middle">
+        BIOAVAIL: +82%
+    </text>
+    <text x="35" y="178" fill="#64748b" font-family="monospace" font-size="8">ABSORPTION</text>
+    <text x="165" y="178" fill="#f43f5e" font-family="monospace" font-size="8">RAW INTAKE</text>
+    <g transform="translate(245, 42)">
+        <rect x="0" y="0" width="130" height="34" rx="5" fill="#141a21" stroke="rgba(16, 185, 129, 0.28)"
+              stroke-width="1"/>
+        <circle cx="14" cy="17" r="4" fill="#10b981"/>
+        <text x="26" y="16" fill="#f1f5f9" font-family="monospace" font-size="10" font-weight="600">Fe · IRON</text>
+        <text x="26" y="27" fill="#64748b" font-family="monospace" font-size="8">88% NET UPTAKE</text>
+        <text x="120" y="21" fill="#10b981" font-family="monospace" font-size="10" font-weight="700" text-anchor="end">
+            ✓
+        </text>
+    </g>
+    <g transform="translate(245, 84)">
+        <rect x="0" y="0" width="130" height="34" rx="5" fill="#141a21" stroke="rgba(6, 182, 212, 0.28)"
+              stroke-width="1"/>
+        <circle cx="14" cy="17" r="4" fill="#06b6d4"/>
+        <text x="26" y="16" fill="#f1f5f9" font-family="monospace" font-size="10" font-weight="600">Mg · MAGNESIUM
+        </text>
+        <text x="26" y="27" fill="#64748b" font-family="monospace" font-size="8">380mg PROFILE</text>
+        <text x="120" y="21" fill="#06b6d4" font-family="monospace" font-size="10" font-weight="700" text-anchor="end">
+            ✓
+        </text>
+    </g>
+    <g transform="translate(245, 126)">
+        <rect x="0" y="0" width="130" height="34" rx="5" fill="#141a21" stroke="rgba(244, 63, 94, 0.25)"
+              stroke-width="1"/>
+        <circle cx="14" cy="17" r="4" fill="#fb7185"/>
+        <text x="26" y="16" fill="#f1f5f9" font-family="monospace" font-size="10" font-weight="600">PHYTATES</text>
+        <text x="26" y="27" fill="#fb7185" font-family="monospace" font-size="8">-74% INHIBITION</text>
+        <text x="120" y="21" fill="#fb7185" font-family="monospace" font-size="9" font-weight="700" text-anchor="end">
+            MIN
+        </text>
+    </g>
+</svg>
