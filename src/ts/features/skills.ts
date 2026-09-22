@@ -1,4 +1,6 @@
 import { qs, qsa, on } from '../utils/dom';
+import { EDUCATION_COURSES, type CourseData } from '../data/education-data';
+import { SKILLS_DATA, type SkillData } from '../data/skills-data';
 
 export function initSkillsAndBio(): void {
     initBioCard();
@@ -33,12 +35,50 @@ function initBioCard(): void {
 }
 
 // =============================================================================
-// 1. EDUCATION SECTION
+// 1. EDUCATION (DYNAMIC FLYWEIGHT BUBBLE)
 // =============================================================================
+let activeCourseItem: HTMLElement | null = null;
+let activeCourseId: string | null = null;
+const sharedEduBubble = document.createElement('div');
+sharedEduBubble.className = 'white-talk-bubble dynamic-bubble';
+
+function renderCourseBubble(item: HTMLElement, courseId: string): void {
+    const data = (EDUCATION_COURSES as Record<string, CourseData | undefined>)[courseId];
+    if (!data) return;
+
+    const lang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
+
+    const linksHtml =
+        data.links && data.links.length > 0
+            ? `<div class="course-links-row">${data.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="course-ext-btn"><span>${l.label}</span></a>`).join('')}</div>`
+            : '';
+
+    sharedEduBubble.innerHTML = `
+        <div class="bubble-header">
+            <span class="course-bubble-code">${data.code}</span>
+            <button type="button" class="bubble-close-btn" aria-label="Close course popup">✕</button>
+        </div>
+        <div class="course-bubble-title">${data.title[lang]}</div>
+        <p>${data.desc[lang]}</p>
+        <div class="course-bubble-meta">${data.meta[lang]}</div>
+        ${linksHtml}
+    `;
+
+    item.appendChild(sharedEduBubble);
+    item.classList.add('has-bubble-open', 'is-selected');
+    activeCourseItem = item;
+    activeCourseId = courseId;
+}
+
 export function closeAllCourseBubbles(): void {
-    qsa('.course-item').forEach(item => {
-        item.classList.remove('has-bubble-open', 'is-selected');
-    });
+    if (activeCourseItem) {
+        activeCourseItem.classList.remove('has-bubble-open', 'is-selected');
+        if (sharedEduBubble.parentElement === activeCourseItem) {
+            activeCourseItem.removeChild(sharedEduBubble);
+        }
+        activeCourseItem = null;
+        activeCourseId = null;
+    }
 }
 
 export function closeAllEducation(): void {
@@ -81,11 +121,14 @@ function initEducationAccordion(): void {
 
     courseItems.forEach(item => {
         const toggleCourse = (): void => {
-            const isAlreadyOpen = item.classList.contains('has-bubble-open');
+            const courseId = item.getAttribute('data-course-id');
+            if (!courseId) return;
+
+            const isAlreadyOpen = item === activeCourseItem;
             closeAllCourseBubbles();
 
             if (!isAlreadyOpen) {
-                item.classList.add('has-bubble-open', 'is-selected');
+                renderCourseBubble(item, courseId);
             }
         };
 
@@ -96,6 +139,7 @@ function initEducationAccordion(): void {
                 closeAllCourseBubbles();
                 return;
             }
+            if (target?.closest('.course-ext-btn')) return;
             if (target?.closest('.white-talk-bubble')) return;
             e.stopPropagation();
             toggleCourse();
@@ -122,8 +166,39 @@ function initEducationAccordion(): void {
 }
 
 // =============================================================================
-// 2. SKILLS SECTION
+// 2. SKILLS (DYNAMIC FLYWEIGHT BUBBLE & HIGHLIGHTING)
 // =============================================================================
+let activeSkillItem: HTMLElement | null = null;
+let activeSkillKey: string | null = null;
+const sharedSkillBubble = document.createElement('div');
+sharedSkillBubble.className = 'white-talk-bubble dynamic-bubble';
+
+function renderSkillBubble(item: HTMLElement, skillKey: string): void {
+    const data = (SKILLS_DATA as Record<string, SkillData | undefined>)[skillKey];
+    if (!data) return;
+
+    const lang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
+
+    sharedSkillBubble.innerHTML = `
+        <div class="bubble-header">
+            <span class="bubble-title">${data.title[lang]}</span>
+            <button type="button" class="bubble-close-btn" aria-label="Close skill popup">✕</button>
+        </div>
+        <p>${data.desc[lang]}</p>
+    `;
+
+    item.appendChild(sharedSkillBubble);
+    item.classList.add('has-bubble-open', 'is-selected');
+
+    const col = item.closest('.skills-column');
+    const grp = item.closest('.skill-group');
+    if (col) col.classList.add('has-active-bubble');
+    if (grp) grp.classList.add('has-active-bubble');
+
+    activeSkillItem = item;
+    activeSkillKey = skillKey;
+}
+
 function initSkillsSystem(): void {
     const skillsSection = qs('.section-skills');
     const eduSection = qs('.section-edu');
@@ -131,14 +206,14 @@ function initSkillsSystem(): void {
     const subSkillItems = qsa('.sub-skill-item[data-skill-id]');
     const allProjectCards = qsa('.app-card');
     const leftPanel = qs('.left-panel');
-    let activeSubSkill: HTMLElement | null = null;
 
-    function highlightSkill(skillTokens: string[]): void {
+    // ➕ Ersätt highlightSkill med denna precisionstestare:
+    function highlightSkill(skillKey: string): void {
         let hasMatch = false;
 
         for (const card of allProjectCards) {
-            const cardSkills = (card.getAttribute('data-skills') ?? '').split(' ');
-            const isMatch = skillTokens.some(token => cardSkills.includes(token));
+            const cardSkills = (card.getAttribute('data-skills') ?? '').split(/\s+/).filter(Boolean);
+            const isMatch = cardSkills.includes(skillKey);
             const drawer = qs('.app-tech-drawer', card);
 
             if (isMatch) {
@@ -153,6 +228,7 @@ function initSkillsSystem(): void {
             }
         }
 
+        // Om ingen av projekten använder kompetensen (t.ex. Java): återställ allt neutralt direkt
         if (!hasMatch) clearHighlights();
     }
 
@@ -164,19 +240,23 @@ function initSkillsSystem(): void {
         });
     }
 
-    function closeAllBubbles(): void {
+    function closeAllSkillBubbles(): void {
         qsa('.has-active-bubble').forEach(el => {
             el.classList.remove('has-active-bubble');
         });
-        subSkillItems.forEach(item => {
-            item.classList.remove('has-bubble-open', 'is-selected');
-        });
-        activeSubSkill = null;
+        if (activeSkillItem) {
+            activeSkillItem.classList.remove('has-bubble-open', 'is-selected');
+            if (sharedSkillBubble.parentElement === activeSkillItem) {
+                activeSkillItem.removeChild(sharedSkillBubble);
+            }
+            activeSkillItem = null;
+            activeSkillKey = null;
+        }
         clearHighlights();
     }
 
     function collapseAllSkills(): void {
-        closeAllBubbles();
+        closeAllSkillBubbles();
         skillGroups.forEach(group => {
             group.classList.remove('is-expanded');
             const header = qs('.skill-group-header', group);
@@ -190,10 +270,15 @@ function initSkillsSystem(): void {
 
         const toggleGroup = (): void => {
             const isCurrentlyExpanded = group.classList.contains('is-expanded');
-            closeAllBubbles();
-            const willExpand = !isCurrentlyExpanded;
-            group.classList.toggle('is-expanded', willExpand);
-            header.setAttribute('aria-expanded', String(willExpand));
+
+            // 1. Fäll ihop alla andra öppna kompetensgrupper och stäng eventuella pratbubblor
+            collapseAllSkills();
+
+            // 2. Om den inte redan var öppen, fäll ut den nyligen klickade gruppen
+            if (!isCurrentlyExpanded) {
+                group.classList.add('is-expanded');
+                header.setAttribute('aria-expanded', 'true');
+            }
         };
 
         on(header, 'click', e => {
@@ -210,30 +295,25 @@ function initSkillsSystem(): void {
     });
 
     subSkillItems.forEach(item => {
-        const skillTokens = (item.getAttribute('data-skill-id') ?? '').split(' ');
+        const skillKey = item.getAttribute('data-skill-key');
 
-        // Native mouseenter/mouseleave: zero bubbling, zero hover lag
+        // Blixtsnabb hover utan felaktiga triggers
         on(item, 'mouseenter', () => {
-            if (!activeSubSkill) highlightSkill(skillTokens);
+            if (!activeSkillItem && skillKey) highlightSkill(skillKey);
         });
 
         on(item, 'mouseleave', () => {
-            if (!activeSubSkill) clearHighlights();
+            if (!activeSkillItem) clearHighlights();
         });
 
         const toggleSubSkill = (): void => {
-            const isAlreadyOpen = item.classList.contains('has-bubble-open');
-            closeAllBubbles();
+            if (!skillKey) return;
+            const isAlreadyOpen = item === activeSkillItem;
+            closeAllSkillBubbles();
 
             if (!isAlreadyOpen) {
-                const col = item.closest('.skills-column');
-                const grp = item.closest('.skill-group');
-                if (col) col.classList.add('has-active-bubble');
-                if (grp) grp.classList.add('has-active-bubble');
-
-                item.classList.add('has-bubble-open', 'is-selected');
-                activeSubSkill = item;
-                highlightSkill(skillTokens);
+                renderSkillBubble(item, skillKey);
+                highlightSkill(skillKey);
             }
         };
 
@@ -241,7 +321,7 @@ function initSkillsSystem(): void {
             const target = e.target as HTMLElement | null;
             if (target?.closest('.bubble-close-btn')) {
                 e.stopPropagation();
-                closeAllBubbles();
+                closeAllSkillBubbles();
                 return;
             }
             if (target?.closest('.white-talk-bubble')) return;
@@ -265,7 +345,6 @@ function initSkillsSystem(): void {
         });
     });
 
-    // Close on click outside
     on(document, 'click', (e: MouseEvent) => {
         const target = e.target as HTMLElement | null;
         if (!target) return;
@@ -273,7 +352,7 @@ function initSkillsSystem(): void {
         if (!target.closest('.section-skills')) {
             collapseAllSkills();
         } else if (!target.closest('.sub-skill-item') && !target.closest('.skill-group-header')) {
-            closeAllBubbles();
+            closeAllSkillBubbles();
         }
 
         if (!target.closest('.section-edu')) {
@@ -281,7 +360,6 @@ function initSkillsSystem(): void {
         }
     });
 
-    // Escape closes both sections
     on(document, 'keydown', (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
             collapseAllSkills();
@@ -294,24 +372,33 @@ function initSkillsSystem(): void {
             leftPanel,
             'scroll',
             () => {
-                if (activeSubSkill) closeAllBubbles();
+                if (activeSkillItem) closeAllSkillBubbles();
             },
             { passive: true }
         );
     }
 
-    // Mobile: instant bubble close on scroll
     window.addEventListener(
         'scroll',
         () => {
-            if (window.innerWidth <= 1150) closeAllBubbles();
+            if (window.innerWidth <= 1150) {
+                closeAllSkillBubbles();
+                closeAllCourseBubbles();
+            }
         },
         { passive: true }
     );
 
-    // =========================================================================
-    // MOBILE AUTO-COLLAPSE (Restored)
-    // =========================================================================
+    // Live-uppdatering vid språkväxling
+    window.addEventListener('site:languagechange', () => {
+        if (activeCourseItem && activeCourseId) {
+            renderCourseBubble(activeCourseItem, activeCourseId);
+        }
+        if (activeSkillItem && activeSkillKey) {
+            renderSkillBubble(activeSkillItem, activeSkillKey);
+        }
+    });
+
     if (typeof IntersectionObserver !== 'undefined') {
         const autoCollapseObserver = new IntersectionObserver(
             entries => {

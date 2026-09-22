@@ -16,10 +16,8 @@
     .profile-card-container {
         flex: 0 0 50%;
         max-width: 300px;
-        opacity: 0;
-        animation: parentIntro 1200ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        animation-delay: 200ms;
-        perspective: 1000px; /* Natural 3D depth on the container */
+        opacity: 1;
+        perspective: 1000px;
     }
 
     @keyframes parentIntro {
