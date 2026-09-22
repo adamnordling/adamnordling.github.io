@@ -229,18 +229,17 @@ export function initCanvasBackground(): void {
     on(window, 'resize', updateBounds, { passive: true });
 
     // Måla canvas direkt, men skjut upp DOM-textmätningen 1 bildruta så TBT blir 0 ms
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(
-            () => {
+    window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => {
                 updateBounds();
-            },
-            { timeout: 1000 }
-        );
-    } else {
-        setTimeout(() => {
-            updateBounds();
-        }, 200);
-    }
+            });
+        } else {
+            setTimeout(() => {
+                updateBounds();
+            }, 300);
+        }
+    });
 
     // Replace direct synchronous calls on scroll with a debounced/rAF batch runner
     let reflowTimeout: ReturnType<typeof setTimeout> | null = null;
