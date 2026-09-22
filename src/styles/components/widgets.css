@@ -849,7 +849,12 @@
             display: flex;
             width: max-content;
             animation: marquee-roll 22s linear infinite;
+            animation-play-state: paused; /* Paused during critical initial paint */
             will-change: transform;
+        }
+
+        .m-marquee-track.is-running {
+            animation-play-state: running;
         }
 
         /* Pausa när klassen är satt (Touch har ingen sticky :hover längre!) */

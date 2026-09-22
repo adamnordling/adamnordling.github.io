@@ -98,6 +98,8 @@ function initMobileMarqueeTelemetry(): void {
     const inspectorDesc: HTMLElement = rawDesc;
     const closeBtn: HTMLElement = rawCloseBtn;
 
+    track.classList.add('is-running');
+
     const MARQUEE_DURATION = 22;
     let currentTrackX = 0;
     let activeMetricKey: string | null = null;
