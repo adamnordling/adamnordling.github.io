@@ -553,7 +553,7 @@
     }
 
     .lh-title {
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.06em;
         color: var(--text-primary);
@@ -579,7 +579,7 @@
 
     .lh-item small {
         color: var(--text-muted);
-        font-size: 0.62rem;
+        font-size: 0.75rem;
         letter-spacing: 0.04em;
     }
 
@@ -658,7 +658,7 @@
     }
 
     .hotkey-pill {
-        font-size: 0.68rem;
+        font-size: 0.75rem;
         color: var(--text-muted);
         display: inline-flex;
         align-items: center;
@@ -670,7 +670,7 @@
         border: 1px solid var(--border-color);
         border-radius: 3px;
         padding: 1px 4px;
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         font-weight: 700;
         color: var(--text-primary);
     }
@@ -948,7 +948,7 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             font-family: var(--font-mono), monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             white-space: nowrap;
             cursor: pointer;

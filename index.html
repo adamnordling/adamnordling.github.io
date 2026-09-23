@@ -79,20 +79,29 @@
             })();
         </script>
         <!-- 6. ENRICHED SCHEMA.ORG GRAPH (Entities linked for Google Search Knowledge Graph) -->
+        <!-- 1. Standalone WebSite Entity (Resolves BeaverCheck name & url warnings) -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "@id": "https://adamnordling.se/#website",
+                "name": "Adam Nordling",
+                "url": "https://adamnordling.se/",
+                "description": "Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web architecture, machine learning pipelines, and network security.",
+                "inLanguage": ["en", "sv"],
+                "publisher": {
+                    "@type": "Person",
+                    "name": "Adam Nordling",
+                    "url": "https://adamnordling.se/"
+                }
+            }
+        </script>
+
+        <!-- 2. ProfilePage & Person Graph -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
                 "@graph": [
-                    {
-                        "@type": "WebSite",
-                        "@id": "https://adamnordling.se/#website",
-                        "url": "https://adamnordling.se/",
-                        "name": "Adam Nordling",
-                        "publisher": {
-                            "@id": "https://adamnordling.se/#person"
-                        },
-                        "inLanguage": ["en", "sv"]
-                    },
                     {
                         "@type": "ProfilePage",
                         "@id": "https://adamnordling.se/#webpage",
@@ -115,7 +124,7 @@
                         "givenName": "Adam",
                         "familyName": "Nordling",
                         "url": "https://adamnordling.se/",
-                        "image": "https://adamnordling.se/assets/profile-400.webp",
+                        "image": "https://adamnordling.se/assets/profile-600.webp",
                         "jobTitle": ["Software Engineer", "Mjukvaruingenjör"],
                         "description": "Software engineer and Master of Science graduate in Software Technology from Linnaeus University, specializing in web architecture, machine learning, data augmentation, and network security.",
                         "alumniOf": [
@@ -1554,9 +1563,10 @@
                             </h2>
                         </div>
 
-                        <div class="header-actions">
+                        <nav class="header-actions" aria-label="Projects category filter">
                             <div class="filter-dropdown" id="projects-filter">
-                                <button class="filter-trigger" id="active-filter-label" type="button" tabindex="-1">
+                                <!-- Change <button ... tabindex="-1"> to <div>: -->
+                                <div class="filter-trigger" id="active-filter-label">
                                     <span lang="en">Category:</span>
                                     <span lang="sv">Kategori:</span>
                                     <span class="filter-selected">
@@ -1574,7 +1584,7 @@
                                     >
                                         <path d="m6 9 6 6 6-6" />
                                     </svg>
-                                </button>
+                                </div>
                                 <div class="filter-menu">
                                     <button class="filter-btn active" data-filter="all" type="button" tabindex="0">
                                         <span>
@@ -1603,7 +1613,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </nav>
                     </div>
 
                     <!-- PROJECTS VIEW -->
@@ -1629,7 +1639,8 @@
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="app-img-link"
-                                        title="Trajectory ML Augmentation GitHub Repository"
+                                        title="Trajectory ML Augmentation GitHub Repository (opens in new tab)"
+                                        aria-label="Trajectory ML Augmentation GitHub Repository (opens in new tab)"
                                     >
                                         <img
                                             src="./assets/svg/trajectory.svg"
@@ -1662,7 +1673,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
-                                            aria-label="GitHub Repository for Trajectory ML Augmentation"
+                                            aria-label="GitHub Repository for Trajectory ML Augmentation (opens in new tab)"
                                         >
                                             <span lang="en">GitHub Repository</span>
                                             <span lang="sv">GitHub-källkod</span>
@@ -1672,7 +1683,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-secondary"
-                                            aria-label="arXiv Research Paper (opens in new tab)"
+                                            aria-label="Read Trajectory ML paper on arXiv (opens in new tab)"
                                         >
                                             <span>arXiv Paper ↗</span>
                                         </a>
@@ -1700,7 +1711,8 @@
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         class="app-img-link"
-                                        title="Open Nutrition live web app"
+                                        title="Open Nutrition live web app (opens in new tab)"
+                                        aria-label="Open Nutrition live web app (opens in new tab)"
                                     >
                                         <img
                                             src="./assets/svg/nutrition.svg"
@@ -1736,7 +1748,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-primary"
-                                            aria-label="Open Live Web Application for Open Nutrition"
+                                            aria-label="Open Live Web Application for Open Nutrition (opens in new tab)"
                                         >
                                             <span lang="en">Live App ↗</span>
                                             <span lang="sv">Öppna App ↗</span>
@@ -1746,6 +1758,7 @@
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             class="btn-secondary"
+                                            aria-label="GitHub Repository for Open Nutrition (opens in new tab)"
                                         >
                                             <span lang="en">GitHub</span>
                                             <span lang="sv">Källkod</span>
@@ -1798,7 +1811,7 @@
                                             <span lang="en">Repository (Soon)</span>
                                             <span lang="sv">Källkod (Snart)</span>
                                         </a>
-                                        <span class="btn-secondary" style="cursor: default">
+                                        <span class="btn-secondary btn-in-dev">
                                             <span lang="en">In Development</span>
                                             <span lang="sv">Under utveckling</span>
                                         </span>
@@ -1920,7 +1933,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
 
                     <!-- SET 2 (Dubblerad för oändlig sömlös CSS-rullning) -->
                     <div class="m-marquee-group" aria-hidden="true">
-                        <button type="button" class="m-pill m-pill-lh" data-metric="lh" tabindex="-1">
+                        <div class="m-pill m-pill-lh" data-metric="lh" tabindex="-1">
                             <span class="m-pill-mobile-only">
                                 <span class="m-pill-dot green"></span>
                                 <span class="m-pill-label">LH: 4×100</span>
@@ -1950,8 +1963,8 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                                     <span class="lh-item"><span class="lh-val">100</span><small>SEO</small></span>
                                 </span>
                             </span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="lcp" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="lcp" tabindex="-1">
                             <svg
                                 class="m-pill-icon"
                                 width="12"
@@ -1964,11 +1977,11 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                             </svg>
                             <span class="m-pill-label">LCP: <span class="telemetry-live-lcp">--</span></span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="cls" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="cls" tabindex="-1">
                             <span class="m-pill-label">CLS: <span class="telemetry-live-cls">0.000</span></span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="runtime" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="runtime" tabindex="-1">
                             <svg
                                 class="m-pill-icon"
                                 width="12"
@@ -1981,14 +1994,14 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
                             <span class="m-pill-label">Vite 8 · ESNext</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="ts" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="ts" tabindex="-1">
                             <span class="m-pill-label">TS Strict</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="layer" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="layer" tabindex="-1">
                             <span class="m-pill-label">CSS @layer</span>
-                        </button>
-                        <button type="button" class="m-pill" data-metric="privacy" tabindex="-1">
+                        </div>
+                        <div class="m-pill" data-metric="privacy" tabindex="-1">
                             <svg
                                 class="m-pill-icon"
                                 width="11"
@@ -2003,7 +2016,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                             </svg>
                             <span class="m-pill-label">0 Trackers</span>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2011,7 +2024,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
         <!-- ==========================================================================
 UNIFIED COCKPIT DOCK / MOBILE HEADER
 ========================================================================== -->
-        <footer class="status-dock" role="contentinfo" aria-label="System status and site navigation">
+        <footer class="status-dock" aria-label="System status and site navigation">
             <!-- LEFT -->
             <div class="dock-segment dock-left">
                 <div
@@ -2366,6 +2379,7 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
                             target="_blank"
                             rel="noopener noreferrer"
                             class="btn-secondary cv-modal-download-btn"
+                            aria-label="Open CV preview in new tab (opens in new tab)"
                         >
                             <span lang="en">Open Tab ↗</span>
                             <span lang="sv">Öppna flik ↗</span>
@@ -2430,6 +2444,7 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="btn-primary cv-fallback-btn"
+                                aria-label="Open PDF in new tab (opens in new tab)"
                             >
                                 <span lang="en">Open in New Tab ↗</span>
                                 <span lang="sv">Öppna i ny flik ↗</span>

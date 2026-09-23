@@ -219,6 +219,11 @@
         background-color: #f59e0b;
     }
 
+    .btn-secondary.btn-in-dev {
+        cursor: default;
+        opacity: 0.75;
+    }
+
     .app-status-badge.is-live .status-dot {
         background-color: #10b981;
         box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);

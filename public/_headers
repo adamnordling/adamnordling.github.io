@@ -3,9 +3,10 @@
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: credentialless
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), serial=(), midi=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-9q/HCesiZtuj11c+LxiPAcNerAyBdD5Bk1cVU8C8/JU=' 'sha256-FwluhCycqeLSz4O/NNAC5D6nh00NUBKs4kkgt9YEOTE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'none';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-FwluhCycqeLSz4O/NNAC5D6nh00NUBKs4kkgt9YEOTE=' 'sha256-Ww57d06ZzwMpwlhtTufUpckJr2mBjWUMRpfmeSzRupU=' 'sha256-Q2wHhunIGzVnWHLRkbqaxvhmKjBtoxa+ENWp8gOaZ8g='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'none';
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
