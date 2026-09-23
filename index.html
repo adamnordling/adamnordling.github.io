@@ -81,20 +81,36 @@
         <!-- 6. ENRICHED SCHEMA.ORG GRAPH (Entities linked for Google Search Knowledge Graph) -->
         <!-- 1. Standalone WebSite Entity (Resolves BeaverCheck name & url warnings) -->
         <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "WebSite",
-                "@id": "https://adamnordling.se/#website",
-                "name": "Adam Nordling",
-                "url": "https://adamnordling.se/",
-                "description": "Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web architecture, machine learning pipelines, and network security.",
-                "inLanguage": ["en", "sv"],
-                "publisher": {
-                    "@type": "Person",
+            [
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "@id": "https://adamnordling.se/#website-en",
                     "name": "Adam Nordling",
-                    "url": "https://adamnordling.se/"
+                    "url": "https://adamnordling.se/en/",
+                    "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security.",
+                    "inLanguage": "en",
+                    "publisher": {
+                        "@type": "Person",
+                        "name": "Adam Nordling",
+                        "url": "https://adamnordling.se/"
+                    }
+                },
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "@id": "https://adamnordling.se/#website-sv",
+                    "name": "Adam Nordling",
+                    "url": "https://adamnordling.se/sv/",
+                    "description": "Portfolio för Adam Nordling, masterexamen i programvaruteknik, med ett stort intresse för webbarkitektur, maskininlärningspipelines och nätverkssäkerhet.",
+                    "inLanguage": "sv",
+                    "publisher": {
+                        "@type": "Person",
+                        "name": "Adam Nordling",
+                        "url": "https://adamnordling.se/"
+                    }
                 }
-            }
+            ]
         </script>
 
         <!-- 2. ProfilePage & Person Graph -->
@@ -106,7 +122,7 @@
                         "@type": "ProfilePage",
                         "@id": "https://adamnordling.se/#webpage",
                         "url": "https://adamnordling.se/",
-                        "name": "Adam Nordling — Software Engineer Portfolio",
+                        "name": "Adam Nordling - Portfolio",
                         "isPartOf": {
                             "@id": "https://adamnordling.se/#website"
                         },
