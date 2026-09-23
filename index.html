@@ -388,8 +388,14 @@
                                 <button type="button" class="edu-group-header" aria-expanded="false">
                                     <span class="edu-header-top">
                                         <span class="edu-degree-title">
-                                            <span lang="en">M.Sc. Software Technology (120 Credits)</span>
-                                            <span lang="sv">Masterexamen i Programvaruteknik (120 HP)</span>
+                                            <span lang="en"
+                                                >M.Sc. Software Technology
+                                                <span class="edu-credits">(120 Credits)</span></span
+                                            >
+                                            <span lang="sv"
+                                                >Masterexamen i Programvaruteknik
+                                                <span class="edu-credits">(120 HP)</span></span
+                                            >
                                         </span>
                                         <span class="edu-date-badge">2023 – 2026</span>
                                     </span>
@@ -600,8 +606,14 @@
                                 <button type="button" class="edu-group-header" aria-expanded="false">
                                     <span class="edu-header-top">
                                         <span class="edu-degree-title">
-                                            <span lang="en">B.Sc. Network Security (180 Credits)</span>
-                                            <span lang="sv">Kandidatexamen i Nätverkssäkerhet (180 HP)</span>
+                                            <span lang="en"
+                                                >B.Sc. Network Security
+                                                <span class="edu-credits">(180 Credits)</span></span
+                                            >
+                                            <span lang="sv"
+                                                >Kandidatexamen i Nätverkssäkerhet
+                                                <span class="edu-credits">(180 HP)</span></span
+                                            >
                                         </span>
                                         <span class="edu-date-badge">2020 – 2023</span>
                                     </span>
@@ -1715,7 +1727,7 @@ MOBILE BOTTOM TELEMETRY DOCK (Infinite Rolling Marquee & Inspector)
 ========================================================================== -->
         <footer class="mobile-telemetry-dock" aria-label="Site architecture and live performance specifications">
             <!-- 1. INSPECTOR CARD MOVED TO TOP (Expands upwards) -->
-            <div class="m-inspector-card hidden" id="m-inspector-card">
+            <div class="m-inspector-card" id="m-inspector-card" role="button" tabindex="0" aria-label="Close inspector">
                 <div class="m-inspector-header">
                     <span class="m-inspector-title" id="m-inspector-title">TELEMETRY</span>
                     <button type="button" class="m-inspector-close" id="m-inspector-close" aria-label="Resume rolling">

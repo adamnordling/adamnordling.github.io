@@ -190,7 +190,7 @@ function initMobileMarqueeTelemetry(): void {
 
     function closeInspector(): void {
         activeMetricKey = null;
-        inspectorCard.classList.add('hidden');
+        inspectorCard.classList.remove('is-open');
         pills.forEach(p => {
             p.classList.remove('is-active');
         });
@@ -205,7 +205,7 @@ function initMobileMarqueeTelemetry(): void {
     function scheduleResume(): void {
         if (resumeTimeout) clearTimeout(resumeTimeout);
         resumeTimeout = setTimeout(() => {
-            if (!activeMetricKey && inspectorCard.classList.contains('hidden')) {
+            if (!activeMetricKey && !inspectorCard.classList.contains('is-open')) {
                 resumeRolling(currentTrackX);
             }
         }, 1000);
@@ -321,20 +321,16 @@ function initMobileMarqueeTelemetry(): void {
             const data = metricData[metricKey];
             inspectorTitle.textContent = data.title[currentLang];
             inspectorDesc.textContent = data.desc[currentLang];
-            inspectorCard.classList.remove('hidden');
 
-            const anchorToBottom = (): void => {
-                window.scrollTo({
-                    top: document.documentElement.scrollHeight,
-                    behavior: 'smooth'
-                });
-            };
-
-            requestAnimationFrame(() => {
-                anchorToBottom();
-                setTimeout(anchorToBottom, 120);
-            });
+            // Open smoothly right above the dock — NO screen scrolling needed!
+            inspectorCard.classList.add('is-open');
         });
+    });
+
+    // Clicking anywhere on the text card collapses it
+    inspectorCard.addEventListener('click', e => {
+        e.stopPropagation();
+        closeInspector();
     });
 
     closeBtn.addEventListener('click', e => {
@@ -345,7 +341,7 @@ function initMobileMarqueeTelemetry(): void {
     document.addEventListener('click', e => {
         const target = e.target as HTMLElement | null;
         if (!target || !target.closest('.m-pill, .m-inspector-card')) {
-            if (!inspectorCard.classList.contains('hidden')) {
+            if (inspectorCard.classList.contains('is-open')) {
                 closeInspector();
             }
         }

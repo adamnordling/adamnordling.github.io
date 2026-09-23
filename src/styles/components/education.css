@@ -347,6 +347,10 @@
     }
 
     @media (max-width: 768px) {
+        .edu-credits {
+            display: none !important;
+        }
+
         .edu-courses-grid {
             grid-template-columns: 1fr;
             row-gap: 2px;

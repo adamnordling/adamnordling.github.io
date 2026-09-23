@@ -139,7 +139,7 @@ export function initCanvasBackground(): void {
         }
 
         const inspector = el.closest('.m-inspector-card');
-        if (inspector && inspector.classList.contains('hidden')) return false;
+        if (inspector && !inspector.classList.contains('is-open')) return false;
 
         const modal = el.closest('#cv-modal');
         if (modal && !modal.classList.contains('is-open')) return false;

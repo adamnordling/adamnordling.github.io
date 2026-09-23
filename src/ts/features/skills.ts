@@ -92,7 +92,17 @@ export function closeAllEducation(): void {
 
 function initEducationAccordion(): void {
     const eduList = qs('.education-list');
+    const eduSection = qs('.section-edu');
     if (!eduList) return;
+
+    // 1. Allow clicking the Education <h2> heading to collapse all education
+    const eduHeading = eduSection?.querySelector('h2');
+    if (eduHeading) {
+        eduHeading.style.cursor = 'pointer';
+        on(eduHeading, 'click', () => {
+            closeAllEducation();
+        });
+    }
 
     on(eduList, 'click', (e: MouseEvent) => {
         const target = e.target as HTMLElement | null;
@@ -108,16 +118,22 @@ function initEducationAccordion(): void {
             return;
         }
 
+        // Inside initEducationAccordion():
         const header = target.closest<HTMLElement>('.edu-group-header');
         if (header) {
             e.stopPropagation();
             const group = header.closest<HTMLElement>('.edu-group');
             if (!group) return;
+
             const isCurrentlyExpanded = group.classList.contains('is-expanded');
-            closeAllCourseBubbles();
-            const willExpand = !isCurrentlyExpanded;
-            group.classList.toggle('is-expanded', willExpand);
-            header.setAttribute('aria-expanded', String(willExpand));
+
+            // Closes the sibling degree program before opening the new one
+            closeAllEducation();
+
+            if (!isCurrentlyExpanded) {
+                group.classList.add('is-expanded');
+                header.setAttribute('aria-expanded', 'true');
+            }
             return;
         }
 
@@ -243,13 +259,18 @@ function initSkillsSystem(): void {
 
             if (target.closest('.white-talk-bubble')) return;
 
+            // Inside initSkillsSystem():
             const header = target.closest<HTMLElement>('.skill-group-header');
             if (header) {
                 e.stopPropagation();
                 const group = header.closest<HTMLElement>('.skill-group');
                 if (!group) return;
                 const isCurrentlyExpanded = group.classList.contains('is-expanded');
+
+                // We DO NOT close education here — the scroll IntersectionObserver
+                // will naturally handle it once the user scrolls down.
                 collapseAllSkills();
+
                 if (!isCurrentlyExpanded) {
                     group.classList.add('is-expanded');
                     header.setAttribute('aria-expanded', 'true');
