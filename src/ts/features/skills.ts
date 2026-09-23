@@ -50,7 +50,12 @@ function renderCourseBubble(item: HTMLElement, courseId: string): void {
 
     const linksHtml =
         data.links && data.links.length > 0
-            ? `<div class="course-links-row">${data.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="course-ext-btn"><span>${l.label}</span></a>`).join('')}</div>`
+            ? `<div class="course-links-row">${data.links
+                  .map(
+                      l =>
+                          `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="course-ext-btn" aria-label="${l.label.replace(' ↗', '')} (opens in new tab)"><span>${l.label}</span></a>`
+                  )
+                  .join('')}</div>`
             : '';
 
     sharedEduBubble.innerHTML = `

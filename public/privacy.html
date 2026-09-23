@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Primary SEO & Crawler Meta -->
+    <title>Privacy Policy & Terms — Adam Nordling</title>
+    <meta
+            name="description"
+            content="Privacy policy and data protection declaration for Adam Nordling's personal engineering portfolio."
+    />
+    <meta name="author" content="Adam Nordling"/>
+    <meta name="robots" content="index, follow"/>
+    <link rel="canonical" href="https://adamnordling.se/privacy.html"/>
+
+    <!-- Theme & Favicon Configuration -->
+    <meta name="theme-color" content="#131418"/>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+
+    <style>
+        :root {
+            --bg: #131418;
+            --card: #1c1d23;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #60a5fa;
+            --border: #2e303b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            padding: 24px;
+        }
+
+        .policy-card {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px 32px;
+            max-width: 620px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 20px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+        }
+
+        nav {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #27272a;
+            border: 1px solid #3f3f46;
+            color: #f4f4f5;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            min-height: 48px;
+            min-width: 48px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .back-btn:hover,
+        .back-btn:focus-visible {
+            background-color: #3f3f46;
+            border-color: #52525b;
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+<main class="policy-card" aria-labelledby="policy-heading">
+    <h1 id="policy-heading">Privacy Policy & Architecture</h1>
+
+    <h2>Data Collection & Cookies</h2>
+    <p>
+        This portfolio website is engineered with a strict privacy-first architecture. It collects zero personal
+        data, operates with zero tracking or session cookies, and embeds no analytics, marketing, or advertising
+        telemetry scripts.
+    </p>
+
+    <h2>Client-Side Utility Execution</h2>
+    <p>
+        All computational tools, cryptographic hashers, and data converters execute 100% client-side inside your
+        browser's local sandbox. No input content, files, or parameters are transmitted to any backend server.
+    </p>
+
+    <h2>External Network Dependencies</h2>
+    <p>
+        Third-party interactions are strictly confined to:
+    </p>
+    <p>
+        1. Anonymous read-only calls to the public GitHub API to render recent open-source commits.
+        <br/>
+        2. Encrypted asset delivery through Cloudflare's edge CDN.
+    </p>
+
+    <nav aria-label="Policy navigation">
+        <a href="/" class="back-btn" aria-label="Return to portfolio homepage">← Back to Portfolio</a>
+    </nav>
+</main>
+</body>
+</html>

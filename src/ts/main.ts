@@ -147,6 +147,14 @@ function initMobileMarqueeTelemetry(): void {
                 en: 'Architectural cascade layer organization (reset, base, components, utilities) eliminating specificity clashes.',
                 sv: 'Kaskad-lager (reset, base, components, utilities) som eliminerar CSS-konflikter och minimerar filstorlek.'
             }
+        },
+        /* Added Privacy Architecture telemetry metric */
+        privacy: {
+            title: { en: '0 Trackers · Privacy', sv: '0 Spårare · Integritet' },
+            desc: {
+                en: 'Zero cookies, zero analytics, and zero data collection. All tools execute 100% client-side in the browser.',
+                sv: 'Noll kakor, noll spårning och noll datainsamling. Alla verktyg körs 100% klientsidigt i webbläsaren.'
+            }
         }
     };
 

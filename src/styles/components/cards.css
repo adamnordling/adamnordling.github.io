@@ -199,7 +199,7 @@
         align-items: center;
         gap: 6px;
         font-family: var(--font-mono), monospace;
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         color: #f4f4f5;
         user-select: none;
     }
