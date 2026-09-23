@@ -59,8 +59,14 @@ export function initProjectFilter(): void {
             });
         });
 
+        // Inside initProjectFilter() in src/ts/features/filter.ts:
         if (filterDropdown) {
             on(filterDropdown, 'mouseleave', () => {
+                filterDropdown.classList.remove('menu-closed');
+            });
+
+            // Remove menu-closed whenever keyboard focus enters the dropdown
+            on(filterDropdown, 'focusin', () => {
                 filterDropdown.classList.remove('menu-closed');
             });
         }

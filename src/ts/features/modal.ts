@@ -44,8 +44,11 @@ export function closeModal(): void {
     cvModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
 
+    // Smoothly restore focus to the button that triggered the modal
     if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
-        previousActiveElement.focus();
+        requestAnimationFrame(() => {
+            previousActiveElement?.focus();
+        });
     }
 }
 

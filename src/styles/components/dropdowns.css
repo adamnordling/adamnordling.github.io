@@ -73,11 +73,29 @@
         min-width: 140px;
     }
 
+    /* Only force-close if neither mouse hover NOR keyboard focus is inside */
+    .filter-dropdown.menu-closed:not(:focus-within):not(:hover) .filter-menu,
+    .lang-dropdown.menu-closed:not(:focus-within):not(:hover) .lang-menu {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transform: translateY(-4px) !important;
+    }
+
+    /* Ensure menu stays 100% visible whenever focused or hovered */
+    .filter-dropdown:focus-within .filter-menu,
     .filter-dropdown:hover .filter-menu,
     .lang-dropdown:hover .lang-menu {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transform: translateY(0) !important;
+    }
+
+    /* Category Button Focus Ring */
+    .filter-btn:focus-visible {
+        outline: 2px solid var(--accent) !important;
+        outline-offset: -2px !important;
+        background: rgba(59, 130, 246, 0.15) !important;
+        color: var(--accent) !important;
     }
 
     .filter-dropdown:hover .filter-trigger .chevron,

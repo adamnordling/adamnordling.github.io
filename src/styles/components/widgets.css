@@ -753,25 +753,55 @@
         display: none; /* Dold som standard på PC */
     }
 
+    /* ==========================================================================
+       KEYBOARD NAVIGATION & ACCESSIBILITY STYLING
+       ========================================================================== */
+    /* 1. Skip-to-content Link (WCAG 2.4.1) */
     .skip-link {
-        position: absolute;
+        position: fixed;
         top: -100px;
         left: 16px;
         background: var(--card-bg);
         color: var(--accent);
-        border: 1px solid var(--accent);
-        padding: 8px 14px;
+        border: 2px solid var(--accent);
+        padding: 10px 18px;
         border-radius: 6px;
-        z-index: 99999;
         font-family: var(--font-mono), monospace;
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
-        transition: top 0.15s ease;
+        z-index: 999999;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .skip-link:focus {
+    .skip-link:focus-visible {
         top: 16px;
+        outline: none;
+    }
+
+    /* 3. Global High-Contrast Focus Ring */
+    :focus-visible {
+        outline: 2px solid var(--accent) !important;
+        outline-offset: 3px !important;
+        border-radius: 4px;
+    }
+
+    /* Global Focus Ring */
+    :focus-visible {
+        outline: 2px solid var(--accent) !important;
+        outline-offset: 3px !important;
+        border-radius: 4px;
+    }
+
+    /* 4. Display tooltips when pills or buttons receive keyboard focus */
+    [data-tooltip]:focus-visible::before,
+    [data-tooltip]:focus-visible::after,
+    [data-tooltip-en]:focus-visible::before,
+    [data-tooltip-en]:focus-visible::after {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(-50%) translateY(0) !important;
     }
 
     @media (max-width: 1150px), (max-height: 500px) and (orientation: landscape) {

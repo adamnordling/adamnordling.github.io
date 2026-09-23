@@ -162,7 +162,15 @@
                     <!-- 1. Profile Header -->
                     <header class="profile-header">
                         <div class="profile-card-container">
-                            <div class="profile-card-inner">
+                            <div
+                                class="profile-card-inner"
+                                id="profile-card-trigger"
+                                tabindex="0"
+                                role="button"
+                                aria-haspopup="menu"
+                                aria-expanded="false"
+                                aria-label="Profile portrait options. Press Enter or right-click to view actions."
+                            >
                                 <picture>
                                     <img
                                         src="./assets/profile-300.webp"
@@ -182,6 +190,77 @@
                                     />
                                 </picture>
                                 <div class="spotlight" aria-hidden="true"></div>
+
+                                <div
+                                    class="profile-img-menu"
+                                    id="profile-img-menu"
+                                    role="menu"
+                                    aria-label="Portrait Actions"
+                                >
+                                    <a
+                                        href="./assets/profile-600.webp"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        role="menuitem"
+                                        class="profile-menu-item"
+                                        aria-label="Open high-resolution photo in new tab (opens in new tab)"
+                                    >
+                                        <svg
+                                            width="13"
+                                            height="13"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                        >
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                            <polyline points="15 3 21 3 21 9"></polyline>
+                                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                                        </svg>
+                                        <span>Open in new tab</span>
+                                    </a>
+                                    <a
+                                        href="./assets/profile-600.webp"
+                                        download="Adam_Nordling_Portrait.webp"
+                                        role="menuitem"
+                                        class="profile-menu-item"
+                                        aria-label="Download high-resolution portrait"
+                                    >
+                                        <svg
+                                            width="13"
+                                            height="13"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                        >
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="7 10 12 15 17 10"></polyline>
+                                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                                        </svg>
+                                        <span>Download image</span>
+                                    </a>
+                                    <button
+                                        type="button"
+                                        role="menuitem"
+                                        class="profile-menu-item"
+                                        id="copy-img-link-btn"
+                                        aria-label="Copy image link to clipboard"
+                                    >
+                                        <svg
+                                            width="13"
+                                            height="13"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2.2"
+                                        >
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                        <span id="copy-img-text">Copy image link</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
@@ -1466,7 +1545,7 @@
                 <div class="panel-divider" aria-hidden="true"></div>
 
                 <!-- RIGHT PANEL: Projects Only -->
-                <section class="right-panel" aria-label="Projects Panel">
+                <section class="right-panel" id="projects-panel">
                     <div class="right-header">
                         <div class="header-title-group">
                             <h2 id="view-title">
@@ -1477,7 +1556,7 @@
 
                         <div class="header-actions">
                             <div class="filter-dropdown" id="projects-filter">
-                                <button class="filter-trigger" id="active-filter-label" type="button">
+                                <button class="filter-trigger" id="active-filter-label" type="button" tabindex="-1">
                                     <span lang="en">Category:</span>
                                     <span lang="sv">Kategori:</span>
                                     <span class="filter-selected">
@@ -1497,25 +1576,25 @@
                                     </svg>
                                 </button>
                                 <div class="filter-menu">
-                                    <button class="filter-btn active" data-filter="all" type="button">
+                                    <button class="filter-btn active" data-filter="all" type="button" tabindex="0">
                                         <span>
                                             <span lang="en">All Projects</span>
                                             <span lang="sv">Alla Projekt</span>
                                         </span>
                                         <span class="filter-count">(3)</span>
                                     </button>
-                                    <button class="filter-btn" data-filter="web" type="button">
+                                    <button class="filter-btn" data-filter="web" type="button" tabindex="0">
                                         <span>
                                             <span lang="en">Web &amp; Tools</span>
                                             <span lang="sv">Webb &amp; Verktyg</span>
                                         </span>
                                         <span class="filter-count">(2)</span>
                                     </button>
-                                    <button class="filter-btn" data-filter="ai" type="button">
+                                    <button class="filter-btn" data-filter="ai" type="button" tabindex="0">
                                         <span>AI / ML</span>
                                         <span class="filter-count">(1)</span>
                                     </button>
-                                    <button class="filter-btn" data-filter="security" type="button">
+                                    <button class="filter-btn" data-filter="security" type="button" tabindex="0">
                                         <span>
                                             <span lang="en">Security</span>
                                             <span lang="sv">Säkerhet</span>
@@ -1532,7 +1611,12 @@
                         <div class="apps-grid">
                             <!-- 1. Master's Thesis Card -->
                             <!-- 1. Master's Thesis Card -->
-                            <article class="app-card" data-category="ai">
+                            <article
+                                class="app-card"
+                                data-category="ai"
+                                tabindex="0"
+                                aria-label="Project: Trajectory ML Augmentation"
+                            >
                                 <div class="app-img-container">
                                     <div class="app-status-badge is-live" data-live-enabled="true">
                                         <span class="status-dot"></span>
@@ -1597,7 +1681,12 @@
                             </article>
 
                             <!-- 2. Open Nutrition Card -->
-                            <article class="app-card" data-category="web">
+                            <article
+                                class="app-card"
+                                data-category="web"
+                                tabindex="0"
+                                aria-label="Project: Open Nutrition"
+                            >
                                 <div class="app-img-container">
                                     <div class="app-status-badge is-live" data-live-enabled="true">
                                         <span class="status-dot"></span>
@@ -1666,7 +1755,7 @@
                             </article>
 
                             <!-- 3. "Everything" Web Utilities Hub Card (Tech-drawer borttagen helt) -->
-                            <article class="app-card" data-category="web" data-skills="">
+                            <article class="app-card" data-category="web" tabindex="0" aria-label="Project: Everything">
                                 <div class="app-img-container">
                                     <div class="app-status-badge" data-live-enabled="false">
                                         <span class="status-dot"></span>
@@ -2013,6 +2102,9 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
             <div class="dock-segment dock-center">
                 <div
                     class="dock-lh-group"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Lighthouse score"
                     data-tooltip-en="Lighthouse CI: Perfect 100 on Perf, A11y, Best Practices & SEO"
                     data-tooltip-sv="Lighthouse CI: 100 poäng inom prestanda, tillgänglighet, praxis & SEO"
                 >
@@ -2043,6 +2135,9 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
 
                 <div
                     class="telemetry-pill live-vitals-pill"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Core Web Vitals status"
                     data-tooltip-en="Live session Core Web Vitals measured via PerformanceObserver API"
                     data-tooltip-sv="Core Web Vitals i realtid via PerformanceObserver API"
                 >
@@ -2091,8 +2186,11 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
                 </a>
                 <div
                     class="telemetry-pill pill-runtime"
+                    tabindex="0"
+                    role="button"
                     data-tooltip-en="Zero client frameworks. Pure compiled TypeScript."
                     data-tooltip-sv="Noll klientramverk. Ren kompilerad TypeScript."
+                    aria-label="Zero client frameworks. Pure compiled TypeScript."
                 >
                     <svg
                         class="dock-svg-icon"
@@ -2112,8 +2210,11 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
 
                 <div
                     class="telemetry-pill pill-ts"
+                    tabindex="0"
+                    role="button"
                     data-tooltip-en="Strict typing enabled: noImplicitAny, strictNullChecks"
                     data-tooltip-sv="Strikt typning: noImplicitAny, strictNullChecks"
+                    aria-label="Strikt typing enabled: noImplicitAny, strictNullChecks"
                 >
                     <svg
                         class="dock-svg-icon"
@@ -2134,8 +2235,11 @@ UNIFIED COCKPIT DOCK / MOBILE HEADER
 
                 <div
                     class="telemetry-pill pill-layer"
+                    tabindex="0"
+                    role="button"
                     data-tooltip-en="Modular CSS cascade layers: reset, base, components, utilities"
                     data-tooltip-sv="Modulära CSS-lager: reset, base, components, utilities"
+                    aria-label="Modular CSS layers: reset, base, components, utilities"
                 >
                     <svg
                         class="dock-svg-icon"

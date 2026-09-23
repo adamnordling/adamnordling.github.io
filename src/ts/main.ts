@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSkillsAndBio();
     initProjectFilter();
     initModal();
+    initProfileCardMenu();
 
     // 2. Schedule secondary background widgets in an idle slice to prevent long-task TBT
     const scheduleSecondary = (cb: () => void): void => {
@@ -52,6 +53,77 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(() => {});
     }
 });
+
+function initProfileCardMenu(): void {
+    const cardTrigger = document.getElementById('profile-card-trigger');
+    const copyBtn = document.getElementById('copy-img-link-btn');
+    const copyText = document.getElementById('copy-img-text');
+    if (!cardTrigger) return;
+
+    const toggleMenu = (open?: boolean): void => {
+        const isOpen = open !== undefined ? open : !cardTrigger.classList.contains('profile-menu-open');
+        cardTrigger.classList.toggle('profile-menu-open', isOpen);
+        cardTrigger.setAttribute('aria-expanded', String(isOpen));
+
+        if (isOpen) {
+            const firstItem = cardTrigger.querySelector<HTMLElement>('.profile-menu-item');
+            firstItem?.focus();
+        }
+    };
+
+    // 1. Enter / Space key on PC
+    cardTrigger.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            if (e.target === cardTrigger) {
+                e.preventDefault();
+                toggleMenu();
+            }
+        }
+    });
+
+    // 2. Right-click on PC
+    cardTrigger.addEventListener('contextmenu', (e: MouseEvent) => {
+        e.preventDefault();
+        toggleMenu(true);
+    });
+
+    // 3. Left-click on PC & Touch tap on Mobile
+    cardTrigger.addEventListener('click', (e: MouseEvent) => {
+        // If clicking an action item inside the menu, let the action run (do not close prematurely)
+        if ((e.target as HTMLElement).closest('.profile-menu-item')) return;
+        toggleMenu();
+    });
+
+    // 4. Click outside to dismiss
+    document.addEventListener('click', (e: MouseEvent) => {
+        if (!cardTrigger.contains(e.target as Node)) {
+            toggleMenu(false);
+        }
+    });
+
+    // 5. Dismiss menu ONLY when Tab navigates away to another element on the page
+    cardTrigger.addEventListener('focusout', (e: FocusEvent) => {
+        // e.relatedTarget is only present when moving to another element on the page.
+        // If you switch browser tabs or open in a new tab, relatedTarget is null, so it does NOT close or trap focus!
+        if (e.relatedTarget && !cardTrigger.contains(e.relatedTarget as Node)) {
+            toggleMenu(false);
+        }
+    });
+
+    // 6. Copy High-Res Link Action (profile-600.webp)
+    if (copyBtn && copyText) {
+        copyBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            const imgUrl = `${window.location.origin}/assets/profile-600.webp`;
+            void navigator.clipboard.writeText(imgUrl).then(() => {
+                copyText.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyText.textContent = 'Copy image link';
+                }, 1200);
+            });
+        });
+    }
+}
 
 function initLazyGitHubActivity(): void {
     const activityFeed = document.getElementById('activity-feed');

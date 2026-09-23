@@ -157,10 +157,16 @@ function initEducationAccordion(): void {
         }
     });
 
+    // Inside initEducationAccordion() in src/ts/features/skills.ts:
     on(eduList, 'keydown', (e: KeyboardEvent) => {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         const target = e.target as HTMLElement | null;
         if (!target) return;
+
+        // FIX: Allow DiVA Portal, arXiv, and popup close buttons to activate naturally
+        if (target.closest('.course-ext-btn') || target.closest('.bubble-close-btn')) {
+            return;
+        }
 
         const header = target.closest<HTMLElement>('.edu-group-header');
         if (header) {
