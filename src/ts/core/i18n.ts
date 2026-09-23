@@ -52,9 +52,18 @@ export function setLanguage(lang: Language): void {
 }
 
 function getInitialLanguage(): Language {
+    // 1. Check URL parameter first (e.g. ?lang=sv)
+    const urlParam = new URLSearchParams(window.location.search).get('lang')?.toLowerCase();
+    if (urlParam === 'en' || urlParam === 'sv') {
+        localStorage.setItem('site_lang', urlParam);
+        return urlParam;
+    }
+
+    // 2. Check saved user preference
     const saved = localStorage.getItem('site_lang') as Language | null;
     if (saved === 'en' || saved === 'sv') return saved;
 
+    // 3. Fall back to browser language
     const browserLangs = navigator.languages.length > 0 ? navigator.languages : [navigator.language];
     const isSwedish = browserLangs.some(l => l.toLowerCase().startsWith('sv'));
     return isSwedish ? 'sv' : 'en';

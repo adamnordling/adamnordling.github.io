@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <!-- 1. PRIMARY SEARCH ENGINE METADATA -->
-        <title>Adam Nordling — Software Engineer Portfolio</title>
+        <title>Adam Nordling - Portfolio</title>
         <meta
             name="description"
-            content="Portfolio of Adam Nordling, a Software Technology master's graduate specializing in web architecture, machine learning pipelines, and network security."
+            content="Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security."
         />
         <meta name="author" content="Adam Nordling" />
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -34,7 +34,7 @@
         <!-- 3. THEME & APP CONFIGURATION -->
         <meta name="theme-color" content="#f4f4f5" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#131418" media="(prefers-color-scheme: dark)" />
-        <link rel="icon" type="image/x-icon" href="./assets/favicons/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png" />
@@ -42,7 +42,7 @@
 
         <!-- 4. OPEN GRAPH (LinkedIn, Facebook, Discord) -->
         <meta property="og:site_name" content="Adam Nordling" />
-        <meta property="og:title" content="Adam Nordling — Software Engineer Portfolio" />
+        <meta property="og:title" content="Adam Nordling - Portfolio" />
         <meta
             property="og:description"
             content="Explore projects in fullstack web development, machine learning pipelines, and network security."
@@ -59,17 +59,19 @@
 
         <!-- 5. TWITTER / X CARD -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Adam Nordling — Software Engineer Portfolio" />
+        <meta name="twitter:title" content="Adam Nordling - Portfolio" />
         <meta
             name="twitter:description"
             content="Explore projects in fullstack web development, machine learning pipelines, and network security."
         />
         <meta name="twitter:image" content="https://adamnordling.se/assets/og-image.png" />
 
-        <!-- Language FOUC fix -->
+        <!-- 6. LANGUAGE FOUC & URL PARAMETER RESOLVER -->
         <script>
             (function () {
-                const s = localStorage.getItem('site_lang');
+                const p = new URLSearchParams(window.location.search).get('lang');
+                const s = p === 'sv' || p === 'en' ? p : localStorage.getItem('site_lang');
+                if (p === 'sv' || p === 'en') localStorage.setItem('site_lang', p);
                 const b =
                     navigator.languages && navigator.languages.length
                         ? navigator.languages
@@ -78,42 +80,27 @@
                 if (sv) document.documentElement.lang = 'sv';
             })();
         </script>
-        <!-- 6. ENRICHED SCHEMA.ORG GRAPH (Entities linked for Google Search Knowledge Graph) -->
-        <!-- 1. Standalone WebSite Entity (Resolves BeaverCheck name & url warnings) -->
+
+        <!-- 7. ENRICHED SCHEMA.ORG GRAPH -->
+        <!-- 1. Standalone WebSite Entity (Resolves BeaverCheck name, url, and description requirements) -->
         <script type="application/ld+json">
-            [
-                {
-                    "@context": "https://schema.org",
-                    "@type": "WebSite",
-                    "@id": "https://adamnordling.se/#website-en",
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "@id": "https://adamnordling.se/#website",
+                "name": "Adam Nordling",
+                "url": "https://adamnordling.se/",
+                "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security.",
+                "inLanguage": ["en", "sv"],
+                "publisher": {
+                    "@type": "Person",
                     "name": "Adam Nordling",
-                    "url": "https://adamnordling.se/en/",
-                    "description": "Portfolio of Adam Nordling, MSc in Software Technology, with a strong interest in web architecture, machine learning pipelines, and network security.",
-                    "inLanguage": "en",
-                    "publisher": {
-                        "@type": "Person",
-                        "name": "Adam Nordling",
-                        "url": "https://adamnordling.se/"
-                    }
-                },
-                {
-                    "@context": "https://schema.org",
-                    "@type": "WebSite",
-                    "@id": "https://adamnordling.se/#website-sv",
-                    "name": "Adam Nordling",
-                    "url": "https://adamnordling.se/sv/",
-                    "description": "Portfolio för Adam Nordling, masterexamen i programvaruteknik, med ett stort intresse för webbarkitektur, maskininlärningspipelines och nätverkssäkerhet.",
-                    "inLanguage": "sv",
-                    "publisher": {
-                        "@type": "Person",
-                        "name": "Adam Nordling",
-                        "url": "https://adamnordling.se/"
-                    }
+                    "url": "https://adamnordling.se/"
                 }
-            ]
+            }
         </script>
 
-        <!-- 2. ProfilePage & Person Graph -->
+        <!-- 2. ProfilePage & Person Graph (Cleanly connected to #website above) -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
