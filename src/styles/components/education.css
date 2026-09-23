@@ -335,6 +335,17 @@
         color: #1d4ed8 !important;
     }
 
+    /* Inside education.css and skills.css */
+    .course-item .white-talk-bubble,
+    .sub-skill-item .white-talk-bubble {
+        overscroll-behavior: contain;
+    }
+
+    /* Inside modal.css */
+    .cv-modal-window {
+        overscroll-behavior: contain;
+    }
+
     @media (max-width: 768px) {
         .edu-courses-grid {
             grid-template-columns: 1fr;

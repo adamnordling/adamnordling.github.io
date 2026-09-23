@@ -5,7 +5,7 @@
   Cross-Origin-Opener-Policy: same-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-src 'self'; object-src 'none'; base-uri 'self';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'none';
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
@@ -28,6 +28,6 @@
   Cache-Control: public, max-age=86400
   Content-Type: application/xml; charset=utf-8
 
- /
+/
   Cache-Control: public, max-age=0, must-revalidate
   Cloudflare-CDN-Cache-Control: max-age=604800, stale-while-revalidate=86400

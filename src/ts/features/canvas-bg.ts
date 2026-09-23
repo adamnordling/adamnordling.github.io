@@ -8,6 +8,12 @@ interface CachedRect {
     isRightPanel: boolean;
 }
 
+interface PrecomputedDot {
+    x: number;
+    y: number;
+    flankFade: number;
+}
+
 export function initCanvasBackground(): void {
     const canvas = qs('#bg-canvas') as HTMLCanvasElement | null;
     const portfolioWrapper = qs('.portfolio-wrapper');
@@ -38,6 +44,7 @@ export function initCanvasBackground(): void {
 
     let cachedExclusionRects: CachedRect[] = [];
     let activeViewportExclusions: DOMRect[] = [];
+    let cachedGridDots: PrecomputedDot[] = [];
     const textRange = document.createRange();
 
     const DARK_BASE_ALPHA = 0.12;
@@ -228,6 +235,80 @@ export function initCanvasBackground(): void {
                 activeViewportExclusions.push(new DOMRect(item.pageLeft, top, item.width, item.height));
             }
         }
+
+        rebuildDotGridCache();
+    }
+
+    function rebuildDotGridCache(): void {
+        cachedGridDots = [];
+        const isMobile = width <= 1150;
+        const maxZone = TEXT_CLEARANCE + FADE_ZONE;
+        const maxZoneSq = maxZone * maxZone;
+        const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
+
+        for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
+            const isLeftFlank = x < wrapperLeft;
+            const isRightFlank = x > wrapperRight;
+            const isInCenterGutter = hasCenterGutter && x > leftPanelRight && x < rightPanelLeft;
+
+            for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
+                let dotFade: number;
+
+                if (!isMobile) {
+                    if (isInCenterGutter && y >= wrapperTop && y <= wrapperBottom) {
+                        const gutterWidth = rightPanelLeft - leftPanelRight;
+                        const normalized = (x - leftPanelRight) / gutterWidth;
+                        dotFade = Math.sin(normalized * Math.PI) * 0.85;
+                    } else if (isLeftFlank) {
+                        dotFade = Math.min(1, Math.max(0, (wrapperLeft - x) / FADE_MARGIN));
+                    } else if (isRightFlank) {
+                        dotFade = Math.min(1, Math.max(0, (x - wrapperRight) / FADE_MARGIN));
+                    } else if (y < wrapperTop && x >= wrapperLeft && x <= wrapperRight) {
+                        const distToWrapper = wrapperTop - y;
+                        dotFade = Math.min(1, Math.max(0, distToWrapper / 25)) * 0.7;
+                    } else if (y > wrapperBottom && y < dockTop && x >= wrapperLeft && x <= wrapperRight) {
+                        const distFromWrapper = y - wrapperBottom;
+                        const distToDock = dockTop - y;
+                        dotFade = Math.min(1, Math.max(0, Math.min(distFromWrapper, distToDock) / 16)) * 0.7;
+                    } else {
+                        dotFade = 0.55;
+                    }
+                } else {
+                    dotFade = 0.65;
+                }
+
+                if (dotFade <= 0) continue;
+
+                if (activeViewportExclusions.length > 0) {
+                    let minTextDistSq = 999999;
+
+                    for (let i = 0; i < activeViewportExclusions.length; i++) {
+                        const r = activeViewportExclusions[i];
+                        if (x < r.left - maxZone || x > r.right + maxZone) continue;
+                        if (y < r.top - maxZone || y > r.bottom + maxZone) continue;
+
+                        const dx = Math.max(0, r.left - x, x - r.right);
+                        const dy = Math.max(0, r.top - y, y - r.bottom);
+                        const dSq = dx * dx + dy * dy;
+
+                        if (dSq < minTextDistSq) {
+                            minTextDistSq = dSq;
+                            if (minTextDistSq === 0) break;
+                        }
+                    }
+
+                    if (minTextDistSq <= clearSq) continue;
+
+                    if (minTextDistSq < maxZoneSq) {
+                        const dist = Math.sqrt(minTextDistSq);
+                        dotFade *= (dist - TEXT_CLEARANCE) / FADE_ZONE;
+                        if (dotFade <= 0.02) continue;
+                    }
+                }
+
+                cachedGridDots.push({ x, y, flankFade: dotFade });
+            }
+        }
     }
 
     let hasMeasuredExclusions = false;
@@ -261,6 +342,8 @@ export function initCanvasBackground(): void {
 
         if (hasMeasuredExclusions) {
             cacheDocumentExclusions();
+        } else {
+            rebuildDotGridCache();
         }
         draw();
     }
@@ -288,6 +371,7 @@ export function initCanvasBackground(): void {
         wrapperTop = rect.top;
         wrapperBottom = rect.bottom;
 
+        rebuildDotGridCache();
         draw();
     }
 
@@ -321,14 +405,10 @@ export function initCanvasBackground(): void {
     on(window, 'scroll', handleSmoothScroll, { passive: true });
 
     const leftPanel = document.querySelector<HTMLElement>('.left-panel');
-    if (leftPanel) {
-        on(leftPanel, 'scroll', handleSmoothScroll, { passive: true });
-    }
+    if (leftPanel) on(leftPanel, 'scroll', handleSmoothScroll, { passive: true });
 
     const rightPanel = document.querySelector<HTMLElement>('.right-panel');
-    if (rightPanel) {
-        on(rightPanel, 'scroll', handleSmoothScroll, { passive: true });
-    }
+    if (rightPanel) on(rightPanel, 'scroll', handleSmoothScroll, { passive: true });
 
     const mainWrapper = document.querySelector<HTMLElement>('.portfolio-wrapper');
     if (mainWrapper) {
@@ -432,91 +512,27 @@ export function initCanvasBackground(): void {
         ctx.fillStyle = `${baseColor}${defaultAlpha.toString()})`;
 
         const activeDots: ActiveDot[] = [];
-        const maxZone = TEXT_CLEARANCE + FADE_ZONE;
-        const maxZoneSq = maxZone * maxZone;
-        const clearSq = TEXT_CLEARANCE * TEXT_CLEARANCE;
+        const dotsLen = cachedGridDots.length;
 
-        for (let x = DOT_SPACING / 2; x < width; x += DOT_SPACING) {
-            const isLeftFlank = x < wrapperLeft;
-            const isRightFlank = x > wrapperRight;
-            const isInCenterGutter = hasCenterGutter && x > leftPanelRight && x < rightPanelLeft;
+        for (let i = 0; i < dotsLen; i++) {
+            const dot = cachedGridDots[i];
+            const dx = mouseX - dot.x;
+            const dy = mouseY - dot.y;
+            const distSq = dx * dx + dy * dy;
 
-            for (let y = DOT_SPACING / 2; y < height; y += DOT_SPACING) {
-                let dotFade: number;
-
-                if (!isMobile) {
-                    if (isInCenterGutter && y >= wrapperTop && y <= wrapperBottom) {
-                        const gutterWidth = rightPanelLeft - leftPanelRight;
-                        const normalized = (x - leftPanelRight) / gutterWidth;
-                        dotFade = Math.sin(normalized * Math.PI) * 0.85;
-                    } else if (isLeftFlank) {
-                        dotFade = Math.min(1, Math.max(0, (wrapperLeft - x) / FADE_MARGIN));
-                    } else if (isRightFlank) {
-                        dotFade = Math.min(1, Math.max(0, (x - wrapperRight) / FADE_MARGIN));
-                    } else if (y < wrapperTop && x >= wrapperLeft && x <= wrapperRight) {
-                        const distToWrapper = wrapperTop - y;
-                        dotFade = Math.min(1, Math.max(0, distToWrapper / 25)) * 0.7;
-                    } else if (y > wrapperBottom && y < dockTop && x >= wrapperLeft && x <= wrapperRight) {
-                        const distFromWrapper = y - wrapperBottom;
-                        const distToDock = dockTop - y;
-                        dotFade = Math.min(1, Math.max(0, Math.min(distFromWrapper, distToDock) / 16)) * 0.7;
-                    } else {
-                        dotFade = 0.55;
-                    }
-                } else {
-                    dotFade = 0.65;
-                }
-
-                if (dotFade <= 0) continue;
-
-                if (activeViewportExclusions.length > 0) {
-                    let minTextDistSq = 999999;
-
-                    for (let i = 0; i < activeViewportExclusions.length; i++) {
-                        const r = activeViewportExclusions[i];
-
-                        // Snabb horisontell & vertikal avgränsning innan dyr distansberäkning
-                        if (x < r.left - maxZone || x > r.right + maxZone) continue;
-                        if (y < r.top - maxZone || y > r.bottom + maxZone) continue;
-
-                        const dx = Math.max(0, r.left - x, x - r.right);
-                        const dy = Math.max(0, r.top - y, y - r.bottom);
-                        const dSq = dx * dx + dy * dy;
-
-                        if (dSq < minTextDistSq) {
-                            minTextDistSq = dSq;
-                            if (minTextDistSq === 0) break;
-                        }
-                    }
-
-                    if (minTextDistSq <= clearSq) {
-                        continue;
-                    }
-
-                    if (minTextDistSq < maxZoneSq) {
-                        const dist = Math.sqrt(minTextDistSq);
-                        dotFade *= (dist - TEXT_CLEARANCE) / FADE_ZONE;
-                        if (dotFade <= 0.02) continue;
-                    }
-                }
-
-                const dx = mouseX - x;
-                const dy = mouseY - y;
-                const distSq = dx * dx + dy * dy;
-
-                if (distSq < touchRadiusSq) {
-                    activeDots.push({ x, y, distSq, flankFade: dotFade });
-                } else {
-                    ctx.moveTo(x + 1.3, y);
-                    ctx.arc(x, y, 1.3, 0, Math.PI * 2);
-                }
+            if (distSq < touchRadiusSq) {
+                activeDots.push({ x: dot.x, y: dot.y, distSq, flankFade: dot.flankFade });
+            } else {
+                ctx.moveTo(dot.x + 1.3, dot.y);
+                ctx.arc(dot.x, dot.y, 1.3, 0, Math.PI * 2);
             }
         }
         ctx.fill();
 
         const glowAlphaMax = isLight ? LIGHT_GLOW_ALPHA : DARK_GLOW_ALPHA;
+        const activeLen = activeDots.length;
 
-        for (let i = 0; i < activeDots.length; i++) {
+        for (let i = 0; i < activeLen; i++) {
             const dot = activeDots[i];
             const dist = Math.sqrt(dot.distSq);
             const influence = 1 - dist / touchRadius;

@@ -11,99 +11,123 @@
   <a href="https://adamnordling.se/"><b>Explore Live Portfolio ↗</b></a>
 </p>
 
+Production-grade, zero-runtime personal portfolio and application hub. Engineered for high performance, strict type
+safety, zero layout shifts, and accessibility compliance. Built to showcase academic research in Software Technology and
+production-level fullstack systems.
+
+
 </div>
 
 ---
 
-## 🚀 About
+## Repository Structure
 
-A production-grade, zero-runtime-bloat personal portfolio and application hub engineered for raw performance, strict
-type safety, and accessibility. Built to showcase academic research (Master's in Software Technology) and practical
-full-stack projects.
+```text
+.
+|-- .github/workflows/   # CI/CD automation pipelines
+|-- public/              # Static assets, manifests, and favicons
+|-- src/
+|   |-- styles/          # Layered component and architecture styles
+|   `-- ts/
+|       |-- core/        # Theme, internationalization, clock, and keyboard engines
+|       |-- data/        # Bilingual course and skill schema dictionaries
+|       |-- features/    # Canvas background, modals, filters, and gestures
+|       |-- services/    # Cached GitHub REST API integrations
+|       `-- utils/       # DOM queries and sanitization helpers
+|-- index.html           # Optimized single-page document entry
+|-- package.json         # Development dependencies and validation scripts
+|-- tsconfig.json        # Strict TypeScript compiler configuration
+`-- vite.config.ts       # Bundler configuration and asset inlining plugins
+```
 
-- **Live URL:** [adamnordling.se](https://adamnordling.se/)
-- **Core Focus:** Web architecture, Machine Learning pipelines, and Network Security.
+## Architectural Principles
 
----
-
-## ⚡ Performance & Engineering Highlights
-
-- **100/100 Lighthouse Audit:** Optimized for performance, accessibility, best practices, and SEO.
-- **Zero Heavy Framework Bloat:** Crafted with vanilla JavaScript/TypeScript ES modules, avoiding heavy runtime
-  overhead.
-- **Modern CSS Architecture:** Utilizes CSS Cascade Layers for scalable, clean style organization.
-- **WCAG AA Accessible:** Designed with full keyboard hotkey support, screen-reader compatibility, and dynamic
-  light/dark theme tracking.
-- **Client-Side Privacy:** Includes client-side tools and interactive components with zero server-side state tracking.
-
----
-
-## 🛠️ Tech Stack
-
-- **Language:** TypeScript (Strict Type-Checked)
-- **Bundler:** Vite
-- **Styling:** Vanilla CSS (Custom properties, Cascade Layers)
-- **Hosting & Edge:** Cloudflare Pages (Global CDN, Universal SSL)
-- **CI/CD:** GitHub Actions (Automated validation, building, and Lighthouse audits)
-
----
-
-## 📂 Featured Projects Included
-
-1. **Trajectory ML Augmentation (Master's Thesis Framework):** A modular Python framework evaluating data augmentation
-   strategies using Optuna and topological analysis.
-2. **Open Nutrition:** A high-performance client-side nutritional tracking web app mapping micronutrients, biological
-   absorption rates, and food profiles.
-3. **Everything (In Development):** A local-first cryptographic, networking, and conversion utilities hub.
+- Zero Client Framework Overhead: Built entirely with vanilla TypeScript compiled directly to modern ECMAScript modules,
+  eliminating virtual DOM diffing, runtime framework weights, and hydration delays.
+- Audited Performance Standards: Structured to enforce perfect 100/100 metrics across Performance, Accessibility, Best
+  Practices, and SEO under Lighthouse CI.
+- Modern CSS Cascade Architecture: Employs CSS Cascade Layers (@layer reset, base, components, utilities) to enforce
+  deterministic specificity and modularity without CSS preprocessors.
+- Hardened Client-Side Privacy: Implements zero third-party telemetry, tracking scripts, or analytics cookies. Contact
+  links leverage memory-stored obfuscated byte arrays to prevent crawler harvesting.
+- Edge Delivery: Distributed via Cloudflare Pages global CDN with Level 2 Content Security Policy headers, Brotli
+  compression, and immutable caching for static assets.
 
 ---
 
-## 💻 Local Development
+## Tech Stack
 
-If you want to run or inspect the source code locally:
+- Language: TypeScript (Strict mode enabled, noImplicitAny, strictNullChecks)
+- Build Tool: Vite
+- Stylesheet: Native CSS3 with CSS Cascade Layers and Custom Properties
+- Runtime/Target: ECMAScript 2022 (ESNext)
+- Code Quality: ESLint (typescript-eslint strict type checked), Prettier
+- Continuous Integration: GitHub Actions with automated linting, typechecking, bundling, and Lighthouse CI assertions
+
+---
+
+## Featured Work
+
+1. Trajectory ML Augmentation (Master's Thesis Project)
+    - A modular Python framework evaluating strategic selection heuristics (Outlierness, Uncertainty, Diversity) using
+      Optuna hyperparameter optimization across 200GB+ geospatial trajectory archives.
+    - Includes topological evaluation using UMAP manifold projections to demonstrate feature space continuity.
+
+2. Open Nutrition
+    - Client-side nutrition analytics web application modeling complete micronutrient profiles, antinutrients, and
+      biological absorption coefficients without centralized user tracking.
+
+3. Everything Web Utilities
+    - Local-first digital utility hub containing media format converters, subnet calculators, cryptographic hashers, and
+      timezone tools, executed 100% in-browser.
+
+---
+
+## Development and Verification
+
+### Prerequisites
+
+- Node.js (Version 20 LTS or higher recommended)
+- npm (Version 10 or higher)
+
+### Setup
 
 ```bash
 # Clone the repository
 git clone https://github.com/adamnordling/adamnordling.github.io.git
 
-# Navigate into the directory
+# Navigate into project directory
 cd adamnordling.github.io
 
-# Install dependencies
+# Install pinned development dependencies
 npm install
-
-# Run the local development server
-npm run dev
 ```
 
-Ideas for website and todolist:
+## Local Development
+
+```bash
+# Start local development server with hot module replacement
+npm run dev
+
+# Preview the production build locally
+npm run preview
+```
+
+## Quality Assurance and Build Verification
+
+```bash
+# Run type checking, linting, and formatting verification
+npm run validate
+
+# Automatically fix linting and formatting issues
+npm run fix
+
+# Compile production bundle to /dist
+npm run build
+```
 
 language - more languages?
 
 Projects > hover the project to see a 10 sec video?
 
 copy as markdown or view (dropout window): https://i.imgur.com/DvnI8Re.png
-
-Terminal / CLI Drawer (~ / bash):
-What it is: A collapsible bottom drawer or keyboard shortcut (e.g., pressing ` or ~) that gives a terminal where typing
-help, skills, education, or curl contact outputs structured text. Why it works: Fun, highly memorable for software
-engineers, and fits your Linux/Low-level skill profile.
-
-Gör en subabase
-
-
-----------------
-
-
-
-translate education all
-
-strict typescript, vanilla ES modules, CSS layers, VITE
-
-kolla om appen startas i svenksa elle renegleska
-
-bugs: scorlling inside QTY scrolls the website too move insights and warning signs to top right
-
-npm install npm run format npm run lint:js npm run validate
-
-npm run validate npm run format:fix

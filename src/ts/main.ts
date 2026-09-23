@@ -382,16 +382,20 @@ function initZoneScrolling(): void {
         (e: WheelEvent) => {
             if (window.innerWidth <= 1150) return;
 
+            // 1. Never scroll background if CV Modal is open
+            if (document.getElementById('cv-modal')?.classList.contains('is-open')) return;
+
+            // 2. Ignore horizontal swipes or micro-jitter on trackpads
+            if (Math.abs(e.deltaY) <= Math.abs(e.deltaX) || Math.abs(e.deltaY) < 1) return;
+
             const target = e.target as HTMLElement | null;
             const isInsideLeft = !!target?.closest('.left-panel');
             const isInsideRight = !!target?.closest('.right-panel');
 
+            // 3. Only forward wheel events if cursor is outside both panels (gutter / margins)
             if (!isInsideLeft && !isInsideRight) {
-                if (e.clientX < cachedDividerX) {
-                    leftPanel.scrollBy({ top: e.deltaY, behavior: 'auto' });
-                } else {
-                    rightPanel.scrollBy({ top: e.deltaY, behavior: 'auto' });
-                }
+                const targetPanel = e.clientX < cachedDividerX ? leftPanel : rightPanel;
+                targetPanel.scrollBy({ top: e.deltaY, behavior: 'auto' });
             }
         },
         { passive: true }

@@ -66,6 +66,18 @@
         />
         <meta name="twitter:image" content="https://adamnordling.se/assets/og-image.png" />
 
+        <!-- Language FOUC fix -->
+        <script>
+            (function () {
+                const s = localStorage.getItem('site_lang');
+                const b =
+                    navigator.languages && navigator.languages.length
+                        ? navigator.languages
+                        : [navigator.language || ''];
+                const sv = s ? s === 'sv' : b.some(l => l.toLowerCase().startsWith('sv'));
+                if (sv) document.documentElement.lang = 'sv';
+            })();
+        </script>
         <!-- 6. ENRICHED SCHEMA.ORG GRAPH (Entities linked for Google Search Knowledge Graph) -->
         <script type="application/ld+json">
             {
