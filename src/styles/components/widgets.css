@@ -1012,13 +1012,6 @@
        4. STRICT RESPONSIVE HIERARCHY
        ========================================================================== */
     /* Tier 1 (<= 1600px): Drop secondary architectural tags */
-    @media (max-width: 1600px) {
-        .pill-ts,
-        .pill-layer {
-            display: none;
-        }
-    }
-
     /* Tier 3 (<= 1100px Tablet): Hide hotkeys & telemetry */
     @media (max-width: 1150px) {
         .dock-hotkeys {
@@ -1031,7 +1024,7 @@
     }
 
     /* Desktop (> 750px): Stack Language button vertically UNDER Dark Mode */
-    @media (min-width: 1150px) and (max-width: 1550px) {
+    @media (min-width: 1150px) and (max-width: 1800px) {
         .status-dock .theme-toggle {
             position: fixed;
             top: 24px;
@@ -1052,7 +1045,9 @@
             z-index: 100;
         }
 
-        .pill-runtime {
+        .pill-runtime,
+        .pill-ts,
+        .pill-layer {
             display: none;
         }
 

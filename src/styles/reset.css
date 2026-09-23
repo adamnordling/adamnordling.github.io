@@ -5,8 +5,9 @@
         box-sizing: border-box;
     }
 
-    :root:not([lang='sv']) span[lang='sv'],
-    :root[lang='sv'] span[lang='en'] {
+    /* Change this in src/styles/reset.css: */
+    :root:not([lang='sv']) [lang='sv'],
+    :root[lang='sv'] [lang='en'] {
         display: none !important;
     }
 

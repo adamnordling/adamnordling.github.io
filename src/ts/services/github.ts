@@ -81,8 +81,10 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
             <div class="stat-pill ${stats.today > 0 ? 'highlight-today' : ''}" title="Commits pushed today">
                 ${stats.today > 0 ? '<span class="stat-pulse-dot"></span>' : ''}
                 <span class="stat-num">${stats.today.toString()}</span>
-                <small lang="en">TODAY</small>
-                <small lang="sv">IDAG</small>
+                <small>
+                    <span lang="en">TODAY</span>
+                    <span lang="sv">IDAG</span>
+                </small>
             </div>
 
             <div class="stat-pill" title="Total public commits">
@@ -90,8 +92,10 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
                 <span class="stat-num">${stats.totalCommits.toString()}</span>
-                <small lang="en">TOTAL</small>
-                <small lang="sv">TOTALT</small>
+                <small>
+                    <span lang="en">TOTAL</span>
+                    <span lang="sv">TOTALT</span>
+                </small>
             </div>
 
             <div class="stat-pill" title="Total public repositories">
@@ -100,8 +104,10 @@ function renderActivity(items: CommitItem[], stats: { today: number; totalCommit
                     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                 </svg>
                 <span class="stat-num">${stats.totalRepos.toString()}</span>
-                <small lang="en">REPOS</small>
-                <small lang="sv">REPOS</small>
+                <small>
+                    <span lang="en">REPOS</span>
+                    <span lang="sv">REPOS</span>
+                </small>
             </div>
         </div>
     `;
