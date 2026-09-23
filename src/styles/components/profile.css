@@ -165,16 +165,20 @@
     }
 
     /* 15s total duration with pauses strictly under 2.0s */
+    /* Delay wave animations until well after initial paint */
     .profile-links .contact-btn-1 svg {
         animation: wave-button-1 15s ease-in-out infinite;
+        animation-delay: 1.3s;
     }
 
     .profile-links .contact-btn-2 svg {
         animation: wave-button-2 15s ease-in-out infinite;
+        animation-delay: 1.3s;
     }
 
     .profile-links .contact-btn-3 svg {
         animation: wave-button-3 15s ease-in-out infinite;
+        animation-delay: 1.3s;
     }
 
     /* =========================================================================

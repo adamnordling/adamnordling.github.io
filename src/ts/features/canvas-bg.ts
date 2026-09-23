@@ -157,12 +157,19 @@ export function initCanvasBackground(): void {
         const leftScrollY = isDesktop && leftPanelEl ? leftPanelEl.scrollTop : 0;
         const rightScrollY = isDesktop && rightPanelEl ? rightPanelEl.scrollTop : 0;
 
+        // Viewport cutoff window
+        const viewHeight = window.innerHeight;
+
         const textEls = document.querySelectorAll<HTMLElement>(textSelectors.join(', '));
         textEls.forEach(el => {
             if (!isElementVisible(el)) return;
             const inRightPanel = isDesktop && !!el.closest('.right-panel');
             const inLeftPanel = isDesktop && !!el.closest('.left-panel');
             const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
+
+            // Quick bounding check: skip elements that are far off-screen
+            const initialBox = el.getBoundingClientRect();
+            if (initialBox.top > viewHeight + 300 || initialBox.bottom < -300) return;
 
             try {
                 textRange.selectNodeContents(el);
@@ -180,13 +187,12 @@ export function initCanvasBackground(): void {
                     }
                 }
             } catch {
-                const r = el.getBoundingClientRect();
-                if (r.width > 0 && r.height > 0) {
+                if (initialBox.width > 0 && initialBox.height > 0) {
                     cachedExclusionRects.push({
-                        pageLeft: r.left,
-                        pageTop: r.top + currentScrollY,
-                        width: r.width,
-                        height: r.height,
+                        pageLeft: initialBox.left,
+                        pageTop: initialBox.top + currentScrollY,
+                        width: initialBox.width,
+                        height: initialBox.height,
                         isRightPanel: inRightPanel
                     });
                 }
@@ -201,6 +207,8 @@ export function initCanvasBackground(): void {
             const currentScrollY = inRightPanel ? rightScrollY : inLeftPanel ? leftScrollY : windowScrollY;
 
             const r = el.getBoundingClientRect();
+            if (r.top > viewHeight + 300 || r.bottom < -300) return;
+
             if (r.width > 0 && r.height > 0) {
                 cachedExclusionRects.push({
                     pageLeft: r.left,
@@ -377,6 +385,8 @@ export function initCanvasBackground(): void {
 
     initCanvasDimensions();
 
+    // Replace the window load event listener in canvas-bg.ts:
+
     function runDeferredExclusionUpdate(): void {
         if (hasMeasuredExclusions) return;
         hasMeasuredExclusions = true;
@@ -384,12 +394,22 @@ export function initCanvasBackground(): void {
         draw();
     }
 
-    window.addEventListener('load', () => {
-        setTimeout(runDeferredExclusionUpdate, 800);
-    });
+    // 1. Only run when the browser is completely done and genuinely idle
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(
+            () => {
+                setTimeout(runDeferredExclusionUpdate, 600);
+            },
+            { timeout: 2500 }
+        );
+    } else {
+        setTimeout(runDeferredExclusionUpdate, 1500);
+    }
 
+    // 2. Or immediately when the user takes their very first action
     window.addEventListener('mousemove', runDeferredExclusionUpdate, { once: true, passive: true });
     window.addEventListener('touchstart', runDeferredExclusionUpdate, { once: true, passive: true });
+    window.addEventListener('scroll', runDeferredExclusionUpdate, { once: true, passive: true });
 
     function handleSmoothScroll(): void {
         if (!hasMeasuredExclusions) return;
