@@ -176,7 +176,7 @@
     }
 
     .stat-pill small {
-        font-size: 0.64rem;
+        font-size: 0.75rem !important;
         color: var(--text-muted);
         letter-spacing: 0.05em;
     }
@@ -289,7 +289,7 @@
     }
 
     .activity-time {
-        font-size: 0.74rem;
+        font-size: 0.75rem !important;
         color: var(--text-muted);
         font-family: var(--font-mono), monospace;
     }
@@ -475,7 +475,7 @@
     }
 
     .dock-status-label {
-        font-size: 0.68rem;
+        font-size: 0.75rem !important;
         font-weight: 700;
         letter-spacing: 0.06em;
         color: var(--text-primary);
@@ -529,7 +529,7 @@
     }
 
     .dock-copyright {
-        font-size: 0.74rem;
+        font-size: 0.75rem !important;
         color: var(--text-muted);
         white-space: nowrap;
     }
@@ -863,7 +863,7 @@
 
         .m-inspector-title {
             font-family: var(--font-mono), monospace;
-            font-size: 0.68rem;
+            font-size: 0.75rem !important;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: 0.05em;
@@ -1066,7 +1066,7 @@
             padding: 0;
             justify-content: center;
             border-radius: 6px;
-            font-size: 0.74rem;
+            font-size: 0.75rem !important;
         }
 
         /* Hide chevron & full text on desktop so it's a sleek, compact [EN] box */
@@ -1110,7 +1110,7 @@
             padding: 0;
             justify-content: center;
             border-radius: 6px;
-            font-size: 0.74rem;
+            font-size: 0.75rem !important;
         }
 
         .dock-mobile-lang .lang-trigger .chevron,
@@ -1317,7 +1317,7 @@
 
         .m-inspector-title {
             font-family: var(--font-mono), monospace;
-            font-size: 0.68rem;
+            font-size: 0.75rem !important;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: 0.05em;
@@ -1396,7 +1396,7 @@
             border: 1px solid var(--border-color);
             border-radius: 5px;
             font-family: var(--font-mono), monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem !important;
             color: var(--text-secondary);
             white-space: nowrap;
             cursor: pointer;
@@ -1429,7 +1429,7 @@
             }
 
             .m-pill-lh .lh-title {
-                font-size: 0.64rem;
+                font-size: 0.75rem !important;
                 font-weight: 700;
                 letter-spacing: 0.05em;
                 color: var(--text-primary);
@@ -1449,13 +1449,13 @@
 
             .m-pill-lh .lh-val {
                 color: #10b981;
-                font-size: 0.7rem;
+                font-size: 0.75rem !important;
                 font-weight: 700;
             }
 
             .m-pill-lh .lh-item small {
                 color: var(--text-muted);
-                font-size: 0.58rem;
+                font-size: 0.75rem !important;
                 letter-spacing: 0.03em;
             }
         }

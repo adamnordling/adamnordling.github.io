@@ -222,10 +222,10 @@ function initMobileMarqueeTelemetry(): void {
         },
         /* Added Privacy Architecture telemetry metric */
         privacy: {
-            title: { en: '0 Trackers · Privacy', sv: '0 Spårare · Integritet' },
+            title: { en: 'Privacy & Terms', sv: 'Integritet & Villkor' },
             desc: {
-                en: 'Zero cookies, zero analytics, and zero data collection. All tools execute 100% client-side in the browser.',
-                sv: 'Noll kakor, noll spårning och noll datainsamling. Alla verktyg körs 100% klientsidigt i webbläsaren.'
+                en: 'Zero cookies, zero analytics, zero data collection. Meets GDPR Article 13 & WCAG 2.1 AA standards.',
+                sv: 'Noll kakor, noll analysverktyg, noll datainsamling. Följer GDPR artikel 13 och WCAG 2.1 AA.'
             }
         }
     };
