@@ -66,23 +66,6 @@ production-level fullstack systems.
 
 ---
 
-## Featured Work
-
-1. Trajectory ML Augmentation (Master's Thesis Project)
-    - A modular Python framework evaluating strategic selection heuristics (Outlierness, Uncertainty, Diversity) using
-      Optuna hyperparameter optimization across 200GB+ geospatial trajectory archives.
-    - Includes topological evaluation using UMAP manifold projections to demonstrate feature space continuity.
-
-2. Open Nutrition
-    - Client-side nutrition analytics web application modeling complete micronutrient profiles, antinutrients, and
-      biological absorption coefficients without centralized user tracking.
-
-3. Everything Web Utilities
-    - Local-first digital utility hub containing media format converters, subnet calculators, cryptographic hashers, and
-      timezone tools, executed 100% in-browser.
-
----
-
 ## Development and Verification
 
 ### Prerequisites
@@ -94,10 +77,10 @@ production-level fullstack systems.
 
 ```bash
 # Clone the repository
-git clone https://github.com/adamnordling/adamnordling.github.io.git
+git clone https://github.com/adamnordling/portfolio.git
 
 # Navigate into project directory
-cd adamnordling.github.io
+cd portfolio
 
 # Install pinned development dependencies
 npm install
